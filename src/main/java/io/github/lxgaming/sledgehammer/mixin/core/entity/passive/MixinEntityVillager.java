@@ -16,6 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.mixin.core.entity.passive;
 
+import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -69,6 +70,7 @@ public abstract class MixinEntityVillager {
         try {
             return !EntityUtil.validateProfession(getProfession()).getCareers().isEmpty();
         } catch (IllegalStateException | NullPointerException ex) {
+            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::isProfessionSafe", getClass().getName(), ex);
             return false;
         }
     }

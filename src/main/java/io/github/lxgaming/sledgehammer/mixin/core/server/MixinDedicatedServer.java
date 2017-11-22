@@ -32,7 +32,7 @@ public class MixinDedicatedServer {
     @Shadow @Final private static Logger LOGGER;
     
     @Inject(method = "startServer", at = @At("RETURN"))
-    private void onRun(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+    private void onStartServer(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (callbackInfoReturnable.getReturnValue()) {
             LOGGER.info("{} v{} was successfully applied!", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);
         }
