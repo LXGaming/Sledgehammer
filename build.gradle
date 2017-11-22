@@ -1,0 +1,113 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url("http://files.minecraftforge.net/maven")
+        }
+        maven {
+            url("https://repo.spongepowered.org/maven")
+        }
+    }
+
+    dependencies {
+        classpath("net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT")
+        classpath("org.spongepowered:mixingradle:0.4-SNAPSHOT")
+    }
+}
+
+apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: "org.spongepowered.mixin"
+apply plugin: "java"
+
+def signFile = "../.gradle/sign.gradle"
+if (file(signFile).exists()) {
+    apply from: signFile
+}
+
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
+
+group = "io.github.lxgaming"
+archivesBaseName = "Sledgehammer"
+version = "1.0.0"
+
+minecraft {
+    version = "1.10.2-12.18.3.2511"
+    runDir = "run"
+    mappings = "snapshot_20161111"
+    makeObfSourceJar = false
+}
+
+configurations {
+    provided {
+        compile.extendsFrom(provided)
+    }
+
+    build {
+        if (project.tasks.findByName("signJar")) {
+            return finalizedBy(signJar)
+        }
+
+        return doLast {
+            println("========== [WARNING] ==========")
+            println()
+            println("   This build is not signed!   ")
+            println()
+            println("========== [WARNING] ==========")
+        }
+    }
+}
+
+repositories {
+    jcenter()
+    maven {
+        url("https://repo.spongepowered.org/maven")
+    }
+}
+
+dependencies {
+    provided("org.spongepowered:spongeapi:5.2.0-SNAPSHOT")
+    provided("org.spongepowered:spongecommon:5.2.0-SNAPSHOT:dev") {
+        exclude(module: "testplugins")
+    }
+}
+
+sourceSets {
+    main {
+        ext.refMap = "mixins.sledgehammer.refmap.json"
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+                "MixinConfigs": "" +
+                        "mixins.sledgehammer.json," +
+                        "mixins.sledgehammer.common.json," +
+                        "mixins.sledgehammer.core.json",
+                "FMLCorePluginContainsFMLMod": "true"
+        )
+    }
+
+    from {
+        (configurations.compile - configurations.provided).collect {
+            if (it.isDirectory()) {
+                return it
+            }
+            return zipTree(it)
+        }
+    }
+
+    exclude("dummyThing")
+}
+
+processResources {
+    from("LICENSE")
+    rename("LICENSE", "LICENSE-" + archivesBaseName)
+
+    from (sourceSets.main.resources.srcDirs) {
+        include("mcmod.info")
+        expand("version":version, "mcversion":minecraft.version)
+    }
+}
