@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.6.15",
+  "package": "io.github.lxgaming.sledgehammer.mixin.core",
+  "refmap": "mixins.sledgehammer.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "entity.passive.MixinEntityVillager",
+    "server.MixinDedicatedServer",
+    "server.MixinMinecraftServer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
