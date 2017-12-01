@@ -128,7 +128,7 @@ public class SledgehammerPlugin implements IMixinConfigPlugin {
                     continue;
                 }
                 
-                for (Iterator<ModData> iterator = getModDataList().iterator(); iterator.hasNext();) {
+                for (Iterator<ModData> iterator = getModDataList().iterator(); iterator.hasNext(); ) {
                     ModData modData = iterator.next();
                     if (!modData.isValid()) {
                         continue;

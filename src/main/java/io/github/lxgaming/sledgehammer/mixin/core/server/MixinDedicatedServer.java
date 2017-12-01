@@ -29,7 +29,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(DedicatedServer.class)
 public class MixinDedicatedServer {
     
-    @Shadow @Final private static Logger LOGGER;
+    @Shadow
+    @Final
+    private static Logger LOGGER;
     
     @Inject(method = "startServer", at = @At("RETURN"))
     private void onStartServer(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {

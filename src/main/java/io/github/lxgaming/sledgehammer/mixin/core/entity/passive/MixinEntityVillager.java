@@ -46,8 +46,11 @@ import java.util.Optional;
 @Mixin(value = EntityVillager.class, priority = 1001)
 public abstract class MixinEntityVillager {
     
-    @Shadow public abstract EntityPlayer getCustomer();
-    @Shadow public abstract int getProfession();
+    @Shadow
+    public abstract EntityPlayer getCustomer();
+    
+    @Shadow
+    public abstract int getProfession();
     
     @Inject(method = "populateBuyingList", at = @At("HEAD"), cancellable = true)
     private void onPopulateBuyingList(CallbackInfo callbackInfo) {
