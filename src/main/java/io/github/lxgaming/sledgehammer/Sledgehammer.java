@@ -44,10 +44,6 @@ public class Sledgehammer {
     }
     
     @Listener
-    public void onGamePreInitialization(GamePreInitializationEvent event) {
-    }
-    
-    @Listener
     public void onGameLoadComplete(GameLoadCompleteEvent event) {
         getLogger().info("{} v{} has started.", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);
     }
