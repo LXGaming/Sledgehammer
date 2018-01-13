@@ -21,7 +21,6 @@ import io.github.lxgaming.sledgehammer.util.Reference;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.LoaderException;
 import net.minecraftforge.fml.common.MetadataCollection;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.relauncher.CoreModManager;
@@ -157,7 +156,8 @@ public class SledgehammerPlugin implements IMixinConfigPlugin {
         try (JarFile jarFile = new JarFile(file)) {
             ZipEntry zipEntry = jarFile.getEntry("mcmod.info");
             if (zipEntry == null) {
-                throw new LoaderException(file.getName() + " appears to be missing an mcmod.info file");
+                getLogger().warn("{} appears to be missing an mcmod.info file", file.getName());
+                return Optional.empty();
             }
             
             try (InputStream inputStream = jarFile.getInputStream(zipEntry)) {
