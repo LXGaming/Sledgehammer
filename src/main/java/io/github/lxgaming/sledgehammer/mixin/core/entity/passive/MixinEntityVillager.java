@@ -40,7 +40,8 @@ import java.util.Optional;
  * and I'm gonna need you to put it wayyy up inside your butthole Sponge,
  * Put it wayyy up inside there as far it can fit.
  *
- * @see <a href="https://github.com/SpongePowered/SpongeCommon/commit/87a01798b61f252b01634780de2223853c697c64">SpongePowered/SpongeCommon</a>
+ * @see <a href="https://github.com/SpongePowered/SpongeCommon/commit/87a01798b61f252b01634780de2223853c697c64">Commit 87a0179</a>
+ * @see <a href="https://github.com/SpongePowered/SpongeForge/issues/1467">Issue 1467</a>
  */
 @Mixin(value = EntityVillager.class, priority = 1001)
 public abstract class MixinEntityVillager implements IMixinVillager {
