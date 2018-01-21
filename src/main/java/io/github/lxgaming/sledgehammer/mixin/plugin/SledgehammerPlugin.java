@@ -46,24 +46,17 @@ import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 
-public class SledgehammerPlugin implements IMixinConfigPlugin {
+public final class SledgehammerPlugin implements IMixinConfigPlugin {
     
-    private final Logger logger;
-    private final Pattern pattern;
-    private final List<ModData> modDataList;
-    
-    public SledgehammerPlugin() {
-        logger = LogManager.getLogger(Reference.PLUGIN_ID);
-        pattern = Pattern.compile("(.+).(zip|jar)$");
-        modDataList = Toolbox.newArrayList();
-    }
+    private final Logger logger = LogManager.getLogger(Reference.PLUGIN_ID);
+    private final Pattern pattern = Pattern.compile("(.+).(zip|jar)$");
+    private final List<ModData> modDataList = Toolbox.newArrayList();
     
     @Override
     public void onLoad(String mixinPackage) {
         Stopwatch stopwatch = Stopwatch.createStarted();
         getLogger().info("{} v{} Loading...", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);
-        
-        if (buildModData() && processModData(getModsDirectory().orElse(null))) {
+        if (initialize()) {
             getLogger().info("Successfully loaded ({}ms)", stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
             return;
         }
@@ -99,12 +92,17 @@ public class SledgehammerPlugin implements IMixinConfigPlugin {
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
     }
     
-    private boolean buildModData() {
+    private boolean initialize() {
         try {
+            if (!isClassPresent("net.minecraftforge.fml.relauncher.CoreModManager") && !isClassPresent("cpw.mods.fml.relauncher.CoreModManager")) {
+                getLogger().info("Proceeding without FML support");
+                return true;
+            }
+            
             getModDataList().add(new ModData(Action.REMOVE, Reference.PLUGIN_ID));
-            return true;
+            return processModData(getModsDirectory().orElse(null));
         } catch (Exception ex) {
-            getLogger().error("Encountered an error processing {}::buildModData", getClass().getName(), ex);
+            getLogger().error("Encountered an error processing {}::initialize", getClass().getName(), ex);
             return false;
         }
     }
@@ -156,7 +154,7 @@ public class SledgehammerPlugin implements IMixinConfigPlugin {
         try (JarFile jarFile = new JarFile(file)) {
             ZipEntry zipEntry = jarFile.getEntry("mcmod.info");
             if (zipEntry == null) {
-                getLogger().warn("{} appears to be missing an mcmod.info file", file.getName());
+                getLogger().debug("{} appears to be missing an mcmod.info file", file.getName());
                 return Optional.empty();
             }
             
@@ -178,6 +176,14 @@ public class SledgehammerPlugin implements IMixinConfigPlugin {
         }
     }
     
+    private boolean isClassPresent(String name) {
+        try {
+            return Class.forName(name, false, Launch.classLoader) != null;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+    
     private Logger getLogger() {
         return logger;
     }
@@ -190,7 +196,7 @@ public class SledgehammerPlugin implements IMixinConfigPlugin {
         return modDataList;
     }
     
-    private class ModData {
+    private final class ModData {
         
         private final Action action;
         private final String id;
