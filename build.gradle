@@ -29,7 +29,7 @@ sourceCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.0.2"
+version = "1.0.3"
 
 minecraft {
     version = "1.10.2-12.18.3.2511"
@@ -82,10 +82,8 @@ jar {
     manifest {
         attributes(
                 "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-                "MixinConfigs": "" +
-                        "mixins.sledgehammer.json," +
-                        "mixins.sledgehammer.core.json",
-                "FMLCorePluginContainsFMLMod": "true"
+                "MixinConfigs": "mixins.sledgehammer.core.json",
+                "ForceLoadAsMod": "true"
         )
     }
 
