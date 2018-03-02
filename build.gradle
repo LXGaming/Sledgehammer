@@ -2,10 +2,12 @@ buildscript {
     repositories {
         jcenter()
         maven {
-            url("http://files.minecraftforge.net/maven")
+            name = "minecraftforge"
+            url = "http://files.minecraftforge.net/maven"
         }
         maven {
-            url("https://repo.spongepowered.org/maven")
+            name = "spongepowered"
+            url = "https://repo.spongepowered.org/maven"
         }
     }
 
@@ -18,14 +20,10 @@ buildscript {
 apply plugin: "java"
 apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: "org.spongepowered.mixin"
+apply plugin: "signing"
 
-def signFile = "../.gradle/sign.gradle"
-if (file(signFile).exists()) {
-    apply from: signFile
-}
-
-targetCompatibility = 1.8
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
@@ -43,30 +41,20 @@ configurations {
         compile.extendsFrom(provided)
     }
 
-    build {
-        if (project.tasks.findByName("signJar")) {
-            return finalizedBy(signJar)
-        }
-
-        return doLast {
-            println("========== [WARNING] ==========")
-            println()
-            println("   This build is not signed!   ")
-            println()
-            println("========== [WARNING] ==========")
-        }
-    }
+    build.dependsOn("signJar")
 }
 
 repositories {
     jcenter()
     maven {
-        url("https://repo.spongepowered.org/maven")
+        name = "spongepowered"
+        url = "https://repo.spongepowered.org/maven"
     }
 }
 
 dependencies {
     provided("org.spongepowered:spongeapi:5.2.0-SNAPSHOT")
+    annotationProcessor("org.spongepowered:spongeapi:5.2.0-SNAPSHOT")
     provided("org.spongepowered:spongecommon:5.2.0-SNAPSHOT:dev") {
         exclude(module: "testplugins")
     }
@@ -89,11 +77,7 @@ jar {
 
     from {
         (configurations.compile - configurations.provided).collect {
-            if (it.isDirectory()) {
-                return it
-            }
-
-            return zipTree(it)
+            it.isDirectory() ? it : zipTree(it)
         }
     }
 
@@ -106,6 +90,38 @@ processResources {
 
     from (sourceSets.main.resources.srcDirs) {
         include("mcmod.info")
-        expand("version":version, "mcversion":minecraft.version)
+        expand("version": version, "mcversion": minecraft.version)
+    }
+}
+
+task signJar {
+    doFirst {
+        if (!project.hasProperty("signing.keyStorePath") || !project.hasProperty("signing.secretKeyRingFile")) {
+            project.logger.warn("========== [WARNING] ==========")
+            project.logger.warn("")
+            project.logger.warn("   This build is not signed!   ")
+            project.logger.warn("")
+            project.logger.warn("========== [WARNING] ==========")
+            throw new StopExecutionException()
+        }
+    }
+
+    doLast {
+        jar.outputs.files.each {
+            ant.signjar(
+                jar: it,
+                alias: project.property("signing.alias"),
+                storepass: project.property("signing.keyStorePassword"),
+                keystore: project.property("signing.keyStorePath"),
+                keypass: project.property("signing.keyStorePassword"),
+                preservelastmodified: project.property("signing.preserveLastModified"),
+                tsaurl: project.property("signing.timestampAuthority"),
+                digestalg: project.property("signing.digestAlgorithm")
+            )
+            project.logger.lifecycle("JAR Signed: " + it.name)
+
+            signing.sign(it)
+            project.logger.lifecycle("PGP Signed: " + it.name)
+        }
     }
 }
