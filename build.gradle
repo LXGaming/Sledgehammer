@@ -13,7 +13,7 @@ buildscript {
 
     dependencies {
         classpath("net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT")
-        classpath("org.spongepowered:mixingradle:0.6-SNAPSHOT")
+        classpath("org.spongepowered:mixingradle:0.4-SNAPSHOT")
     }
 }
 
@@ -27,13 +27,19 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.0.3"
+version = "1.0.3-1.10.2"
 
 minecraft {
     version = "1.10.2-12.18.3.2511"
     runDir = "run"
     mappings = "snapshot_20161111"
     makeObfSourceJar = false
+}
+
+mixin {
+    defaultObfuscationEnv = searge
+    disableRefMapWarning = true
+    add(sourceSets.main, "mixins.sledgehammer.refmap.json")
 }
 
 configurations {
@@ -54,15 +60,8 @@ repositories {
 
 dependencies {
     provided("org.spongepowered:spongeapi:5.2.0-SNAPSHOT")
-    annotationProcessor("org.spongepowered:spongeapi:5.2.0-SNAPSHOT")
     provided("org.spongepowered:spongecommon:5.2.0-SNAPSHOT:dev") {
         exclude(module: "testplugins")
-    }
-}
-
-sourceSets {
-    main {
-        ext.refMap = "mixins.sledgehammer.refmap.json"
     }
 }
 
