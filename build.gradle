@@ -60,7 +60,6 @@ repositories {
 
 dependencies {
     provided("org.spongepowered:spongeapi:7.1.0-SNAPSHOT")
-    annotationProcessor("org.spongepowered:spongeapi:7.1.0-SNAPSHOT")
     provided("org.spongepowered:spongecommon:7.1.0-SNAPSHOT:dev") {
         exclude(module: "testplugins")
     }
