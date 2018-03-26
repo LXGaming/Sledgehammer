@@ -16,13 +16,23 @@
 
 package io.github.lxgaming.sledgehammer;
 
+import com.google.inject.Inject;
+import io.github.lxgaming.sledgehammer.configuration.Config;
+import io.github.lxgaming.sledgehammer.configuration.Configuration;
 import io.github.lxgaming.sledgehammer.util.Reference;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import ninja.leaping.configurate.objectmapping.GuiceObjectMapperFactory;
+import org.slf4j.Logger;
+import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.game.state.GameConstructionEvent;
 import org.spongepowered.api.event.game.state.GameLoadCompleteEvent;
+import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.plugin.PluginContainer;
+
+import java.nio.file.Path;
+import java.util.Optional;
 
 @Plugin(
         id = Reference.PLUGIN_ID,
@@ -35,11 +45,33 @@ import org.spongepowered.api.plugin.Plugin;
 public class Sledgehammer {
     
     private static Sledgehammer instance;
-    private final Logger logger;
     
-    public Sledgehammer() {
+    @Inject
+    private PluginContainer pluginContainer;
+    
+    @Inject
+    private Logger logger;
+    
+    @Inject
+    @DefaultConfig(sharedRoot = true)
+    private Path path;
+    
+    @Inject
+    private GuiceObjectMapperFactory factory;
+    
+    private Configuration configuration;
+    
+    @Listener
+    public void onGameConstruction(GameConstructionEvent event) {
         instance = this;
-        logger = LogManager.getLogger(Reference.PLUGIN_ID);
+        configuration = new Configuration();
+    }
+    
+    @Listener
+    public void onGamePreInitialization(GamePreInitializationEvent event) {
+        getLogger().info("Initializing...");
+        getConfiguration().loadConfiguration();
+        getConfiguration().saveConfiguration();
     }
     
     @Listener
@@ -56,7 +88,31 @@ public class Sledgehammer {
         return instance;
     }
     
+    public PluginContainer getPluginContainer() {
+        return pluginContainer;
+    }
+    
     public Logger getLogger() {
         return logger;
+    }
+    
+    public Path getPath() {
+        return path;
+    }
+    
+    public GuiceObjectMapperFactory getFactory() {
+        return factory;
+    }
+    
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+    
+    public Optional<Config> getConfig() {
+        if (getConfiguration() != null) {
+            return Optional.ofNullable(getConfiguration().getConfig());
+        }
+        
+        return Optional.empty();
     }
 }

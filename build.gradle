@@ -27,7 +27,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.0.3-1.12.2"
+version = "1.0.4-1.12.2"
 
 minecraft {
     version = "1.12.2-14.23.2.2611"
@@ -59,8 +59,17 @@ repositories {
 }
 
 dependencies {
+    annotationProcessor("org.spongepowered:mixin:0.7.4-SNAPSHOT")
+    provided("org.spongepowered:mixin:0.7.4-SNAPSHOT") {
+        exclude(module: "commons-io")
+        exclude(module: "gson")
+        exclude(module: "guava")
+        exclude(module: "launchwrapper")
+    }
     provided("org.spongepowered:spongeapi:7.1.0-SNAPSHOT")
+    annotationProcessor("org.spongepowered:spongeapi:7.1.0-SNAPSHOT")
     provided("org.spongepowered:spongecommon:7.1.0-SNAPSHOT:dev") {
+        exclude(module: "mixin")
         exclude(module: "testplugins")
     }
 }

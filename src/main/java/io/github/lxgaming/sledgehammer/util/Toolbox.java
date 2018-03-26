@@ -16,6 +16,9 @@
 
 package io.github.lxgaming.sledgehammer.util;
 
+import org.apache.commons.lang3.StringUtils;
+import org.spongepowered.api.Platform;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.action.TextAction;
 import org.spongepowered.api.text.action.TextActions;
@@ -26,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -57,10 +61,20 @@ public class Toolbox {
         }
     }
     
+    public static boolean isForgeEnvironment() {
+        return StringUtils.equals(Sponge.getGame().getPlatform().getContainer(Platform.Component.IMPLEMENTATION).getName(), "SpongeForge");
+    }
+    
     @SafeVarargs
     public static <E> ArrayList<E> newArrayList(E... elements) throws NullPointerException {
         Objects.requireNonNull(elements);
         return Stream.of(elements).collect(Collectors.toCollection(ArrayList::new));
+    }
+    
+    @SafeVarargs
+    public static <E> HashSet<E> newHashSet(E... elements) throws NullPointerException {
+        Objects.requireNonNull(elements);
+        return Stream.of(elements).collect(Collectors.toCollection(HashSet::new));
     }
     
     public static <K, V> HashMap<K, V> newHashMap() {

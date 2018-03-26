@@ -26,15 +26,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(DedicatedServer.class)
+@Mixin(value = DedicatedServer.class, priority = 1337)
 public class MixinDedicatedServer {
     
     @Shadow
     @Final
     private static Logger LOGGER;
     
-    @Inject(method = "startServer", at = @At("RETURN"))
-    private void onStartServer(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+    @Inject(method = "init", at = @At("RETURN"))
+    private void onInit(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (callbackInfoReturnable.getReturnValue()) {
             LOGGER.info("{} v{} was successfully applied!", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);
         }
