@@ -25,7 +25,9 @@ import org.slf4j.Logger;
 import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameConstructionEvent;
+import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameLoadCompleteEvent;
+import org.spongepowered.api.event.game.state.GamePostInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
@@ -69,8 +71,15 @@ public class Sledgehammer {
     
     @Listener
     public void onGamePreInitialization(GamePreInitializationEvent event) {
-        getLogger().info("Initializing...");
         getConfiguration().loadConfiguration();
+    }
+    
+    @Listener
+    public void onGameInitialization(GameInitializationEvent event) {
+    }
+    
+    @Listener
+    public void onGamePostInitialization(GamePostInitializationEvent event) {
         getConfiguration().saveConfiguration();
     }
     
@@ -82,6 +91,14 @@ public class Sledgehammer {
     @Listener
     public void onGameStopping(GameStoppingEvent event) {
         getLogger().info("{} v{} has stopped.", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);
+    }
+    
+    public void debugMessage(String format, Object... arguments) {
+        if (getConfig().map(Config::isDebug).orElse(false)) {
+            getLogger().info(format, arguments);
+        } else {
+            getLogger().debug(format, arguments);
+        }
     }
     
     public static Sledgehammer getInstance() {

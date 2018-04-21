@@ -61,6 +61,16 @@ public class Toolbox {
         }
     }
     
+    public static boolean isClassStackFrame(String className, StackTraceElement[] stackTraceElements) {
+        for (StackTraceElement stackTraceElement : stackTraceElements) {
+            if (StringUtils.equals(stackTraceElement.getClassName(), className)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     public static boolean isForgeEnvironment() {
         return StringUtils.equals(Sponge.getGame().getPlatform().getContainer(Platform.Component.IMPLEMENTATION).getName(), "SpongeForge");
     }

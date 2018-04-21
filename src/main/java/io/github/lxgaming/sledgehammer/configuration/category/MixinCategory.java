@@ -22,10 +22,36 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class MixinCategory {
     
-    @Setting(value = "entity-villager")
-    private boolean entityVillager = true;
+    @Setting(value = "ceremony-rain", comment = "Disables weather changing from Totemic")
+    private boolean ceremonyRain = false;
+    
+    @Setting(value = "entity-villager", comment = "Prevents villagers crashing the server")
+    private boolean entityVillager = false;
+    
+    @Setting(value = "traveling-merchant", comment = "Fixes Traveling Merchants from PrimitiveMobs")
+    private boolean travelingMerchant = false;
+    
+    public boolean isCeremonyRain() {
+        return ceremonyRain;
+    }
+    
+    public void setCeremonyRain(boolean ceremonyRain) {
+        this.ceremonyRain = ceremonyRain;
+    }
     
     public boolean isEntityVillager() {
         return entityVillager;
+    }
+    
+    public void setEntityVillager(boolean entityVillager) {
+        this.entityVillager = entityVillager;
+    }
+    
+    public boolean isTravelingMerchant() {
+        return travelingMerchant;
+    }
+    
+    public void setTravelingMerchant(boolean travelingMerchant) {
+        this.travelingMerchant = travelingMerchant;
     }
 }

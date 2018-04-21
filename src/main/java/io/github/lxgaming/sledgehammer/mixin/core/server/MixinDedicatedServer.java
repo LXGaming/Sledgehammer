@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = DedicatedServer.class, priority = 1337)
-public class MixinDedicatedServer {
+public abstract class MixinDedicatedServer {
     
     @Shadow
     @Final

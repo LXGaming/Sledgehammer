@@ -82,17 +82,21 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
         
         callbackInfo.cancel();
         entity.remove();
-        Sledgehammer.getInstance().getLogger().debug("Entity {} at {} was removed by {}", entity.getType().getId(), entity.getLocation().toString(), getClass().getSimpleName());
+        Sledgehammer.getInstance().debugMessage("Entity {} at {} was removed by {}", entity.getType().getId(), entity.getLocation().toString(), getClass().getSimpleName());
     }
     
     @Inject(method = "populateBuyingList", at = @At("RETURN"), cancellable = true)
     private void onPopulateBuyingListReturn(CallbackInfo callbackInfo) {
-        populateTravelingMerchant();
+        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isTravelingMerchant).orElse(false)) {
+            populateTravelingMerchant();
+        }
     }
     
     @Inject(method = "processInteract", at = @At("HEAD"), cancellable = true)
     private void onProcessInteract(EntityPlayer player, EnumHand hand, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        populateTravelingMerchant();
+        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isTravelingMerchant).orElse(false)) {
+            populateTravelingMerchant();
+        }
     }
     
     /**
@@ -125,7 +129,7 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
                 ((EntityVillager.ITradeList) trade).addMerchantRecipe(((IMerchant) this), this.buyingList, this.rand);
             }
             
-            Sledgehammer.getInstance().getLogger().debug("TravelingMerchant Populated");
+            Sledgehammer.getInstance().debugMessage("TravelingMerchant Populated");
         } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::populateTravelingMerchant", getClass().getSimpleName());
             ex.printStackTrace();
