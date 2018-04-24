@@ -22,6 +22,9 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class MixinCategory {
     
+    @Setting(value = "block-grass", comment = "Prevents BlockGrass turning into BlockDirt")
+    private boolean blockGrass = false;
+    
     @Setting(value = "ceremony-rain", comment = "Disables weather changing from Totemic")
     private boolean ceremonyRain = false;
     
@@ -31,27 +34,19 @@ public class MixinCategory {
     @Setting(value = "traveling-merchant", comment = "Fixes Traveling Merchants from PrimitiveMobs")
     private boolean travelingMerchant = false;
     
-    public boolean isCeremonyRain() {
-        return ceremonyRain;
+    public boolean isBlockGrass() {
+        return blockGrass;
     }
     
-    public void setCeremonyRain(boolean ceremonyRain) {
-        this.ceremonyRain = ceremonyRain;
+    public boolean isCeremonyRain() {
+        return ceremonyRain;
     }
     
     public boolean isEntityVillager() {
         return entityVillager;
     }
     
-    public void setEntityVillager(boolean entityVillager) {
-        this.entityVillager = entityVillager;
-    }
-    
     public boolean isTravelingMerchant() {
         return travelingMerchant;
-    }
-    
-    public void setTravelingMerchant(boolean travelingMerchant) {
-        this.travelingMerchant = travelingMerchant;
     }
 }
