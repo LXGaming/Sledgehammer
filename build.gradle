@@ -27,10 +27,10 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.0.6-1.12.2"
+version = "1.0.7-1.12.2"
 
 minecraft {
-    version = "1.12.2-14.23.2.2611"
+    version = "1.12.2-14.23.3.2655"
     runDir = "run"
     mappings = "snapshot_20171003"
     makeObfSourceJar = false
@@ -79,7 +79,7 @@ jar {
         attributes(
                 "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
                 "MixinConfigs": "mixins.sledgehammer.core.json",
-                "ForceLoadAsMod": "true"
+                "ForceLoadAsMod": true
         )
     }
 
