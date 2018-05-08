@@ -96,8 +96,6 @@ public class Sledgehammer {
     public void debugMessage(String format, Object... arguments) {
         if (getConfig().map(Config::isDebug).orElse(false)) {
             getLogger().info(format, arguments);
-        } else {
-            getLogger().debug(format, arguments);
         }
     }
     
