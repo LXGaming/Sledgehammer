@@ -43,8 +43,7 @@ public class Configuration {
             Sledgehammer.getInstance().getLogger().info("Successfully loaded configuration file.");
         } catch (IOException | ObjectMappingException | RuntimeException ex) {
             configurationNode = getConfigurationLoader().createEmptyNode(getConfigurationOptions());
-            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::loadConfiguration", getClass().getSimpleName());
-            ex.printStackTrace();
+            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::loadConfiguration", getClass().getSimpleName(), ex);
         }
     }
     
@@ -55,8 +54,7 @@ public class Configuration {
             getConfigurationLoader().save(getConfigurationNode());
             Sledgehammer.getInstance().getLogger().info("Successfully saved configuration file.");
         } catch (IOException | ObjectMappingException | RuntimeException ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::saveConfiguration", getClass().getSimpleName());
-            ex.printStackTrace();
+            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::saveConfiguration", getClass().getSimpleName(), ex);
         }
     }
     

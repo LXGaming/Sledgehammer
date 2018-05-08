@@ -6,7 +6,9 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "advancements.MixinAdvancementProgress",
     "block.MixinBlockGrass",
+    "block.MixinBlockIce",
     "entity.passive.MixinEntityVillager",
     "server.MixinDedicatedServer",
     "world.storage.MixinWorldInfo"

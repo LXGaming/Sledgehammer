@@ -33,7 +33,7 @@ public abstract class MixinDedicatedServer {
     @Final
     private static Logger LOGGER;
     
-    @Inject(method = "init", at = @At("RETURN"))
+    @Inject(method = "init", at = @At(value = "RETURN"))
     private void onInit(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (callbackInfoReturnable.getReturnValue()) {
             LOGGER.info("{} v{} was successfully applied!", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);

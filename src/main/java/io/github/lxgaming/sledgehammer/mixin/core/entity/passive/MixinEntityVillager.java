@@ -68,7 +68,7 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
         this.careerId = careerId;
     }
     
-    @Inject(method = "populateBuyingList", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "populateBuyingList", at = @At(value = "HEAD"), cancellable = true)
     private void onPopulateBuyingListHead(CallbackInfo callbackInfo) {
         if (!Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isEntityVillager).orElse(false)) {
             return;
@@ -85,14 +85,14 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
         Sledgehammer.getInstance().debugMessage("Entity {} at {} was removed by {}", entity.getType().getId(), entity.getLocation().toString(), getClass().getSimpleName());
     }
     
-    @Inject(method = "populateBuyingList", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "populateBuyingList", at = @At(value = "RETURN"), cancellable = true)
     private void onPopulateBuyingListReturn(CallbackInfo callbackInfo) {
         if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isTravelingMerchant).orElse(false)) {
             populateTravelingMerchant();
         }
     }
     
-    @Inject(method = "processInteract", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "processInteract", at = @At(value = "HEAD"), cancellable = true)
     private void onProcessInteract(EntityPlayer player, EnumHand hand, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isTravelingMerchant).orElse(false)) {
             populateTravelingMerchant();
@@ -131,8 +131,7 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
             
             Sledgehammer.getInstance().debugMessage("TravelingMerchant Populated");
         } catch (Exception ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::populateTravelingMerchant", getClass().getSimpleName());
-            ex.printStackTrace();
+            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::populateTravelingMerchant", getClass().getSimpleName(), ex);
         }
     }
 }

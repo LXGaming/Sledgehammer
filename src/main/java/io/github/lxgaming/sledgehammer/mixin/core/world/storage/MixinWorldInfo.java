@@ -29,7 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = WorldInfo.class, priority = 1337)
 public abstract class MixinWorldInfo {
     
-    @Inject(method = "setRaining", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "setRaining", at = @At(value = "HEAD"), cancellable = true)
     private void onSetRaining(boolean isRaining, CallbackInfo callbackInfo) {
         if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isCeremonyRain).orElse(false)) {
             if (Toolbox.isClassStackFrame("pokefenn.totemic.ceremony.CeremonyRain", Thread.currentThread().getStackTrace())) {
@@ -39,7 +39,7 @@ public abstract class MixinWorldInfo {
         }
     }
     
-    @Inject(method = "setRainTime", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "setRainTime", at = @At(value = "HEAD"), cancellable = true)
     private void onSetRainTime(int time, CallbackInfo callbackInfo) {
         if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isCeremonyRain).orElse(false)) {
             if (Toolbox.isClassStackFrame("pokefenn.totemic.ceremony.CeremonyRain", Thread.currentThread().getStackTrace())) {
