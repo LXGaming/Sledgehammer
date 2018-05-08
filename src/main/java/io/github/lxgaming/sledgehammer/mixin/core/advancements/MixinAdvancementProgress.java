@@ -33,7 +33,7 @@ import java.lang.reflect.Field;
 @Mixin(value = AdvancementProgress.class, priority = 1337)
 public abstract class MixinAdvancementProgress implements org.spongepowered.api.advancement.AdvancementProgress, IMixinAdvancementProgress {
     
-    @Inject(method = "isDone", at = @At(value = "INVOKE"))
+    @Inject(method = "isDone", at = @At(value = "HEAD"))
     private void onIsDone(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (!Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isAdvancementProgress).orElse(false)) {
             return;
