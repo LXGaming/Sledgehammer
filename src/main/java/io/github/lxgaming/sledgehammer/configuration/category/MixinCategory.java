@@ -25,6 +25,9 @@ public class MixinCategory {
     @Setting(value = "advancement-progress", comment = "Fixes Advancement Progress")
     private boolean advancementProgress = false;
     
+    @Setting(value = "advancement-stacktrace", comment = "Catches the stacktrace thrown by the AdvancementManager")
+    private boolean advancementStacktrace = false;
+    
     @Setting(value = "block-grass", comment = "Prevents BlockGrass turning into BlockDirt")
     private boolean blockGrass = false;
     
@@ -42,6 +45,10 @@ public class MixinCategory {
     
     public boolean isAdvancementProgress() {
         return advancementProgress;
+    }
+    
+    public boolean isAdvancementStacktrace() {
+        return advancementStacktrace;
     }
     
     public boolean isBlockGrass() {

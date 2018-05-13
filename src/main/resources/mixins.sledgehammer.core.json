@@ -6,6 +6,7 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "advancements.MixinAdvancementManager",
     "advancements.MixinAdvancementProgress",
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
