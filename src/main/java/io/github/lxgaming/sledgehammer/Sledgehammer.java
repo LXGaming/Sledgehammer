@@ -34,7 +34,7 @@ public class Sledgehammer {
     
     private static Sledgehammer instance;
     private final Logger logger = LoggerFactory.getLogger(Reference.PLUGIN_NAME);
-    private final Configuration configuration = new Configuration(SpongeLaunch.getConfigDir());
+    private final Configuration configuration = new Configuration(SpongeLaunch.getConfigDir().resolve(Reference.PLUGIN_ID + ".conf"));
     private final Map<String, Function<MixinCategory, Boolean>> mixinMappings = Toolbox.newHashMap();
     private PluginContainer pluginContainer;
     

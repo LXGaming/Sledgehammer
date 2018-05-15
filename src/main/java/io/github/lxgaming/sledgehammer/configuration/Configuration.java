@@ -17,7 +17,6 @@
 package io.github.lxgaming.sledgehammer.configuration;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.util.Reference;
 import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
@@ -38,7 +37,7 @@ public class Configuration {
     
     public Configuration(Path path) {
         try {
-            this.configurationLoader = HoconConfigurationLoader.builder().setPath(path.resolve(Reference.PLUGIN_ID + ".conf")).build();
+            this.configurationLoader = HoconConfigurationLoader.builder().setPath(path).build();
             this.objectMapper = ObjectMapper.forClass(Config.class).bindToNew();
         } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error initializing {}", getClass().getSimpleName(), ex);
