@@ -3,6 +3,7 @@
   "minVersion": "0.7.4",
   "package": "io.github.lxgaming.sledgehammer.mixin.core",
   "refmap": "mixins.sledgehammer.refmap.json",
+  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
@@ -11,8 +12,7 @@
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
     "entity.passive.MixinEntityVillager",
-    "server.MixinDedicatedServer",
-    "world.storage.MixinWorldInfo"
+    "server.MixinDedicatedServer"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -16,9 +16,6 @@
 
 package io.github.lxgaming.sledgehammer.mixin.core.block;
 
-import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import net.minecraft.block.BlockIce;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -35,8 +32,6 @@ public abstract class MixinBlockIce {
     
     @Inject(method = "updateTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockIce;turnIntoWater(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V", ordinal = 0), cancellable = true)
     private void onUpdateTick(World world, BlockPos blockPos, IBlockState blockState, Random random, CallbackInfo callbackInfo) {
-        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isBlockIce).orElse(false)) {
-            callbackInfo.cancel();
-        }
+        callbackInfo.cancel();
     }
 }

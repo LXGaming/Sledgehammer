@@ -17,28 +17,17 @@
 package io.github.lxgaming.sledgehammer.mixin.core.entity.passive;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumHand;
-import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.common.entity.SpongeProfession;
 import org.spongepowered.common.interfaces.entity.IMixinVillager;
-
-import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * I'm gonna need you to take this IllegalStateException into the bathroom,
@@ -57,12 +46,6 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
     @Shadow
     private int careerId;
     
-    @Shadow
-    private int careerLevel;
-    
-    @Shadow
-    private MerchantRecipeList buyingList;
-    
     public MixinEntityVillager(World worldIn, int careerId) {
         super(worldIn);
         this.careerId = careerId;
@@ -70,10 +53,6 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
     
     @Inject(method = "populateBuyingList", at = @At(value = "HEAD"), cancellable = true)
     private void onPopulateBuyingListHead(CallbackInfo callbackInfo) {
-        if (!Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isEntityVillager).orElse(false)) {
-            return;
-        }
-        
         if (getProfession() != null && !getProfession().getCareers().isEmpty()) {
             return;
         }
@@ -83,55 +62,5 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
         callbackInfo.cancel();
         entity.remove();
         Sledgehammer.getInstance().debugMessage("Entity {} at {} was removed by {}", entity.getType().getId(), entity.getLocation().toString(), getClass().getSimpleName());
-    }
-    
-    @Inject(method = "populateBuyingList", at = @At(value = "RETURN"), cancellable = true)
-    private void onPopulateBuyingListReturn(CallbackInfo callbackInfo) {
-        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isTravelingMerchant).orElse(false)) {
-            populateTravelingMerchant();
-        }
-    }
-    
-    @Inject(method = "processInteract", at = @At(value = "HEAD"), cancellable = true)
-    private void onProcessInteract(EntityPlayer player, EnumHand hand, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isTravelingMerchant).orElse(false)) {
-            populateTravelingMerchant();
-        }
-    }
-    
-    /**
-     * Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59
-     */
-    @SuppressWarnings("deprecation")
-    private void populateTravelingMerchant() {
-        try {
-            if (!StringUtils.equals(((Entity) this).getType().getId(), "primitivemobs:travelingmerchant") || (this.buyingList != null && !this.buyingList.isEmpty())) {
-                return;
-            }
-            
-            Class<?> villagerRegistryClass = Class.forName("net.minecraftforge.fml.common.registry.VillagerRegistry");
-            Method getById = villagerRegistryClass.getMethod("getById", int.class);
-            Object villagerProfession = getById.invoke(null, ((SpongeProfession) getProfession()).type);
-            
-            Class<?> villagerProfessionClass = Class.forName("net.minecraftforge.fml.common.registry.VillagerRegistry$VillagerProfession");
-            Method getCareer = villagerProfessionClass.getMethod("getCareer", int.class);
-            Object villagerCareer = getCareer.invoke(villagerProfession, this.careerId - 1);
-            
-            Class<?> villagerCareerClass = Class.forName("net.minecraftforge.fml.common.registry.VillagerRegistry$VillagerCareer");
-            Method getTrades = villagerCareerClass.getMethod("getTrades", int.class);
-            
-            List<?> trades = (List<?>) getTrades.invoke(villagerCareer, this.careerLevel - 1);
-            for (Object trade : trades) {
-                if (!(trade instanceof EntityVillager.ITradeList)) {
-                    return;
-                }
-                
-                ((EntityVillager.ITradeList) trade).addMerchantRecipe(((IMerchant) this), this.buyingList, this.rand);
-            }
-            
-            Sledgehammer.getInstance().debugMessage("TravelingMerchant Populated");
-        } catch (Exception ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::populateTravelingMerchant", getClass().getSimpleName(), ex);
-        }
     }
 }

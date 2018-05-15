@@ -16,6 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.util;
 
+import net.minecraft.launchwrapper.Launch;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.Platform;
 import org.spongepowered.api.Sponge;
@@ -28,9 +29,11 @@ import org.spongepowered.api.text.format.TextStyles;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -61,6 +64,42 @@ public class Toolbox {
         }
     }
     
+    public static boolean isForgeEnvironment() {
+        return StringUtils.equals(Sponge.getGame().getPlatform().getContainer(Platform.Component.IMPLEMENTATION).getName(), "SpongeForge");
+    }
+    
+    /**
+     * Removes non-printable characters (excluding new line and carriage return) in the provided {@link java.lang.String String}.
+     *
+     * @param string The {@link java.lang.String String} to filter.
+     * @return The filtered {@link java.lang.String String}.
+     */
+    public static String filter(String string) {
+        return StringUtils.replaceAll(string, "[^\\x20-\\x7E\\x0A\\x0D]", "");
+    }
+    
+    public static boolean containsIgnoreCase(Collection<String> list, String targetString) {
+        if (list == null || list.isEmpty()) {
+            return false;
+        }
+        
+        for (String string : list) {
+            if (StringUtils.equalsIgnoreCase(string, targetString)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public static boolean isClassPresent(String className) {
+        try {
+            return Class.forName(className, false, Launch.classLoader) != null;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+    
     public static boolean isClassStackFrame(String className, StackTraceElement[] stackTraceElements) {
         for (StackTraceElement stackTraceElement : stackTraceElements) {
             if (StringUtils.equals(stackTraceElement.getClassName(), className)) {
@@ -71,8 +110,12 @@ public class Toolbox {
         return false;
     }
     
-    public static boolean isForgeEnvironment() {
-        return StringUtils.equals(Sponge.getGame().getPlatform().getContainer(Platform.Component.IMPLEMENTATION).getName(), "SpongeForge");
+    public static <T> Optional<T> newInstance(Class<? extends T> typeOfT) {
+        try {
+            return Optional.of(typeOfT.newInstance());
+        } catch (Exception ex) {
+            return Optional.empty();
+        }
     }
     
     @SafeVarargs
@@ -82,9 +125,9 @@ public class Toolbox {
     }
     
     @SafeVarargs
-    public static <E> HashSet<E> newHashSet(E... elements) throws NullPointerException {
+    public static <E> LinkedHashSet<E> newLinkedHashSet(E... elements) throws NullPointerException {
         Objects.requireNonNull(elements);
-        return Stream.of(elements).collect(Collectors.toCollection(HashSet::new));
+        return Stream.of(elements).collect(Collectors.toCollection(LinkedHashSet::new));
     }
     
     public static <K, V> HashMap<K, V> newHashMap() {

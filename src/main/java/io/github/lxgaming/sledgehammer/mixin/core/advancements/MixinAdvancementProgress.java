@@ -17,8 +17,6 @@
 package io.github.lxgaming.sledgehammer.mixin.core.advancements;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import net.minecraft.advancements.AdvancementProgress;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,10 +33,6 @@ public abstract class MixinAdvancementProgress implements org.spongepowered.api.
     
     @Inject(method = "isDone", at = @At(value = "HEAD"))
     private void onIsDone(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (!Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isAdvancementProgress).orElse(false)) {
-            return;
-        }
-        
         if (!get(getAdvancement().getCriterion()).isPresent()) {
             Player player = ((IMixinPlayerAdvancements) getPlayerAdvancements()).getPlayer();
             Sledgehammer.getInstance().debugMessage("Resetting {} for {} ({})", getAdvancement().getCriterion().getName(), player.getName(), player.getUniqueId());

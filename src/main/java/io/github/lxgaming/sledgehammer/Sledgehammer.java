@@ -16,81 +16,55 @@
 
 package io.github.lxgaming.sledgehammer;
 
-import com.google.inject.Inject;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.Configuration;
+import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.util.Reference;
-import ninja.leaping.configurate.objectmapping.GuiceObjectMapperFactory;
+import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.slf4j.Logger;
-import org.spongepowered.api.config.DefaultConfig;
-import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.game.state.GameConstructionEvent;
-import org.spongepowered.api.event.game.state.GameInitializationEvent;
-import org.spongepowered.api.event.game.state.GameLoadCompleteEvent;
-import org.spongepowered.api.event.game.state.GamePostInitializationEvent;
-import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
-import org.spongepowered.api.event.game.state.GameStoppingEvent;
-import org.spongepowered.api.plugin.Plugin;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.common.launch.SpongeLaunch;
 
-import java.nio.file.Path;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
-@Plugin(
-        id = Reference.PLUGIN_ID,
-        name = Reference.PLUGIN_NAME,
-        version = Reference.PLUGIN_VERSION,
-        description = Reference.DESCRIPTION,
-        authors = {Reference.AUTHORS},
-        url = Reference.WEBSITE
-)
 public class Sledgehammer {
     
     private static Sledgehammer instance;
-    
-    @Inject
+    private final Logger logger = LoggerFactory.getLogger(Reference.PLUGIN_NAME);
+    private final Configuration configuration = new Configuration(SpongeLaunch.getConfigDir());
+    private final Map<String, Function<MixinCategory, Boolean>> mixinMappings = Toolbox.newHashMap();
     private PluginContainer pluginContainer;
     
-    @Inject
-    private Logger logger;
-    
-    @Inject
-    @DefaultConfig(sharedRoot = true)
-    private Path path;
-    
-    @Inject
-    private GuiceObjectMapperFactory factory;
-    
-    private Configuration configuration;
-    
-    @Listener
-    public void onGameConstruction(GameConstructionEvent event) {
+    private Sledgehammer() {
         instance = this;
-        configuration = new Configuration();
     }
     
-    @Listener
-    public void onGamePreInitialization(GamePreInitializationEvent event) {
-        getConfiguration().loadConfiguration();
+    public static boolean init() {
+        if (getInstance() != null) {
+            return false;
+        }
+        
+        Sledgehammer sledgehammer = new Sledgehammer();
+        sledgehammer.getConfiguration().loadConfiguration();
+        sledgehammer.register();
+        sledgehammer.getConfiguration().saveConfiguration();
+        return true;
     }
     
-    @Listener
-    public void onGameInitialization(GameInitializationEvent event) {
-    }
-    
-    @Listener
-    public void onGamePostInitialization(GamePostInitializationEvent event) {
-        getConfiguration().saveConfiguration();
-    }
-    
-    @Listener
-    public void onGameLoadComplete(GameLoadCompleteEvent event) {
-        getLogger().info("{} v{} has started.", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);
-    }
-    
-    @Listener
-    public void onGameStopping(GameStoppingEvent event) {
-        getLogger().info("{} v{} has stopped.", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);
+    private void register() {
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementManager", MixinCategory::isAdvancementStacktrace);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementProgress", MixinCategory::isAdvancementProgress);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockGrass", MixinCategory::isBlockGrass);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockIce", MixinCategory::isBlockIce);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.entity.passive.MixinEntityVillager", MixinCategory::isEntityVillager);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.MixinDedicatedServer", (module) -> true);
+        
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks", MixinCategory::isAdvancementStacktrace);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.entity.passive.MixinEntityVillager", MixinCategory::isTravelingMerchant);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.world.storage.MixinWorldInfo", MixinCategory::isCeremonyRain);
     }
     
     public void debugMessage(String format, Object... arguments) {
@@ -103,20 +77,8 @@ public class Sledgehammer {
         return instance;
     }
     
-    public PluginContainer getPluginContainer() {
-        return pluginContainer;
-    }
-    
     public Logger getLogger() {
         return logger;
-    }
-    
-    public Path getPath() {
-        return path;
-    }
-    
-    public GuiceObjectMapperFactory getFactory() {
-        return factory;
     }
     
     public Configuration getConfiguration() {
@@ -129,5 +91,17 @@ public class Sledgehammer {
         }
         
         return Optional.empty();
+    }
+    
+    public Map<String, Function<MixinCategory, Boolean>> getMixinMappings() {
+        return mixinMappings;
+    }
+    
+    public PluginContainer getPluginContainer() {
+        return pluginContainer;
+    }
+    
+    protected void setPluginContainer(PluginContainer pluginContainer) {
+        this.pluginContainer = pluginContainer;
     }
 }

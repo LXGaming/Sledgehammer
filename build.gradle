@@ -27,7 +27,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.0.9-1.12.2"
+version = "1.1.0-1.12.2"
 
 minecraft {
     version = "1.12.2-14.23.3.2655"
@@ -59,27 +59,23 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor("org.spongepowered:mixin:0.7.4-SNAPSHOT")
-    provided("org.spongepowered:mixin:0.7.4-SNAPSHOT") {
+    annotationProcessor("org.spongepowered:spongecommon:7.1.0-SNAPSHOT:dev")
+    provided("org.spongepowered:spongecommon:7.1.0-SNAPSHOT:dev") {
         exclude(module: "commons-io")
         exclude(module: "gson")
         exclude(module: "guava")
         exclude(module: "launchwrapper")
-    }
-    provided("org.spongepowered:spongeapi:7.1.0-SNAPSHOT")
-    annotationProcessor("org.spongepowered:spongeapi:7.1.0-SNAPSHOT")
-    provided("org.spongepowered:spongecommon:7.1.0-SNAPSHOT:dev") {
-        exclude(module: "mixin")
-        exclude(module: "testplugins")
     }
 }
 
 jar {
     manifest {
         attributes(
+                "FMLCorePluginContainsFMLMod": true,
+                "ForceLoadAsMod": true,
+                "MixinConfigs": "mixins.sledgehammer.core.json,mixins.sledgehammer.forge.json",
                 "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-                "MixinConfigs": "mixins.sledgehammer.core.json",
-                "ForceLoadAsMod": true
+                "TweakOrder": 0
         )
     }
 

@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.7.4",
+  "package": "io.github.lxgaming.sledgehammer.mixin.forge",
+  "refmap": "mixins.sledgehammer.refmap.json",
+  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.ForgePlugin",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "common.MixinForgeHooks",
+    "entity.passive.MixinEntityVillager",
+    "world.storage.MixinWorldInfo"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -16,33 +16,42 @@
 
 package io.github.lxgaming.sledgehammer.configuration;
 
-import com.google.common.reflect.TypeToken;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.util.Reference;
 import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
+import ninja.leaping.configurate.objectmapping.ObjectMapper;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Objects;
 
 public class Configuration {
     
     private ConfigurationLoader<CommentedConfigurationNode> configurationLoader;
-    private ConfigurationOptions configurationOptions;
+    private ObjectMapper<Config>.BoundInstance objectMapper;
     private CommentedConfigurationNode configurationNode;
     private Config config;
     
+    public Configuration(Path path) {
+        try {
+            this.configurationLoader = HoconConfigurationLoader.builder().setPath(path.resolve(Reference.PLUGIN_ID + ".conf")).build();
+            this.objectMapper = ObjectMapper.forClass(Config.class).bindToNew();
+        } catch (Exception ex) {
+            Sledgehammer.getInstance().getLogger().error("Encountered an error initializing {}", getClass().getSimpleName(), ex);
+        }
+    }
+    
     public void loadConfiguration() {
         try {
-            configurationLoader = HoconConfigurationLoader.builder().setPath(Sledgehammer.getInstance().getPath()).build();
-            configurationOptions = ConfigurationOptions.defaults().setObjectMapperFactory(Sledgehammer.getInstance().getFactory());
-            configurationNode = getConfigurationLoader().load(getConfigurationOptions());
-            config = getConfigurationNode().getValue(TypeToken.of(Config.class), new Config());
+            configurationNode = getConfigurationLoader().load(ConfigurationOptions.defaults());
+            config = getObjectMapper().populate(getConfigurationNode());
             Sledgehammer.getInstance().getLogger().info("Successfully loaded configuration file.");
         } catch (IOException | ObjectMappingException | RuntimeException ex) {
-            configurationNode = getConfigurationLoader().createEmptyNode(getConfigurationOptions());
+            configurationNode = getConfigurationLoader().createEmptyNode(ConfigurationOptions.defaults());
             Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::loadConfiguration", getClass().getSimpleName(), ex);
         }
     }
@@ -50,7 +59,7 @@ public class Configuration {
     public void saveConfiguration() {
         try {
             Objects.requireNonNull(getConfig(), "Config cannot be null");
-            getConfigurationNode().setValue(TypeToken.of(Config.class), getConfig());
+            getObjectMapper().serialize(getConfigurationNode());
             getConfigurationLoader().save(getConfigurationNode());
             Sledgehammer.getInstance().getLogger().info("Successfully saved configuration file.");
         } catch (IOException | ObjectMappingException | RuntimeException ex) {
@@ -62,12 +71,12 @@ public class Configuration {
         return configurationLoader;
     }
     
-    private ConfigurationOptions getConfigurationOptions() {
-        return configurationOptions;
-    }
-    
     private CommentedConfigurationNode getConfigurationNode() {
         return configurationNode;
+    }
+    
+    private ObjectMapper<Config>.BoundInstance getObjectMapper() {
+        return objectMapper;
     }
     
     public Config getConfig() {

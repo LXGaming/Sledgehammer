@@ -14,25 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.mixin.core.advancements;
+package io.github.lxgaming.sledgehammer.mixin.forge.common;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import net.minecraft.advancements.AdvancementManager;
+import net.minecraftforge.common.ForgeHooks;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = AdvancementManager.class, priority = 1337)
-public abstract class MixinAdvancementManager {
+@Mixin(value = ForgeHooks.class, priority = 1337, remap = false)
+public abstract class MixinForgeHooks {
     
-    @Redirect(method = "loadCustomAdvancements", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", remap = false))
-    private void onCustomAdvancementsError(Logger logger, String message, Throwable throwable) {
-        Sledgehammer.getInstance().getLogger().error("{} - {}", message, throwable.getMessage());
-    }
-    
-    @Redirect(method = "loadBuiltInAdvancements", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", remap = false))
-    private void onBuiltInAdvancementsError(Logger logger, String message, Throwable throwable) {
+    @Redirect(method = "lambda$loadAdvancements$0", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V"))
+    private static void onLoadAdvancementsError(Logger logger, String message, Throwable throwable) {
         Sledgehammer.getInstance().getLogger().error("{} - {}", message, throwable.getMessage());
     }
 }

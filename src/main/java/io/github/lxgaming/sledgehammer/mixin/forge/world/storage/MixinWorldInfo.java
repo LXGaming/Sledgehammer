@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.mixin.core.world.storage;
+package io.github.lxgaming.sledgehammer.mixin.forge.world.storage;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.world.storage.WorldInfo;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,21 +29,17 @@ public abstract class MixinWorldInfo {
     
     @Inject(method = "setRaining", at = @At(value = "HEAD"), cancellable = true)
     private void onSetRaining(boolean isRaining, CallbackInfo callbackInfo) {
-        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isCeremonyRain).orElse(false)) {
-            if (Toolbox.isClassStackFrame("pokefenn.totemic.ceremony.CeremonyRain", Thread.currentThread().getStackTrace())) {
-                callbackInfo.cancel();
-                Sledgehammer.getInstance().debugMessage("CeremonyRain from Totemic was blocked");
-            }
+        if (Toolbox.isClassStackFrame("pokefenn.totemic.ceremony.CeremonyRain", Thread.currentThread().getStackTrace())) {
+            callbackInfo.cancel();
+            Sledgehammer.getInstance().debugMessage("CeremonyRain from Totemic was blocked");
         }
     }
     
     @Inject(method = "setRainTime", at = @At(value = "HEAD"), cancellable = true)
     private void onSetRainTime(int time, CallbackInfo callbackInfo) {
-        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isCeremonyRain).orElse(false)) {
-            if (Toolbox.isClassStackFrame("pokefenn.totemic.ceremony.CeremonyRain", Thread.currentThread().getStackTrace())) {
-                callbackInfo.cancel();
-                Sledgehammer.getInstance().debugMessage("CeremonyRain from Totemic was blocked");
-            }
+        if (Toolbox.isClassStackFrame("pokefenn.totemic.ceremony.CeremonyRain", Thread.currentThread().getStackTrace())) {
+            callbackInfo.cancel();
+            Sledgehammer.getInstance().debugMessage("CeremonyRain from Totemic was blocked");
         }
     }
 }
