@@ -30,7 +30,13 @@ import java.util.Random;
 @Mixin(value = BlockGrass.class, priority = 1337)
 public abstract class MixinBlockGrass {
     
-    @Inject(method = "updateTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;)Z", ordinal = 0), cancellable = true)
+    @Inject(method = "updateTick",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/world/World;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;)Z",
+                    ordinal = 0
+            ),
+            cancellable = true
+    )
     private void onUpdateTick(World world, BlockPos blockPos, IBlockState blockState, Random random, CallbackInfo callbackInfo) {
         callbackInfo.cancel();
     }

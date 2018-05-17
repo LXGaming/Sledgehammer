@@ -22,25 +22,22 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class MixinCategory {
     
-    @Setting(value = "advancement-progress", comment = "Fixes Advancement Progress")
+    @Setting(value = "advancement-progress", comment = "Fixes https://github.com/SpongePowered/SpongeCommon/issues/1904")
     private boolean advancementProgress = false;
     
-    @Setting(value = "advancement-stacktrace", comment = "Catches the stacktrace thrown by the AdvancementManager")
+    @Setting(value = "advancement-stacktrace", comment = "Prints a single message instead of a stacktrace for advancement errors")
     private boolean advancementStacktrace = false;
     
-    @Setting(value = "block-grass", comment = "Prevents BlockGrass turning into BlockDirt")
+    @Setting(value = "block-grass", comment = "Prevents Grass turning into Dirt")
     private boolean blockGrass = false;
     
-    @Setting(value = "block-ice", comment = "Prevents BlockIce turning into Water")
+    @Setting(value = "block-ice", comment = "Prevents Ice turning into Water")
     private boolean blockIce = false;
     
-    @Setting(value = "ceremony-rain", comment = "Disables weather changing from Totemic")
+    @Setting(value = "ceremony-rain", comment = "Prevents Totemic from changing the weather")
     private boolean ceremonyRain = false;
     
-    @Setting(value = "entity-villager", comment = "Prevents villagers crashing the server")
-    private boolean entityVillager = false;
-    
-    @Setting(value = "traveling-merchant", comment = "Fixes Traveling Merchants from PrimitiveMobs")
+    @Setting(value = "traveling-merchant", comment = "Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59")
     private boolean travelingMerchant = false;
     
     public boolean isAdvancementProgress() {
@@ -61,10 +58,6 @@ public class MixinCategory {
     
     public boolean isCeremonyRain() {
         return ceremonyRain;
-    }
-    
-    public boolean isEntityVillager() {
-        return entityVillager;
     }
     
     public boolean isTravelingMerchant() {

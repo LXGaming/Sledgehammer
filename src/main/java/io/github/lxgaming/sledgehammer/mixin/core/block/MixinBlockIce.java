@@ -30,7 +30,13 @@ import java.util.Random;
 @Mixin(value = BlockIce.class, priority = 1337)
 public abstract class MixinBlockIce {
     
-    @Inject(method = "updateTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockIce;turnIntoWater(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V", ordinal = 0), cancellable = true)
+    @Inject(method = "updateTick",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/block/BlockIce;turnIntoWater(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V",
+                    ordinal = 0
+            ),
+            cancellable = true
+    )
     private void onUpdateTick(World world, BlockPos blockPos, IBlockState blockState, Random random, CallbackInfo callbackInfo) {
         callbackInfo.cancel();
     }

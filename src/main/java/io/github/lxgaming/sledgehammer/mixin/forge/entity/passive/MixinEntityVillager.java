@@ -65,9 +65,6 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
         populateTravelingMerchant();
     }
     
-    /**
-     * Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59
-     */
     @SuppressWarnings("deprecation")
     private void populateTravelingMerchant() {
         if (!StringUtils.equals(((Entity) this).getType().getId(), "primitivemobs:travelingmerchant") || (this.buyingList != null && !this.buyingList.isEmpty())) {
@@ -77,6 +74,10 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
         VillagerRegistry.VillagerProfession villagerProfession = VillagerRegistry.getById(((SpongeProfession) getProfession()).type);
         VillagerRegistry.VillagerCareer villagerCareer = villagerProfession.getCareer(this.careerId - 1);
         List<EntityVillager.ITradeList> trades = villagerCareer.getTrades(this.careerLevel - 1);
+        if (trades == null) {
+            Sledgehammer.getInstance().getLogger().warn("Failed to populate TravelingMerchant");
+            return;
+        }
         
         for (EntityVillager.ITradeList trade : trades) {
             trade.addMerchantRecipe(((IMerchant) this), this.buyingList, this.rand);

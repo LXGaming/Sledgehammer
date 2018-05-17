@@ -18,35 +18,31 @@ package io.github.lxgaming.sledgehammer.mixin.core.advancements;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import net.minecraft.advancements.AdvancementProgress;
+import org.spongepowered.api.advancement.criteria.AdvancementCriterion;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.asm.mixin.Dynamic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.common.advancement.ICriterionProgress;
 import org.spongepowered.common.interfaces.advancement.IMixinAdvancementProgress;
 import org.spongepowered.common.interfaces.advancement.IMixinPlayerAdvancements;
 
-import java.lang.reflect.Field;
+import java.util.Map;
 
 @Mixin(value = AdvancementProgress.class, priority = 1337)
 public abstract class MixinAdvancementProgress implements org.spongepowered.api.advancement.AdvancementProgress, IMixinAdvancementProgress {
     
+    @Dynamic(mixin = org.spongepowered.common.mixin.core.advancement.MixinAdvancementProgress.class)
+    private Map<AdvancementCriterion, ICriterionProgress> progressMap;
+    
     @Inject(method = "isDone", at = @At(value = "HEAD"))
     private void onIsDone(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (!get(getAdvancement().getCriterion()).isPresent()) {
+            this.progressMap = null;
             Player player = ((IMixinPlayerAdvancements) getPlayerAdvancements()).getPlayer();
-            Sledgehammer.getInstance().debugMessage("Resetting {} for {} ({})", getAdvancement().getCriterion().getName(), player.getName(), player.getUniqueId());
-            resetProgressMap();
-        }
-    }
-    
-    private void resetProgressMap() {
-        try {
-            Field field = this.getClass().getDeclaredField("progressMap");
-            field.setAccessible(true);
-            field.set(this, null);
-        } catch (Exception ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::resetProgressMap", getClass().getSimpleName(), ex);
+            Sledgehammer.getInstance().debugMessage("Reset {} for {} ({})", getAdvancement().getCriterion().getName(), player.getName(), player.getUniqueId());
         }
     }
 }
