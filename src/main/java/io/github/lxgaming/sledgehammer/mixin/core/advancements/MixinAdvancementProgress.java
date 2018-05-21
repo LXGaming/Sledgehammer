@@ -42,15 +42,6 @@ public abstract class MixinAdvancementProgress implements org.spongepowered.api.
     
     @Inject(method = "isDone", at = @At(value = "HEAD"), cancellable = true)
     private void onIsDone(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        /*
-        // Setting the progressMap to null might be the cause of the advancement message spam
-        if (!get(getAdvancement().getCriterion()).isPresent()) {
-            this.progressMap = null;
-            Player player = ((IMixinPlayerAdvancements) getPlayerAdvancements()).getPlayer();
-            Sledgehammer.getInstance().debugMessage("Reset {} for {} ({})", getAdvancement().getCriterion().getName(), player.getName(), player.getUniqueId());
-        }
-        */
-        
         if (progressMap == null || progressMap.isEmpty()) {
             callbackInfoReturnable.setReturnValue(false);
             return;
