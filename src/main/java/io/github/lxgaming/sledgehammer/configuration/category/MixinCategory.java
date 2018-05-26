@@ -37,6 +37,9 @@ public class MixinCategory {
     @Setting(value = "ceremony-rain", comment = "Prevents Totemic from changing the weather")
     private boolean ceremonyRain = false;
     
+    @Setting(value = "dimension-manager", comment = "Fixes https://github.com/SpongePowered/SpongeForge/issues/2173")
+    private boolean dimensionManager = false;
+    
     @Setting(value = "traveling-merchant", comment = "Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59")
     private boolean travelingMerchant = false;
     
@@ -58,6 +61,10 @@ public class MixinCategory {
     
     public boolean isCeremonyRain() {
         return ceremonyRain;
+    }
+    
+    public boolean isDimensionManager() {
+        return dimensionManager;
     }
     
     public boolean isTravelingMerchant() {
