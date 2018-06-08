@@ -50,7 +50,7 @@ public abstract class AbstractCommand implements CommandCallable {
     
     @Override
     public final List<String> getSuggestions(CommandSource commandSource, String arguments, Location<World> targetPosition) throws CommandException {
-        return null;
+        return Toolbox.newArrayList();
     }
     
     @Override
