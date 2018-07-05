@@ -11,7 +11,8 @@
     "advancements.MixinAdvancementProgress",
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
-    "server.MixinDedicatedServer"
+    "server.MixinDedicatedServer",
+    "world.biome.MixinBiomeProvider"
   ],
   "injectors": {
     "defaultRequire": 1

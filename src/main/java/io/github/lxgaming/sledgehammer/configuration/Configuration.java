@@ -26,7 +26,6 @@ import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Objects;
 
 public class Configuration {
     
@@ -57,7 +56,6 @@ public class Configuration {
     
     public void saveConfiguration() {
         try {
-            Objects.requireNonNull(getConfig(), "Config cannot be null");
             getObjectMapper().serialize(getConfigurationNode());
             getConfigurationLoader().save(getConfigurationNode());
             Sledgehammer.getInstance().getLogger().info("Successfully saved configuration file.");

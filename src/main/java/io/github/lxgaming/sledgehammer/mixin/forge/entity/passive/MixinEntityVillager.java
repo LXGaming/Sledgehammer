@@ -76,7 +76,11 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
             return;
         }
         
-        VillagerRegistry.VillagerProfession villagerProfession = VillagerRegistry.getById(((SpongeProfession) getProfession()).type);
+        if (!getProfession().isPresent()) {
+            return;
+        }
+        
+        VillagerRegistry.VillagerProfession villagerProfession = VillagerRegistry.getById(((SpongeProfession) getProfession().get()).type);
         VillagerRegistry.VillagerCareer villagerCareer = villagerProfession.getCareer(this.careerId - 1);
         List<EntityVillager.ITradeList> trades = villagerCareer.getTrades(this.careerLevel - 1);
         if (trades == null) {

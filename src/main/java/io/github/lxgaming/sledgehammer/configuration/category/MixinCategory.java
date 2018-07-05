@@ -22,11 +22,14 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class MixinCategory {
     
-    @Setting(value = "advancement-progress", comment = "Fixes https://github.com/SpongePowered/SpongeCommon/issues/1904")
+    @Setting(value = "advancement-progress", comment = "Fixes https://github.com/SpongePowered/SpongeCommon/issues/1904 (Fixed in SpongeForge-1.12.2-2705-7.1.0-BETA-3158 & SpongeVanilla-1.12.2-7.1.0-BETA-58)")
     private boolean advancementProgress = false;
     
     @Setting(value = "advancement-stacktrace", comment = "Prints a single message instead of a stacktrace for advancement errors")
     private boolean advancementStacktrace = false;
+    
+    @Setting(value = "biome-provider", comment = "Fixed NPE in findBiomePosition method")
+    private boolean biomeProvider = false;
     
     @Setting(value = "block-grass", comment = "Prevents Grass turning into Dirt")
     private boolean blockGrass = false;
@@ -37,7 +40,7 @@ public class MixinCategory {
     @Setting(value = "ceremony-rain", comment = "Prevents Totemic from changing the weather")
     private boolean ceremonyRain = false;
     
-    @Setting(value = "dimension-manager", comment = "Fixes https://github.com/SpongePowered/SpongeForge/issues/2173")
+    @Setting(value = "dimension-manager", comment = "Fixes https://github.com/SpongePowered/SpongeForge/issues/2173 (Fixed in SpongeForge-1.12.2-2703-7.1.0-BETA-3124)")
     private boolean dimensionManager = false;
     
     @Setting(value = "traveling-merchant", comment = "Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59")
@@ -49,6 +52,10 @@ public class MixinCategory {
     
     public boolean isAdvancementStacktrace() {
         return advancementStacktrace;
+    }
+    
+    public boolean isBiomeProvider() {
+        return biomeProvider;
     }
     
     public boolean isBlockGrass() {

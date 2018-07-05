@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -119,18 +118,16 @@ public class Toolbox {
     }
     
     @SafeVarargs
-    public static <E> ArrayList<E> newArrayList(E... elements) throws NullPointerException {
-        Objects.requireNonNull(elements);
+    public static <E> ArrayList<E> newArrayList(E... elements) {
         return Stream.of(elements).collect(Collectors.toCollection(ArrayList::new));
     }
     
     @SafeVarargs
-    public static <E> LinkedHashSet<E> newLinkedHashSet(E... elements) throws NullPointerException {
-        Objects.requireNonNull(elements);
+    public static <E> LinkedHashSet<E> newLinkedHashSet(E... elements) {
         return Stream.of(elements).collect(Collectors.toCollection(LinkedHashSet::new));
     }
     
     public static <K, V> HashMap<K, V> newHashMap() {
-        return new HashMap<K, V>();
+        return new HashMap<>();
     }
 }

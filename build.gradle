@@ -27,7 +27,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.1.4-1.12.2"
+version = "1.1.5-1.12.2"
 
 minecraft {
     version = "1.12.2-14.23.4.2703"
