@@ -16,6 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.configuration;
 
+import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
@@ -26,6 +27,9 @@ public class Config {
     @Setting(value = "debug", comment = "For debugging purposes")
     private boolean debug = false;
     
+    @Setting(value = "integration")
+    private IntegrationCategory integrationCategory = new IntegrationCategory();
+    
     @Setting(value = "mixin")
     private MixinCategory mixinCategory = new MixinCategory();
     
@@ -33,8 +37,8 @@ public class Config {
         return debug;
     }
     
-    public void setDebug(boolean debug) {
-        this.debug = debug;
+    public IntegrationCategory getIntegrationCategory() {
+        return integrationCategory;
     }
     
     public MixinCategory getMixinCategory() {

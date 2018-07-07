@@ -27,7 +27,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.1.5-1.12.2"
+version = "1.1.6-1.12.2"
 
 minecraft {
     version = "1.12.2-14.23.4.2703"
@@ -53,6 +53,10 @@ configurations {
 repositories {
     jcenter()
     maven {
+        name = "curseforge"
+        url = "https://minecraft.curseforge.com/api/maven"
+    }
+    maven {
         name = "spongepowered"
         url = "https://repo.spongepowered.org/maven"
     }
@@ -66,6 +70,7 @@ dependencies {
         exclude(module: "guava")
         exclude(module: "launchwrapper")
     }
+    provided("primalcore:PrimalCore:1.12.2:0.6.51")
 }
 
 jar {

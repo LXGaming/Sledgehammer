@@ -18,8 +18,6 @@ package io.github.lxgaming.sledgehammer.util;
 
 import net.minecraft.launchwrapper.Launch;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.api.Platform;
-import org.spongepowered.api.Sponge;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.action.TextAction;
 import org.spongepowered.api.text.action.TextActions;
@@ -61,10 +59,6 @@ public class Toolbox {
         } catch (MalformedURLException ex) {
             return TextActions.suggestCommand(url);
         }
-    }
-    
-    public static boolean isForgeEnvironment() {
-        return StringUtils.equals(Sponge.getGame().getPlatform().getContainer(Platform.Component.IMPLEMENTATION).getName(), "SpongeForge");
     }
     
     /**
