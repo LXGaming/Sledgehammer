@@ -11,6 +11,7 @@
     "advancements.MixinAdvancementProgress",
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
+    "network.MixinNetworkSystem",
     "server.MixinDedicatedServer",
     "world.biome.MixinBiomeProvider"
   ],

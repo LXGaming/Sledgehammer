@@ -43,6 +43,9 @@ public class MixinCategory {
     @Setting(value = "dimension-manager", comment = "Fixes https://github.com/SpongePowered/SpongeForge/issues/2173 (Fixed in SpongeForge-1.12.2-2703-7.1.0-BETA-3124)")
     private boolean dimensionManager = false;
     
+    @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
+    private boolean networkSystem = false;
+    
     @Setting(value = "traveling-merchant", comment = "Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59")
     private boolean travelingMerchant = false;
     
@@ -72,6 +75,10 @@ public class MixinCategory {
     
     public boolean isDimensionManager() {
         return dimensionManager;
+    }
+    
+    public boolean isNetworkSystem() {
+        return networkSystem;
     }
     
     public boolean isTravelingMerchant() {
