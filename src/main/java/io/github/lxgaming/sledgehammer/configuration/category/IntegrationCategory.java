@@ -22,10 +22,24 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class IntegrationCategory {
     
-    @Setting(value = "primal-core", comment = "Fixes https://github.com/An-Sar/PrimalCore/issues/210 (Fixed in 0.6.56 according to Dev)")
-    private boolean primalCore = false;
+    @Setting(value = "forge", comment = "Forces permission check for OP based commands")
+    private boolean forge = false;
     
-    public boolean isPrimalCore() {
-        return primalCore;
+    @Setting(value = "mist", comment = "Fixes portal issues")
+    private boolean mist = false;
+    
+    @Setting(value = "primal", comment = "Fixes https://github.com/An-Sar/PrimalCore/issues/210 (Fixed in 0.6.56 according to Dev)")
+    private boolean primal = false;
+    
+    public boolean isForge() {
+        return forge;
+    }
+    
+    public boolean isMist() {
+        return mist;
+    }
+    
+    public boolean isPrimal() {
+        return primal;
     }
 }

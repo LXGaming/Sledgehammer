@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.integrations.primal;
+package io.github.lxgaming.sledgehammer.integrations;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,7 +29,18 @@ import nmd.primal.core.common.helper.PlayerHelper;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.CauseStackManager;
 
-public class CraftingListener {
+public class PrimalIntegration extends AbstractIntegration {
+    
+    public PrimalIntegration() {
+        addDependency("forge");
+        addDependency("primal");
+    }
+    
+    @Override
+    public boolean prepareIntegration() {
+        MinecraftForge.EVENT_BUS.register(this);
+        return true;
+    }
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onFlake(FlakeEvent event) {

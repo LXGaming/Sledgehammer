@@ -18,6 +18,7 @@ package io.github.lxgaming.sledgehammer;
 
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.Configuration;
+import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
@@ -35,6 +36,7 @@ public class Sledgehammer {
     private static Sledgehammer instance;
     private final Logger logger = LoggerFactory.getLogger(Reference.PLUGIN_NAME);
     private final Configuration configuration = new Configuration(SpongeLaunch.getConfigDir().resolve(Reference.PLUGIN_ID + ".conf"));
+    private final Map<String, Function<IntegrationCategory, Boolean>> integrationMappings = Toolbox.newHashMap();
     private final Map<String, Function<MixinCategory, Boolean>> mixinMappings = Toolbox.newHashMap();
     private PluginContainer pluginContainer;
     
@@ -49,13 +51,18 @@ public class Sledgehammer {
         
         Sledgehammer sledgehammer = new Sledgehammer();
         sledgehammer.getConfiguration().loadConfiguration();
-        sledgehammer.register();
+        sledgehammer.registerMappings();
         sledgehammer.getConfiguration().saveConfiguration();
         return true;
     }
     
-    private void register() {
-        // Core
+    private void registerMappings() {
+        // Integration
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.ForgeIntegration", IntegrationCategory::isForge);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.MistIntegration", IntegrationCategory::isMist);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.PrimalIntegration", IntegrationCategory::isPrimal);
+        
+        // Mixin Core
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementManager", MixinCategory::isAdvancementStacktrace);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementProgress", MixinCategory::isAdvancementProgress);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockGrass", MixinCategory::isBlockGrass);
@@ -64,7 +71,7 @@ public class Sledgehammer {
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.MixinDedicatedServer", (module) -> true);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.world.biome.MixinBiomeProvider", MixinCategory::isBiomeProvider);
         
-        // Forge
+        // Mixin Forge
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinDimensionManager", MixinCategory::isDimensionManager);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks", MixinCategory::isAdvancementStacktrace);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.entity.passive.MixinEntityVillager", MixinCategory::isTravelingMerchant);
@@ -95,6 +102,10 @@ public class Sledgehammer {
         }
         
         return Optional.empty();
+    }
+    
+    public Map<String, Function<IntegrationCategory, Boolean>> getIntegrationMappings() {
+        return integrationMappings;
     }
     
     public Map<String, Function<MixinCategory, Boolean>> getMixinMappings() {

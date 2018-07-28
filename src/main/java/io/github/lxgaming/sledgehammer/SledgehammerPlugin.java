@@ -18,13 +18,12 @@ package io.github.lxgaming.sledgehammer;
 
 import com.google.inject.Inject;
 import io.github.lxgaming.sledgehammer.commands.SledgehammerCommand;
-import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
-import io.github.lxgaming.sledgehammer.integrations.primal.CraftingListener;
+import io.github.lxgaming.sledgehammer.integrations.ForgeIntegration;
+import io.github.lxgaming.sledgehammer.integrations.MistIntegration;
+import io.github.lxgaming.sledgehammer.integrations.PrimalIntegration;
 import io.github.lxgaming.sledgehammer.managers.CommandManager;
+import io.github.lxgaming.sledgehammer.managers.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
-import net.minecraftforge.common.MinecraftForge;
-import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameConstructionEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
@@ -55,12 +54,9 @@ public class SledgehammerPlugin {
     @Listener
     public void onGameInitialization(GameInitializationEvent event) {
         CommandManager.registerCommand(SledgehammerCommand.class);
-        
-        if (Sponge.getPluginManager().isLoaded("forge")) {
-            if (Sponge.getPluginManager().isLoaded("primal") && Sledgehammer.getInstance().getConfig().map(Config::getIntegrationCategory).map(IntegrationCategory::isPrimalCore).orElse(false)) {
-                MinecraftForge.EVENT_BUS.register(new CraftingListener());
-            }
-        }
+        IntegrationManager.registerIntegration(ForgeIntegration.class);
+        IntegrationManager.registerIntegration(MistIntegration.class);
+        IntegrationManager.registerIntegration(PrimalIntegration.class);
     }
     
     @Listener
