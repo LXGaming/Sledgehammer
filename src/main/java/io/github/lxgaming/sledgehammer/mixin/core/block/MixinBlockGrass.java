@@ -20,15 +20,22 @@ import net.minecraft.block.BlockGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.spongepowered.api.block.BlockType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.common.interfaces.block.IMixinBlock;
 
 import java.util.Random;
 
 @Mixin(value = BlockGrass.class, priority = 1337)
-public abstract class MixinBlockGrass {
+public abstract class MixinBlockGrass implements BlockType, IMixinBlock {
+    
+    @Inject(method = "<init>*", at = @At(value = "RETURN"))
+    public void onInit(CallbackInfo callbackInfo) {
+        setTickRandomly(false);
+    }
     
     @Inject(method = "updateTick",
             at = @At(value = "INVOKE",
