@@ -60,6 +60,7 @@ public class ForgeIntegration extends AbstractIntegration {
             TextComponentTranslation textComponentTranslation = new TextComponentTranslation("commands.generic.permission");
             textComponentTranslation.getStyle().setColor(TextFormatting.RED);
             entityPlayer.sendMessage(textComponentTranslation);
+            Sledgehammer.getInstance().getLogger().info("{} was denied access to /{}", entityPlayer.getName(), String.join(" ", arguments));
         }
     }
 }
