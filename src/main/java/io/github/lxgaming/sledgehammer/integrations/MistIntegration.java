@@ -17,12 +17,16 @@
 package io.github.lxgaming.sledgehammer.integrations;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import org.h2.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockState;
+import org.spongepowered.api.block.trait.BlockTrait;
+import org.spongepowered.api.block.trait.BooleanTrait;
+import org.spongepowered.api.data.Transaction;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
+import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.block.TickBlockEvent;
 import org.spongepowered.api.event.filter.Getter;
 import org.spongepowered.api.util.Direction;
@@ -44,25 +48,57 @@ public class MistIntegration extends AbstractIntegration {
     
     @Listener(order = Order.LATE)
     public void onTickBlock(TickBlockEvent.Scheduled event, @Getter("getTargetBlock") BlockSnapshot blockSnapshot) {
-        if (event.isCancelled()) {
+        if (!StringUtils.equals(blockSnapshot.getState().getType().getId(), "mist:portal")) {
             return;
         }
         
-        Location<World> location = event.getTargetBlock().getLocation().orElse(null);
-        if (location == null || !StringUtils.equals(event.getTargetBlock().getState().getId(), "mist:portal")) {
-            return;
+        Location<World> location = blockSnapshot.getLocation().orElse(null);
+        if (location != null && isValidPortalBlock(location.getBlockRelative(Direction.DOWN).getBlock()) && isValidPortalBlock(location.getBlockRelative(Direction.UP).getBlock())) {
+            event.setCancelled(true);
+            Sledgehammer.getInstance().debugMessage("Portal Tick Cancelled {}", location.getBlockPosition().toString());
+        }
+    }
+    
+    @Listener(order = Order.LATE)
+    public void onChangeBlockBreak(ChangeBlockEvent.Break event) {
+        for (Transaction<BlockSnapshot> transaction : event.getTransactions()) {
+            if (!isValidPortalBlock(transaction.getOriginal().getState())) {
+                continue;
+            }
+            
+            BlockTrait blockTrait = transaction.getOriginal().getState().getTrait("isup").orElse(null);
+            if (!(blockTrait instanceof BooleanTrait)) {
+                continue;
+            }
+            
+            if (transaction.getOriginal().getState().getTraitValue((BooleanTrait) blockTrait).orElse(false)) {
+                transaction.getOriginal().getLocation().ifPresent(location -> location.getExtent().addScheduledUpdate(location.getBlockRelative(Direction.DOWN).getBlockPosition(), 1, 1));
+            } else {
+                transaction.getOriginal().getLocation().ifPresent(location -> location.getExtent().addScheduledUpdate(location.getBlockRelative(Direction.UP).getBlockPosition(), 1, 1));
+            }
+        }
+    }
+    
+    @Listener(order = Order.LATE)
+    public void onChangeBlockPlace(ChangeBlockEvent.Place event) {
+        for (Transaction<BlockSnapshot> transaction : event.getTransactions()) {
+            if (!StringUtils.equals(transaction.getFinal().getState().getType().getId(), "minecraft:gold_block")) {
+                continue;
+            }
+            
+            Location<World> location = transaction.getFinal().getLocation().orElse(null);
+            if (location != null && isValidPortalBlock(location.getBlockRelative(Direction.DOWN).getBlock()) && isValidPortalBlock(location.getBlockRelative(Direction.UP).getBlock())) {
+                // Only the Upper Portal Stone Block creates the portal on updateTick
+                location.getExtent().addScheduledUpdate(location.getBlockRelative(Direction.UP).getBlockPosition(), 1, 1);
+            }
+        }
+    }
+    
+    private boolean isValidPortalBlock(BlockState blockState) {
+        if (!StringUtils.equals(blockState.getType().getId(), "mist:portal_base") && !StringUtils.equals(blockState.getType().getId(), "mist:portal_work")) {
+            return false;
         }
         
-        BlockState blockDown = location.getBlockRelative(Direction.DOWN).getBlock();
-        if (!StringUtils.equals(blockDown.getId(), "mist:portal_base") && !StringUtils.equals(blockDown.getId(), "mist:portal_work")) {
-            return;
-        }
-        
-        BlockState blockUp = location.getBlockRelative(Direction.UP).getBlock();
-        if (!StringUtils.equals(blockUp.getId(), "mist:portal_base") && !StringUtils.equals(blockUp.getId(), "mist:portal_work")) {
-            return;
-        }
-        
-        event.setCancelled(true);
+        return blockState.getTrait("isnew").isPresent() && blockState.getTrait("isup").isPresent();
     }
 }
