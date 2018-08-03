@@ -67,7 +67,9 @@ public class Sledgehammer {
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementProgress", MixinCategory::isAdvancementProgress);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockGrass", MixinCategory::isBlockGrass);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockIce", MixinCategory::isBlockIce);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetHandlerPlayServer", MixinCategory::isInteractEvents);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkSystem", MixinCategory::isNetworkSystem);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.management.MixinPlayerInteractionManager", MixinCategory::isInteractEvents);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.MixinDedicatedServer", (module) -> true);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.world.biome.MixinBiomeProvider", MixinCategory::isBiomeProvider);
         

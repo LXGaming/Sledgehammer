@@ -20,7 +20,7 @@ public class Reference {
     
     public static final String PLUGIN_ID = "sledgehammer";
     public static final String PLUGIN_NAME = "Sledgehammer";
-    public static final String PLUGIN_VERSION = "1.2.1-1.12.2";
+    public static final String PLUGIN_VERSION = "1.2.2-1.12.2";
     public static final String DESCRIPTION = "Smashes the stupid out of the server.";
     public static final String AUTHORS = "LX_Gaming";
     public static final String SOURCE = "https://github.com/LXGaming/Sledgehammer/";
