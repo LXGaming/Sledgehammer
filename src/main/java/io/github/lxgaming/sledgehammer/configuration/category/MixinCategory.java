@@ -43,6 +43,9 @@ public class MixinCategory {
     @Setting(value = "dimension-manager", comment = "Fixes https://github.com/SpongePowered/SpongeForge/issues/2173 (Fixed in SpongeForge-1.12.2-2703-7.1.0-BETA-3124)")
     private boolean dimensionManager = false;
     
+    @Setting(value = "harvest-block", comment = "Prevents ClassCastException caused by Sponge assuming things")
+    private boolean harvestBlock = false;
+    
     @Setting(value = "interact-events", comment = "Fixes https://github.com/SpongePowered/SpongeCommon/issues/2013")
     private boolean interactEvents = false;
     
@@ -78,6 +81,10 @@ public class MixinCategory {
     
     public boolean isDimensionManager() {
         return dimensionManager;
+    }
+    
+    public boolean isHarvestBlock() {
+        return harvestBlock;
     }
     
     public boolean isInteractEvents() {

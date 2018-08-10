@@ -75,7 +75,8 @@ public class Sledgehammer {
         
         // Mixin Forge
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinDimensionManager", MixinCategory::isDimensionManager);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks", MixinCategory::isAdvancementStacktrace);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks_Advancement", MixinCategory::isAdvancementStacktrace);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks_Harvest", MixinCategory::isHarvestBlock);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.entity.passive.MixinEntityVillager", MixinCategory::isTravelingMerchant);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.world.storage.MixinWorldInfo", MixinCategory::isCeremonyRain);
     }
