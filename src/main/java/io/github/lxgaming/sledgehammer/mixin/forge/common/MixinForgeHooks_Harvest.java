@@ -16,21 +16,18 @@
 
 package io.github.lxgaming.sledgehammer.mixin.forge.common;
 
+import io.github.lxgaming.sledgehammer.Sledgehammer;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
-import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.chat.ChatTypes;
-import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.common.event.tracking.PhaseTracker;
-import org.spongepowered.common.interfaces.world.IMixinWorld;
 
 @Mixin(value = ForgeHooks.class, priority = 1337, remap = false)
 public abstract class MixinForgeHooks_Harvest {
@@ -43,11 +40,9 @@ public abstract class MixinForgeHooks_Harvest {
     )
     private static void onCanHarvestBlock(Block block, EntityPlayer entityPlayer, IBlockAccess blockAccess, BlockPos blockPos, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         // Prevents ClassCastException caused by Sponge assuming the IBlockAccess is an instanceof IMixinWorld
-        if (!PhaseTracker.getInstance().getCurrentPhaseData().state.isInteraction() && !(blockAccess instanceof IMixinWorld)) {
+        if (!PhaseTracker.getInstance().getCurrentPhaseData().state.isInteraction() && !(blockAccess instanceof World)) {
             callbackInfoReturnable.setReturnValue(false);
-            
-            // Using ACTION_BAR to prevent chat spam
-            ((Player) entityPlayer).sendMessage(ChatTypes.ACTION_BAR, Text.of(TextColors.RED, "Harvest denied at (", blockPos.getX(), ", ", blockPos.getY(), ", ", blockPos.getZ(), ")"));
+            Sledgehammer.getInstance().getLogger().debug("Harvest denied at {}, {}, {}", blockPos.getX(), blockPos.getY(), blockPos.getZ());
         }
     }
 }
