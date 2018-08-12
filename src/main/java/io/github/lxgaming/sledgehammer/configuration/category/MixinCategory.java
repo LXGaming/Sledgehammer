@@ -49,6 +49,9 @@ public class MixinCategory {
     @Setting(value = "interact-events", comment = "Fixes https://github.com/SpongePowered/SpongeCommon/issues/2013")
     private boolean interactEvents = false;
     
+    @Setting(value = "message-spam", comment = "Redirects spammy messages to Sledgehammer debug")
+    private boolean messageSpam = false;
+    
     @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
     private boolean networkSystem = false;
     
@@ -89,6 +92,10 @@ public class MixinCategory {
     
     public boolean isInteractEvents() {
         return interactEvents;
+    }
+    
+    public boolean isMessageSpam() {
+        return messageSpam;
     }
     
     public boolean isNetworkSystem() {

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.7.4",
+  "package": "io.github.lxgaming.sledgehammer.mixin.sponge",
+  "refmap": "mixins.sledgehammer.refmap.json",
+  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.SpongePlugin",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "common.event.MixinSpongeCommonEventFactory"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
