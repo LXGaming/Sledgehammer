@@ -21,6 +21,7 @@ import io.github.lxgaming.sledgehammer.commands.SledgehammerCommand;
 import io.github.lxgaming.sledgehammer.integrations.ForgeIntegration;
 import io.github.lxgaming.sledgehammer.integrations.MistIntegration;
 import io.github.lxgaming.sledgehammer.integrations.PrimalIntegration;
+import io.github.lxgaming.sledgehammer.integrations.SpongeIntegration;
 import io.github.lxgaming.sledgehammer.managers.CommandManager;
 import io.github.lxgaming.sledgehammer.managers.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
@@ -57,6 +58,7 @@ public class SledgehammerPlugin {
         IntegrationManager.registerIntegration(ForgeIntegration.class);
         IntegrationManager.registerIntegration(MistIntegration.class);
         IntegrationManager.registerIntegration(PrimalIntegration.class);
+        IntegrationManager.registerIntegration(SpongeIntegration.class);
     }
     
     @Listener

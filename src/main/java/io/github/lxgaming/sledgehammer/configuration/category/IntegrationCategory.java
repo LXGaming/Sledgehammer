@@ -31,6 +31,9 @@ public class IntegrationCategory {
     @Setting(value = "primal", comment = "Fixes https://github.com/An-Sar/PrimalCore/issues/210 (Fixed in 0.6.56 according to Dev)")
     private boolean primal = false;
     
+    @Setting(value = "sponge", comment = "Prevent sending blank death messages")
+    private boolean sponge = false;
+    
     public boolean isForge() {
         return forge;
     }
@@ -41,5 +44,9 @@ public class IntegrationCategory {
     
     public boolean isPrimal() {
         return primal;
+    }
+    
+    public boolean isSponge() {
+        return sponge;
     }
 }

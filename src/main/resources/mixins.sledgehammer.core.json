@@ -8,12 +8,10 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "advancements.MixinAdvancementManager",
-    "advancements.MixinAdvancementProgress",
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
-    "network.MixinNetHandlerPlayServer",
+    "item.MixinItemStack_Exploit",
     "network.MixinNetworkSystem",
-    "server.management.MixinPlayerInteractionManager",
     "server.MixinDedicatedServer",
     "world.biome.MixinBiomeProvider"
   ],

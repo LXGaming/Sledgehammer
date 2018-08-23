@@ -7,7 +7,6 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "common.MixinDimensionManager",
     "common.MixinForgeHooks_Advancement",
     "common.MixinForgeHooks_Harvest",
     "entity.passive.MixinEntityVillager",

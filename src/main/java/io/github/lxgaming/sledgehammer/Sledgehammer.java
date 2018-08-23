@@ -61,27 +61,25 @@ public class Sledgehammer {
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.ForgeIntegration", IntegrationCategory::isForge);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.MistIntegration", IntegrationCategory::isMist);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.PrimalIntegration", IntegrationCategory::isPrimal);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration", IntegrationCategory::isSponge);
+        
         
         // Mixin Core
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementManager", MixinCategory::isAdvancementStacktrace);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementProgress", MixinCategory::isAdvancementProgress);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockGrass", MixinCategory::isBlockGrass);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockIce", MixinCategory::isBlockIce);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetHandlerPlayServer", MixinCategory::isInteractEvents);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.item.MixinItemStack_Exploit", MixinCategory::isItemstackExploit);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkSystem", MixinCategory::isNetworkSystem);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.management.MixinPlayerInteractionManager", MixinCategory::isInteractEvents);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.MixinDedicatedServer", (module) -> true);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.world.biome.MixinBiomeProvider", MixinCategory::isBiomeProvider);
         
         // Mixin Forge
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinDimensionManager", MixinCategory::isDimensionManager);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks_Advancement", MixinCategory::isAdvancementStacktrace);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks_Harvest", MixinCategory::isHarvestBlock);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.entity.passive.MixinEntityVillager", MixinCategory::isTravelingMerchant);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.world.storage.MixinWorldInfo", MixinCategory::isCeremonyRain);
         
         // Mixin Sponge
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.sponge.common.event.MixinSpongeCommonEventFactory", MixinCategory::isMessageSpam);
     }
     
     public void debugMessage(String format, Object... arguments) {
