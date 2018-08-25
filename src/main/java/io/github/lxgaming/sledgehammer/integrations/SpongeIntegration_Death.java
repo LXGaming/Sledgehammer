@@ -25,9 +25,9 @@ import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
 import org.spongepowered.api.event.entity.DestructEntityEvent;
 import org.spongepowered.api.event.filter.cause.Root;
 
-public class SpongeIntegration extends AbstractIntegration {
+public class SpongeIntegration_Death extends AbstractIntegration {
     
-    public SpongeIntegration() {
+    public SpongeIntegration_Death() {
         addDependency("sponge");
     }
     
