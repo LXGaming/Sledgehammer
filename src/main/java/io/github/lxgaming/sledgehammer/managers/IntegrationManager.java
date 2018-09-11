@@ -68,7 +68,7 @@ public final class IntegrationManager {
             return false;
         }
         
-        Sledgehammer.getInstance().getLogger().debug("{} registered", integrationClass.getSimpleName());
+        Sledgehammer.getInstance().debugMessage("{} registered", integrationClass.getSimpleName());
         return true;
     }
     

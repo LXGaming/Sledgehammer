@@ -52,7 +52,7 @@ public final class CommandManager {
             return CommandResult.empty();
         }
         
-        Sledgehammer.getInstance().getLogger().debug("Processing {} for {}", command.get().getPrimaryAlias().orElse("Unknown"), commandSource.getName());
+        Sledgehammer.getInstance().debugMessage("Processing {} for {}", command.get().getPrimaryAlias().orElse("Unknown"), commandSource.getName());
         return command.get().execute(commandSource, arguments.get());
     }
     
@@ -71,7 +71,7 @@ public final class CommandManager {
         
         getCommands().add(command.get());
         Sponge.getCommandManager().register(Sledgehammer.getInstance().getPluginContainer(), command.get(), command.get().getAliases().toArray(new String[0]));
-        Sledgehammer.getInstance().getLogger().debug("{} registered", commandClass.getSimpleName());
+        Sledgehammer.getInstance().debugMessage("{} registered", commandClass.getSimpleName());
         return true;
     }
     
@@ -82,7 +82,7 @@ public final class CommandManager {
         }
         
         command.getAliases().add(alias);
-        Sledgehammer.getInstance().getLogger().debug("{} registered for {}", alias, command.getClass().getSimpleName());
+        Sledgehammer.getInstance().debugMessage("{} registered for {}", alias, command.getClass().getSimpleName());
         return true;
     }
     
@@ -105,7 +105,7 @@ public final class CommandManager {
         }
         
         parentCommand.getChildren().add(command.get());
-        Sledgehammer.getInstance().getLogger().debug("{} registered for {}", commandClass.getSimpleName(), parentCommand.getClass().getSimpleName());
+        Sledgehammer.getInstance().debugMessage("{} registered for {}", commandClass.getSimpleName(), parentCommand.getClass().getSimpleName());
         return true;
     }
     

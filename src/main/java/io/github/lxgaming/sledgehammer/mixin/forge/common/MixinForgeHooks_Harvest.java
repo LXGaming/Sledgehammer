@@ -42,7 +42,7 @@ public abstract class MixinForgeHooks_Harvest {
         // Prevents ClassCastException caused by Sponge assuming the IBlockAccess is an instanceof IMixinWorld
         if (!PhaseTracker.getInstance().getCurrentPhaseData().state.isInteraction() && !(blockAccess instanceof World)) {
             callbackInfoReturnable.setReturnValue(false);
-            Sledgehammer.getInstance().getLogger().debug("Harvest denied at {}, {}, {}", blockPos.getX(), blockPos.getY(), blockPos.getZ());
+            Sledgehammer.getInstance().debugMessage("Harvest denied at {}, {}, {}", blockPos.getX(), blockPos.getY(), blockPos.getZ());
         }
     }
 }
