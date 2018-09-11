@@ -61,6 +61,7 @@ public class Sledgehammer {
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.ForgeIntegration", IntegrationCategory::isForge);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.MistIntegration", IntegrationCategory::isMist);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.PrimalIntegration", IntegrationCategory::isPrimal);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Border", IntegrationCategory::isSpongeBorder);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Death", IntegrationCategory::isSpongeDeath);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Phase", IntegrationCategory::isSpongePhase);
         

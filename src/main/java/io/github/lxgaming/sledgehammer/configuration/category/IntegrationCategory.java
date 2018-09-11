@@ -31,6 +31,9 @@ public class IntegrationCategory {
     @Setting(value = "primal", comment = "Fixes https://github.com/An-Sar/PrimalCore/issues/210 (Fixed in 0.6.56 according to Dev)")
     private boolean primal = false;
     
+    @Setting(value = "sponge-border", comment = "Prevent movement outside of the world border")
+    private boolean spongeBorder = false;
+    
     @Setting(value = "sponge-death", comment = "Prevent sending blank death messages")
     private boolean spongeDeath = false;
     
@@ -47,6 +50,10 @@ public class IntegrationCategory {
     
     public boolean isPrimal() {
         return primal;
+    }
+    
+    public boolean isSpongeBorder() {
+        return spongeBorder;
     }
     
     public boolean isSpongeDeath() {
