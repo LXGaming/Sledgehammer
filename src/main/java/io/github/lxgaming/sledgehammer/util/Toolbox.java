@@ -23,6 +23,7 @@ import org.spongepowered.api.text.action.TextAction;
 import org.spongepowered.api.text.action.TextActions;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
+import org.spongepowered.api.text.serializer.TextSerializers;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -59,6 +60,10 @@ public class Toolbox {
         } catch (MalformedURLException ex) {
             return TextActions.suggestCommand(url);
         }
+    }
+    
+    public static Text convertColor(String string) {
+        return TextSerializers.FORMATTING_CODE.deserialize(string);
     }
     
     /**

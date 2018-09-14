@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.configuration;
 
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
@@ -29,6 +30,9 @@ public class Config {
     
     @Setting(value = "integration")
     private IntegrationCategory integrationCategory = new IntegrationCategory();
+    
+    @Setting(value = "message")
+    private MessageCategory messageCategory = new MessageCategory();
     
     @Setting(value = "mixin")
     private MixinCategory mixinCategory = new MixinCategory();
@@ -43,6 +47,10 @@ public class Config {
     
     public IntegrationCategory getIntegrationCategory() {
         return integrationCategory;
+    }
+    
+    public MessageCategory getMessageCategory() {
+        return messageCategory;
     }
     
     public MixinCategory getMixinCategory() {

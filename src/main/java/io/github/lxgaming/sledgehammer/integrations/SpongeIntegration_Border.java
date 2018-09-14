@@ -18,12 +18,17 @@ package io.github.lxgaming.sledgehammer.integrations;
 
 import com.flowpowered.math.vector.Vector3d;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.configuration.Config;
+import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
+import io.github.lxgaming.sledgehammer.util.Toolbox;
+import org.codehaus.plexus.util.StringUtils;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.entity.MoveEntityEvent;
 import org.spongepowered.api.event.filter.cause.Root;
+import org.spongepowered.api.text.Text;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
@@ -48,7 +53,10 @@ public class SpongeIntegration_Border extends AbstractIntegration {
         Vector3d displacement = location.getPosition().sub(world.getWorldBorder().getCenter()).abs();
         if (displacement.getX() > radius || displacement.getZ() > radius) {
             event.setCancelled(true);
-            Sledgehammer.getInstance().debugMessage("Move denied for {} ({})", player.getName(), player.getUniqueId());
+            Sledgehammer.getInstance().debugMessage("Movement denied for {} ({})", player.getName(), player.getUniqueId());
+            Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getMoveOutsideBorder).filter(StringUtils::isNotBlank).ifPresent(message -> {
+                player.sendMessage(Text.of(Toolbox.getTextPrefix(), Toolbox.convertColor(message)));
+            });
         }
     }
 }
