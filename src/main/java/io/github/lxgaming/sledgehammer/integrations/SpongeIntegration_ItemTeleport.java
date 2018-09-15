@@ -16,25 +16,22 @@
 
 package io.github.lxgaming.sledgehammer.integrations;
 
-import com.flowpowered.math.vector.Vector3d;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.entity.Item;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.entity.MoveEntityEvent;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.world.Location;
-import org.spongepowered.api.world.World;
 
-public class SpongeIntegration_Border extends AbstractIntegration {
+public class SpongeIntegration_ItemTeleport extends AbstractIntegration {
     
-    public SpongeIntegration_Border() {
+    public SpongeIntegration_ItemTeleport() {
         addDependency("sponge");
     }
     
@@ -45,18 +42,19 @@ public class SpongeIntegration_Border extends AbstractIntegration {
     }
     
     @Listener(order = Order.LAST)
-    public void onMoveEntity(MoveEntityEvent event, @Root Player player) {
-        // https://github.com/NucleusPowered/Nucleus/blob/c55d92191741214b09a6952ca853723c27f640d0/src/main/java/io/github/nucleuspowered/nucleus/Util.java#L393
-        Location<World> location = event.getToTransform().getLocation();
-        World world = location.getExtent();
-        long radius = (long) Math.floor(world.getWorldBorder().getDiameter() / 2.0) + 1L;
-        Vector3d displacement = location.getPosition().sub(world.getWorldBorder().getCenter()).abs();
-        if (displacement.getX() > radius || displacement.getZ() > radius) {
-            event.setCancelled(true);
-            Sledgehammer.getInstance().debugMessage("Movement denied for {} ({})", player.getName(), player.getUniqueId());
-            Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getMoveOutsideBorder).filter(StringUtils::isNotBlank).ifPresent(message -> {
-                player.sendMessage(Text.of(Toolbox.getTextPrefix(), Toolbox.convertColor(message)));
-            });
+    public void onMoveEntity(MoveEntityEvent.Teleport event, @Root Item item) {
+        if (event.getFromTransform().getExtent() == event.getToTransform().getExtent()) {
+            return;
         }
+        
+        event.setCancelled(true);
+        item.remove();
+        
+        Sledgehammer.getInstance().debugMessage("Item {} removed", item.getItemType().getId());
+        Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getItemTeleport).filter(StringUtils::isNotBlank).ifPresent(message -> {
+            item.getCreator().flatMap(Sponge.getServer()::getPlayer).ifPresent(player -> {
+                player.sendMessage(Text.of(Toolbox.getTextPrefix(), Toolbox.convertColor(message.replace("[ITEM]", item.getItemType().getId()))));
+            });
+        });
     }
 }
