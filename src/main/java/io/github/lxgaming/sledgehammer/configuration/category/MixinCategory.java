@@ -40,9 +40,6 @@ public class MixinCategory {
     @Setting(value = "harvest-block", comment = "Prevents ClassCastException caused by Sponge assuming things")
     private boolean harvestBlock = false;
     
-    @Setting(value = "itemstack-exploit", comment = "Fixes MC-134716")
-    private boolean itemstackExploit = false;
-    
     @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
     private boolean networkSystem = false;
     
@@ -71,10 +68,6 @@ public class MixinCategory {
     
     public boolean isHarvestBlock() {
         return harvestBlock;
-    }
-    
-    public boolean isItemstackExploit() {
-        return itemstackExploit;
     }
     
     public boolean isNetworkSystem() {
