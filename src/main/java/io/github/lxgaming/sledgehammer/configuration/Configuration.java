@@ -17,7 +17,7 @@
 package io.github.lxgaming.sledgehammer.configuration;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import ninja.leaping.configurate.ConfigurationOptions;
+import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -31,7 +31,6 @@ public class Configuration {
     
     private ConfigurationLoader<CommentedConfigurationNode> configurationLoader;
     private ObjectMapper<Config>.BoundInstance objectMapper;
-    private CommentedConfigurationNode configurationNode;
     private Config config;
     
     public Configuration(Path path) {
@@ -45,19 +44,18 @@ public class Configuration {
     
     public void loadConfiguration() {
         try {
-            configurationNode = getConfigurationLoader().load(ConfigurationOptions.defaults());
-            config = getObjectMapper().populate(getConfigurationNode());
+            config = getObjectMapper().populate(getConfigurationLoader().load());
             Sledgehammer.getInstance().getLogger().info("Successfully loaded configuration file.");
         } catch (IOException | ObjectMappingException | RuntimeException ex) {
-            configurationNode = getConfigurationLoader().createEmptyNode(ConfigurationOptions.defaults());
             Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::loadConfiguration", getClass().getSimpleName(), ex);
         }
     }
     
     public void saveConfiguration() {
         try {
-            getObjectMapper().serialize(getConfigurationNode());
-            getConfigurationLoader().save(getConfigurationNode());
+            ConfigurationNode configurationNode = getConfigurationLoader().createEmptyNode();
+            getObjectMapper().serialize(configurationNode);
+            getConfigurationLoader().save(configurationNode);
             Sledgehammer.getInstance().getLogger().info("Successfully saved configuration file.");
         } catch (IOException | ObjectMappingException | RuntimeException ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::saveConfiguration", getClass().getSimpleName(), ex);
@@ -66,10 +64,6 @@ public class Configuration {
     
     private ConfigurationLoader<CommentedConfigurationNode> getConfigurationLoader() {
         return configurationLoader;
-    }
-    
-    private CommentedConfigurationNode getConfigurationNode() {
-        return configurationNode;
     }
     
     private ObjectMapper<Config>.BoundInstance getObjectMapper() {
