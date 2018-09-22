@@ -1,12 +1,13 @@
 {
   "required": true,
   "minVersion": "0.7.4",
-  "package": "io.github.lxgaming.sledgehammer.mixin.sponge",
+  "package": "io.github.lxgaming.sledgehammer.mixin.spongeforge",
   "refmap": "mixins.sledgehammer.refmap.json",
-  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.SpongePlugin",
+  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.ForgePlugin",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "mod.item.inventory.fabric.MixinIItemHandlerFabric"
   ],
   "injectors": {
     "defaultRequire": 1

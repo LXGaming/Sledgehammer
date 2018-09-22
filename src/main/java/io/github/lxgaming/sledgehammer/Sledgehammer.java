@@ -80,7 +80,10 @@ public class Sledgehammer {
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.entity.passive.MixinEntityVillager", MixinCategory::isTravelingMerchant);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.world.storage.MixinWorldInfo", MixinCategory::isCeremonyRain);
         
-        // Mixin Sponge
+        // Mixin SpongeForge
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.spongeforge.mod.item.inventory.fabric.MixinIItemHandlerFabric", MixinCategory::isItemHandlerFabric);
+        
+        // Mixin SpongeVanilla
     }
     
     public void debugMessage(String format, Object... arguments) {
