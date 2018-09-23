@@ -7,7 +7,6 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "mod.item.inventory.fabric.MixinIItemHandlerFabric"
   ],
   "injectors": {
     "defaultRequire": 1

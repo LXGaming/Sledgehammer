@@ -22,9 +22,11 @@ import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.entity.Item;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
+import org.spongepowered.api.event.block.CollideBlockEvent;
 import org.spongepowered.api.event.entity.MoveEntityEvent;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.text.Text;
@@ -42,12 +44,35 @@ public class SpongeIntegration_ItemTeleport extends AbstractIntegration {
     }
     
     @Listener(order = Order.LAST)
+    public void onCollideBlock(CollideBlockEvent event, @Root Item item) {
+        if (event.getTargetBlock().getType() != BlockTypes.PORTAL && event.getTargetBlock().getType() != BlockTypes.END_PORTAL) {
+            return;
+        }
+        
+        if (item.isRemoved()) {
+            return;
+        }
+        
+        item.remove();
+        
+        Sledgehammer.getInstance().debugMessage("Item {} removed", item.getItemType().getId());
+        Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getItemTeleport).filter(StringUtils::isNotBlank).ifPresent(message -> {
+            item.getCreator().flatMap(Sponge.getServer()::getPlayer).ifPresent(player -> {
+                player.sendMessage(Text.of(Toolbox.getTextPrefix(), Toolbox.convertColor(message.replace("[ITEM]", item.getItemType().getId()))));
+            });
+        });
+    }
+    
+    @Listener(order = Order.LAST)
     public void onMoveEntity(MoveEntityEvent.Teleport event, @Root Item item) {
         if (event.getFromTransform().getExtent() == event.getToTransform().getExtent()) {
             return;
         }
         
-        event.setCancelled(true);
+        if (item.isRemoved()) {
+            return;
+        }
+        
         item.remove();
         
         Sledgehammer.getInstance().debugMessage("Item {} removed", item.getItemType().getId());
