@@ -76,13 +76,11 @@ public class Sledgehammer {
         
         // Mixin Forge
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks_Advancement", MixinCategory::isAdvancementStacktrace);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks_Harvest", MixinCategory::isHarvestBlock);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.entity.passive.MixinEntityVillager", MixinCategory::isTravelingMerchant);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.world.storage.MixinWorldInfo", MixinCategory::isCeremonyRain);
         
-        // Mixin SpongeForge
-        
-        // Mixin SpongeVanilla
+        // Mixin Sponge
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", MixinCategory::isInventoryDebug);
     }
     
     public void debugMessage(String format, Object... arguments) {

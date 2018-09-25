@@ -17,13 +17,14 @@
 package io.github.lxgaming.sledgehammer.mixin.plugin;
 
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 import java.util.List;
 import java.util.Set;
 
-public class ForgePlugin extends AbstractPlugin {
+public class SpongePlugin extends AbstractPlugin {
     
     @Override
     public void onLoad(String mixinPackage) {
@@ -37,7 +38,7 @@ public class ForgePlugin extends AbstractPlugin {
     
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (!Toolbox.isForgeEnvironment()) {
+        if (StringUtils.startsWith(mixinClassName, "io.github.lxgaming.sledgehammer.mixin.sponge.mod.") && !Toolbox.isForgeEnvironment()) {
             return false;
         }
         

@@ -27,7 +27,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-1.2.12"
+version = "1.12.2-1.2.13"
 
 minecraft {
     version = "1.12.2-14.23.4.2705"
@@ -80,7 +80,7 @@ jar {
         attributes(
                 "FMLCorePluginContainsFMLMod": true,
                 "ForceLoadAsMod": true,
-                "MixinConfigs": "mixins.sledgehammer.core.json,mixins.sledgehammer.forge.json,mixins.sledgehammer.spongeforge.json,mixins.sledgehammer.spongevanilla.json",
+                "MixinConfigs": "mixins.sledgehammer.core.json,mixins.sledgehammer.forge.json,mixins.sledgehammer.sponge.json",
                 "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
                 "TweakOrder": 0
         )

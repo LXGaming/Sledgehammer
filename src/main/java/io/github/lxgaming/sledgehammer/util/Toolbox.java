@@ -66,6 +66,10 @@ public class Toolbox {
         return TextSerializers.FORMATTING_CODE.deserialize(string);
     }
     
+    public static boolean isForgeEnvironment() {
+        return Toolbox.isClassPresent("net.minecraftforge.fml.relauncher.CoreModManager") || Toolbox.isClassPresent("cpw.mods.fml.relauncher.CoreModManager");
+    }
+    
     /**
      * Removes non-printable characters (excluding new line and carriage return) in the provided {@link java.lang.String String}.
      *

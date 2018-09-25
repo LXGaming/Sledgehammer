@@ -37,8 +37,8 @@ public class MixinCategory {
     @Setting(value = "ceremony-rain", comment = "Prevents Totemic from changing the weather")
     private boolean ceremonyRain = false;
     
-    @Setting(value = "harvest-block", comment = "Prevents ClassCastException caused by Sponge assuming things")
-    private boolean harvestBlock = false;
+    @Setting(value = "inventory-debug", comment = "Redirects inventory debugging messages")
+    private boolean inventoryDebug = false;
     
     @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
     private boolean networkSystem = false;
@@ -66,8 +66,8 @@ public class MixinCategory {
         return ceremonyRain;
     }
     
-    public boolean isHarvestBlock() {
-        return harvestBlock;
+    public boolean isInventoryDebug() {
+        return inventoryDebug;
     }
     
     public boolean isNetworkSystem() {
