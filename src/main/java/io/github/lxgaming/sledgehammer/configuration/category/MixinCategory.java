@@ -34,6 +34,9 @@ public class MixinCategory {
     @Setting(value = "block-ice", comment = "Prevents Ice turning into Water")
     private boolean blockIce = false;
     
+    @Setting(value = "cause-stack-manager", comment = "Fixes https://github.com/SpongePowered/SpongeCommon/pull/2110")
+    private boolean causeStackManager = false;
+    
     @Setting(value = "ceremony-rain", comment = "Prevents Totemic from changing the weather")
     private boolean ceremonyRain = false;
     
@@ -60,6 +63,10 @@ public class MixinCategory {
     
     public boolean isBlockIce() {
         return blockIce;
+    }
+    
+    public boolean isCauseStackManager() {
+        return causeStackManager;
     }
     
     public boolean isCeremonyRain() {

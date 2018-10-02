@@ -81,6 +81,7 @@ public class Sledgehammer {
         
         // Mixin Sponge
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", MixinCategory::isInventoryDebug);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.sponge.common.event.MixinSpongeCauseStackManager", MixinCategory::isCauseStackManager);
     }
     
     public void debugMessage(String format, Object... arguments) {
