@@ -18,6 +18,7 @@ package io.github.lxgaming.sledgehammer.integrations;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
+import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.apache.commons.lang3.StringUtils;
@@ -53,6 +54,13 @@ public class SpongeIntegration_ItemTeleport extends AbstractIntegration {
             return;
         }
         
+        if (Sledgehammer.getInstance().getConfig()
+                .map(Config::getIntegrationCategory)
+                .map(IntegrationCategory::getSpongeItemWhitelist)
+                .map(list -> list.contains(item.getItemType().getId())).orElse(false)) {
+            return;
+        }
+        
         item.remove();
         
         Sledgehammer.getInstance().debugMessage("Item {} removed", item.getItemType().getId());
@@ -70,6 +78,13 @@ public class SpongeIntegration_ItemTeleport extends AbstractIntegration {
         }
         
         if (item.isRemoved()) {
+            return;
+        }
+        
+        if (Sledgehammer.getInstance().getConfig()
+                .map(Config::getIntegrationCategory)
+                .map(IntegrationCategory::getSpongeItemWhitelist)
+                .map(list -> list.contains(item.getItemType().getId())).orElse(false)) {
             return;
         }
         
