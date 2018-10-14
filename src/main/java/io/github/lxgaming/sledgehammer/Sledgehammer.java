@@ -70,6 +70,7 @@ public class Sledgehammer {
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementManager", MixinCategory::isAdvancementStacktrace);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockGrass", MixinCategory::isBlockGrass);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockIce", MixinCategory::isBlockIce);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkManager", MixinCategory::isFlushNetworkOnTick);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkSystem", MixinCategory::isNetworkSystem);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.MixinDedicatedServer", (module) -> true);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.world.biome.MixinBiomeProvider", MixinCategory::isBiomeProvider);
@@ -77,6 +78,9 @@ public class Sledgehammer {
         // Mixin Forge
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks_Advancement", MixinCategory::isAdvancementStacktrace);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.entity.passive.MixinEntityVillager", MixinCategory::isTravelingMerchant);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper", MixinCategory::isFlushNetworkOnTick);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.fml.common.network.MixinFMLEmbeddedChannel", MixinCategory::isFlushNetworkOnTick);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.fml.common.network.MixinFMLEventChannel", MixinCategory::isFlushNetworkOnTick);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.world.storage.MixinWorldInfo", MixinCategory::isCeremonyRain);
         
         // Mixin Sponge

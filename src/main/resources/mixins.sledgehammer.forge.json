@@ -9,6 +9,9 @@
   "mixins": [
     "common.MixinForgeHooks_Advancement",
     "entity.passive.MixinEntityVillager",
+    "fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper",
+    "fml.common.network.MixinFMLEmbeddedChannel",
+    "fml.common.network.MixinFMLEventChannel",
     "world.storage.MixinWorldInfo"
   ],
   "injectors": {

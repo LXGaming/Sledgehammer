@@ -10,6 +10,7 @@
     "advancements.MixinAdvancementManager",
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
+    "network.MixinNetworkManager",
     "network.MixinNetworkSystem",
     "server.MixinDedicatedServer",
     "world.biome.MixinBiomeProvider"

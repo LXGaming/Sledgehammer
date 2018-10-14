@@ -40,6 +40,9 @@ public class MixinCategory {
     @Setting(value = "ceremony-rain", comment = "Prevents Totemic from changing the weather")
     private boolean ceremonyRain = false;
     
+    @Setting(value = "flush-network-on-tick", comment = "Reduce Network usage by post-poning flush")
+    private boolean flushNetworkOnTick = false;
+    
     @Setting(value = "inventory-debug", comment = "Redirects inventory debugging messages")
     private boolean inventoryDebug = false;
     
@@ -71,6 +74,10 @@ public class MixinCategory {
     
     public boolean isCeremonyRain() {
         return ceremonyRain;
+    }
+    
+    public boolean isFlushNetworkOnTick() {
+        return flushNetworkOnTick;
     }
     
     public boolean isInventoryDebug() {
