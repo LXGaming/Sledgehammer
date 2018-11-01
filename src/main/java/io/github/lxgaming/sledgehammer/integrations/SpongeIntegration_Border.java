@@ -28,11 +28,17 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.entity.MoveEntityEvent;
 import org.spongepowered.api.event.filter.cause.Root;
+import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
+import java.util.Map;
+import java.util.UUID;
+
 public class SpongeIntegration_Border extends AbstractIntegration {
+    
+    private final Map<UUID, Long> cooldown = Toolbox.newHashMap();
     
     public SpongeIntegration_Border() {
         addDependency("sponge");
@@ -44,7 +50,17 @@ public class SpongeIntegration_Border extends AbstractIntegration {
         return true;
     }
     
-    @Listener(order = Order.LAST)
+    @Listener(order = Order.LATE)
+    public void onClientConnectionDisconnect(ClientConnectionEvent.Disconnect event) {
+        this.cooldown.remove(event.getTargetEntity().getUniqueId());
+    }
+    
+    @Listener(order = Order.EARLY)
+    public void onClientConnectionJoin(ClientConnectionEvent.Join event) {
+        this.cooldown.put(event.getTargetEntity().getUniqueId(), System.currentTimeMillis());
+    }
+    
+    @Listener(order = Order.LATE)
     public void onMoveEntity(MoveEntityEvent event, @Root Player player) {
         // https://github.com/NucleusPowered/Nucleus/blob/c55d92191741214b09a6952ca853723c27f640d0/src/main/java/io/github/nucleuspowered/nucleus/Util.java#L393
         Location<World> location = event.getToTransform().getLocation();
@@ -53,6 +69,13 @@ public class SpongeIntegration_Border extends AbstractIntegration {
         Vector3d displacement = location.getPosition().sub(world.getWorldBorder().getCenter()).abs();
         if (displacement.getX() > radius || displacement.getZ() > radius) {
             event.setCancelled(true);
+            
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - this.cooldown.getOrDefault(player.getUniqueId(), 0L) < 5000L) {
+                return;
+            }
+            
+            this.cooldown.put(player.getUniqueId(), currentTime);
             Sledgehammer.getInstance().debugMessage("Movement denied for {} ({})", player.getName(), player.getUniqueId());
             Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getMoveOutsideBorder).filter(StringUtils::isNotBlank).ifPresent(message -> {
                 player.sendMessage(Text.of(Toolbox.getTextPrefix(), Toolbox.convertColor(message)));
