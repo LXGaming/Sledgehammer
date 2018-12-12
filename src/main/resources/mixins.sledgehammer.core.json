@@ -10,6 +10,7 @@
     "advancements.MixinAdvancementManager",
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
+    "network.MixinNetHandlerPlayServer",
     "network.MixinNetworkManager",
     "network.MixinNetworkSystem",
     "server.MixinDedicatedServer",

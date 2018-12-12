@@ -34,20 +34,23 @@ public class MixinCategory {
     @Setting(value = "block-ice", comment = "Prevents Ice turning into Water")
     private boolean blockIce = false;
     
-    @Setting(value = "cause-stack-manager", comment = "Fixes https://github.com/SpongePowered/SpongeCommon/pull/2110")
-    private boolean causeStackManager = false;
-    
     @Setting(value = "ceremony-rain", comment = "Prevents Totemic from changing the weather")
     private boolean ceremonyRain = false;
     
-    @Setting(value = "flush-network-on-tick", comment = "Reduce Network usage by post-poning flush")
+    @Setting(value = "flush-network-on-tick", comment = "Reduce Network usage by postponing flush")
     private boolean flushNetworkOnTick = false;
+    
+    @Setting(value = "interact-events", comment = "Fixes https://github.com/SpongePowered/SpongeCommon/issues/2013")
+    private boolean interactEvents = false;
     
     @Setting(value = "inventory-debug", comment = "Redirects inventory debugging messages")
     private boolean inventoryDebug = false;
     
     @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
     private boolean networkSystem = false;
+    
+    @Setting(value = "packet-spam", comment = "Cancels spammy packets")
+    private boolean packetSpam = false;
     
     @Setting(value = "traveling-merchant", comment = "Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59")
     private boolean travelingMerchant = false;
@@ -68,10 +71,6 @@ public class MixinCategory {
         return blockIce;
     }
     
-    public boolean isCauseStackManager() {
-        return causeStackManager;
-    }
-    
     public boolean isCeremonyRain() {
         return ceremonyRain;
     }
@@ -80,12 +79,20 @@ public class MixinCategory {
         return flushNetworkOnTick;
     }
     
+    public boolean isInteractEvents() {
+        return interactEvents;
+    }
+    
     public boolean isInventoryDebug() {
         return inventoryDebug;
     }
     
     public boolean isNetworkSystem() {
         return networkSystem;
+    }
+    
+    public boolean isPacketSpam() {
+        return packetSpam;
     }
     
     public boolean isTravelingMerchant() {

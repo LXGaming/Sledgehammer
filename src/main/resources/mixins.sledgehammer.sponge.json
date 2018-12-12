@@ -7,8 +7,7 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState",
-    "common.event.MixinSpongeCauseStackManager"
+    "common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState"
   ],
   "injectors": {
     "defaultRequire": 1
