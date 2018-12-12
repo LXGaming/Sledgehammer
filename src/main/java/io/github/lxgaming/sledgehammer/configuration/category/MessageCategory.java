@@ -26,7 +26,7 @@ public class MessageCategory {
     private String moveOutsideBorder = "&cCannot move outside of the world border";
     
     @Setting(value = "item-teleport", comment = "Sent to the player when a thrown item gets deleted")
-    private String itemTeleport = "&f[ITEM] &cwas lost in time and space";
+    private String itemTeleport = "&f[ID] &cwas lost in time and space";
     
     public String getMoveOutsideBorder() {
         return moveOutsideBorder;

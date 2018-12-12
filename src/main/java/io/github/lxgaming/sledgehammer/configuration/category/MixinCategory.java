@@ -16,8 +16,11 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category;
 
+import com.google.common.collect.Lists;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+
+import java.util.List;
 
 @ConfigSerializable
 public class MixinCategory {
@@ -51,6 +54,12 @@ public class MixinCategory {
     
     @Setting(value = "packet-spam", comment = "Cancels spammy packets")
     private boolean packetSpam = false;
+    
+    @Setting(value = "item-teleport", comment = "Prevents or deletes any items that attempt to teleport across dimensions")
+    private boolean itemTeleport = false;
+    
+    @Setting(value = "item-teleport-whitelist", comment = "Don't prevent these items from teleporting")
+    private List<String> itemTeleportWhitelist = Lists.newArrayList("draconicevolution:ender_energy_manipulator");
     
     @Setting(value = "traveling-merchant", comment = "Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59")
     private boolean travelingMerchant = false;
@@ -93,6 +102,14 @@ public class MixinCategory {
     
     public boolean isPacketSpam() {
         return packetSpam;
+    }
+    
+    public boolean isItemTeleport() {
+        return itemTeleport;
+    }
+    
+    public List<String> getItemTeleportWhitelist() {
+        return itemTeleportWhitelist;
     }
     
     public boolean isTravelingMerchant() {

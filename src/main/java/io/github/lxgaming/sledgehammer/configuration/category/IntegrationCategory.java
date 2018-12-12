@@ -16,11 +16,8 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category;
 
-import io.github.lxgaming.sledgehammer.util.Toolbox;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
-
-import java.util.List;
 
 @ConfigSerializable
 public class IntegrationCategory {
@@ -39,12 +36,6 @@ public class IntegrationCategory {
     
     @Setting(value = "sponge-death", comment = "Prevent sending blank death messages")
     private boolean spongeDeath = false;
-    
-    @Setting(value = "sponge-item-teleport", comment = "Deletes any items that teleport across dimensions")
-    private boolean spongeItemTeleport = false;
-    
-    @Setting(value = "sponge-item-whitelist", comment = "Don't delete these items")
-    private List<String> spongeItemWhitelist = Toolbox.newArrayList("draconicevolution:ender_energy_manipulator");
     
     @Setting(value = "sponge-phase", comment = "Fixes https://github.com/SpongePowered/SpongeForge/issues/2355")
     private boolean spongePhase = false;
@@ -67,14 +58,6 @@ public class IntegrationCategory {
     
     public boolean isSpongeDeath() {
         return spongeDeath;
-    }
-    
-    public boolean isSpongeItemTeleport() {
-        return spongeItemTeleport;
-    }
-    
-    public List<String> getSpongeItemWhitelist() {
-        return spongeItemWhitelist;
     }
     
     public boolean isSpongePhase() {

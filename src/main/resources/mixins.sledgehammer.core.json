@@ -10,6 +10,7 @@
     "advancements.MixinAdvancementManager",
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
+    "entity.MixinEntity_Teleport",
     "network.MixinNetHandlerPlayServer",
     "network.MixinNetworkManager",
     "network.MixinNetworkSystem",

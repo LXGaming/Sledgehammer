@@ -63,13 +63,13 @@ public class Sledgehammer {
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.PrimalIntegration", IntegrationCategory::isPrimal);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Border", IntegrationCategory::isSpongeBorder);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Death", IntegrationCategory::isSpongeDeath);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_ItemTeleport", IntegrationCategory::isSpongeItemTeleport);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Phase", IntegrationCategory::isSpongePhase);
         
         // Mixin Core
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementManager", MixinCategory::isAdvancementStacktrace);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockGrass", MixinCategory::isBlockGrass);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockIce", MixinCategory::isBlockIce);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.entity.MixinEntity_Teleport", MixinCategory::isItemTeleport);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetHandlerPlayServer", MixinCategory::isInteractEvents);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkManager", MixinCategory::isFlushNetworkOnTick);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkSystem", MixinCategory::isNetworkSystem);

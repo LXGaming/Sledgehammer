@@ -18,6 +18,9 @@ package io.github.lxgaming.sledgehammer.util;
 
 import net.minecraft.launchwrapper.Launch;
 import org.apache.commons.lang3.StringUtils;
+import org.spongepowered.api.CatalogType;
+import org.spongepowered.api.entity.Entity;
+import org.spongepowered.api.entity.Item;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.action.TextAction;
 import org.spongepowered.api.text.action.TextActions;
@@ -64,6 +67,14 @@ public class Toolbox {
     
     public static Text convertColor(String string) {
         return TextSerializers.FORMATTING_CODE.deserialize(string);
+    }
+    
+    public static CatalogType getRootType(Entity entity) {
+        if (entity instanceof Item) {
+            return ((Item) entity).getItemType();
+        }
+        
+        return entity.getType();
     }
     
     public static boolean isForgeEnvironment() {
