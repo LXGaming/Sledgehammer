@@ -9,6 +9,7 @@
   "mixins": [
     "common.MixinForgeHooks_Advancement",
     "entity.passive.MixinEntityVillager",
+    "entity.MixinEntity_Teleport",
     "fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper",
     "fml.common.network.simpleimpl.MixinSimpleNetworkWrapper",
     "fml.common.network.MixinFMLEmbeddedChannel",

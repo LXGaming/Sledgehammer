@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.mixin.core.entity;
+package io.github.lxgaming.sledgehammer.mixin.forge.entity;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
@@ -22,6 +22,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.common.util.ITeleporter;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.Item;
@@ -30,22 +31,14 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.common.interfaces.entity.IMixinEntity;
 
 @Mixin(value = Entity.class, priority = 1337)
 public abstract class MixinEntity_Teleport {
     
-    @Inject(method = "setPortal", at = @At(value = "HEAD"), cancellable = true)
-    private void onSetPortal(CallbackInfo callbackInfo) {
-        if (shouldRemove((IMixinEntity) this)) {
-            callbackInfo.cancel();
-        }
-    }
-    
-    @Inject(method = "changeDimension(I)Lnet/minecraft/entity/Entity;", at = @At(value = "HEAD"))
-    private void onChangeDimension(int dimension, CallbackInfoReturnable<Entity> callbackInfoReturnable) {
+    @Inject(method = "changeDimension(ILnet/minecraftforge/common/util/ITeleporter;)Lnet/minecraft/entity/Entity;", at = @At(value = "HEAD"), remap = false)
+    private void onChangeDimension(int dimension, ITeleporter teleporter, CallbackInfoReturnable<Entity> callbackInfoReturnable) {
         IMixinEntity mixinEntity = (IMixinEntity) this;
         if (shouldRemove(mixinEntity)) {
             mixinEntity.remove();

@@ -32,7 +32,7 @@ version = "1.12.2-1.2.16"
 minecraft {
     version = "1.12.2-14.23.5.2768"
     runDir = "run"
-    mappings = "snapshot_20171003"
+    mappings = "stable_39"
     makeObfSourceJar = false
 }
 
