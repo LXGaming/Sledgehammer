@@ -49,6 +49,9 @@ public class MixinCategory {
     @Setting(value = "inventory-debug", comment = "Redirects inventory debugging messages")
     private boolean inventoryDebug = false;
     
+    @Setting(value = "itemstack-exploit", comment = "Fixes MC-134716")
+    private boolean itemstackExploit = false;
+    
     @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
     private boolean networkSystem = false;
     
@@ -94,6 +97,10 @@ public class MixinCategory {
     
     public boolean isInventoryDebug() {
         return inventoryDebug;
+    }
+    
+    public boolean isItemstackExploit() {
+        return itemstackExploit;
     }
     
     public boolean isNetworkSystem() {

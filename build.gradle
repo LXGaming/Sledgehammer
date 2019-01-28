@@ -27,7 +27,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-1.2.16"
+version = "1.12.2-1.2.17"
 
 minecraft {
     version = "1.12.2-14.23.5.2768"
@@ -120,7 +120,7 @@ task signJar {
     }
 
     doLast {
-        jar.outputs.files.each {
+        configurations.archives.allArtifacts.files.each {
             ant.signjar(
                 jar: it,
                 alias: project.property("signing.alias"),

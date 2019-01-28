@@ -11,6 +11,7 @@
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
     "entity.MixinEntity_Teleport",
+    "item.MixinItemStack_Exploit",
     "network.MixinNetHandlerPlayServer",
     "network.MixinNetworkManager",
     "network.MixinNetworkSystem",
