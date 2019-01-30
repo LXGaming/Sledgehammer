@@ -40,7 +40,7 @@ public abstract class MixinEntity_Teleport {
     @Inject(method = "changeDimension(ILnet/minecraftforge/common/util/ITeleporter;)Lnet/minecraft/entity/Entity;", at = @At(value = "HEAD"), remap = false)
     private void onChangeDimension(int dimension, ITeleporter teleporter, CallbackInfoReturnable<Entity> callbackInfoReturnable) {
         IMixinEntity mixinEntity = (IMixinEntity) this;
-        if (shouldRemove(mixinEntity)) {
+        if (sledgehammer$shouldRemove(mixinEntity)) {
             mixinEntity.remove();
             
             Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getItemTeleport).filter(StringUtils::isNotBlank).ifPresent(message -> {
@@ -58,7 +58,7 @@ public abstract class MixinEntity_Teleport {
         }
     }
     
-    private boolean shouldRemove(IMixinEntity mixinEntity) {
+    private boolean sledgehammer$shouldRemove(IMixinEntity mixinEntity) {
         if (!(mixinEntity instanceof Item || mixinEntity instanceof Minecart) || mixinEntity.isRemoved()) {
             return false;
         }

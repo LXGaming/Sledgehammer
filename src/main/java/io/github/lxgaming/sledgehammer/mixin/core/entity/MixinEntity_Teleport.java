@@ -39,7 +39,7 @@ public abstract class MixinEntity_Teleport {
     
     @Inject(method = "setPortal", at = @At(value = "HEAD"), cancellable = true)
     private void onSetPortal(CallbackInfo callbackInfo) {
-        if (shouldRemove((IMixinEntity) this)) {
+        if (sledgehammer$shouldRemove((IMixinEntity) this)) {
             callbackInfo.cancel();
         }
     }
@@ -47,7 +47,7 @@ public abstract class MixinEntity_Teleport {
     @Inject(method = "changeDimension(I)Lnet/minecraft/entity/Entity;", at = @At(value = "HEAD"))
     private void onChangeDimension(int dimension, CallbackInfoReturnable<Entity> callbackInfoReturnable) {
         IMixinEntity mixinEntity = (IMixinEntity) this;
-        if (shouldRemove(mixinEntity)) {
+        if (sledgehammer$shouldRemove(mixinEntity)) {
             mixinEntity.remove();
             
             Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getItemTeleport).filter(StringUtils::isNotBlank).ifPresent(message -> {
@@ -65,7 +65,7 @@ public abstract class MixinEntity_Teleport {
         }
     }
     
-    private boolean shouldRemove(IMixinEntity mixinEntity) {
+    private boolean sledgehammer$shouldRemove(IMixinEntity mixinEntity) {
         if (!(mixinEntity instanceof Item || mixinEntity instanceof Minecart) || mixinEntity.isRemoved()) {
             return false;
         }

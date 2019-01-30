@@ -59,19 +59,19 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
     @Inject(method = "populateBuyingList", at = @At(value = "RETURN"), cancellable = true)
     private void onPopulateBuyingListReturn(CallbackInfo callbackInfo) {
         if (Sponge.getPluginManager().isLoaded("primitivemobs") && StringUtils.equals(((Entity) this).getType().getId(), "primitivemobs:travelingmerchant")) {
-            populateTravelingMerchant();
+            sledgehammer$populateTravelingMerchant();
         }
     }
     
     @Inject(method = "processInteract", at = @At(value = "HEAD"), cancellable = true)
     private void onProcessInteract(EntityPlayer player, EnumHand hand, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (Sponge.getPluginManager().isLoaded("primitivemobs") && StringUtils.equals(((Entity) this).getType().getId(), "primitivemobs:travelingmerchant")) {
-            populateTravelingMerchant();
+            sledgehammer$populateTravelingMerchant();
         }
     }
     
     @SuppressWarnings("deprecation")
-    private void populateTravelingMerchant() {
+    private void sledgehammer$populateTravelingMerchant() {
         if (this.buyingList != null && !this.buyingList.isEmpty()) {
             return;
         }
