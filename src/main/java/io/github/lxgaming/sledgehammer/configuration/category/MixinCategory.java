@@ -40,6 +40,18 @@ public class MixinCategory {
     @Setting(value = "ceremony-rain", comment = "Prevents Totemic from changing the weather")
     private boolean ceremonyRain = false;
     
+    @Setting(value = "chunk-save-alert", comment = "Alerts players with permission (sledgehammer.broadcast.chunksave) when a chunk fails to save")
+    private boolean chunkSaveAlert = false;
+    
+    @Setting(value = "chunk-save-blacklist", comment = "Items to removed from chunks")
+    private List<String> chunkSaveBlacklist = Lists.newArrayList("minecraft:writable_book", "minecraft:written_book");
+    
+    @Setting(value = "chunk-save-purge-blacklist", comment = "Removes all blacklisted items from chunks that fail to save")
+    private boolean chunkSavePurgeBlacklist = false;
+    
+    @Setting(value = "chunk-save-purge-all", comment = "Removes all Entities and TileEntities from chunks that fail to save")
+    private boolean chunkSavePurgeAll = false;
+    
     @Setting(value = "flush-network-on-tick", comment = "Reduce Network usage by postponing flush")
     private boolean flushNetworkOnTick = false;
     
@@ -88,6 +100,22 @@ public class MixinCategory {
     
     public boolean isCeremonyRain() {
         return ceremonyRain;
+    }
+    
+    public boolean isChunkSaveAlert() {
+        return chunkSaveAlert;
+    }
+    
+    public List<String> getChunkSaveBlacklist() {
+        return chunkSaveBlacklist;
+    }
+    
+    public boolean isChunkSavePurgeBlacklist() {
+        return chunkSavePurgeBlacklist;
+    }
+    
+    public boolean isChunkSavePurgeAll() {
+        return chunkSavePurgeAll;
     }
     
     public boolean isFlushNetworkOnTick() {

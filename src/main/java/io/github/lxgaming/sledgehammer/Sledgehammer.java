@@ -76,8 +76,12 @@ public class Sledgehammer {
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetHandlerPlayServer_Event", MixinCategory::isInteractEvents);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkManager", MixinCategory::isFlushNetworkOnTick);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkSystem", MixinCategory::isNetworkSystem);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.MixinDedicatedServer", (module) -> true);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.MixinDedicatedServer", category -> true);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.world.biome.MixinBiomeProvider", MixinCategory::isBiomeProvider);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.world.chunk.storage.MixinAnvilChunkLoader", category ->
+                category.isChunkSaveAlert() || category.isChunkSavePurgeBlacklist() || category.isChunkSavePurgeAll());
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.world.chunk.storage.MixinRegionFileChunkBuffer", category ->
+                category.isChunkSaveAlert() || category.isChunkSavePurgeBlacklist() || category.isChunkSavePurgeAll());
         
         // Mixin Forge
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks_Advancement", MixinCategory::isAdvancementStacktrace);

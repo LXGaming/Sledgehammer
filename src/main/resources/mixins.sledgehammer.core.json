@@ -18,7 +18,9 @@
     "network.MixinNetworkManager",
     "network.MixinNetworkSystem",
     "server.MixinDedicatedServer",
-    "world.biome.MixinBiomeProvider"
+    "world.biome.MixinBiomeProvider",
+    "world.chunk.storage.MixinAnvilChunkLoader",
+    "world.chunk.storage.MixinRegionFileChunkBuffer"
   ],
   "injectors": {
     "defaultRequire": 1

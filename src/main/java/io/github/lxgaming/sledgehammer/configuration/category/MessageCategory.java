@@ -22,17 +22,24 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class MessageCategory {
     
-    @Setting(value = "move-outside-border", comment = "Sent to the player when attempting to move outside the world border")
-    private String moveOutsideBorder = "&cCannot move outside of the world border";
+    @Setting(value = "chunk-save", comment = "Sent to the player when a chunk fails to save")
+    private String chunkSave = "&fChunk ([X], [Z]) &cfailed to save";
     
     @Setting(value = "item-teleport", comment = "Sent to the player when a thrown item gets deleted")
     private String itemTeleport = "&f[ID] &cwas lost in time and space";
     
-    public String getMoveOutsideBorder() {
-        return moveOutsideBorder;
+    @Setting(value = "move-outside-border", comment = "Sent to the player when attempting to move outside the world border")
+    private String moveOutsideBorder = "&cCannot move outside of the world border";
+    
+    public String getChunkSave() {
+        return chunkSave;
     }
     
     public String getItemTeleport() {
         return itemTeleport;
+    }
+    
+    public String getMoveOutsideBorder() {
+        return moveOutsideBorder;
     }
 }
