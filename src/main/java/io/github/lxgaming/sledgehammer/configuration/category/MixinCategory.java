@@ -52,6 +52,9 @@ public class MixinCategory {
     @Setting(value = "itemstack-exploit", comment = "Fixes MC-134716")
     private boolean itemstackExploit = false;
     
+    @Setting(value = "limit-books", comment = "Limits books to 50 pages with 255 characters for each")
+    private boolean limitBooks = false;
+    
     @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
     private boolean networkSystem = false;
     
@@ -101,6 +104,10 @@ public class MixinCategory {
     
     public boolean isItemstackExploit() {
         return itemstackExploit;
+    }
+    
+    public boolean isLimitBooks() {
+        return limitBooks;
     }
     
     public boolean isNetworkSystem() {

@@ -12,6 +12,8 @@
     "block.MixinBlockIce",
     "entity.MixinEntity_Teleport",
     "item.MixinItemStack_Exploit",
+    "item.MixinItemWritableBook",
+    "network.MixinNetHandlerPlayServer_Book",
     "network.MixinNetHandlerPlayServer_Event",
     "network.MixinNetworkManager",
     "network.MixinNetworkSystem",
