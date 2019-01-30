@@ -75,7 +75,7 @@ public final class IntegrationManager {
     private static boolean shouldApplyIntegration(Class<? extends AbstractIntegration> integrationClass) {
         Function<IntegrationCategory, Boolean> integrationMapping = Sledgehammer.getInstance().getIntegrationMappings().get(integrationClass.getName());
         if (integrationMapping == null) {
-            new PrettyPrinter(50).add("Could not find function for " + Reference.PLUGIN_NAME + " integration").centre().hr()
+            new PrettyPrinter(50).add("Could not find function for " + Reference.NAME + " integration").centre().hr()
                     .add("Missing function for class: " + integrationClass.getName())
                     .print();
             return false;

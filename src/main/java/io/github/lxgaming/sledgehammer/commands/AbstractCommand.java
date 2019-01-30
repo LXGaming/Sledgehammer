@@ -69,7 +69,7 @@ public abstract class AbstractCommand implements CommandCallable {
     
     @Override
     public final Optional<Text> getHelp(CommandSource commandSource) {
-        return Optional.of(Text.of(TextColors.BLUE, "Use ", TextColors.GREEN, "/", Reference.PLUGIN_ID, " help ", TextColors.BLUE, "to view available commands."));
+        return Optional.of(Text.of(TextColors.BLUE, "Use ", TextColors.GREEN, "/", Reference.ID, " help ", TextColors.BLUE, "to view available commands."));
     }
     
     @Override

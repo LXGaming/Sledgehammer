@@ -36,7 +36,7 @@ public abstract class MixinDedicatedServer {
     @Inject(method = "init", at = @At(value = "RETURN"))
     private void onInit(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (callbackInfoReturnable.getReturnValue()) {
-            LOGGER.info("{} v{} was successfully applied!", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);
+            LOGGER.info("{} v{} was successfully applied!", Reference.NAME, Reference.VERSION);
         }
     }
 }

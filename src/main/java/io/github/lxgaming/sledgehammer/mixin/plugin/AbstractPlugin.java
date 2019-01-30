@@ -36,7 +36,7 @@ public abstract class AbstractPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         Function<MixinCategory, Boolean> mixinMapping = Sledgehammer.getInstance().getMixinMappings().get(mixinClassName);
         if (mixinMapping == null) {
-            new PrettyPrinter(50).add("Could not find function for " + Reference.PLUGIN_NAME + " mixin").centre().hr()
+            new PrettyPrinter(50).add("Could not find function for " + Reference.NAME + " mixin").centre().hr()
                     .add("Missing function for class: " + mixinClassName)
                     .print();
             return false;

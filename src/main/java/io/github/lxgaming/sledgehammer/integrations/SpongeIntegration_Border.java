@@ -20,6 +20,7 @@ import com.flowpowered.math.vector.Vector3d;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
+import io.github.lxgaming.sledgehammer.util.Broadcast;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.Sponge;
@@ -29,7 +30,6 @@ import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.entity.MoveEntityEvent;
 import org.spongepowered.api.event.filter.cause.Root;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
-import org.spongepowered.api.text.Text;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
@@ -76,9 +76,13 @@ public class SpongeIntegration_Border extends AbstractIntegration {
             }
             
             this.cooldown.put(player.getUniqueId(), currentTime);
-            Sledgehammer.getInstance().debugMessage("Movement denied for {} ({})", player.getName(), player.getUniqueId());
             Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getMoveOutsideBorder).filter(StringUtils::isNotBlank).ifPresent(message -> {
-                player.sendMessage(Text.of(Toolbox.getTextPrefix(), Toolbox.convertColor(message)));
+                Broadcast broadcast = Broadcast.builder().message(Toolbox.convertColor(message)).type(Broadcast.Type.CHAT).build();
+                if (Sledgehammer.getInstance().getConfig().map(Config::isDebug).orElse(false)) {
+                    broadcast.sendMessage(Sponge.getServer().getConsole());
+                }
+                
+                broadcast.sendMessage(player);
             });
         }
     }

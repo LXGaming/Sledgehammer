@@ -34,8 +34,8 @@ import java.util.function.Function;
 public class Sledgehammer {
     
     private static Sledgehammer instance;
-    private final Logger logger = LoggerFactory.getLogger(Reference.PLUGIN_NAME);
-    private final Configuration configuration = new Configuration(SpongeLaunch.getConfigDir().resolve(Reference.PLUGIN_ID + ".conf"));
+    private final Logger logger = LoggerFactory.getLogger(Reference.NAME);
+    private final Configuration configuration = new Configuration(SpongeLaunch.getConfigDir().resolve(Reference.ID + ".conf"));
     private final Map<String, Function<IntegrationCategory, Boolean>> integrationMappings = Toolbox.newHashMap();
     private final Map<String, Function<MixinCategory, Boolean>> mixinMappings = Toolbox.newHashMap();
     private PluginContainer pluginContainer;
@@ -71,7 +71,7 @@ public class Sledgehammer {
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockIce", MixinCategory::isBlockIce);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.entity.MixinEntity_Teleport", MixinCategory::isItemTeleport);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.item.MixinItemStack_Exploit", MixinCategory::isItemstackExploit);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetHandlerPlayServer", MixinCategory::isInteractEvents);
+        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetHandlerPlayServer_Event", MixinCategory::isInteractEvents);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkManager", MixinCategory::isFlushNetworkOnTick);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkSystem", MixinCategory::isNetworkSystem);
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.MixinDedicatedServer", (module) -> true);

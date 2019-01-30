@@ -38,7 +38,7 @@ import org.spongepowered.common.item.inventory.util.ItemStackUtil;
 import org.spongepowered.common.util.VecHelper;
 
 @Mixin(value = NetHandlerPlayServer.class, priority = 137)
-public abstract class MixinNetHandlerPlayServer {
+public abstract class MixinNetHandlerPlayServer_Event {
     
     @Shadow
     public EntityPlayerMP player;

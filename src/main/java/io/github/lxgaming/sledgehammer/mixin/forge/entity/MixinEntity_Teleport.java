@@ -20,6 +20,7 @@ import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
+import io.github.lxgaming.sledgehammer.util.Broadcast;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.common.util.ITeleporter;
@@ -27,7 +28,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.Item;
 import org.spongepowered.api.entity.vehicle.minecart.Minecart;
-import org.spongepowered.api.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -43,11 +43,17 @@ public abstract class MixinEntity_Teleport {
         if (shouldRemove(mixinEntity)) {
             mixinEntity.remove();
             
-            Sledgehammer.getInstance().debugMessage("Entity {} removed", Toolbox.getRootType(mixinEntity).getId());
             Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getItemTeleport).filter(StringUtils::isNotBlank).ifPresent(message -> {
-                mixinEntity.getCreator().flatMap(Sponge.getServer()::getPlayer).ifPresent(player -> {
-                    player.sendMessage(Text.of(Toolbox.getTextPrefix(), Toolbox.convertColor(message.replace("[ID]", Toolbox.getRootType(mixinEntity).getId()))));
-                });
+                Broadcast broadcast = Broadcast.builder()
+                        .message(Toolbox.convertColor(message.replace("[ID]", Toolbox.getRootType(mixinEntity).getId())))
+                        .type(Broadcast.Type.CHAT)
+                        .build();
+                
+                if (Sledgehammer.getInstance().getConfig().map(Config::isDebug).orElse(false)) {
+                    broadcast.sendMessage(Sponge.getServer().getConsole());
+                }
+                
+                mixinEntity.getCreator().flatMap(Sponge.getServer()::getPlayer).ifPresent(broadcast::sendMessage);
             });
         }
     }

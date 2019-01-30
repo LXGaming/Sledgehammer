@@ -12,7 +12,7 @@
     "block.MixinBlockIce",
     "entity.MixinEntity_Teleport",
     "item.MixinItemStack_Exploit",
-    "network.MixinNetHandlerPlayServer",
+    "network.MixinNetHandlerPlayServer_Event",
     "network.MixinNetworkManager",
     "network.MixinNetworkSystem",
     "server.MixinDedicatedServer",

@@ -36,9 +36,9 @@ import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 
 @Plugin(
-        id = Reference.PLUGIN_ID,
-        name = Reference.PLUGIN_NAME,
-        version = Reference.PLUGIN_VERSION,
+        id = Reference.ID,
+        name = Reference.NAME,
+        version = Reference.VERSION,
         description = Reference.DESCRIPTION,
         authors = {Reference.AUTHORS},
         url = Reference.WEBSITE
@@ -67,12 +67,12 @@ public class SledgehammerPlugin {
     
     @Listener
     public void onGameLoadComplete(GameLoadCompleteEvent event) {
-        Sledgehammer.getInstance().getLogger().info("{} v{} has started.", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);
+        Sledgehammer.getInstance().getLogger().info("{} v{} has started.", Reference.NAME, Reference.VERSION);
     }
     
     @Listener
     public void onGameStopping(GameStoppingEvent event) {
-        Sledgehammer.getInstance().getLogger().info("{} v{} has stopped.", Reference.PLUGIN_NAME, Reference.PLUGIN_VERSION);
+        Sledgehammer.getInstance().getLogger().info("{} v{} has stopped.", Reference.NAME, Reference.VERSION);
     }
     
     private PluginContainer getPluginContainer() {
