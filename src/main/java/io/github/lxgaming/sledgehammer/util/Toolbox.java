@@ -113,6 +113,14 @@ public class Toolbox {
         return false;
     }
     
+    public static Optional<Integer> parseInteger(String string) {
+        try {
+            return Optional.of(Integer.parseInt(string));
+        } catch (NumberFormatException ex) {
+            return Optional.empty();
+        }
+    }
+    
     public static boolean isClassPresent(String className) {
         try {
             return Class.forName(className, false, Launch.classLoader) != null;
