@@ -58,6 +58,7 @@ public class Sledgehammer {
     
     private void registerMappings() {
         // Integration
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.BotaniaIntegration", IntegrationCategory::isBotania);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.ForgeIntegration", IntegrationCategory::isForge);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.MistIntegration", IntegrationCategory::isMist);
         getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.PrimalIntegration", IntegrationCategory::isPrimal);

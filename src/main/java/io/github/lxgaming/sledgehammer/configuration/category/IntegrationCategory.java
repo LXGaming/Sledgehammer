@@ -22,6 +22,9 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class IntegrationCategory {
     
+    @Setting(value = "botania", comment = "Prevents Botania creating islands")
+    private boolean botania = false;
+    
     @Setting(value = "forge", comment = "Forces permission check for OP based commands")
     private boolean forge = false;
     
@@ -39,6 +42,10 @@ public class IntegrationCategory {
     
     @Setting(value = "sponge-phase", comment = "Fixes https://github.com/SpongePowered/SpongeForge/issues/2355")
     private boolean spongePhase = false;
+    
+    public boolean isBotania() {
+        return botania;
+    }
     
     public boolean isForge() {
         return forge;

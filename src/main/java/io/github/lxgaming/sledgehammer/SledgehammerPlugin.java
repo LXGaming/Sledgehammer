@@ -18,6 +18,7 @@ package io.github.lxgaming.sledgehammer;
 
 import com.google.inject.Inject;
 import io.github.lxgaming.sledgehammer.commands.SledgehammerCommand;
+import io.github.lxgaming.sledgehammer.integrations.BotaniaIntegration;
 import io.github.lxgaming.sledgehammer.integrations.ForgeIntegration;
 import io.github.lxgaming.sledgehammer.integrations.MistIntegration;
 import io.github.lxgaming.sledgehammer.integrations.PrimalIntegration;
@@ -57,6 +58,7 @@ public class SledgehammerPlugin {
     @Listener
     public void onGameInitialization(GameInitializationEvent event) {
         CommandManager.registerCommand(SledgehammerCommand.class);
+        IntegrationManager.registerIntegration(BotaniaIntegration.class);
         IntegrationManager.registerIntegration(ForgeIntegration.class);
         IntegrationManager.registerIntegration(MistIntegration.class);
         IntegrationManager.registerIntegration(PrimalIntegration.class);
