@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.commands;
+package io.github.lxgaming.sledgehammer.command;
 
 import com.google.common.collect.Lists;
 import io.github.lxgaming.sledgehammer.util.Toolbox;

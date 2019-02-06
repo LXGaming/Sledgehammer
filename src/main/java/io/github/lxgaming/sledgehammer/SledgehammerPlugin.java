@@ -17,16 +17,16 @@
 package io.github.lxgaming.sledgehammer;
 
 import com.google.inject.Inject;
-import io.github.lxgaming.sledgehammer.commands.SledgehammerCommand;
-import io.github.lxgaming.sledgehammer.integrations.BotaniaIntegration;
-import io.github.lxgaming.sledgehammer.integrations.ForgeIntegration;
-import io.github.lxgaming.sledgehammer.integrations.MistIntegration;
-import io.github.lxgaming.sledgehammer.integrations.PrimalIntegration;
-import io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Border;
-import io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Death;
-import io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Phase;
-import io.github.lxgaming.sledgehammer.managers.CommandManager;
-import io.github.lxgaming.sledgehammer.managers.IntegrationManager;
+import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
+import io.github.lxgaming.sledgehammer.integration.BotaniaIntegration;
+import io.github.lxgaming.sledgehammer.integration.ForgeIntegration;
+import io.github.lxgaming.sledgehammer.integration.MistIntegration;
+import io.github.lxgaming.sledgehammer.integration.PrimalIntegration;
+import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border;
+import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Death;
+import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Phase;
+import io.github.lxgaming.sledgehammer.manager.CommandManager;
+import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameConstructionEvent;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Alex Thomson
+ * Copyright 2019 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.managers;
+package io.github.lxgaming.sledgehammer.manager;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
-import io.github.lxgaming.sledgehammer.integrations.AbstractIntegration;
+import io.github.lxgaming.sledgehammer.integration.AbstractIntegration;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.spongepowered.api.Sponge;

@@ -58,13 +58,13 @@ public class Sledgehammer {
     
     private void registerMappings() {
         // Integration
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.BotaniaIntegration", IntegrationCategory::isBotania);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.ForgeIntegration", IntegrationCategory::isForge);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.MistIntegration", IntegrationCategory::isMist);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.PrimalIntegration", IntegrationCategory::isPrimal);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Border", IntegrationCategory::isSpongeBorder);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Death", IntegrationCategory::isSpongeDeath);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integrations.SpongeIntegration_Phase", IntegrationCategory::isSpongePhase);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.BotaniaIntegration", IntegrationCategory::isBotania);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.ForgeIntegration", IntegrationCategory::isForge);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.MistIntegration", IntegrationCategory::isMist);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.PrimalIntegration", IntegrationCategory::isPrimal);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border", IntegrationCategory::isSpongeBorder);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Death", IntegrationCategory::isSpongeDeath);
+        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Phase", IntegrationCategory::isSpongePhase);
         
         // Mixin Core
         getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementManager", MixinCategory::isAdvancementStacktrace);

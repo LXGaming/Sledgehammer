@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.integrations;
+package io.github.lxgaming.sledgehammer.integration;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import net.minecraft.entity.player.EntityPlayer;
