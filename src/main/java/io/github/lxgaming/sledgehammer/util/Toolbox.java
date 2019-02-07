@@ -30,13 +30,8 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Toolbox {
     
@@ -83,10 +78,6 @@ public class Toolbox {
         }
         
         return entity.getType();
-    }
-    
-    public static boolean isForgeEnvironment() {
-        return Toolbox.isClassPresent("net.minecraftforge.fml.relauncher.CoreModManager") || Toolbox.isClassPresent("cpw.mods.fml.relauncher.CoreModManager");
     }
     
     /**
@@ -139,25 +130,15 @@ public class Toolbox {
         return false;
     }
     
+    public static <T> T cast(Object object, Class<T> type) {
+        return type.cast(object);
+    }
+    
     public static <T> Optional<T> newInstance(Class<? extends T> typeOfT) {
         try {
             return Optional.of(typeOfT.newInstance());
         } catch (Exception ex) {
             return Optional.empty();
         }
-    }
-    
-    @SafeVarargs
-    public static <E> ArrayList<E> newArrayList(E... elements) {
-        return Stream.of(elements).collect(Collectors.toCollection(ArrayList::new));
-    }
-    
-    @SafeVarargs
-    public static <E> LinkedHashSet<E> newLinkedHashSet(E... elements) {
-        return Stream.of(elements).collect(Collectors.toCollection(LinkedHashSet::new));
-    }
-    
-    public static <K, V> HashMap<K, V> newHashMap() {
-        return new HashMap<>();
     }
 }

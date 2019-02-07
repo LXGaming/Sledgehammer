@@ -37,9 +37,8 @@ public class PrimalIntegration extends AbstractIntegration {
     }
     
     @Override
-    public boolean prepareIntegration() {
+    public void execute() {
         MinecraftForge.EVENT_BUS.register(this);
-        return true;
     }
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)

@@ -16,8 +16,8 @@
 
 package io.github.lxgaming.sledgehammer.integration;
 
+import com.google.common.collect.Lists;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -36,9 +36,8 @@ public class ForgeIntegration extends AbstractIntegration {
     }
     
     @Override
-    public boolean prepareIntegration() {
+    public void execute() {
         MinecraftForge.EVENT_BUS.register(this);
-        return true;
     }
     
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -48,7 +47,7 @@ public class ForgeIntegration extends AbstractIntegration {
         }
         
         EntityPlayer entityPlayer = (EntityPlayer) event.getSender();
-        List<String> arguments = Toolbox.newArrayList(event.getCommand().getName());
+        List<String> arguments = Lists.newArrayList(event.getCommand().getName());
         Collections.addAll(arguments, event.getParameters());
         if (arguments.isEmpty()) {
             return;

@@ -16,49 +16,17 @@
 
 package io.github.lxgaming.sledgehammer.mixin.plugin;
 
-import io.github.lxgaming.sledgehammer.util.Toolbox;
+import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.asm.lib.tree.ClassNode;
-import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
-
-import java.util.List;
-import java.util.Set;
 
 public class SpongePlugin extends AbstractPlugin {
     
     @Override
-    public void onLoad(String mixinPackage) {
-        super.onLoad(mixinPackage);
-    }
-    
-    @Override
-    public String getRefMapperConfig() {
-        return null;
-    }
-    
-    @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (StringUtils.startsWith(mixinClassName, "io.github.lxgaming.sledgehammer.mixin.sponge.mod.") && !Toolbox.isForgeEnvironment()) {
+        if (!SledgehammerLaunch.isForgeRegistered() && StringUtils.startsWith(mixinClassName, "io.github.lxgaming.sledgehammer.mixin.sponge.mod.")) {
             return false;
         }
         
         return super.shouldApplyMixin(targetClassName, mixinClassName);
-    }
-    
-    @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-    }
-    
-    @Override
-    public List<String> getMixins() {
-        return null;
-    }
-    
-    @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-    }
-    
-    @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
     }
 }

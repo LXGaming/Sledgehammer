@@ -17,22 +17,15 @@
 package io.github.lxgaming.sledgehammer;
 
 import com.google.inject.Inject;
-import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
-import io.github.lxgaming.sledgehammer.integration.BotaniaIntegration;
-import io.github.lxgaming.sledgehammer.integration.ForgeIntegration;
-import io.github.lxgaming.sledgehammer.integration.MistIntegration;
-import io.github.lxgaming.sledgehammer.integration.PrimalIntegration;
-import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border;
-import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Death;
-import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Phase;
-import io.github.lxgaming.sledgehammer.manager.CommandManager;
+import io.github.lxgaming.sledgehammer.integration.AbstractIntegration;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameConstructionEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameLoadCompleteEvent;
-import org.spongepowered.api.event.game.state.GameStoppingEvent;
+import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
+import org.spongepowered.api.event.game.state.GameStoppedEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 
@@ -50,31 +43,30 @@ public class SledgehammerPlugin {
     private PluginContainer pluginContainer;
     
     @Listener
-    public void onGameConstruction(GameConstructionEvent event) {
+    public void onConstruction(GameConstructionEvent event) {
         Sledgehammer.init();
         Sledgehammer.getInstance().setPluginContainer(getPluginContainer());
     }
     
     @Listener
-    public void onGameInitialization(GameInitializationEvent event) {
-        CommandManager.registerCommand(SledgehammerCommand.class);
-        IntegrationManager.registerIntegration(BotaniaIntegration.class);
-        IntegrationManager.registerIntegration(ForgeIntegration.class);
-        IntegrationManager.registerIntegration(MistIntegration.class);
-        IntegrationManager.registerIntegration(PrimalIntegration.class);
-        IntegrationManager.registerIntegration(SpongeIntegration_Border.class);
-        IntegrationManager.registerIntegration(SpongeIntegration_Death.class);
-        IntegrationManager.registerIntegration(SpongeIntegration_Phase.class);
+    public void onPreInitialization(GamePreInitializationEvent event) {
+        Sledgehammer.getInstance().registerIntegrations();
     }
     
     @Listener
-    public void onGameLoadComplete(GameLoadCompleteEvent event) {
-        Sledgehammer.getInstance().getLogger().info("{} v{} has started.", Reference.NAME, Reference.VERSION);
+    public void onInitialization(GameInitializationEvent event) {
+        Sledgehammer.getInstance().registerCommands();
+        IntegrationManager.getIntegrations().forEach(AbstractIntegration::run);
     }
     
     @Listener
-    public void onGameStopping(GameStoppingEvent event) {
-        Sledgehammer.getInstance().getLogger().info("{} v{} has stopped.", Reference.NAME, Reference.VERSION);
+    public void onLoadComplete(GameLoadCompleteEvent event) {
+        Sledgehammer.getInstance().getLogger().info("{} v{} has loaded", Reference.NAME, Reference.VERSION);
+    }
+    
+    @Listener
+    public void onStopped(GameStoppedEvent event) {
+        Sledgehammer.getInstance().getLogger().info("{} v{} has stopped", Reference.NAME, Reference.VERSION);
     }
     
     private PluginContainer getPluginContainer() {

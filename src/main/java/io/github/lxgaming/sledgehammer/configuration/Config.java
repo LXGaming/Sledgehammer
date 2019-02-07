@@ -16,11 +16,14 @@
 
 package io.github.lxgaming.sledgehammer.configuration;
 
+import com.google.common.collect.Maps;
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+
+import java.util.Map;
 
 @ConfigSerializable
 public class Config {
@@ -36,6 +39,11 @@ public class Config {
     
     @Setting(value = "mixin")
     private MixinCategory mixinCategory = new MixinCategory();
+    
+    @Setting(value = "mod", comment = ""
+            + "False: Mod will not be loaded.\n"
+            + "True: Mod will be loaded early.")
+    private Map<String, Boolean> modMappings = Maps.newHashMap();
     
     public boolean isDebug() {
         return debug;
@@ -55,5 +63,9 @@ public class Config {
     
     public MixinCategory getMixinCategory() {
         return mixinCategory;
+    }
+    
+    public Map<String, Boolean> getModMappings() {
+        return modMappings;
     }
 }

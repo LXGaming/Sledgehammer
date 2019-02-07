@@ -38,7 +38,7 @@ public class Configuration {
             this.configurationLoader = HoconConfigurationLoader.builder().setPath(path).build();
             this.objectMapper = ObjectMapper.forClass(Config.class).bindToNew();
         } catch (Exception ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error initializing {}", getClass().getSimpleName(), ex);
+            Sledgehammer.getInstance().getLogger().error("Encountered an error while initializing configuration", ex);
         }
     }
     
@@ -47,7 +47,7 @@ public class Configuration {
             config = getObjectMapper().populate(getConfigurationLoader().load());
             Sledgehammer.getInstance().getLogger().info("Successfully loaded configuration file.");
         } catch (IOException | ObjectMappingException | RuntimeException ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::loadConfiguration", getClass().getSimpleName(), ex);
+            Sledgehammer.getInstance().getLogger().error("Encountered an error while loading config", ex);
         }
     }
     
@@ -58,7 +58,7 @@ public class Configuration {
             getConfigurationLoader().save(configurationNode);
             Sledgehammer.getInstance().getLogger().info("Successfully saved configuration file.");
         } catch (IOException | ObjectMappingException | RuntimeException ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error processing {}::saveConfiguration", getClass().getSimpleName(), ex);
+            Sledgehammer.getInstance().getLogger().error("Encountered an error while saving config", ex);
         }
     }
     

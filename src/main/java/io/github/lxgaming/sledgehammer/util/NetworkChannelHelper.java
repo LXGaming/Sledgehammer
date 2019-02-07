@@ -19,6 +19,7 @@
 
 package io.github.lxgaming.sledgehammer.util;
 
+import com.google.common.collect.Lists;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOutboundInvoker;
 import io.netty.channel.ChannelPromise;
@@ -33,7 +34,7 @@ import java.util.List;
  */
 public class NetworkChannelHelper implements Runnable {
     
-    private static final List<ChannelOutboundInvoker> markedChannels = Toolbox.newArrayList();
+    private static final List<ChannelOutboundInvoker> markedChannels = Lists.newArrayList();
     public static final int flushDelay = Integer.getInteger("fml.network.flushDelay", 50);
     
     static {

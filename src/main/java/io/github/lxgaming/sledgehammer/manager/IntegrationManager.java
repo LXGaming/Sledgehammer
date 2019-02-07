@@ -16,31 +16,30 @@
 
 package io.github.lxgaming.sledgehammer.manager;
 
+import com.google.common.collect.Sets;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
 import io.github.lxgaming.sledgehammer.integration.AbstractIntegration;
-import io.github.lxgaming.sledgehammer.util.Reference;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.asm.util.PrettyPrinter;
 
 import java.util.Set;
 import java.util.function.Function;
 
 public final class IntegrationManager {
     
-    private static final Set<AbstractIntegration> INTEGRATIONS = Toolbox.newLinkedHashSet();
-    private static final Set<Class<? extends AbstractIntegration>> INTEGRATION_CLASSES = Toolbox.newLinkedHashSet();
+    private static final Set<AbstractIntegration> INTEGRATIONS = Sets.newLinkedHashSet();
+    private static final Set<Class<? extends AbstractIntegration>> INTEGRATION_CLASSES = Sets.newLinkedHashSet();
     
-    public static boolean registerIntegration(Class<? extends AbstractIntegration> integrationClass) {
+    public static boolean registerIntegration(Class<? extends AbstractIntegration> integrationClass, Function<IntegrationCategory, Boolean> function) {
         if (getIntegrationClasses().contains(integrationClass)) {
-            Sledgehammer.getInstance().getLogger().warn("{} has already been registered", integrationClass.getSimpleName());
+            Sledgehammer.getInstance().getLogger().warn("{} is already registered", integrationClass.getSimpleName());
             return false;
         }
         
         getIntegrationClasses().add(integrationClass);
-        if (!shouldApplyIntegration(integrationClass)) {
+        if (!Sledgehammer.getInstance().getConfig().map(Config::getIntegrationCategory).map(function).orElse(false)) {
             return false;
         }
         
@@ -50,8 +49,7 @@ public final class IntegrationManager {
             return false;
         }
         
-        getIntegrations().add(integration);
-        Set<String> missingDependencies = Toolbox.newLinkedHashSet();
+        Set<String> missingDependencies = Sets.newLinkedHashSet();
         for (String dependency : integration.getDependencies()) {
             if (!Sponge.getPluginManager().isLoaded(dependency)) {
                 missingDependencies.add(dependency);
@@ -63,25 +61,9 @@ public final class IntegrationManager {
             return false;
         }
         
-        if (!integration.prepareIntegration()) {
-            Sledgehammer.getInstance().getLogger().error("{} failed to prepare", integrationClass.getSimpleName());
-            return false;
-        }
-        
+        getIntegrations().add(integration);
         Sledgehammer.getInstance().debugMessage("{} registered", integrationClass.getSimpleName());
         return true;
-    }
-    
-    private static boolean shouldApplyIntegration(Class<? extends AbstractIntegration> integrationClass) {
-        Function<IntegrationCategory, Boolean> integrationMapping = Sledgehammer.getInstance().getIntegrationMappings().get(integrationClass.getName());
-        if (integrationMapping == null) {
-            new PrettyPrinter(50).add("Could not find function for " + Reference.NAME + " integration").centre().hr()
-                    .add("Missing function for class: " + integrationClass.getName())
-                    .print();
-            return false;
-        }
-        
-        return Sledgehammer.getInstance().getConfig().map(Config::getIntegrationCategory).map(integrationMapping).orElse(false);
     }
     
     public static Set<AbstractIntegration> getIntegrations() {

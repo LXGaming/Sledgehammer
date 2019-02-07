@@ -16,6 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.command;
 
+import com.google.common.collect.Lists;
 import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
@@ -38,7 +39,7 @@ public class HelpCommand extends AbstractCommand {
     
     @Override
     public CommandResult execute(CommandSource commandSource, List<String> arguments) {
-        Optional<AbstractCommand> abstractCommand = CommandManager.getCommand(Toolbox.newArrayList(Reference.ID));
+        Optional<AbstractCommand> abstractCommand = CommandManager.getCommand(Lists.newArrayList(Reference.ID));
         if (!abstractCommand.isPresent()) {
             return CommandResult.success();
         }

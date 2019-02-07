@@ -32,9 +32,8 @@ public class SpongeIntegration_Death extends AbstractIntegration {
     }
     
     @Override
-    public boolean prepareIntegration() {
+    public void execute() {
         Sponge.getEventManager().registerListeners(Sledgehammer.getInstance().getPluginContainer(), this);
-        return true;
     }
     
     @Listener(order = Order.LAST)

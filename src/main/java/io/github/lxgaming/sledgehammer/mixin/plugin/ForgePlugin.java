@@ -16,48 +16,108 @@
 
 package io.github.lxgaming.sledgehammer.mixin.plugin;
 
+import com.google.common.collect.Sets;
+import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.interfaces.fml.common.IMixinLoader;
+import io.github.lxgaming.sledgehammer.interfaces.fml.common.IMixinMetadataCollection;
+import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
-import org.spongepowered.asm.lib.tree.ClassNode;
-import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.MetadataCollection;
+import net.minecraftforge.fml.common.ModMetadata;
+import net.minecraftforge.fml.relauncher.CoreModManager;
+import net.minecraftforge.fml.relauncher.libraries.LibraryManager;
+import org.spongepowered.asm.mixin.MixinEnvironment;
 
-import java.util.List;
+import java.io.File;
+import java.io.InputStream;
+import java.util.Map;
 import java.util.Set;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
 
 public class ForgePlugin extends AbstractPlugin {
     
     @Override
     public void onLoad(String mixinPackage) {
         super.onLoad(mixinPackage);
-    }
-    
-    @Override
-    public String getRefMapperConfig() {
-        return null;
+        if (MixinEnvironment.getCurrentEnvironment().getPhase() != MixinEnvironment.Phase.DEFAULT
+                || !SledgehammerLaunch.isForgeRegistered()
+                || !SledgehammerLaunch.isSledgehammerRegistered()
+                || Sledgehammer.getInstance().getModMappings().isEmpty()) {
+            return;
+        }
+        
+        IMixinLoader mixinLoader = Toolbox.cast(Loader.instance(), IMixinLoader.class);
+        for (File file : LibraryManager.gatherLegacyCanidates(mixinLoader.getMinecraftDirectory())) {
+            Map<String, ModMetadata> metadatas = getMetadataCollection(file).getMetadatas();
+            if (metadatas.isEmpty()) {
+                continue;
+            }
+            
+            mixinLoader.getMappings().computeIfAbsent(file, key -> Sets.newHashSet());
+            Sledgehammer.getInstance().getLogger().debug("{}:", file.getName());
+            for (String id : metadatas.keySet()) {
+                if (mixinLoader.getMappings().get(file).add(id)) {
+                    Sledgehammer.getInstance().getLogger().debug("   {}", id);
+                } else {
+                    Sledgehammer.getInstance().getLogger().debug("   {} (Duplicate)", id);
+                }
+            }
+        }
+        
+        int size = mixinLoader.getMappings().size();
+        Sledgehammer.getInstance().getLogger().info("Identified {} {}", size, Toolbox.formatUnit(size, "mod", "mods"));
+        
+        for (Map.Entry<File, Set<String>> entry : mixinLoader.getMappings().entrySet()) {
+            for (String id : entry.getValue()) {
+                Boolean modMapping = Sledgehammer.getInstance().getModMapping(id).orElse(null);
+                if (modMapping == null) {
+                    continue;
+                }
+                
+                if (modMapping) {
+                    // Add Mods
+                    if (CoreModManager.getIgnoredMods().removeIf(entry.getKey().getName()::equals)) {
+                        Sledgehammer.getInstance().getLogger().info("Acknowledged {}", entry.getKey().getName());
+                    }
+                    
+                    mixinLoader.addFile(entry.getKey());
+                } else {
+                    // Remove Mods
+                    if (CoreModManager.getIgnoredMods().contains(entry.getKey().getName())) {
+                        continue;
+                    }
+                    
+                    CoreModManager.getIgnoredMods().add(entry.getKey().getName());
+                    Sledgehammer.getInstance().getLogger().info("Ignored {}", entry.getKey().getName());
+                }
+            }
+        }
     }
     
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (!Toolbox.isForgeEnvironment()) {
+        if (!SledgehammerLaunch.isForgeRegistered()) {
             return false;
         }
         
         return super.shouldApplyMixin(targetClassName, mixinClassName);
     }
     
-    @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-    }
-    
-    @Override
-    public List<String> getMixins() {
-        return null;
-    }
-    
-    @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-    }
-    
-    @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    private IMixinMetadataCollection getMetadataCollection(File file) {
+        try (JarFile jarFile = new JarFile(file)) {
+            ZipEntry zipEntry = jarFile.getEntry("mcmod.info");
+            if (zipEntry == null) {
+                return Toolbox.cast(MetadataCollection.from(null, ""), IMixinMetadataCollection.class);
+            }
+            
+            try (InputStream inputStream = jarFile.getInputStream(zipEntry)) {
+                return Toolbox.cast(MetadataCollection.from(inputStream, jarFile.getName()), IMixinMetadataCollection.class);
+            }
+        } catch (Exception ex) {
+            Sledgehammer.getInstance().getLogger().error("Encountered an error while getting Metadata from {}", file, ex);
+            return Toolbox.cast(MetadataCollection.from(null, ""), IMixinMetadataCollection.class);
+        }
     }
 }

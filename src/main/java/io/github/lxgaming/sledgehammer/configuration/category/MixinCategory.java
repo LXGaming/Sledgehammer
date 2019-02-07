@@ -64,6 +64,12 @@ public class MixinCategory {
     @Setting(value = "itemstack-exploit", comment = "Fixes MC-134716")
     private boolean itemstackExploit = false;
     
+    @Setting(value = "item-teleport", comment = "Prevents or deletes any items that attempt to teleport across dimensions")
+    private boolean itemTeleport = false;
+    
+    @Setting(value = "item-teleport-whitelist", comment = "Don't prevent these items from teleporting")
+    private List<String> itemTeleportWhitelist = Lists.newArrayList("draconicevolution:ender_energy_manipulator");
+    
     @Setting(value = "limit-books", comment = "Limits books to 50 pages with 255 characters for each")
     private boolean limitBooks = false;
     
@@ -72,12 +78,6 @@ public class MixinCategory {
     
     @Setting(value = "packet-spam", comment = "Cancels spammy packets")
     private boolean packetSpam = false;
-    
-    @Setting(value = "item-teleport", comment = "Prevents or deletes any items that attempt to teleport across dimensions")
-    private boolean itemTeleport = false;
-    
-    @Setting(value = "item-teleport-whitelist", comment = "Don't prevent these items from teleporting")
-    private List<String> itemTeleportWhitelist = Lists.newArrayList("draconicevolution:ender_energy_manipulator");
     
     @Setting(value = "traveling-merchant", comment = "Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59")
     private boolean travelingMerchant = false;
@@ -134,6 +134,14 @@ public class MixinCategory {
         return itemstackExploit;
     }
     
+    public boolean isItemTeleport() {
+        return itemTeleport;
+    }
+    
+    public List<String> getItemTeleportWhitelist() {
+        return itemTeleportWhitelist;
+    }
+    
     public boolean isLimitBooks() {
         return limitBooks;
     }
@@ -144,14 +152,6 @@ public class MixinCategory {
     
     public boolean isPacketSpam() {
         return packetSpam;
-    }
-    
-    public boolean isItemTeleport() {
-        return itemTeleport;
-    }
-    
-    public List<String> getItemTeleportWhitelist() {
-        return itemTeleportWhitelist;
     }
     
     public boolean isTravelingMerchant() {

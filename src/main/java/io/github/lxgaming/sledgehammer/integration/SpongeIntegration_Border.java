@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.integration;
 
 import com.flowpowered.math.vector.Vector3d;
+import com.google.common.collect.Maps;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
@@ -38,16 +39,15 @@ import java.util.UUID;
 
 public class SpongeIntegration_Border extends AbstractIntegration {
     
-    private final Map<UUID, Long> cooldown = Toolbox.newHashMap();
+    private final Map<UUID, Long> cooldown = Maps.newHashMap();
     
     public SpongeIntegration_Border() {
         addDependency("sponge");
     }
     
     @Override
-    public boolean prepareIntegration() {
+    public void execute() {
         Sponge.getEventManager().registerListeners(Sledgehammer.getInstance().getPluginContainer(), this);
-        return true;
     }
     
     @Listener(order = Order.LATE)

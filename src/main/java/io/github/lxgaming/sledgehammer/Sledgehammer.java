@@ -16,12 +16,23 @@
 
 package io.github.lxgaming.sledgehammer;
 
+import com.google.common.collect.Maps;
+import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.Configuration;
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
+import io.github.lxgaming.sledgehammer.integration.BotaniaIntegration;
+import io.github.lxgaming.sledgehammer.integration.ForgeIntegration;
+import io.github.lxgaming.sledgehammer.integration.MistIntegration;
+import io.github.lxgaming.sledgehammer.integration.PrimalIntegration;
+import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border;
+import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Death;
+import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Phase;
+import io.github.lxgaming.sledgehammer.manager.CommandManager;
+import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
-import io.github.lxgaming.sledgehammer.util.Toolbox;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.api.plugin.PluginContainer;
@@ -36,8 +47,8 @@ public class Sledgehammer {
     private static Sledgehammer instance;
     private final Logger logger = LoggerFactory.getLogger(Reference.NAME);
     private final Configuration configuration = new Configuration(SpongeLaunch.getConfigDir().resolve(Reference.ID + ".conf"));
-    private final Map<String, Function<IntegrationCategory, Boolean>> integrationMappings = Toolbox.newHashMap();
-    private final Map<String, Function<MixinCategory, Boolean>> mixinMappings = Toolbox.newHashMap();
+    private final Map<String, Function<MixinCategory, Boolean>> mixinMappings = Maps.newHashMap();
+    private final Map<String, Boolean> modMappings = Maps.newHashMap();
     private PluginContainer pluginContainer;
     
     private Sledgehammer() {
@@ -51,51 +62,65 @@ public class Sledgehammer {
         
         Sledgehammer sledgehammer = new Sledgehammer();
         sledgehammer.getConfiguration().loadConfiguration();
-        sledgehammer.registerMappings();
+        sledgehammer.registerMods();
+        sledgehammer.registerMixins();
         sledgehammer.getConfiguration().saveConfiguration();
         return true;
     }
     
-    private void registerMappings() {
-        // Integration
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.BotaniaIntegration", IntegrationCategory::isBotania);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.ForgeIntegration", IntegrationCategory::isForge);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.MistIntegration", IntegrationCategory::isMist);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.PrimalIntegration", IntegrationCategory::isPrimal);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border", IntegrationCategory::isSpongeBorder);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Death", IntegrationCategory::isSpongeDeath);
-        getIntegrationMappings().put("io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Phase", IntegrationCategory::isSpongePhase);
-        
+    protected void registerCommands() {
+        CommandManager.registerCommand(SledgehammerCommand.class);
+    }
+    
+    protected void registerIntegrations() {
+        IntegrationManager.registerIntegration(BotaniaIntegration.class, IntegrationCategory::isBotania);
+        IntegrationManager.registerIntegration(ForgeIntegration.class, IntegrationCategory::isForge);
+        IntegrationManager.registerIntegration(MistIntegration.class, IntegrationCategory::isMist);
+        IntegrationManager.registerIntegration(PrimalIntegration.class, IntegrationCategory::isPrimal);
+        IntegrationManager.registerIntegration(SpongeIntegration_Border.class, IntegrationCategory::isSpongeBorder);
+        IntegrationManager.registerIntegration(SpongeIntegration_Death.class, IntegrationCategory::isSpongeDeath);
+        IntegrationManager.registerIntegration(SpongeIntegration_Phase.class, IntegrationCategory::isSpongePhase);
+    }
+    
+    protected void registerMixins() {
         // Mixin Core
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.advancements.MixinAdvancementManager", MixinCategory::isAdvancementStacktrace);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockGrass", MixinCategory::isBlockGrass);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.block.MixinBlockIce", MixinCategory::isBlockIce);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.entity.MixinEntity_Teleport", MixinCategory::isItemTeleport);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.item.MixinItemStack_Exploit", MixinCategory::isItemstackExploit);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.item.MixinItemWritableBook", MixinCategory::isLimitBooks);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetHandlerPlayServer_Book", MixinCategory::isLimitBooks);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetHandlerPlayServer_Event", MixinCategory::isInteractEvents);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkManager", MixinCategory::isFlushNetworkOnTick);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.network.MixinNetworkSystem", MixinCategory::isNetworkSystem);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.server.MixinDedicatedServer", category -> true);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.world.biome.MixinBiomeProvider", MixinCategory::isBiomeProvider);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.world.chunk.storage.MixinAnvilChunkLoader", category ->
+        getMixinMappings().put("core.advancements.MixinAdvancementManager", MixinCategory::isAdvancementStacktrace);
+        getMixinMappings().put("core.block.MixinBlockGrass", MixinCategory::isBlockGrass);
+        getMixinMappings().put("core.block.MixinBlockIce", MixinCategory::isBlockIce);
+        getMixinMappings().put("core.entity.MixinEntity_Teleport", MixinCategory::isItemTeleport);
+        getMixinMappings().put("core.item.MixinItemStack_Exploit", MixinCategory::isItemstackExploit);
+        getMixinMappings().put("core.item.MixinItemWritableBook", MixinCategory::isLimitBooks);
+        getMixinMappings().put("core.network.MixinNetHandlerPlayServer_Book", MixinCategory::isLimitBooks);
+        getMixinMappings().put("core.network.MixinNetHandlerPlayServer_Event", MixinCategory::isInteractEvents);
+        getMixinMappings().put("core.network.MixinNetworkManager", MixinCategory::isFlushNetworkOnTick);
+        getMixinMappings().put("core.network.MixinNetworkSystem", MixinCategory::isNetworkSystem);
+        getMixinMappings().put("core.server.MixinDedicatedServer", category -> true);
+        getMixinMappings().put("core.world.biome.MixinBiomeProvider", MixinCategory::isBiomeProvider);
+        getMixinMappings().put("core.world.chunk.storage.MixinAnvilChunkLoader", category ->
                 category.isChunkSaveAlert() || category.isChunkSavePurgeBlacklist() || category.isChunkSavePurgeAll());
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.core.world.chunk.storage.MixinRegionFileChunkBuffer", category ->
+        getMixinMappings().put("core.world.chunk.storage.MixinRegionFileChunkBuffer", category ->
                 category.isChunkSaveAlert() || category.isChunkSavePurgeBlacklist() || category.isChunkSavePurgeAll());
         
         // Mixin Forge
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.common.MixinForgeHooks_Advancement", MixinCategory::isAdvancementStacktrace);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.entity.passive.MixinEntityVillager", MixinCategory::isTravelingMerchant);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.entity.MixinEntity_Teleport", MixinCategory::isItemTeleport);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper", MixinCategory::isFlushNetworkOnTick);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.fml.common.network.simpleimpl.MixinSimpleNetworkWrapper", MixinCategory::isPacketSpam);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.fml.common.network.MixinFMLEmbeddedChannel", MixinCategory::isFlushNetworkOnTick);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.fml.common.network.MixinFMLEventChannel", MixinCategory::isFlushNetworkOnTick);
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.forge.world.storage.MixinWorldInfo", MixinCategory::isCeremonyRain);
+        getMixinMappings().put("forge.common.MixinForgeHooks_Advancement", MixinCategory::isAdvancementStacktrace);
+        getMixinMappings().put("forge.entity.passive.MixinEntityVillager", MixinCategory::isTravelingMerchant);
+        getMixinMappings().put("forge.entity.MixinEntity_Teleport", MixinCategory::isItemTeleport);
+        getMixinMappings().put("forge.fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper", MixinCategory::isFlushNetworkOnTick);
+        getMixinMappings().put("forge.fml.common.network.simpleimpl.MixinSimpleNetworkWrapper", MixinCategory::isPacketSpam);
+        getMixinMappings().put("forge.fml.common.network.MixinFMLEmbeddedChannel", MixinCategory::isFlushNetworkOnTick);
+        getMixinMappings().put("forge.fml.common.network.MixinFMLEventChannel", MixinCategory::isFlushNetworkOnTick);
+        getMixinMappings().put("forge.world.storage.MixinWorldInfo", MixinCategory::isCeremonyRain);
+        
+        // Mixin PreInit
+        getMixinMappings().put("forge.fml.common.MixinLoader", category -> !getModMappings().isEmpty());
+        getMixinMappings().put("forge.fml.common.MixinMetadataCollection", category -> !getModMappings().isEmpty());
         
         // Mixin Sponge
-        getMixinMappings().put("io.github.lxgaming.sledgehammer.mixin.sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", MixinCategory::isInventoryDebug);
+        getMixinMappings().put("sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", MixinCategory::isInventoryDebug);
+    }
+    
+    protected void registerMods() {
+        getConfig().map(Config::getModMappings).ifPresent(getModMappings()::putAll);
     }
     
     public void debugMessage(String format, Object... arguments) {
@@ -124,12 +149,25 @@ public class Sledgehammer {
         return Optional.empty();
     }
     
-    public Map<String, Function<IntegrationCategory, Boolean>> getIntegrationMappings() {
-        return integrationMappings;
-    }
-    
     public Map<String, Function<MixinCategory, Boolean>> getMixinMappings() {
         return mixinMappings;
+    }
+    
+    public Optional<Boolean> getMixinMapping(String id) {
+        Function<MixinCategory, Boolean> mixinMapping = getMixinMappings().get(StringUtils.removeStart(id, "io.github.lxgaming.sledgehammer.mixin."));
+        if (mixinMapping != null) {
+            return getConfig().map(Config::getMixinCategory).map(mixinMapping);
+        }
+        
+        return Optional.empty();
+    }
+    
+    public Map<String, Boolean> getModMappings() {
+        return modMappings;
+    }
+    
+    public Optional<Boolean> getModMapping(String id) {
+        return Optional.ofNullable(getModMappings().get(id));
     }
     
     public PluginContainer getPluginContainer() {

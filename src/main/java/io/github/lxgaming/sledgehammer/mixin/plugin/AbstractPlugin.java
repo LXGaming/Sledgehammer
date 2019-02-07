@@ -17,13 +17,14 @@
 package io.github.lxgaming.sledgehammer.mixin.plugin;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.util.Reference;
+import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
+import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import org.spongepowered.asm.util.PrettyPrinter;
 
-import java.util.function.Function;
+import java.util.List;
+import java.util.Set;
 
 public abstract class AbstractPlugin implements IMixinConfigPlugin {
     
@@ -33,8 +34,13 @@ public abstract class AbstractPlugin implements IMixinConfigPlugin {
     }
     
     @Override
+    public String getRefMapperConfig() {
+        return null;
+    }
+    
+    @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        Function<MixinCategory, Boolean> mixinMapping = Sledgehammer.getInstance().getMixinMappings().get(mixinClassName);
+        Boolean mixinMapping = Sledgehammer.getInstance().getMixinMapping(mixinClassName).orElse(null);
         if (mixinMapping == null) {
             new PrettyPrinter(50).add("Could not find function for " + Reference.NAME + " mixin").centre().hr()
                     .add("Missing function for class: " + mixinClassName)
@@ -42,6 +48,23 @@ public abstract class AbstractPlugin implements IMixinConfigPlugin {
             return false;
         }
         
-        return Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(mixinMapping).orElse(false);
+        return mixinMapping;
+    }
+    
+    @Override
+    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+    }
+    
+    @Override
+    public List<String> getMixins() {
+        return null;
+    }
+    
+    @Override
+    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    }
+    
+    @Override
+    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
     }
 }
