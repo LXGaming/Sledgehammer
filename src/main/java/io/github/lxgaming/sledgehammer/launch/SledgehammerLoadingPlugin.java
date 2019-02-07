@@ -21,6 +21,7 @@ import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.Map;
@@ -59,7 +60,11 @@ public class SledgehammerLoadingPlugin implements IFMLLoadingPlugin {
             location = "unknown";
         }
         
-        CoreModManager.getTransformers().remove(Reference.NAME + " (" + location + ")");
+        // Remove Transformer
+        if (CoreModManager.getTransformers().remove(Reference.NAME + " (" + location + ")") == null) {
+            // Remove Transformer fallback
+            CoreModManager.getTransformers().keySet().removeIf(name -> StringUtils.startsWithAny(name, Reference.NAME, getClass().getSimpleName()));
+        }
     }
     
     @Override
