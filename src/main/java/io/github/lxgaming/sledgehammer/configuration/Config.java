@@ -42,7 +42,7 @@ public class Config {
     
     @Setting(value = "mod", comment = ""
             + "False: Mod will not be loaded.\n"
-            + "True: Mod will be loaded early.")
+            + "True: Mod will be added to the classloader.")
     private Map<String, Boolean> modMappings = Maps.newHashMap();
     
     public boolean isDebug() {

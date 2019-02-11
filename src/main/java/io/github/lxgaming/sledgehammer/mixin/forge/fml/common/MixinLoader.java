@@ -72,8 +72,12 @@ public abstract class MixinLoader {
     
     public void sledgehammer$addFile(File file) {
         try {
+            if (modClassLoader.containsSource(file)) {
+                return;
+            }
+            
             modClassLoader.addFile(file);
-            Sledgehammer.getInstance().getLogger().debug("Added {} to the classloader", file.getName());
+            Sledgehammer.getInstance().getLogger().info("Loaded {}", file.getName());
         } catch (MalformedURLException ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while adding {} to the classloader", file, ex);
         }
