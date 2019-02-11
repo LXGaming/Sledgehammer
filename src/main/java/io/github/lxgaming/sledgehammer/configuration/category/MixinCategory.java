@@ -25,6 +25,9 @@ import java.util.List;
 @ConfigSerializable
 public class MixinCategory {
     
+    @Setting(value = "actuallyadditions-disruption", comment = "Disabled Disruption lens from ActuallyAdditions")
+    private boolean actuallyAdditionsDisruption = false;
+    
     @Setting(value = "advancement-stacktrace", comment = "Prints a single message instead of a stacktrace for advancement errors")
     private boolean advancementStacktrace = false;
     
@@ -79,8 +82,15 @@ public class MixinCategory {
     @Setting(value = "packet-spam", comment = "Cancels spammy packets")
     private boolean packetSpam = false;
     
+    @Setting(value = "quark-improved-sleeping", comment = "Disables Improved Sleeping from Quark")
+    private boolean quarkImprovedSleeping = false;
+    
     @Setting(value = "traveling-merchant", comment = "Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59")
     private boolean travelingMerchant = false;
+    
+    public boolean isActuallyAdditionsDisruption() {
+        return actuallyAdditionsDisruption;
+    }
     
     public boolean isAdvancementStacktrace() {
         return advancementStacktrace;
@@ -152,6 +162,10 @@ public class MixinCategory {
     
     public boolean isPacketSpam() {
         return packetSpam;
+    }
+    
+    public boolean isQuarkImprovedSleeping() {
+        return quarkImprovedSleeping;
     }
     
     public boolean isTravelingMerchant() {

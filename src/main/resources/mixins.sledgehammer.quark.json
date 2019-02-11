@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.7.10",
+  "package": "io.github.lxgaming.sledgehammer.mixin.quark",
+  "refmap": "mixins.sledgehammer.refmap.json",
+  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "base.module.MixinModuleLoader"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

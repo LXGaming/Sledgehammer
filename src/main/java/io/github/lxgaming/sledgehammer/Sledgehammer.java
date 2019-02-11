@@ -29,6 +29,7 @@ import io.github.lxgaming.sledgehammer.integration.PrimalIntegration;
 import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border;
 import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Death;
 import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Phase;
+import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
@@ -83,6 +84,10 @@ public class Sledgehammer {
     }
     
     protected void registerMixins() {
+        // Mixin ActuallyAdditions
+        getMixinMappings().put("actuallyadditions.mod.tile.MixinTileEntityAtomicReconstructor", category ->
+                SledgehammerLaunch.isForgeRegistered() && category.isActuallyAdditionsDisruption());
+        
         // Mixin Core
         getMixinMappings().put("core.advancements.MixinAdvancementManager", MixinCategory::isAdvancementStacktrace);
         getMixinMappings().put("core.block.MixinBlockGrass", MixinCategory::isBlockGrass);
@@ -115,12 +120,24 @@ public class Sledgehammer {
         getMixinMappings().put("forge.fml.common.MixinLoader", category -> !getModMappings().isEmpty());
         getMixinMappings().put("forge.fml.common.MixinMetadataCollection", category -> !getModMappings().isEmpty());
         
+        // Mixin Quark
+        getMixinMappings().put("quark.base.module.MixinModuleLoader", category ->
+                SledgehammerLaunch.isForgeRegistered() && category.isQuarkImprovedSleeping());
+        
         // Mixin Sponge
         getMixinMappings().put("sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", MixinCategory::isInventoryDebug);
     }
     
     protected void registerMods() {
         getConfig().map(Config::getModMappings).ifPresent(getModMappings()::putAll);
+        addModMapping("actuallyadditions", config -> config.getMixinCategory().isActuallyAdditionsDisruption());
+        addModMapping("quark", config -> config.getMixinCategory().isQuarkImprovedSleeping());
+    }
+    
+    public void addModMapping(String id, Function<Config, Boolean> function) {
+        if (getConfig().map(function).orElse(false)) {
+            getModMappings().put(id, true);
+        }
     }
     
     public void debugMessage(String format, Object... arguments) {
