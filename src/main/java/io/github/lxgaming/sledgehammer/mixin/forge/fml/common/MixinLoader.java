@@ -22,6 +22,7 @@ import io.github.lxgaming.sledgehammer.interfaces.fml.common.IMixinLoader;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModClassLoader;
 import net.minecraftforge.fml.common.discovery.ModDiscoverer;
+import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.libraries.Artifact;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
@@ -59,6 +60,10 @@ public abstract class MixinLoader {
     private void onGatherLegacyCanidates(List<String> additionalContainers, CallbackInfoReturnable<ModDiscoverer> callbackInfoReturnable,
                                          ModDiscoverer discoverer, List<Artifact> maven_canidates, List<File> file_canidates) {
         for (Map.Entry<File, Set<String>> entry : mappings.entrySet()) {
+            if (CoreModManager.getReparseableCoremods().contains(entry.getKey().getName())) {
+                continue;
+            }
+            
             for (String id : entry.getValue()) {
                 if (Sledgehammer.getInstance().getModMapping(id).isPresent()) {
                     file_canidates.removeIf(entry.getKey()::equals);
