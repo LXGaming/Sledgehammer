@@ -126,6 +126,7 @@ public class Sledgehammer {
         
         // Mixin Sponge
         getMixinMappings().put("sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", MixinCategory::isInventoryDebug);
+        getMixinMappings().put("sponge.common.event.MixinSpongeCommonEventFactory", MixinCategory::isInventoryDebug);
     }
     
     protected void registerMods() {
