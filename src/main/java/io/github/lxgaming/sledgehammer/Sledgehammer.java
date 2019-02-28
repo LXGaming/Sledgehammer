@@ -34,8 +34,8 @@ import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.common.launch.SpongeLaunch;
 
@@ -46,7 +46,7 @@ import java.util.function.Function;
 public class Sledgehammer {
     
     private static Sledgehammer instance;
-    private final Logger logger = LoggerFactory.getLogger(Reference.NAME);
+    private final Logger logger = LogManager.getLogger(Reference.NAME);
     private final Configuration configuration = new Configuration(SpongeLaunch.getConfigDir().resolve(Reference.ID + ".conf"));
     private final Map<String, Function<MixinCategory, Boolean>> mixinMappings = Maps.newHashMap();
     private final Map<String, Boolean> modMappings = Maps.newHashMap();
