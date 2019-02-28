@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Alex Thomson
+ * Copyright 2019 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.util;
+package io.github.lxgaming.sledgehammer.interfaces.crash;
 
-public class Reference {
+import net.minecraft.crash.CrashReportCategory;
+
+public interface IMixinCrashReport {
     
-    public static final String ID = "sledgehammer";
-    public static final String NAME = "Sledgehammer";
-    public static final String VERSION = "1.12.2-1.3.4";
-    public static final String DESCRIPTION = "Smashes the stupid out of the server.";
-    public static final String AUTHORS = "LX_Gaming";
-    public static final String SOURCE = "https://github.com/LXGaming/Sledgehammer/";
-    public static final String WEBSITE = "https://lxgaming.github.io/";
+    void addCategory(CrashReportCategory crashReportCategory);
+    
+    void addCategory(int index, CrashReportCategory crashReportCategory);
 }

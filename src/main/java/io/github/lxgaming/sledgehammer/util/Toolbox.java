@@ -16,6 +16,8 @@
 
 package io.github.lxgaming.sledgehammer.util;
 
+import io.github.lxgaming.sledgehammer.Sledgehammer;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.launchwrapper.Launch;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.CatalogType;
@@ -27,10 +29,14 @@ import org.spongepowered.api.text.action.TextActions;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
 import org.spongepowered.api.text.serializer.TextSerializers;
+import org.spongepowered.common.launch.SpongeLaunch;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 public class Toolbox {
@@ -70,6 +76,20 @@ public class Toolbox {
         }
         
         return plural;
+    }
+    
+    public static boolean saveCrashReport(CrashReport crashReport) {
+        Path crashPath = SpongeLaunch.getGameDir()
+                .resolve("crash-reports")
+                .resolve("crash-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.txt");
+        
+        if (crashReport.saveToFile(crashPath.toFile())) {
+            Sledgehammer.getInstance().getLogger().info("This crash report has been saved to: {}", crashPath);
+            return true;
+        } else {
+            Sledgehammer.getInstance().getLogger().error("We were unable to save this crash report to disk.");
+            return false;
+        }
     }
     
     public static CatalogType getRootType(Entity entity) {

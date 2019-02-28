@@ -92,6 +92,7 @@ public class Sledgehammer {
         getMixinMappings().put("core.advancements.MixinAdvancementManager", MixinCategory::isAdvancementStacktrace);
         getMixinMappings().put("core.block.MixinBlockGrass", MixinCategory::isBlockGrass);
         getMixinMappings().put("core.block.MixinBlockIce", MixinCategory::isBlockIce);
+        getMixinMappings().put("core.crash.MixinCrashReport", category -> true);
         getMixinMappings().put("core.entity.MixinEntity_Teleport", MixinCategory::isItemTeleport);
         getMixinMappings().put("core.item.MixinItemStack_Exploit", MixinCategory::isItemstackExploit);
         getMixinMappings().put("core.item.MixinItemWritableBook", MixinCategory::isLimitBooks);
@@ -102,9 +103,9 @@ public class Sledgehammer {
         getMixinMappings().put("core.server.MixinDedicatedServer", category -> true);
         getMixinMappings().put("core.world.biome.MixinBiomeProvider", MixinCategory::isBiomeProvider);
         getMixinMappings().put("core.world.chunk.storage.MixinAnvilChunkLoader", category ->
-                category.isChunkSaveAlert() || category.isChunkSavePurgeBlacklist() || category.isChunkSavePurgeAll());
+                category.isChunkSaveAlert() || category.isChunkSavePurgeAll() || category.isChunkSavePurgeBlacklist() || category.isChunkSaveShutdown());
         getMixinMappings().put("core.world.chunk.storage.MixinRegionFileChunkBuffer", category ->
-                category.isChunkSaveAlert() || category.isChunkSavePurgeBlacklist() || category.isChunkSavePurgeAll());
+                category.isChunkSaveAlert() || category.isChunkSavePurgeAll() || category.isChunkSavePurgeBlacklist() || category.isChunkSaveShutdown());
         
         // Mixin Forge
         getMixinMappings().put("forge.common.MixinForgeHooks_Advancement", MixinCategory::isAdvancementStacktrace);

@@ -10,6 +10,7 @@
     "advancements.MixinAdvancementManager",
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
+    "crash.MixinCrashReport",
     "entity.MixinEntity_Teleport",
     "item.MixinItemStack_Exploit",
     "item.MixinItemWritableBook",

@@ -22,7 +22,7 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class MessageCategory {
     
-    @Setting(value = "chunk-save", comment = "Sent to the player when a chunk fails to save")
+    @Setting(value = "chunk-save", comment = "Sent when a chunk fails to save")
     private String chunkSave = "&fChunk ([X], [Z]) &cfailed to save";
     
     @Setting(value = "item-teleport", comment = "Sent to the player when a thrown item gets deleted")

@@ -22,21 +22,32 @@ import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.exception.ChunkSaveException;
+import io.github.lxgaming.sledgehammer.interfaces.crash.IMixinCrashReport;
 import io.github.lxgaming.sledgehammer.util.Broadcast;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import net.minecraft.crash.CrashReport;
+import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.Level;
+import org.spongepowered.api.GameState;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.world.World;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.util.PrettyPrinter;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -46,6 +57,10 @@ public abstract class MixinAnvilChunkLoader {
     
     @Shadow
     protected abstract void writeChunkData(ChunkPos pos, NBTTagCompound compound) throws IOException;
+    
+    @Shadow
+    @Final
+    public File chunkSaveLocation;
     
     @Redirect(method = "writeNextIO",
             at = @At(value = "INVOKE",
@@ -85,6 +100,47 @@ public abstract class MixinAnvilChunkLoader {
                 Sledgehammer.getInstance().getLogger().info("Chunk ({}, {}) saved after removing all Entities and TileEntities", pos.x, pos.z);
                 return;
             }
+        }
+        
+        // Cannot broadcast or shutdown unless the server is currently running
+        if (Sponge.getGame().getState() != GameState.SERVER_STARTED) {
+            return;
+        }
+        
+        // Shutdown
+        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isChunkSaveShutdown).orElse(false)) {
+            World world = sledgehammer$getWorld().orElse(null);
+            
+            CrashReport crashReport = CrashReport.makeCrashReport(new ChunkSaveException(), "Chunk (" + pos.x + ", " + pos.z + ") failed to save");
+            CrashReportCategory crashReportCategory = new CrashReportCategory(crashReport, "Affected level");
+            crashReportCategory.addDetail("World", () -> {
+                if (world != null) {
+                    return String.format("%s (%s)", world.getName(), world.getUniqueId());
+                }
+                
+                return "Unknown";
+            });
+            
+            crashReportCategory.addDetail("Players", () -> {
+                if (world != null) {
+                    return String.format("%d total; %s", world.getPlayers().size(), world.getPlayers());
+                }
+                
+                return "Unknown";
+            });
+            
+            crashReportCategory.addDetail("Location", () -> CrashReportCategory.getCoordinateInfo(pos.getBlock(8, 0, 8)));
+            Toolbox.cast(crashReport, IMixinCrashReport.class).addCategory(crashReportCategory);
+            Toolbox.saveCrashReport(crashReport);
+            new PrettyPrinter(50)
+                    .add(crashReport.getDescription()).centre().hr()
+                    .add("StackTrace:")
+                    .add(crashReport.getCrashCause())
+                    .log(Sledgehammer.getInstance().getLogger(), Level.ERROR);
+            
+            Sponge.getServer().setHasWhitelist(true);
+            Sponge.getServer().shutdown();
+            return;
         }
         
         // Broadcast
@@ -261,5 +317,15 @@ public abstract class MixinAnvilChunkLoader {
                 }
             }
         }
+    }
+    
+    private Optional<World> sledgehammer$getWorld() {
+        for (World world : Sponge.getServer().getWorlds()) {
+            if (world.getDirectory().equals(chunkSaveLocation.toPath())) {
+                return Optional.of(world);
+            }
+        }
+        
+        return Optional.empty();
     }
 }
