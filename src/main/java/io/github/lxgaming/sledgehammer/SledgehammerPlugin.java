@@ -17,7 +17,6 @@
 package io.github.lxgaming.sledgehammer;
 
 import com.google.inject.Inject;
-import io.github.lxgaming.sledgehammer.integration.AbstractIntegration;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import org.spongepowered.api.event.Listener;
@@ -25,6 +24,7 @@ import org.spongepowered.api.event.game.state.GameConstructionEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameLoadCompleteEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
+import org.spongepowered.api.event.game.state.GameStateEvent;
 import org.spongepowered.api.event.game.state.GameStoppedEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
@@ -46,17 +46,16 @@ public class SledgehammerPlugin {
     public void onConstruction(GameConstructionEvent event) {
         Sledgehammer.init();
         Sledgehammer.getInstance().setPluginContainer(getPluginContainer());
+        Sledgehammer.getInstance().registerIntegrations();
     }
     
     @Listener
     public void onPreInitialization(GamePreInitializationEvent event) {
-        Sledgehammer.getInstance().registerIntegrations();
     }
     
     @Listener
     public void onInitialization(GameInitializationEvent event) {
         Sledgehammer.getInstance().registerCommands();
-        IntegrationManager.getIntegrations().forEach(AbstractIntegration::run);
     }
     
     @Listener
@@ -67,6 +66,11 @@ public class SledgehammerPlugin {
     @Listener
     public void onStopped(GameStoppedEvent event) {
         Sledgehammer.getInstance().getLogger().info("{} v{} has stopped", Reference.NAME, Reference.VERSION);
+    }
+    
+    @Listener
+    public void onGameState(GameStateEvent event) {
+        IntegrationManager.process();
     }
     
     private PluginContainer getPluginContainer() {

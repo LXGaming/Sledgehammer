@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import nmd.primal.core.api.PrimalAPI;
 import nmd.primal.core.api.events.FlakeEvent;
 import nmd.primal.core.common.helper.PlayerHelper;
+import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.CauseStackManager;
 
@@ -34,6 +35,7 @@ public class PrimalIntegration extends AbstractIntegration {
     public PrimalIntegration() {
         addDependency("forge");
         addDependency("primal");
+        setState(GameState.INITIALIZATION);
     }
     
     @Override

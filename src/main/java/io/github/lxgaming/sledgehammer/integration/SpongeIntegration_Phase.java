@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.integration;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -34,6 +35,7 @@ public class SpongeIntegration_Phase extends AbstractIntegration {
     
     public SpongeIntegration_Phase() {
         addDependency("sponge");
+        setState(GameState.INITIALIZATION);
     }
     
     @Override

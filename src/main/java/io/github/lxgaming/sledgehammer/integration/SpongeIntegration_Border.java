@@ -24,6 +24,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.util.Broadcast;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.apache.commons.lang3.StringUtils;
+import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -43,6 +44,7 @@ public class SpongeIntegration_Border extends AbstractIntegration {
     
     public SpongeIntegration_Border() {
         addDependency("sponge");
+        setState(GameState.INITIALIZATION);
     }
     
     @Override

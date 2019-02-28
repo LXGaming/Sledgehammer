@@ -32,6 +32,35 @@ public final class IntegrationManager {
     private static final Set<AbstractIntegration> INTEGRATIONS = Sets.newLinkedHashSet();
     private static final Set<Class<? extends AbstractIntegration>> INTEGRATION_CLASSES = Sets.newLinkedHashSet();
     
+    public static void process() {
+        for (AbstractIntegration integration : getIntegrations()) {
+            if (integration.getState() == null || integration.getState() != Sponge.getGame().getState()) {
+                continue;
+            }
+            
+            Set<String> missingDependencies = Sets.newLinkedHashSet();
+            for (String dependency : integration.getDependencies()) {
+                if (!Sponge.getPluginManager().isLoaded(dependency)) {
+                    missingDependencies.add(dependency);
+                }
+            }
+            
+            if (!missingDependencies.isEmpty()) {
+                Sledgehammer.getInstance().getLogger().warn("{} is missing the following dependencies: {}",
+                        integration.getClass().getSimpleName(), String.join(", ", missingDependencies));
+                continue;
+            }
+            
+            Sledgehammer.getInstance().debugMessage("Processing {} ({})", integration.getClass().getSimpleName(), integration.getState());
+            
+            try {
+                integration.execute();
+            } catch (Exception ex) {
+                Sledgehammer.getInstance().getLogger().error("Encountered an error while executing {}", integration.getClass().getSimpleName(), ex);
+            }
+        }
+    }
+    
     public static boolean registerIntegration(Class<? extends AbstractIntegration> integrationClass, Function<IntegrationCategory, Boolean> function) {
         if (getIntegrationClasses().contains(integrationClass)) {
             Sledgehammer.getInstance().getLogger().warn("{} is already registered", integrationClass.getSimpleName());
@@ -46,18 +75,6 @@ public final class IntegrationManager {
         AbstractIntegration integration = Toolbox.newInstance(integrationClass).orElse(null);
         if (integration == null) {
             Sledgehammer.getInstance().getLogger().error("{} failed to initialize", integrationClass.getSimpleName());
-            return false;
-        }
-        
-        Set<String> missingDependencies = Sets.newLinkedHashSet();
-        for (String dependency : integration.getDependencies()) {
-            if (!Sponge.getPluginManager().isLoaded(dependency)) {
-                missingDependencies.add(dependency);
-            }
-        }
-        
-        if (!missingDependencies.isEmpty()) {
-            Sledgehammer.getInstance().getLogger().warn("{} is missing the following dependencies: {}", integrationClass.getSimpleName(), String.join(", ", missingDependencies));
             return false;
         }
         
