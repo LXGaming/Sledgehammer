@@ -51,7 +51,9 @@ public class SpongeIntegration_Phase extends AbstractIntegration {
         try {
             Field field = PhaseContext.class.getDeclaredField("blockEntitySpawnSupplier");
             field.setAccessible(true);
-            field.set(context, new CapturedBlockEntitySpawnSupplier());
+            if (field.get(context) == null) {
+                field.set(context, new CapturedBlockEntitySpawnSupplier());
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
