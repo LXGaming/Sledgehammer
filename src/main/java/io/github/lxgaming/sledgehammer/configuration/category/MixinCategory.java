@@ -88,6 +88,9 @@ public class MixinCategory {
     @Setting(value = "quark-improved-sleeping", comment = "Disables Improved Sleeping from Quark")
     private boolean quarkImprovedSleeping = false;
     
+    @Setting(value = "reliquary-item-rending-gale", comment = "Fixes https://github.com/P3pp3rF1y/Reliquary/issues/370")
+    private boolean reliquaryItemRendingGale = false;
+    
     @Setting(value = "traveling-merchant", comment = "Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59")
     private boolean travelingMerchant = false;
     
@@ -173,6 +176,10 @@ public class MixinCategory {
     
     public boolean isQuarkImprovedSleeping() {
         return quarkImprovedSleeping;
+    }
+    
+    public boolean isReliquaryItemRendingGale() {
+        return reliquaryItemRendingGale;
     }
     
     public boolean isTravelingMerchant() {

@@ -125,6 +125,10 @@ public class Sledgehammer {
         getMixinMappings().put("quark.base.module.MixinModuleLoader", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isQuarkImprovedSleeping());
         
+        // Mixin Reliquary
+        getMixinMappings().put("xreliquary.items.MixinItemRendingGale", category ->
+                SledgehammerLaunch.isForgeRegistered() && category.isReliquaryItemRendingGale());
+        
         // Mixin Sponge
         getMixinMappings().put("sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", MixinCategory::isInventoryDebug);
         getMixinMappings().put("sponge.common.event.MixinSpongeCommonEventFactory", MixinCategory::isInventoryDebug);
