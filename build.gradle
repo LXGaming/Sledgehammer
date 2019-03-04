@@ -89,7 +89,7 @@ jar {
                         + "mixins.sledgehammer.core.json,"
                         + "mixins.sledgehammer.forge.json,"
                         + "mixins.sledgehammer.quark.json,"
-                        + "mixins.sledgehammer.sponge.json"
+                        + "mixins.sledgehammer.sponge.json,"
                         + "mixins.sledgehammer.xreliquary.json",
                 "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
                 "TweakOrder": 0
