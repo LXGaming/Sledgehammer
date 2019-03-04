@@ -138,6 +138,7 @@ public class Sledgehammer {
         getConfig().map(Config::getModMappings).ifPresent(getModMappings()::putAll);
         addModMapping("actuallyadditions", config -> config.getMixinCategory().isActuallyAdditionsDisruption());
         addModMapping("quark", config -> config.getMixinCategory().isQuarkImprovedSleeping());
+        addModMapping("xreliquary", config -> config.getMixinCategory().isReliquaryItemRendingGale());
     }
     
     public void addModMapping(String id, Function<Config, Boolean> function) {
