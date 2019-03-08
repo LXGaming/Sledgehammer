@@ -129,6 +129,10 @@ public class Sledgehammer {
         getMixinMappings().put("xreliquary.items.MixinItemRendingGale", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isReliquaryItemRendingGale());
         
+        // Mixin Ruins
+        getMixinMappings().put("ruins.common.MixinRuinTextLumper", category ->
+                SledgehammerLaunch.isForgeRegistered() && category.isRuinsDebug());
+        
         // Mixin Sponge
         getMixinMappings().put("sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", MixinCategory::isInventoryDebug);
         getMixinMappings().put("sponge.common.event.MixinSpongeCommonEventFactory", MixinCategory::isInventoryDebug);
@@ -137,6 +141,7 @@ public class Sledgehammer {
     protected void registerMods() {
         getConfig().map(Config::getModMappings).ifPresent(getModMappings()::putAll);
         addModMapping("actuallyadditions", config -> config.getMixinCategory().isActuallyAdditionsDisruption());
+        addModMapping("AS_Ruins", config -> config.getMixinCategory().isRuinsDebug());
         addModMapping("quark", config -> config.getMixinCategory().isQuarkImprovedSleeping());
         addModMapping("xreliquary", config -> config.getMixinCategory().isReliquaryItemRendingGale());
     }
