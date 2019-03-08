@@ -31,7 +31,7 @@ public class MixinCategory {
     @Setting(value = "advancement-stacktrace", comment = "Prints a single message instead of a stacktrace for advancement errors")
     private boolean advancementStacktrace = false;
     
-    @Setting(value = "biome-provider", comment = "Fixed NPE in findBiomePosition method")
+    @Setting(value = "biome-provider", comment = "Fixed NullPointerException in findBiomePosition method")
     private boolean biomeProvider = false;
     
     @Setting(value = "block-grass", comment = "Prevents Grass turning into Dirt")

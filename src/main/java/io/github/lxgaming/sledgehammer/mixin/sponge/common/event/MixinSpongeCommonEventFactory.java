@@ -32,7 +32,7 @@ public class MixinSpongeCommonEventFactory {
             )
     )
     private static void onCaptureTransactionWarnFirst(Logger logger, String message) {
-        Sledgehammer.getInstance().debugMessage("{} - {}", message);
+        Sledgehammer.getInstance().debugMessage(message);
     }
     
     @Redirect(method = "captureTransaction(Lorg/spongepowered/common/interfaces/IMixinInventory;Lorg/spongepowered/api/item/inventory/Inventory;ILjava/util/function/Supplier;)Lnet/minecraft/item/ItemStack;",
@@ -41,6 +41,6 @@ public class MixinSpongeCommonEventFactory {
             )
     )
     private static void onCaptureTransactionWarnSecond(Logger logger, String message) {
-        Sledgehammer.getInstance().debugMessage("{} - {}", message);
+        Sledgehammer.getInstance().debugMessage(message);
     }
 }
