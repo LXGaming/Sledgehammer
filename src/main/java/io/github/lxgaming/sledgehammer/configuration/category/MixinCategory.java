@@ -85,6 +85,9 @@ public class MixinCategory {
     @Setting(value = "packet-spam", comment = "Cancels spammy packets")
     private boolean packetSpam = false;
     
+    @Setting(value = "player-chunk-map", comment = "Prevents ConcurrentModificationException in PlayerChunkMap")
+    private boolean playerChunkMap = false;
+    
     @Setting(value = "quark-improved-sleeping", comment = "Disables Improved Sleeping from Quark")
     private boolean quarkImprovedSleeping = false;
     
@@ -175,6 +178,10 @@ public class MixinCategory {
     
     public boolean isPacketSpam() {
         return packetSpam;
+    }
+    
+    public boolean isPlayerChunkMap() {
+        return playerChunkMap;
     }
     
     public boolean isQuarkImprovedSleeping() {

@@ -100,6 +100,7 @@ public class Sledgehammer {
         getMixinMappings().put("core.network.MixinNetHandlerPlayServer_Event", MixinCategory::isInteractEvents);
         getMixinMappings().put("core.network.MixinNetworkManager", MixinCategory::isFlushNetworkOnTick);
         getMixinMappings().put("core.network.MixinNetworkSystem", MixinCategory::isNetworkSystem);
+        getMixinMappings().put("core.server.management.MixinPlayerChunkMap", MixinCategory::isPlayerChunkMap);
         getMixinMappings().put("core.server.MixinDedicatedServer", category -> true);
         getMixinMappings().put("core.world.biome.MixinBiomeProvider", MixinCategory::isBiomeProvider);
         getMixinMappings().put("core.world.chunk.storage.MixinAnvilChunkLoader", category ->

@@ -18,6 +18,7 @@
     "network.MixinNetHandlerPlayServer_Event",
     "network.MixinNetworkManager",
     "network.MixinNetworkSystem",
+    "server.management.MixinPlayerChunkMap",
     "server.MixinDedicatedServer",
     "world.biome.MixinBiomeProvider",
     "world.chunk.storage.MixinAnvilChunkLoader",
