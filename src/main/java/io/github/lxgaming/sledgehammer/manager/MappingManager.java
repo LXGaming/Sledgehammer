@@ -37,6 +37,9 @@ public final class MappingManager {
     
     public static void registerMixins() {
         // Client Mixin
+        // - Core
+        registerClientMixin("core.client.MixinMinecraft", category -> true);
+        
         // - Forge
         registerClientMixin("forge.common.MixinForgeModContainer", ClientMixinCategory::isNukeSearchTree);
         

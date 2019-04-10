@@ -23,6 +23,7 @@
     "world.chunk.storage.MixinRegionFileChunkBuffer"
   ],
   "client": [
+    "client.MixinMinecraft"
   ],
   "server": [
     "server.management.MixinPlayerChunkMap",
