@@ -17,12 +17,9 @@
 package io.github.lxgaming.sledgehammer.mixin.plugin;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.util.Reference;
-import org.apache.logging.log4j.Level;
 import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
-import org.spongepowered.asm.util.PrettyPrinter;
 
 import java.util.List;
 import java.util.Set;
@@ -43,10 +40,7 @@ public abstract class AbstractPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         Boolean mixinMapping = Sledgehammer.getInstance().getMixinMapping(mixinClassName).orElse(null);
         if (mixinMapping == null) {
-            new PrettyPrinter(50)
-                    .add("Could not find function for " + Reference.NAME + " mixin").centre().hr()
-                    .add("Missing function for class: " + mixinClassName)
-                    .log(Sledgehammer.getInstance().getLogger(), Level.WARN);
+            Sledgehammer.getInstance().getLogger().error("Missing Mixin mapping for class: {}", mixinClassName);
             return false;
         }
         

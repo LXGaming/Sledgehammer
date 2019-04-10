@@ -52,7 +52,7 @@ public abstract class MixinEntity_Teleport {
             
             Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getItemTeleport).filter(StringUtils::isNotBlank).ifPresent(message -> {
                 Broadcast broadcast = Broadcast.builder()
-                        .message(Toolbox.convertColor(message.replace("[ID]", Toolbox.getRootType(mixinEntity).getId())))
+                        .message(Toolbox.convertColor(message.replace("[ID]", Toolbox.getRootId(Toolbox.cast(this, Entity.class)))))
                         .type(Broadcast.Type.CHAT)
                         .build();
                 
@@ -73,6 +73,6 @@ public abstract class MixinEntity_Teleport {
         return Sledgehammer.getInstance().getConfig()
                 .map(Config::getMixinCategory)
                 .map(MixinCategory::getItemTeleportWhitelist)
-                .map(list -> !list.contains(Toolbox.getRootType(mixinEntity).getId())).orElse(false);
+                .map(list -> !list.contains(Toolbox.getRootId(Toolbox.cast(this, Entity.class)))).orElse(false);
     }
 }

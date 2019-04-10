@@ -19,6 +19,7 @@ package io.github.lxgaming.sledgehammer.integration;
 import com.flowpowered.math.vector.Vector3d;
 import com.google.common.collect.Maps;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlugin;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.util.Broadcast;
@@ -49,7 +50,7 @@ public class SpongeIntegration_Border extends AbstractIntegration {
     
     @Override
     public void execute() {
-        Sponge.getEventManager().registerListeners(Sledgehammer.getInstance().getPluginContainer(), this);
+        Sponge.getEventManager().registerListeners(SledgehammerPlugin.getInstance().getPluginContainer(), this);
     }
     
     @Listener(order = Order.LATE)

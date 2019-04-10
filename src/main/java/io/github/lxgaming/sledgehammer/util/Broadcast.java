@@ -26,11 +26,11 @@ import org.spongepowered.api.text.chat.ChatTypes;
 
 public class Broadcast {
     
-    private final Text message;
+    private final String message;
     private final String permission;
     private final Type type;
     
-    private Broadcast(Text message, String permission, Type type) {
+    private Broadcast(String message, String permission, Type type) {
         this.message = message;
         this.permission = permission;
         this.type = type;
@@ -57,13 +57,13 @@ public class Broadcast {
         }
         
         if (getType() == Type.ACTION_BAR) {
-            player.sendMessage(getType().getChatType(), getMessage());
+            //player.sendMessage(getType().getChatType(), getMessage());
         } else {
             player.sendMessage(getType().getChatType(), Text.of(Toolbox.getTextPrefix(), getMessage()));
         }
     }
     
-    public Text getMessage() {
+    public String getMessage() {
         return message;
     }
     
@@ -95,13 +95,13 @@ public class Broadcast {
     
     public static final class Builder {
         
-        private Text message;
+        private String message;
         private String permission;
         private Type type;
         
         public Broadcast build() {
             if (getMessage() == null) {
-                message(Text.EMPTY);
+                message("");
             }
             
             if (getType() == null) {
@@ -111,11 +111,11 @@ public class Broadcast {
             return new Broadcast(getMessage(), getPermission(), getType());
         }
         
-        private Text getMessage() {
+        private String getMessage() {
             return message;
         }
         
-        public Builder message(Text message) {
+        public Builder message(String message) {
             this.message = message;
             return this;
         }

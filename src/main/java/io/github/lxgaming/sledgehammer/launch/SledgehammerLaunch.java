@@ -17,13 +17,14 @@
 package io.github.lxgaming.sledgehammer.launch;
 
 import io.github.lxgaming.sledgehammer.util.Reference;
-import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.launchwrapper.ITweaker;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.common.ForgeVersion;
 import org.spongepowered.asm.launch.GlobalProperties;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.Mixins;
+import org.spongepowered.common.SpongeImpl;
 
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class SledgehammerLaunch {
     private static final String FORGE_CLASS = "net.minecraftforge.fml.relauncher.CoreModManager";
     private static final String FORGE_INITIALIZED = ForgeVersion.MOD_ID + ".initialized";
     private static final String SLEDGEHAMMER_INITIALIZED = Reference.ID + ".initialized";
+    private static final String SPONGE_CLASS = "org.spongepowered.common.launch.SpongeLaunch";
+    private static final String SPONGE_INITIALIZED = SpongeImpl.ECOSYSTEM_ID + ".initialized";
     
     private SledgehammerLaunch() {
     }
@@ -41,7 +44,7 @@ public class SledgehammerLaunch {
     }
     
     public static void configureEnvironment() {
-        if (!isForgeRegistered() && Toolbox.isClassPresent(FORGE_CLASS)) {
+        if (!isForgeRegistered() && isClassPresent(FORGE_CLASS)) {
             registerForge();
         }
         
@@ -53,6 +56,18 @@ public class SledgehammerLaunch {
             registerSledgehammer();
             
             Mixins.addConfiguration("mixins.sledgehammer.preinit.json");
+        }
+        
+        if (!isSpongeRegistered() && isClassPresent(SPONGE_CLASS)) {
+            registerSponge();
+        }
+    }
+    
+    public static boolean isClassPresent(String className) {
+        try {
+            return Class.forName(className, false, Launch.classLoader) != null;
+        } catch (Exception ex) {
+            return false;
         }
     }
     
@@ -78,5 +93,13 @@ public class SledgehammerLaunch {
     
     private static void registerSledgehammer() {
         GlobalProperties.put(SLEDGEHAMMER_INITIALIZED, Reference.VERSION);
+    }
+    
+    public static boolean isSpongeRegistered() {
+        return GlobalProperties.get(SPONGE_INITIALIZED) != null;
+    }
+    
+    private static void registerSponge() {
+        GlobalProperties.put(SPONGE_INITIALIZED, "Unknown");
     }
 }

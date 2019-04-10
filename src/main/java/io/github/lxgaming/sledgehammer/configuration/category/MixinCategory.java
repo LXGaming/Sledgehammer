@@ -29,7 +29,7 @@ public class MixinCategory {
     private boolean actuallyAdditionsDisruption = false;
     
     @Setting(value = "advancement-stacktrace", comment = "Prints a single message instead of a stacktrace for advancement errors")
-    private boolean advancementStacktrace = false;
+    private boolean advancementStacktrace = true;
     
     @Setting(value = "biome-provider", comment = "Fixed NullPointerException in findBiomePosition method")
     private boolean biomeProvider = false;
@@ -80,7 +80,7 @@ public class MixinCategory {
     private boolean limitBooks = false;
     
     @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
-    private boolean networkSystem = false;
+    private boolean networkSystem = true;
     
     @Setting(value = "packet-spam", comment = "Cancels spammy packets")
     private boolean packetSpam = false;

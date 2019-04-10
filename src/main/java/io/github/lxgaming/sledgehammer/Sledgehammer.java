@@ -17,7 +17,6 @@
 package io.github.lxgaming.sledgehammer;
 
 import com.google.common.collect.Maps;
-import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.Configuration;
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
@@ -30,15 +29,13 @@ import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border;
 import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Death;
 import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Phase;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
-import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.spongepowered.api.plugin.PluginContainer;
-import org.spongepowered.common.launch.SpongeLaunch;
 
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -47,10 +44,9 @@ public class Sledgehammer {
     
     private static Sledgehammer instance;
     private final Logger logger = LogManager.getLogger(Reference.NAME);
-    private final Configuration configuration = new Configuration(SpongeLaunch.getConfigDir().resolve(Reference.ID + ".conf"));
+    private final Configuration configuration = new Configuration(Paths.get("config").resolve(Reference.ID + ".conf"));
     private final Map<String, Function<MixinCategory, Boolean>> mixinMappings = Maps.newHashMap();
     private final Map<String, Boolean> modMappings = Maps.newHashMap();
-    private PluginContainer pluginContainer;
     
     private Sledgehammer() {
         instance = this;
@@ -70,7 +66,9 @@ public class Sledgehammer {
     }
     
     protected void registerCommands() {
-        CommandManager.registerCommand(SledgehammerCommand.class);
+        // TODO Fix
+        // Won't work on Forge
+        // CommandManager.registerCommand(SledgehammerCommand.class);
     }
     
     protected void registerIntegrations() {
@@ -198,13 +196,5 @@ public class Sledgehammer {
     
     public Optional<Boolean> getModMapping(String id) {
         return Optional.ofNullable(getModMappings().get(id));
-    }
-    
-    public PluginContainer getPluginContainer() {
-        return pluginContainer;
-    }
-    
-    protected void setPluginContainer(PluginContainer pluginContainer) {
-        this.pluginContainer = pluginContainer;
     }
 }

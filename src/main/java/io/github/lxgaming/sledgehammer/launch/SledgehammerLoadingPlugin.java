@@ -17,7 +17,6 @@
 package io.github.lxgaming.sledgehammer.launch;
 
 import io.github.lxgaming.sledgehammer.util.Reference;
-import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
@@ -52,7 +51,7 @@ public class SledgehammerLoadingPlugin implements IFMLLoadingPlugin {
     
     @Override
     public void injectData(Map<String, Object> data) {
-        File file = Toolbox.cast(data.get("coremodLocation"), File.class);
+        File file = (File) data.get("coremodLocation");
         String location;
         if (file != null) {
             location = file.getName();

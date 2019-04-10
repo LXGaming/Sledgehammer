@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.integration;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlugin;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
@@ -44,7 +45,7 @@ public class MistIntegration extends AbstractIntegration {
     
     @Override
     public void execute() {
-        Sponge.getEventManager().registerListeners(Sledgehammer.getInstance().getPluginContainer(), this);
+        Sponge.getEventManager().registerListeners(SledgehammerPlugin.getInstance().getPluginContainer(), this);
     }
     
     @Listener(order = Order.LATE)

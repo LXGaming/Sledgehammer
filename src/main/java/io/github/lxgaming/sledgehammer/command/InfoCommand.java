@@ -16,7 +16,6 @@
 
 package io.github.lxgaming.sledgehammer.command;
 
-import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 
@@ -32,7 +31,7 @@ public class InfoCommand extends AbstractCommand {
     
     @Override
     public CommandResult execute(CommandSource commandSource, List<String> arguments) {
-        commandSource.sendMessage(Toolbox.getPluginInformation());
+        //commandSource.sendMessage(Toolbox.getPluginInformation());
         return CommandResult.success();
     }
 }

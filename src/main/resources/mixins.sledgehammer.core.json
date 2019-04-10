@@ -1,5 +1,5 @@
 {
-  "required": true,
+  "required": false,
   "minVersion": "0.7.10",
   "package": "io.github.lxgaming.sledgehammer.mixin.core",
   "refmap": "mixins.sledgehammer.refmap.json",
@@ -18,11 +18,15 @@
     "network.MixinNetHandlerPlayServer_Event",
     "network.MixinNetworkManager",
     "network.MixinNetworkSystem",
-    "server.management.MixinPlayerChunkMap",
-    "server.MixinDedicatedServer",
     "world.biome.MixinBiomeProvider",
     "world.chunk.storage.MixinAnvilChunkLoader",
     "world.chunk.storage.MixinRegionFileChunkBuffer"
+  ],
+  "client": [
+  ],
+  "server": [
+    "server.management.MixinPlayerChunkMap",
+    "server.MixinDedicatedServer"
   ],
   "injectors": {
     "defaultRequire": 1

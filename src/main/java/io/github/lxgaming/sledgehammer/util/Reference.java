@@ -20,9 +20,13 @@ public class Reference {
     
     public static final String ID = "sledgehammer";
     public static final String NAME = "Sledgehammer";
-    public static final String VERSION = "1.12.2-1.3.7";
-    public static final String DESCRIPTION = "Smashes the stupid out of the server.";
+    public static final String VERSION = "1.12.2-1.4.0-alpha";
+    public static final String DESCRIPTION = "Smashes the stupid out of the client & server.";
     public static final String AUTHORS = "LX_Gaming";
     public static final String SOURCE = "https://github.com/LXGaming/Sledgehammer/";
     public static final String WEBSITE = "https://lxgaming.github.io/";
+    
+    public static final String ACCEPTED_VERSIONS = "[1.12.2]";
+    public static final String ACCEPTABLE_REMOTE_VERSIONS = "*";
+    public static final String CERTIFICATE_FINGERPRINT = "565fa4dbf20e7c3c4423950ca8e0bdabf7568796";
 }

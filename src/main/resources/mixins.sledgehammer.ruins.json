@@ -1,5 +1,5 @@
 {
-  "required": true,
+  "required": false,
   "minVersion": "0.7.10",
   "package": "io.github.lxgaming.sledgehammer.mixin.ruins",
   "refmap": "mixins.sledgehammer.refmap.json",

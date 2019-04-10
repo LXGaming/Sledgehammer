@@ -39,13 +39,15 @@ import org.spongepowered.api.plugin.PluginContainer;
 )
 public class SledgehammerPlugin {
     
+    private static SledgehammerPlugin instance;
+    
     @Inject
     private PluginContainer pluginContainer;
     
     @Listener
     public void onConstruction(GameConstructionEvent event) {
+        instance = this;
         Sledgehammer.init();
-        Sledgehammer.getInstance().setPluginContainer(getPluginContainer());
         Sledgehammer.getInstance().registerIntegrations();
     }
     
@@ -73,7 +75,11 @@ public class SledgehammerPlugin {
         IntegrationManager.process();
     }
     
-    private PluginContainer getPluginContainer() {
+    public static SledgehammerPlugin getInstance() {
+        return instance;
+    }
+    
+    public PluginContainer getPluginContainer() {
         return pluginContainer;
     }
 }
