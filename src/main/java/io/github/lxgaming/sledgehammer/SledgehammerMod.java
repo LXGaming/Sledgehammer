@@ -39,7 +39,8 @@ public class SledgehammerMod {
     
     @Mod.EventHandler
     public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
-        throw new SecurityException("Certificate Fingerprint Violation Detected!");
+        Sledgehammer.getInstance().getLogger().warn("Certificate Fingerprint Violation Detected!");
+        // throw new SecurityException("Certificate Fingerprint Violation Detected!");
     }
     
     @Mod.EventHandler
