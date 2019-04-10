@@ -25,79 +25,79 @@ import java.util.List;
 @ConfigSerializable
 public class ServerMixinCategory {
     
-    @Setting(value = "actuallyadditions-disruption", comment = "Disabled Disruption lens from ActuallyAdditions")
+    @Setting(value = "actuallyadditions-disruption", comment = "Disable Disruption lens from ActuallyAdditions")
     private boolean actuallyAdditionsDisruption = false;
     
-    @Setting(value = "advancement-stacktrace", comment = "Prints a single message instead of a stacktrace for advancement errors")
+    @Setting(value = "advancement-stacktrace", comment = "Print a single message instead of a stacktrace for advancement errors")
     private boolean advancementStacktrace = true;
     
-    @Setting(value = "biome-provider", comment = "Fixed NullPointerException in findBiomePosition method")
+    @Setting(value = "biome-provider", comment = "Fix NullPointerException in BiomeProvider::findBiomePosition")
     private boolean biomeProvider = false;
     
-    @Setting(value = "block-grass", comment = "Prevents Grass turning into Dirt")
+    @Setting(value = "block-grass", comment = "Prevent Grass turning into Dirt")
     private boolean blockGrass = false;
     
-    @Setting(value = "block-ice", comment = "Prevents Ice turning into Water")
+    @Setting(value = "block-ice", comment = "Prevent Ice turning into Water")
     private boolean blockIce = false;
     
-    @Setting(value = "ceremony-rain", comment = "Prevents Totemic from changing the weather")
+    @Setting(value = "ceremony-rain", comment = "Prevent Totemic from changing the weather")
     private boolean ceremonyRain = false;
     
-    @Setting(value = "chunk-save-alert", comment = "Alerts players with permission (sledgehammer.broadcast.chunksave) when a chunk fails to save")
+    @Setting(value = "chunk-save-alert", comment = "Alert players with permission (sledgehammer.broadcast.chunksave) when a chunk fails to save")
     private boolean chunkSaveAlert = false;
     
-    @Setting(value = "chunk-save-blacklist", comment = "Items to removed from chunks")
+    @Setting(value = "chunk-save-blacklist", comment = "Items to remove from chunks")
     private List<String> chunkSaveBlacklist = Lists.newArrayList("minecraft:writable_book", "minecraft:written_book");
     
-    @Setting(value = "chunk-save-purge-all", comment = "Removes all Entities and TileEntities from chunks that fail to save")
+    @Setting(value = "chunk-save-purge-all", comment = "Remove all Entities and TileEntities from chunks that fail to save")
     private boolean chunkSavePurgeAll = false;
     
-    @Setting(value = "chunk-save-purge-blacklist", comment = "Removes all blacklisted items from chunks that fail to save")
+    @Setting(value = "chunk-save-purge-blacklist", comment = "Remove all blacklisted items from chunks that fail to save")
     private boolean chunkSavePurgeBlacklist = false;
     
-    @Setting(value = "chunk-save-shutdown", comment = "Generates a crash report and safely stops the server if a chunk fails to save")
+    @Setting(value = "chunk-save-shutdown", comment = "Generate a crash report and safely stops the server if a chunk fails to save")
     private boolean chunkSaveShutdown = false;
     
     @Setting(value = "flush-network-on-tick", comment = "Reduce Network usage by postponing flush")
     private boolean flushNetworkOnTick = false;
     
-    @Setting(value = "interact-events", comment = "Fixes https://github.com/SpongePowered/SpongeCommon/issues/2013")
+    @Setting(value = "interact-events", comment = "Fix https://github.com/SpongePowered/SpongeCommon/issues/2013")
     private boolean interactEvents = false;
     
-    @Setting(value = "inventory-debug", comment = "Redirects inventory debugging messages")
+    @Setting(value = "inventory-debug", comment = "Redirect inventory debugging messages added by Sponge")
     private boolean inventoryDebug = false;
     
-    @Setting(value = "itemstack-exploit", comment = "Fixes MC-134716")
+    @Setting(value = "itemstack-exploit", comment = "Fix MC-134716 - Player kick exploit")
     private boolean itemstackExploit = false;
     
-    @Setting(value = "item-teleport", comment = "Prevents or deletes any items that attempt to teleport across dimensions")
+    @Setting(value = "item-teleport", comment = "Prevent or delete any items that attempt to teleport across dimensions")
     private boolean itemTeleport = false;
     
     @Setting(value = "item-teleport-whitelist", comment = "Don't prevent these items from teleporting")
     private List<String> itemTeleportWhitelist = Lists.newArrayList("draconicevolution:ender_energy_manipulator");
     
-    @Setting(value = "limit-books", comment = "Limits books to 50 pages with 255 characters for each")
+    @Setting(value = "limit-books", comment = "Limit books to 50 pages with 255 characters for each")
     private boolean limitBooks = false;
     
-    @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
+    @Setting(value = "network-system", comment = "Fix potential deadlock on shutdown")
     private boolean networkSystem = true;
     
-    @Setting(value = "packet-spam", comment = "Cancels spammy packets")
+    @Setting(value = "packet-spam", comment = "Cancel spammy packets")
     private boolean packetSpam = false;
     
-    @Setting(value = "player-chunk-map", comment = "Prevents ConcurrentModificationException in PlayerChunkMap")
+    @Setting(value = "player-chunk-map", comment = "Prevent ConcurrentModificationException in PlayerChunkMap")
     private boolean playerChunkMap = false;
     
-    @Setting(value = "quark-improved-sleeping", comment = "Disables Improved Sleeping from Quark")
+    @Setting(value = "quark-improved-sleeping", comment = "Disable Improved Sleeping from Quark")
     private boolean quarkImprovedSleeping = false;
     
-    @Setting(value = "reliquary-item-rending-gale", comment = "Fixes https://github.com/P3pp3rF1y/Reliquary/issues/370")
+    @Setting(value = "reliquary-item-rending-gale", comment = "Fix https://github.com/P3pp3rF1y/Reliquary/issues/370")
     private boolean reliquaryItemRendingGale = false;
     
-    @Setting(value = "ruins-debug", comment = "Redirects ruins debugging messages")
+    @Setting(value = "ruins-debug", comment = "Redirect ruins debugging messages")
     private boolean ruinsDebug = false;
     
-    @Setting(value = "traveling-merchant", comment = "Fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59")
+    @Setting(value = "traveling-merchant", comment = "Fix https://github.com/Daveyx0/PrimitiveMobs/issues/59")
     private boolean travelingMerchant = false;
     
     public boolean isActuallyAdditionsDisruption() {

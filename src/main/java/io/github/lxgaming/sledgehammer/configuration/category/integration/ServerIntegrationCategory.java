@@ -22,16 +22,16 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class ServerIntegrationCategory {
     
-    @Setting(value = "botania", comment = "Prevents Botania creating islands")
+    @Setting(value = "botania", comment = "Prevent Botania from creating islands")
     private boolean botania = false;
     
-    @Setting(value = "forge", comment = "Forces permission check for OP based commands")
+    @Setting(value = "forge", comment = "Force permission check for OP based commands")
     private boolean forge = false;
     
-    @Setting(value = "mist", comment = "Fixes portal issues")
+    @Setting(value = "mist", comment = "Fix Misty World portal issues")
     private boolean mist = false;
     
-    @Setting(value = "primal", comment = "Fixes https://github.com/An-Sar/PrimalCore/issues/210 (Fixed in 0.6.56 according to Dev)")
+    @Setting(value = "primal", comment = "Fix https://github.com/An-Sar/PrimalCore/issues/210 (Fixed in 0.6.56 according to Dev)")
     private boolean primal = false;
     
     @Setting(value = "sponge-border", comment = "Prevent movement outside of the world border")
@@ -40,7 +40,7 @@ public class ServerIntegrationCategory {
     @Setting(value = "sponge-death", comment = "Prevent sending blank death messages")
     private boolean spongeDeath = false;
     
-    @Setting(value = "sponge-phase", comment = "Fixes https://github.com/SpongePowered/SpongeForge/issues/2355")
+    @Setting(value = "sponge-phase", comment = "Fix https://github.com/SpongePowered/SpongeForge/issues/2355")
     private boolean spongePhase = false;
     
     public boolean isBotania() {

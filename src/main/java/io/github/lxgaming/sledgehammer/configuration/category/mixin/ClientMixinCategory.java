@@ -22,7 +22,7 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class ClientMixinCategory {
     
-    @Setting(value = "nuke-search-tree", comment = "No description provided")
+    @Setting(value = "nuke-search-tree", comment = "Disable SearchTree reloading (Speeds up server connection process)")
     private boolean nukeSearchTree = true;
     
     public boolean isNukeSearchTree() {
