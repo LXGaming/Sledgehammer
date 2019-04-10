@@ -19,8 +19,7 @@ package io.github.lxgaming.sledgehammer.mixin.core.world.chunk.storage;
 import com.google.common.collect.Lists;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.ServerMixinCategory;
 import io.github.lxgaming.sledgehammer.exception.ChunkSaveException;
 import io.github.lxgaming.sledgehammer.interfaces.crash.IMixinCrashReport;
 import io.github.lxgaming.sledgehammer.util.Broadcast;
@@ -82,8 +81,8 @@ public abstract class MixinAnvilChunkLoader {
         boolean saveRequired;
         
         // Remove Blacklisted items from Entities and TileEntities
-        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isChunkSavePurgeBlacklist).orElse(false)) {
-            List<String> blacklist = Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::getChunkSaveBlacklist).orElseGet(Lists::newArrayList);
+        if (Sledgehammer.getInstance().getConfig().map(Config::getServerMixinCategory).map(ServerMixinCategory::isChunkSavePurgeBlacklist).orElse(false)) {
+            List<String> blacklist = Sledgehammer.getInstance().getConfig().map(Config::getServerMixinCategory).map(ServerMixinCategory::getChunkSaveBlacklist).orElseGet(Lists::newArrayList);
             saveRequired = sledgehammer$removeEntityItems(level, item -> sledgehammer$checkItem(item, blacklist::contains));
             saveRequired |= sledgehammer$removeTileEntityItems(level, item -> sledgehammer$checkItem(item, blacklist::contains));
             if (saveRequired && sledgehammer$writeChunk(pos, compound)) {
@@ -93,7 +92,7 @@ public abstract class MixinAnvilChunkLoader {
         }
         
         // Remove all Entities and TileEntities
-        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isChunkSavePurgeAll).orElse(false)) {
+        if (Sledgehammer.getInstance().getConfig().map(Config::getServerMixinCategory).map(ServerMixinCategory::isChunkSavePurgeAll).orElse(false)) {
             saveRequired = sledgehammer$removeEntities(level, entity -> true);
             saveRequired |= sledgehammer$removeTileEntities(level, tileEntity -> true);
             if (saveRequired && sledgehammer$writeChunk(pos, compound)) {
@@ -108,7 +107,7 @@ public abstract class MixinAnvilChunkLoader {
         }
         
         // Shutdown
-        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isChunkSaveShutdown).orElse(false)) {
+        if (Sledgehammer.getInstance().getConfig().map(Config::getServerMixinCategory).map(ServerMixinCategory::isChunkSaveShutdown).orElse(false)) {
             World world = sledgehammer$getWorld().orElse(null);
             
             CrashReport crashReport = CrashReport.makeCrashReport(new ChunkSaveException(), "Chunk (" + pos.x + ", " + pos.z + ") failed to save");
@@ -144,8 +143,13 @@ public abstract class MixinAnvilChunkLoader {
         }
         
         // Broadcast
-        if (Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).map(MixinCategory::isChunkSaveAlert).orElse(false)) {
-            Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getChunkSave).filter(StringUtils::isNotBlank).ifPresent(message -> {
+        if (Sledgehammer.getInstance().getConfig().map(Config::getServerMixinCategory).map(ServerMixinCategory::isChunkSaveAlert).orElse(false)) {
+            Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).ifPresent(generalCategory -> {
+                String message = generalCategory.getMessageCategory().getChunkSave();
+                if (StringUtils.isBlank(message)) {
+                    return;
+                }
+                
                 Broadcast.builder()
                         .message(Toolbox.convertColor(message.replace("[X]", String.valueOf(pos.x)).replace("[Z]", String.valueOf(pos.z))))
                         .permission(Reference.ID + ".broadcast.chunksave")

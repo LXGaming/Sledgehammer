@@ -18,8 +18,7 @@ package io.github.lxgaming.sledgehammer.mixin.forge.entity;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.ServerMixinCategory;
 import io.github.lxgaming.sledgehammer.util.Broadcast;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.entity.Entity;
@@ -43,13 +42,18 @@ public abstract class MixinEntity_Teleport {
         if (sledgehammer$shouldRemove(mixinEntity)) {
             mixinEntity.remove();
             
-            Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getItemTeleport).filter(StringUtils::isNotBlank).ifPresent(message -> {
+            Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).ifPresent(generalCategory -> {
+                String message = generalCategory.getMessageCategory().getItemTeleport();
+                if (StringUtils.isBlank(message)) {
+                    return;
+                }
+                
                 Broadcast broadcast = Broadcast.builder()
                         .message(Toolbox.convertColor(message.replace("[ID]", Toolbox.getRootId(Toolbox.cast(this, Entity.class)))))
                         .type(Broadcast.Type.CHAT)
                         .build();
                 
-                if (Sledgehammer.getInstance().getConfig().map(Config::isDebug).orElse(false)) {
+                if (generalCategory.isDebug()) {
                     broadcast.sendMessage(Sponge.getServer().getConsole());
                 }
                 
@@ -64,8 +68,8 @@ public abstract class MixinEntity_Teleport {
         }
         
         return Sledgehammer.getInstance().getConfig()
-                .map(Config::getMixinCategory)
-                .map(MixinCategory::getItemTeleportWhitelist)
+                .map(Config::getServerMixinCategory)
+                .map(ServerMixinCategory::getItemTeleportWhitelist)
                 .map(list -> !list.contains(Toolbox.getRootId(Toolbox.cast(this, Entity.class)))).orElse(false);
     }
 }

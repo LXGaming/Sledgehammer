@@ -21,6 +21,7 @@ import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.interfaces.fml.common.IMixinLoader;
 import io.github.lxgaming.sledgehammer.interfaces.fml.common.IMixinMetadataCollection;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
+import io.github.lxgaming.sledgehammer.manager.MappingManager;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.MetadataCollection;
@@ -44,7 +45,7 @@ public class ForgePlugin extends AbstractPlugin {
         if (MixinEnvironment.getCurrentEnvironment().getPhase() != MixinEnvironment.Phase.DEFAULT
                 || !SledgehammerLaunch.isForgeRegistered()
                 || !SledgehammerLaunch.isSledgehammerRegistered()
-                || Sledgehammer.getInstance().getModMappings().isEmpty()) {
+                || MappingManager.getModMappings().isEmpty()) {
             return;
         }
         
@@ -71,7 +72,7 @@ public class ForgePlugin extends AbstractPlugin {
         
         for (Map.Entry<File, Set<String>> entry : mixinLoader.getMappings().entrySet()) {
             for (String id : entry.getValue()) {
-                Boolean modMapping = Sledgehammer.getInstance().getModMapping(id).orElse(null);
+                Boolean modMapping = MappingManager.getModMapping(id).orElse(null);
                 if (modMapping == null) {
                     continue;
                 }

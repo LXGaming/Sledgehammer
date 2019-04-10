@@ -16,56 +16,65 @@
 
 package io.github.lxgaming.sledgehammer.configuration;
 
-import com.google.common.collect.Maps;
-import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.integration.ClientIntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.integration.CommonIntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.integration.ServerIntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.ClientMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.CommonMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.ServerMixinCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
-
-import java.util.Map;
 
 @ConfigSerializable
 public class Config {
     
-    @Setting(value = "debug", comment = "For debugging purposes")
-    private boolean debug = false;
+    @Setting(value = "general")
+    private GeneralCategory generalCategory = new GeneralCategory();
     
-    @Setting(value = "integration")
-    private IntegrationCategory integrationCategory = new IntegrationCategory();
+    @Setting(value = "integration-client")
+    private ClientIntegrationCategory clientIntegrationCategory = new ClientIntegrationCategory();
     
-    @Setting(value = "message")
-    private MessageCategory messageCategory = new MessageCategory();
+    @Setting(value = "integration-common")
+    private CommonIntegrationCategory commonIntegrationCategory = new CommonIntegrationCategory();
     
-    @Setting(value = "mixin")
-    private MixinCategory mixinCategory = new MixinCategory();
+    @Setting(value = "integration-server")
+    private ServerIntegrationCategory serverIntegrationCategory = new ServerIntegrationCategory();
     
-    @Setting(value = "mod", comment = ""
-            + "False: Mod will not be loaded.\n"
-            + "True: Mod will be added to the classloader.")
-    private Map<String, Boolean> modMappings = Maps.newHashMap();
+    @Setting(value = "mixin-client")
+    private ClientMixinCategory clientMixinCategory = new ClientMixinCategory();
     
-    public boolean isDebug() {
-        return debug;
+    @Setting(value = "mixin-common")
+    private CommonMixinCategory commonMixinCategory = new CommonMixinCategory();
+    
+    @Setting(value = "mixin-server")
+    private ServerMixinCategory serverMixinCategory = new ServerMixinCategory();
+    
+    public GeneralCategory getGeneralCategory() {
+        return generalCategory;
     }
     
-    public void setDebug(boolean debug) {
-        this.debug = debug;
+    public ClientIntegrationCategory getClientIntegrationCategory() {
+        return clientIntegrationCategory;
     }
     
-    public IntegrationCategory getIntegrationCategory() {
-        return integrationCategory;
+    public CommonIntegrationCategory getCommonIntegrationCategory() {
+        return commonIntegrationCategory;
     }
     
-    public MessageCategory getMessageCategory() {
-        return messageCategory;
+    public ServerIntegrationCategory getServerIntegrationCategory() {
+        return serverIntegrationCategory;
     }
     
-    public MixinCategory getMixinCategory() {
-        return mixinCategory;
+    public ClientMixinCategory getClientMixinCategory() {
+        return clientMixinCategory;
     }
     
-    public Map<String, Boolean> getModMappings() {
-        return modMappings;
+    public CommonMixinCategory getCommonMixinCategory() {
+        return commonMixinCategory;
+    }
+    
+    public ServerMixinCategory getServerMixinCategory() {
+        return serverMixinCategory;
     }
 }

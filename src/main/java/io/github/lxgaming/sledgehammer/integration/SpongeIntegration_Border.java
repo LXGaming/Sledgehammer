@@ -21,7 +21,6 @@ import com.google.common.collect.Maps;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlugin;
 import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.MessageCategory;
 import io.github.lxgaming.sledgehammer.util.Broadcast;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.apache.commons.lang3.StringUtils;
@@ -79,9 +78,14 @@ public class SpongeIntegration_Border extends AbstractIntegration {
             }
             
             this.cooldown.put(player.getUniqueId(), currentTime);
-            Sledgehammer.getInstance().getConfig().map(Config::getMessageCategory).map(MessageCategory::getMoveOutsideBorder).filter(StringUtils::isNotBlank).ifPresent(message -> {
+            Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).ifPresent(generalCategory -> {
+                String message = generalCategory.getMessageCategory().getMoveOutsideBorder();
+                if (StringUtils.isBlank(message)) {
+                    return;
+                }
+                
                 Broadcast broadcast = Broadcast.builder().message(Toolbox.convertColor(message)).type(Broadcast.Type.CHAT).build();
-                if (Sledgehammer.getInstance().getConfig().map(Config::isDebug).orElse(false)) {
+                if (generalCategory.isDebug()) {
                     broadcast.sendMessage(Sponge.getServer().getConsole());
                 }
                 

@@ -18,6 +18,7 @@ package io.github.lxgaming.sledgehammer.command;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
+import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -35,17 +36,17 @@ public class DebugCommand extends AbstractCommand {
     
     @Override
     public CommandResult execute(CommandSource commandSource, List<String> arguments) {
-        Config config = Sledgehammer.getInstance().getConfig().orElse(null);
-        if (config == null) {
+        GeneralCategory generalCategory = Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).orElse(null);
+        if (generalCategory == null) {
             commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Configuration error"));
             return CommandResult.empty();
         }
         
-        if (config.isDebug()) {
-            config.setDebug(false);
+        if (generalCategory.isDebug()) {
+            generalCategory.setDebug(false);
             commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Debugging disabled"));
         } else {
-            config.setDebug(true);
+            generalCategory.setDebug(true);
             commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.GREEN, "Debugging enabled"));
         }
         

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Alex Thomson
+ * Copyright 2019 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.configuration.category;
+package io.github.lxgaming.sledgehammer.configuration.category.integration;
 
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
-public class IntegrationCategory {
+public class ServerIntegrationCategory {
     
     @Setting(value = "botania", comment = "Prevents Botania creating islands")
     private boolean botania = false;

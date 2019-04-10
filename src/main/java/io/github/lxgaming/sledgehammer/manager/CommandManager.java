@@ -21,6 +21,7 @@ import com.google.common.collect.Sets;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlugin;
 import io.github.lxgaming.sledgehammer.command.AbstractCommand;
+import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.Sponge;
@@ -37,6 +38,10 @@ public final class CommandManager {
     
     private static final Set<AbstractCommand> COMMANDS = Sets.newLinkedHashSet();
     private static final Set<Class<? extends AbstractCommand>> COMMAND_CLASSES = Sets.newLinkedHashSet();
+    
+    public static void register() {
+        registerCommand(SledgehammerCommand.class);
+    }
     
     public static CommandResult process(AbstractCommand abstractCommand, CommandSource commandSource, String message) {
         List<String> arguments = getArguments(message).map(Lists::newArrayList).orElse(null);

@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer;
 
 import com.google.inject.Inject;
+import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import org.spongepowered.api.event.Listener;
@@ -48,7 +49,7 @@ public class SledgehammerPlugin {
     public void onConstruction(GameConstructionEvent event) {
         instance = this;
         Sledgehammer.init();
-        Sledgehammer.getInstance().registerIntegrations();
+        IntegrationManager.register();
     }
     
     @Listener
@@ -57,7 +58,7 @@ public class SledgehammerPlugin {
     
     @Listener
     public void onInitialization(GameInitializationEvent event) {
-        Sledgehammer.getInstance().registerCommands();
+        CommandManager.register();
     }
     
     @Listener

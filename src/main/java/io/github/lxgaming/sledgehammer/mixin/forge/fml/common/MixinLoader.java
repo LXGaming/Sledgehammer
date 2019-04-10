@@ -19,6 +19,7 @@ package io.github.lxgaming.sledgehammer.mixin.forge.fml.common;
 import com.google.common.collect.Maps;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.interfaces.fml.common.IMixinLoader;
+import io.github.lxgaming.sledgehammer.manager.MappingManager;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModClassLoader;
 import net.minecraftforge.fml.common.discovery.ModDiscoverer;
@@ -65,7 +66,7 @@ public abstract class MixinLoader {
             }
             
             for (String id : entry.getValue()) {
-                if (Sledgehammer.getInstance().getModMapping(id).isPresent()) {
+                if (MappingManager.getModMapping(id).isPresent()) {
                     file_canidates.removeIf(entry.getKey()::equals);
                     break;
                 }

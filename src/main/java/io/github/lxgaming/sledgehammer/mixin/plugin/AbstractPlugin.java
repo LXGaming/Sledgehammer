@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.mixin.plugin;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.manager.MappingManager;
 import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -38,7 +39,7 @@ public abstract class AbstractPlugin implements IMixinConfigPlugin {
     
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        Boolean mixinMapping = Sledgehammer.getInstance().getMixinMapping(mixinClassName).orElse(null);
+        Boolean mixinMapping = MappingManager.getMixinMapping(mixinClassName).orElse(null);
         if (mixinMapping == null) {
             Sledgehammer.getInstance().getLogger().error("Missing Mixin mapping for class: {}", mixinClassName);
             return false;

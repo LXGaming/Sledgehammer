@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Alex Thomson
+ * Copyright 2019 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.configuration.category;
+package io.github.lxgaming.sledgehammer.configuration.category.mixin;
 
 import com.google.common.collect.Lists;
 import ninja.leaping.configurate.objectmapping.Setting;
@@ -23,7 +23,7 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 import java.util.List;
 
 @ConfigSerializable
-public class MixinCategory {
+public class ServerMixinCategory {
     
     @Setting(value = "actuallyadditions-disruption", comment = "Disabled Disruption lens from ActuallyAdditions")
     private boolean actuallyAdditionsDisruption = false;
@@ -81,9 +81,6 @@ public class MixinCategory {
     
     @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
     private boolean networkSystem = true;
-    
-    @Setting(value = "nuke-search-tree", comment = "Fixes potential deadlock on shutdown")
-    private boolean nukeSearchTree = true;
     
     @Setting(value = "packet-spam", comment = "Cancels spammy packets")
     private boolean packetSpam = false;
@@ -177,10 +174,6 @@ public class MixinCategory {
     
     public boolean isNetworkSystem() {
         return networkSystem;
-    }
-    
-    public boolean isNukeSearchTree() {
-        return nukeSearchTree;
     }
     
     public boolean isPacketSpam() {
