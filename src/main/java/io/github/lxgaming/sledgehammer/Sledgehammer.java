@@ -108,6 +108,7 @@ public class Sledgehammer {
         
         // Mixin Forge
         getMixinMappings().put("forge.common.MixinForgeHooks_Advancement", MixinCategory::isAdvancementStacktrace);
+        getMixinMappings().put("forge.common.MixinForgeModContainer", MixinCategory::isNukeSearchTree);
         getMixinMappings().put("forge.entity.passive.MixinEntityVillager", MixinCategory::isTravelingMerchant);
         getMixinMappings().put("forge.entity.MixinEntity_Teleport", MixinCategory::isItemTeleport);
         getMixinMappings().put("forge.fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper", MixinCategory::isFlushNetworkOnTick);

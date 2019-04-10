@@ -82,6 +82,9 @@ public class MixinCategory {
     @Setting(value = "network-system", comment = "Fixes potential deadlock on shutdown")
     private boolean networkSystem = true;
     
+    @Setting(value = "nuke-search-tree", comment = "Fixes potential deadlock on shutdown")
+    private boolean nukeSearchTree = true;
+    
     @Setting(value = "packet-spam", comment = "Cancels spammy packets")
     private boolean packetSpam = false;
     
@@ -174,6 +177,10 @@ public class MixinCategory {
     
     public boolean isNetworkSystem() {
         return networkSystem;
+    }
+    
+    public boolean isNukeSearchTree() {
+        return nukeSearchTree;
     }
     
     public boolean isPacketSpam() {

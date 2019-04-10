@@ -8,6 +8,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "common.MixinForgeHooks_Advancement",
+    "common.MixinForgeModContainer",
     "entity.passive.MixinEntityVillager",
     "entity.MixinEntity_Teleport",
     "fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper",
