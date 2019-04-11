@@ -19,7 +19,7 @@ package io.github.lxgaming.sledgehammer.manager;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.SledgehammerPlugin;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.command.AbstractCommand;
 import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
@@ -86,7 +86,7 @@ public final class CommandManager {
         }
         
         getCommands().add(command);
-        Sponge.getCommandManager().register(SledgehammerPlugin.getInstance().getPluginContainer(), command, command.getAliases().toArray(new String[0]));
+        Sponge.getCommandManager().register(SledgehammerPlatform.getInstance().getContainer(), command, command.getAliases().toArray(new String[0]));
         Sledgehammer.getInstance().debugMessage("{} registered", commandClass.getSimpleName());
         return true;
     }

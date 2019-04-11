@@ -17,7 +17,7 @@
 package io.github.lxgaming.sledgehammer.integration;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.SledgehammerPlugin;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import org.spongepowered.api.GameState;
@@ -38,7 +38,7 @@ public class BotaniaIntegration extends AbstractIntegration {
     
     @Override
     public void execute() {
-        Sponge.getEventManager().registerListeners(SledgehammerPlugin.getInstance().getPluginContainer(), this);
+        Sponge.getEventManager().registerListeners(SledgehammerPlatform.getInstance().getContainer(), this);
     }
     
     @Listener(order = Order.EARLY, beforeModifications = true)

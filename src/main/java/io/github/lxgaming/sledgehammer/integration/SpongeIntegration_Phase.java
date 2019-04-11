@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.integration;
 
-import io.github.lxgaming.sledgehammer.SledgehammerPlugin;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
@@ -40,7 +40,7 @@ public class SpongeIntegration_Phase extends AbstractIntegration {
     
     @Override
     public void execute() {
-        Sponge.getEventManager().registerListeners(SledgehammerPlugin.getInstance().getPluginContainer(), this);
+        Sponge.getEventManager().registerListeners(SledgehammerPlatform.getInstance().getContainer(), this);
     }
     
     @Listener(order = Order.LAST)

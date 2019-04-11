@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.integration;
 
-import io.github.lxgaming.sledgehammer.SledgehammerPlugin;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
@@ -35,7 +35,7 @@ public class SpongeIntegration_Death extends AbstractIntegration {
     
     @Override
     public void execute() {
-        Sponge.getEventManager().registerListeners(SledgehammerPlugin.getInstance().getPluginContainer(), this);
+        Sponge.getEventManager().registerListeners(SledgehammerPlatform.getInstance().getContainer(), this);
     }
     
     @Listener(order = Order.LAST)

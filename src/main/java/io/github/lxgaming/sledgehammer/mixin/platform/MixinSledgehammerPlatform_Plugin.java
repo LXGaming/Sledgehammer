@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Alex Thomson
+ * Copyright 2019 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer;
+package io.github.lxgaming.sledgehammer.mixin.platform;
 
-import com.google.inject.Inject;
+import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.util.Toolbox;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameConstructionEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
@@ -27,27 +30,19 @@ import org.spongepowered.api.event.game.state.GameLoadCompleteEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStateEvent;
 import org.spongepowered.api.event.game.state.GameStoppedEvent;
-import org.spongepowered.api.plugin.Plugin;
-import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 
-@Plugin(
-        id = Reference.ID,
-        name = Reference.NAME,
-        version = Reference.VERSION,
-        description = Reference.DESCRIPTION,
-        authors = {Reference.AUTHORS},
-        url = Reference.WEBSITE
-)
-public class SledgehammerPlugin {
+@Mixin(value = SledgehammerPlatform.class, priority = 1337, remap = false)
+public abstract class MixinSledgehammerPlatform_Plugin {
     
-    private static SledgehammerPlugin instance;
-    
-    @Inject
-    private PluginContainer pluginContainer;
+    @Shadow
+    private static SledgehammerPlatform instance;
     
     @Listener
     public void onConstruction(GameConstructionEvent event) {
-        instance = this;
+        instance = Toolbox.cast(this, SledgehammerPlatform.class);
         Sledgehammer.init();
         IntegrationManager.register();
     }
@@ -76,11 +71,21 @@ public class SledgehammerPlugin {
         IntegrationManager.process();
     }
     
-    public static SledgehammerPlugin getInstance() {
-        return instance;
+    /**
+     * @author LX_Gaming
+     * @reason Sponge compatibility
+     */
+    @Overwrite
+    public Object getContainer() {
+        return Sponge.getPluginManager().getPlugin(Reference.ID).orElse(null);
     }
     
-    public PluginContainer getPluginContainer() {
-        return pluginContainer;
+    /**
+     * @author LX_Gaming
+     * @reason Sponge compatibility
+     */
+    @Overwrite
+    public SledgehammerPlatform.Type getType() {
+        return SledgehammerPlatform.Type.SPONGE;
     }
 }

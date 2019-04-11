@@ -14,28 +14,27 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer;
+package io.github.lxgaming.sledgehammer.mixin.platform;
 
+import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import org.apache.commons.lang3.StringUtils;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 
-@Mod(
-        modid = Reference.ID,
-        name = Reference.NAME,
-        version = Reference.VERSION,
-        acceptedMinecraftVersions = Reference.ACCEPTED_VERSIONS,
-        acceptableRemoteVersions = Reference.ACCEPTABLE_REMOTE_VERSIONS,
-        certificateFingerprint = Reference.CERTIFICATE_FINGERPRINT
-)
-public class SledgehammerMod {
+@Mixin(value = SledgehammerPlatform.class, priority = 1337, remap = false)
+public abstract class MixinSledgehammerPlatform_Mod {
     
-    @Mod.Instance
-    private static SledgehammerMod instance;
+    @Shadow
+    private static SledgehammerPlatform instance;
     
     @Mod.EventHandler
     public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
@@ -45,6 +44,7 @@ public class SledgehammerMod {
     
     @Mod.EventHandler
     public void onConstruction(FMLConstructionEvent event) {
+        instance = Toolbox.cast(this, SledgehammerPlatform.class);
         Sledgehammer.init();
         
         ModContainer modContainer = Loader.instance().activeModContainer();
@@ -53,7 +53,21 @@ public class SledgehammerMod {
         }
     }
     
-    public static SledgehammerMod getInstance() {
-        return instance;
+    /**
+     * @author LX_Gaming
+     * @reason Forge compatibility
+     */
+    @Overwrite
+    public Object getContainer() {
+        return Loader.instance().getIndexedModList().get(Reference.ID);
+    }
+    
+    /**
+     * @author LX_Gaming
+     * @reason Forge compatibility
+     */
+    @Overwrite
+    public SledgehammerPlatform.Type getType() {
+        return SledgehammerPlatform.Type.FORGE;
     }
 }

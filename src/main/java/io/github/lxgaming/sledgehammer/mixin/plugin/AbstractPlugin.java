@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.mixin.plugin;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
 import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -29,6 +30,7 @@ public abstract class AbstractPlugin implements IMixinConfigPlugin {
     
     @Override
     public void onLoad(String mixinPackage) {
+        SledgehammerLaunch.configureEnvironment();
         Sledgehammer.init();
     }
     

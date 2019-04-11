@@ -55,7 +55,9 @@ public class SledgehammerLaunch {
         if (!isSledgehammerRegistered()) {
             registerSledgehammer();
             
-            Mixins.addConfiguration("mixins.sledgehammer.preinit.json");
+            if (getTweakers().stream().anyMatch(SledgehammerTweaker.class::isInstance)) {
+                Mixins.addConfiguration("mixins.sledgehammer.preinit.json");
+            }
         }
         
         if (!isSpongeRegistered() && isClassPresent(SPONGE_CLASS)) {
