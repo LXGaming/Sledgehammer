@@ -44,6 +44,9 @@ public final class MappingManager {
         registerClientMixin("forge.common.MixinForgeModContainer", ClientMixinCategory::isNukeSearchTree);
         
         // Common Mixin
+        // - PreInit
+        registerCommonMixin("forge.fml.common.MixinLoader", category -> !getModMappings().isEmpty());
+        registerCommonMixin("forge.fml.common.MixinMetadataCollection", category -> !getModMappings().isEmpty());
         
         // Server Mixin
         // - ActuallyAdditions
@@ -79,10 +82,6 @@ public final class MappingManager {
         registerServerMixin("forge.fml.common.network.MixinFMLEmbeddedChannel", ServerMixinCategory::isFlushNetworkOnTick);
         registerServerMixin("forge.fml.common.network.MixinFMLEventChannel", ServerMixinCategory::isFlushNetworkOnTick);
         registerServerMixin("forge.world.storage.MixinWorldInfo", ServerMixinCategory::isCeremonyRain);
-        
-        // - PreInit
-        registerServerMixin("forge.fml.common.MixinLoader", category -> !getModMappings().isEmpty());
-        registerServerMixin("forge.fml.common.MixinMetadataCollection", category -> !getModMappings().isEmpty());
         
         // - Quark
         registerServerMixin("quark.base.module.MixinModuleLoader", category ->
