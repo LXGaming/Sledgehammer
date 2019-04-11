@@ -39,13 +39,30 @@ import java.util.zip.ZipEntry;
 
 public class ForgePlugin extends AbstractPlugin {
     
+    private static boolean INITIALIZED;
+    
     @Override
     public void onLoad(String mixinPackage) {
         super.onLoad(mixinPackage);
-        if (MixinEnvironment.getCurrentEnvironment().getPhase() != MixinEnvironment.Phase.DEFAULT
+        if (MixinEnvironment.getCurrentEnvironment().getPhase() != MixinEnvironment.Phase.DEFAULT) {
+            return;
+        }
+        
+        if (INITIALIZED
                 || !SledgehammerLaunch.isForgeRegistered()
                 || !SledgehammerLaunch.isSledgehammerRegistered()
                 || MappingManager.getModMappings().isEmpty()) {
+            return;
+        }
+        
+        INITIALIZED = true;
+        if (!MappingManager.getMixinMapping("forge.fml.common.MixinLoader").orElse(false)) {
+            Sledgehammer.getInstance().getLogger().error("MixinLoader is disabled");
+            return;
+        }
+        
+        if (!MappingManager.getMixinMapping("forge.fml.common.MixinMetadataCollection").orElse(false)) {
+            Sledgehammer.getInstance().getLogger().error("MixinMetadataCollection is disabled");
             return;
         }
         
