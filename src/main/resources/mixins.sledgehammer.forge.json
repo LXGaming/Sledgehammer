@@ -8,7 +8,6 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "common.MixinForgeHooks_Advancement",
-    "common.MixinForgeModContainer",
     "entity.passive.MixinEntityVillager",
     "entity.MixinEntity_Teleport",
     "fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper",
@@ -16,6 +15,11 @@
     "fml.common.network.MixinFMLEmbeddedChannel",
     "fml.common.network.MixinFMLEventChannel",
     "world.storage.MixinWorldInfo"
+  ],
+  "client": [
+    "common.MixinForgeModContainer"
+  ],
+  "server": [
   ],
   "injectors": {
     "defaultRequire": 1
