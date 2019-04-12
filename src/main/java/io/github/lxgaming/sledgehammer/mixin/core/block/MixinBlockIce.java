@@ -16,24 +16,28 @@
 
 package io.github.lxgaming.sledgehammer.mixin.core.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockIce;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.spongepowered.api.block.BlockType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.common.interfaces.block.IMixinBlock;
 
 import java.util.Random;
 
 @Mixin(value = BlockIce.class, priority = 1337)
-public abstract class MixinBlockIce implements BlockType, IMixinBlock {
+public abstract class MixinBlockIce extends Block {
+    
+    public MixinBlockIce(Material materialIn) {
+        super(materialIn);
+    }
     
     @Inject(method = "<init>*", at = @At(value = "RETURN"))
-    public void onInit(CallbackInfo callbackInfo) {
+    private void onInit(CallbackInfo callbackInfo) {
         setTickRandomly(false);
     }
     
