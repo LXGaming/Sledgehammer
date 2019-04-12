@@ -102,6 +102,6 @@ public class SledgehammerLaunch {
     }
     
     private static void registerSponge() {
-        GlobalProperties.put(SPONGE_INITIALIZED, "Unknown");
+        GlobalProperties.put(SPONGE_INITIALIZED, SpongeImpl.MINECRAFT_VERSION.getName());
     }
 }
