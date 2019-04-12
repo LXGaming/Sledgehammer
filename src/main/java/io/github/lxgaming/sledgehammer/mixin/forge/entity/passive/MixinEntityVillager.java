@@ -89,7 +89,7 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
         }
         
         for (EntityVillager.ITradeList trade : trades) {
-            trade.addMerchantRecipe(((IMerchant) this), this.buyingList, this.rand);
+            trade.addMerchantRecipe(Toolbox.cast(this, IMerchant.class), this.buyingList, this.rand);
         }
         
         Sledgehammer.getInstance().debugMessage("TravelingMerchant Populated");

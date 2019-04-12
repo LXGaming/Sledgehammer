@@ -38,14 +38,14 @@ public abstract class MixinEntity_Teleport {
     
     @Inject(method = "setPortal", at = @At(value = "HEAD"), cancellable = true)
     private void onSetPortal(CallbackInfo callbackInfo) {
-        if (sledgehammer$shouldRemove((IMixinEntity) this)) {
+        if (sledgehammer$shouldRemove(Toolbox.cast(this, IMixinEntity.class))) {
             callbackInfo.cancel();
         }
     }
     
     @Inject(method = "changeDimension(I)Lnet/minecraft/entity/Entity;", at = @At(value = "HEAD"))
     private void onChangeDimension(int dimension, CallbackInfoReturnable<Entity> callbackInfoReturnable) {
-        IMixinEntity mixinEntity = (IMixinEntity) this;
+        IMixinEntity mixinEntity = Toolbox.cast(this, IMixinEntity.class);
         if (sledgehammer$shouldRemove(mixinEntity)) {
             mixinEntity.remove();
             

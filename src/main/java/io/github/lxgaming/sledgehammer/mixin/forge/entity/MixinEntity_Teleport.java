@@ -38,7 +38,7 @@ public abstract class MixinEntity_Teleport {
     
     @Inject(method = "changeDimension(ILnet/minecraftforge/common/util/ITeleporter;)Lnet/minecraft/entity/Entity;", at = @At(value = "HEAD"), remap = false)
     private void onChangeDimension(int dimension, ITeleporter teleporter, CallbackInfoReturnable<Entity> callbackInfoReturnable) {
-        IMixinEntity mixinEntity = (IMixinEntity) this;
+        IMixinEntity mixinEntity = Toolbox.cast(this, IMixinEntity.class);
         if (sledgehammer$shouldRemove(mixinEntity)) {
             mixinEntity.remove();
             

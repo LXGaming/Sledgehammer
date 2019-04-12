@@ -66,7 +66,7 @@ public class ForgePlugin extends AbstractPlugin {
             return;
         }
         
-        IMixinLoader mixinLoader = Toolbox.cast(Loader.instance(), IMixinLoader.class);
+        IMixinLoader mixinLoader = (IMixinLoader) Loader.instance();
         for (File file : LibraryManager.gatherLegacyCanidates(mixinLoader.getMinecraftDirectory())) {
             Map<String, ModMetadata> metadatas = getMetadataCollection(file).getMetadatas();
             if (metadatas.isEmpty()) {
@@ -127,15 +127,15 @@ public class ForgePlugin extends AbstractPlugin {
         try (JarFile jarFile = new JarFile(file)) {
             ZipEntry zipEntry = jarFile.getEntry("mcmod.info");
             if (zipEntry == null) {
-                return Toolbox.cast(MetadataCollection.from(null, ""), IMixinMetadataCollection.class);
+                return (IMixinMetadataCollection) MetadataCollection.from(null, "");
             }
             
             try (InputStream inputStream = jarFile.getInputStream(zipEntry)) {
-                return Toolbox.cast(MetadataCollection.from(inputStream, jarFile.getName()), IMixinMetadataCollection.class);
+                return (IMixinMetadataCollection) MetadataCollection.from(inputStream, jarFile.getName());
             }
         } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while getting Metadata from {}", file, ex);
-            return Toolbox.cast(MetadataCollection.from(null, ""), IMixinMetadataCollection.class);
+            return (IMixinMetadataCollection) MetadataCollection.from(null, "");
         }
     }
 }
