@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.common.event.SpongeCommonEventFactory;
 
 @Mixin(value = SpongeCommonEventFactory.class, priority = 1337, remap = false)
-public class MixinSpongeCommonEventFactory {
+public abstract class MixinSpongeCommonEventFactory {
     
     @Redirect(method = "captureTransaction(Lorg/spongepowered/common/interfaces/IMixinInventory;Lorg/spongepowered/api/item/inventory/Inventory;ILnet/minecraft/item/ItemStack;)V",
             at = @At(value = "INVOKE",
