@@ -28,7 +28,6 @@ import org.spongepowered.asm.mixin.Overwrite;
 public abstract class MixinItemWritableBook {
     
     /**
-     * @param compound NBTTagCompound
      * @author LX_Gaming
      * @reason Limit books based on {@link net.minecraft.client.gui.GuiScreenBook GuiScreenBook} values.
      */
