@@ -62,7 +62,7 @@ public final class MappingManager {
         registerServerMixin("core.block.MixinBlockGrass", ServerMixinCategory::isBlockGrass);
         registerServerMixin("core.block.MixinBlockIce", ServerMixinCategory::isBlockIce);
         registerServerMixin("core.crash.MixinCrashReport", category -> true);
-        registerServerMixin("core.entity.MixinEntity_Teleport", ServerMixinCategory::isItemTeleport);
+        registerServerMixin("core.entity.MixinEntity_Teleport", category -> category.isItemTeleport() && SledgehammerLaunch.isSpongeRegistered());
         registerServerMixin("core.item.MixinItemStack_Exploit", ServerMixinCategory::isItemstackExploit);
         registerServerMixin("core.item.MixinItemWritableBook", ServerMixinCategory::isLimitBooks);
         registerServerMixin("core.network.MixinNetHandlerPlayServer_Book", ServerMixinCategory::isLimitBooks);
@@ -79,8 +79,8 @@ public final class MappingManager {
         
         // - Forge
         registerServerMixin("forge.common.MixinForgeHooks_Advancement", ServerMixinCategory::isAdvancementStacktrace);
-        registerServerMixin("forge.entity.passive.MixinEntityVillager", ServerMixinCategory::isTravelingMerchant);
-        registerServerMixin("forge.entity.MixinEntity_Teleport", ServerMixinCategory::isItemTeleport);
+        registerServerMixin("forge.entity.passive.MixinEntityVillager", category -> category.isTravelingMerchant() && SledgehammerLaunch.isSpongeRegistered());
+        registerServerMixin("forge.entity.MixinEntity_Teleport", category -> category.isItemTeleport() && SledgehammerLaunch.isSpongeRegistered());
         registerServerMixin("forge.fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper", ServerMixinCategory::isFlushNetworkOnTick);
         registerServerMixin("forge.fml.common.network.simpleimpl.MixinSimpleNetworkWrapper", ServerMixinCategory::isPacketSpam);
         registerServerMixin("forge.fml.common.network.MixinFMLEmbeddedChannel", ServerMixinCategory::isFlushNetworkOnTick);
