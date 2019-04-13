@@ -68,7 +68,7 @@ public final class MappingManager {
         registerServerMixin("core.item.MixinItemStack_Exploit", ServerMixinCategory::isItemstackExploit);
         registerServerMixin("core.item.MixinItemWritableBook", ServerMixinCategory::isLimitBooks);
         registerServerMixin("core.network.MixinNetHandlerPlayServer_Book", ServerMixinCategory::isLimitBooks);
-        registerServerMixin("core.network.MixinNetHandlerPlayServer_Event", ServerMixinCategory::isInteractEvents);
+        registerServerMixin("core.network.MixinNetHandlerPlayServer_Event", category -> category.isInteractEvents() && SledgehammerLaunch.isSpongeRegistered());
         registerServerMixin("core.network.MixinNetworkManager", ServerMixinCategory::isFlushNetworkOnTick);
         registerServerMixin("core.network.MixinNetworkSystem", ServerMixinCategory::isNetworkSystem);
         registerServerMixin("core.server.management.MixinPlayerChunkMap", ServerMixinCategory::isPlayerChunkMap);
@@ -102,8 +102,8 @@ public final class MappingManager {
                 SledgehammerLaunch.isForgeRegistered() && category.isRuinsDebug());
         
         // - Sponge
-        registerServerMixin("sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", ServerMixinCategory::isInventoryDebug);
-        registerServerMixin("sponge.common.event.MixinSpongeCommonEventFactory", ServerMixinCategory::isInventoryDebug);
+        registerServerMixin("sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", category -> category.isInventoryDebug() && SledgehammerLaunch.isSpongeRegistered());
+        registerServerMixin("sponge.common.event.MixinSpongeCommonEventFactory", category -> category.isInventoryDebug() && SledgehammerLaunch.isSpongeRegistered());
         
         // - TombManyGraves
         registerServerMixin("tombmanygraves.events.MixinCommonEvents", ServerMixinCategory::isTombManyGraves);
