@@ -66,6 +66,7 @@ repositories {
 }
 
 dependencies {
+    testCompile("org.junit.jupiter:junit-jupiter-engine:5.4.1")
     shadow("org.spongepowered:configurate-hocon:3.6") {
         exclude(module: "guava")
     }
@@ -94,6 +95,15 @@ dependencies {
     provided("reliquary-v1-3:Reliquary:1.12.2:1.3.4.786")
     provided("ruins-structure-spawning-system:Ruins:1.12.2")
     provided("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
+}
+
+test {
+    testLogging {
+        exceptionFormat = "full"
+        showStandardStreams = true
+    }
+    
+    useJUnitPlatform()
 }
 
 shadowJar {
