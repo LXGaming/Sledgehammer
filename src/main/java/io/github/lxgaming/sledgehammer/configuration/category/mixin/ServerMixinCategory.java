@@ -70,7 +70,7 @@ public class ServerMixinCategory {
     @Setting(value = "itemstack-exploit", comment = "Fix MC-134716 - Player kick exploit")
     private boolean itemstackExploit = false;
     
-    @Setting(value = "item-teleport", comment = "Prevent or delete any items that attempt to teleport across dimensions")
+    @Setting(value = "item-teleport", comment = "Prevent or delete any items that attempt to teleport across dimensions (Sponge only)")
     private boolean itemTeleport = false;
     
     @Setting(value = "item-teleport-whitelist", comment = "Don't prevent these items from teleporting")
