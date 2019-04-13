@@ -97,6 +97,9 @@ public class ServerMixinCategory {
     @Setting(value = "ruins-debug", comment = "Redirect ruins debugging messages")
     private boolean ruinsDebug = false;
     
+    @Setting(value = "tomb-many-graves", comment = "Disable TombManyGraves functionality")
+    private boolean tombManyGraves = false;
+    
     @Setting(value = "traveling-merchant", comment = "Fix https://github.com/Daveyx0/PrimitiveMobs/issues/59")
     private boolean travelingMerchant = false;
     
@@ -194,6 +197,10 @@ public class ServerMixinCategory {
     
     public boolean isRuinsDebug() {
         return ruinsDebug;
+    }
+    
+    public boolean isTombManyGraves() {
+        return tombManyGraves;
     }
     
     public boolean isTravelingMerchant() {

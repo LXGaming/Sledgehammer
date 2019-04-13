@@ -93,6 +93,7 @@ dependencies {
     provided("quark:Quark:r1.5:145")
     provided("reliquary-v1-3:Reliquary:1.12.2:1.3.4.786")
     provided("ruins-structure-spawning-system:Ruins:1.12.2")
+    provided("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
 }
 
 shadowJar {
@@ -125,8 +126,9 @@ jar {
                         + "mixins.sledgehammer.forge.json,"
                         + "mixins.sledgehammer.platform.json,"
                         + "mixins.sledgehammer.quark.json,"
-                        + "mixins.sledgehammer.sponge.json,"
                         + "mixins.sledgehammer.ruins.json,"
+                        + "mixins.sledgehammer.sponge.json,"
+                        + "mixins.sledgehammer.tombmanygraves.json,"
                         + "mixins.sledgehammer.xreliquary.json",
                 "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
                 "TweakOrder": 0

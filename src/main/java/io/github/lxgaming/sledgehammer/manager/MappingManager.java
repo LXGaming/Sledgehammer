@@ -104,6 +104,9 @@ public final class MappingManager {
         // - Sponge
         registerServerMixin("sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", ServerMixinCategory::isInventoryDebug);
         registerServerMixin("sponge.common.event.MixinSpongeCommonEventFactory", ServerMixinCategory::isInventoryDebug);
+        
+        // - TombManyGraves
+        registerServerMixin("tombmanygraves.events.MixinCommonEvents", ServerMixinCategory::isTombManyGraves);
     }
     
     public static void registerMods() {
