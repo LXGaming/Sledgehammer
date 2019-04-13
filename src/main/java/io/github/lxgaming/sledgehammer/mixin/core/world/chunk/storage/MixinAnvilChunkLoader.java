@@ -18,6 +18,7 @@ package io.github.lxgaming.sledgehammer.mixin.core.world.chunk.storage;
 
 import com.google.common.collect.Lists;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ServerMixinCategory;
 import io.github.lxgaming.sledgehammer.exception.ChunkSaveException;
@@ -30,12 +31,11 @@ import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.text.ChatType;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
-import org.spongepowered.api.GameState;
-import org.spongepowered.api.Sponge;
-import org.spongepowered.api.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -102,7 +102,7 @@ public abstract class MixinAnvilChunkLoader {
         }
         
         // Cannot broadcast or shutdown unless the server is currently running
-        if (Sponge.getGame().getState() != GameState.SERVER_STARTED) {
+        if (SledgehammerPlatform.getInstance().getServer() == null || SledgehammerPlatform.getInstance().getServer().isServerRunning() || SledgehammerPlatform.getInstance().getServer().isServerStopped()) {
             return;
         }
         
@@ -114,7 +114,7 @@ public abstract class MixinAnvilChunkLoader {
             CrashReportCategory crashReportCategory = new CrashReportCategory(crashReport, "Affected level");
             crashReportCategory.addDetail("World", () -> {
                 if (world != null) {
-                    return String.format("%s (%s)", world.getName(), world.getUniqueId());
+                    return String.format("%s", world.getWorldInfo().getWorldName());
                 }
                 
                 return "Unknown";
@@ -122,7 +122,7 @@ public abstract class MixinAnvilChunkLoader {
             
             crashReportCategory.addDetail("Players", () -> {
                 if (world != null) {
-                    return String.format("%d total; %s", world.getPlayers().size(), world.getPlayers());
+                    return String.format("%d total; %s", world.playerEntities.size(), world.playerEntities);
                 }
                 
                 return "Unknown";
@@ -137,8 +137,8 @@ public abstract class MixinAnvilChunkLoader {
                     .add(crashReport.getCrashCause())
                     .log(Sledgehammer.getInstance().getLogger(), Level.ERROR);
             
-            Sponge.getServer().setHasWhitelist(true);
-            Sponge.getServer().shutdown();
+            SledgehammerPlatform.getInstance().getServer().getPlayerList().setWhiteListEnabled(true);
+            SledgehammerPlatform.getInstance().getServer().initiateShutdown();
             return;
         }
         
@@ -153,7 +153,7 @@ public abstract class MixinAnvilChunkLoader {
                 Broadcast.builder()
                         .message(Toolbox.convertColor(message.replace("[X]", String.valueOf(pos.x)).replace("[Z]", String.valueOf(pos.z))))
                         .permission(Reference.ID + ".broadcast.chunksave")
-                        .type(Broadcast.Type.CHAT)
+                        .type(ChatType.CHAT)
                         .build()
                         .sendMessage();
             });
@@ -324,8 +324,8 @@ public abstract class MixinAnvilChunkLoader {
     }
     
     private Optional<World> sledgehammer$getWorld() {
-        for (World world : Sponge.getServer().getWorlds()) {
-            if (world.getDirectory().equals(chunkSaveLocation.toPath())) {
+        for (World world : SledgehammerPlatform.getInstance().getServer().worlds) {
+            if (world.getSaveHandler().getWorldDirectory().equals(chunkSaveLocation)) {
                 return Optional.of(world);
             }
         }

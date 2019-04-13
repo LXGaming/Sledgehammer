@@ -17,6 +17,8 @@
 package io.github.lxgaming.sledgehammer.mixin.forge.entity.passive;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
+import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
@@ -26,7 +28,6 @@ import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -58,14 +59,14 @@ public abstract class MixinEntityVillager extends EntityAgeable implements IMixi
     
     @Inject(method = "populateBuyingList", at = @At(value = "RETURN"), cancellable = true)
     private void onPopulateBuyingListReturn(CallbackInfo callbackInfo) {
-        if (Sponge.getPluginManager().isLoaded("primitivemobs") && StringUtils.equals(((Entity) this).getType().getId(), "primitivemobs:travelingmerchant")) {
+        if (SledgehammerPlatform.getInstance().isLoaded("primitivemobs") && StringUtils.equals(Toolbox.cast(this, Entity.class).getType().getId(), "primitivemobs:travelingmerchant")) {
             sledgehammer$populateTravelingMerchant();
         }
     }
     
     @Inject(method = "processInteract", at = @At(value = "HEAD"), cancellable = true)
     private void onProcessInteract(EntityPlayer player, EnumHand hand, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        if (Sponge.getPluginManager().isLoaded("primitivemobs") && StringUtils.equals(((Entity) this).getType().getId(), "primitivemobs:travelingmerchant")) {
+        if (SledgehammerPlatform.getInstance().isLoaded("primitivemobs") && StringUtils.equals(Toolbox.cast(this, Entity.class).getType().getId(), "primitivemobs:travelingmerchant")) {
             sledgehammer$populateTravelingMerchant();
         }
     }

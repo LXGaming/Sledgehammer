@@ -16,9 +16,9 @@
 
 package io.github.lxgaming.sledgehammer.mixin.forge.fml.common.network.simpleimpl;
 
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import org.spongepowered.api.Sponge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,7 +29,7 @@ public abstract class MixinSimpleNetworkWrapper {
     
     @Inject(method = "sendToAll", at = @At(value = "HEAD"), cancellable = true)
     private void sendToAll(IMessage message, CallbackInfo callbackInfo) {
-        if (Sponge.getPluginManager().isLoaded("lootbags") && message.getClass().getName().startsWith("mal.lootbags.network.message.")) {
+        if (SledgehammerPlatform.getInstance().isLoaded("lootbags") && message.getClass().getName().startsWith("mal.lootbags.network.message.")) {
             callbackInfo.cancel();
         }
     }

@@ -17,11 +17,14 @@
 package io.github.lxgaming.sledgehammer.mixin.forge.entity;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ServerMixinCategory;
 import io.github.lxgaming.sledgehammer.util.Broadcast;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.ChatType;
 import net.minecraftforge.common.util.ITeleporter;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.Sponge;
@@ -50,14 +53,14 @@ public abstract class MixinEntity_Teleport {
                 
                 Broadcast broadcast = Broadcast.builder()
                         .message(Toolbox.convertColor(message.replace("[ID]", Toolbox.getRootId(Toolbox.cast(this, Entity.class)))))
-                        .type(Broadcast.Type.CHAT)
+                        .type(ChatType.CHAT)
                         .build();
                 
                 if (generalCategory.isDebug()) {
-                    broadcast.sendMessage(Sponge.getServer().getConsole());
+                    broadcast.sendMessage(SledgehammerPlatform.getInstance().getServer());
                 }
                 
-                mixinEntity.getCreator().flatMap(Sponge.getServer()::getPlayer).ifPresent(broadcast::sendMessage);
+                mixinEntity.getCreator().flatMap(Sponge.getServer()::getPlayer).map(EntityPlayer.class::cast).ifPresent(broadcast::sendMessage);
             });
         }
     }
