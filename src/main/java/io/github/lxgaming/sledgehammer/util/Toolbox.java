@@ -213,10 +213,10 @@ public class Toolbox {
         return type.cast(object);
     }
     
-    public static <T> Optional<T> newInstance(Class<? extends T> typeOfT) {
+    public static <T> Optional<T> newInstance(Class<T> type) {
         try {
-            return Optional.of(typeOfT.newInstance());
-        } catch (Exception ex) {
+            return Optional.of(type.newInstance());
+        } catch (Throwable ex) {
             return Optional.empty();
         }
     }

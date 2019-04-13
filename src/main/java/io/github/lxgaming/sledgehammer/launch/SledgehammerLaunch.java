@@ -65,10 +65,10 @@ public class SledgehammerLaunch {
         }
     }
     
-    public static boolean isClassPresent(String className) {
+    public static boolean isClassPresent(String name) {
         try {
-            return Class.forName(className, false, Launch.classLoader) != null;
-        } catch (Exception ex) {
+            return Class.forName(name, false, Launch.classLoader) != null;
+        } catch (Throwable ex) {
             return false;
         }
     }
