@@ -17,22 +17,23 @@
 package io.github.lxgaming.sledgehammer.command;
 
 import com.google.common.collect.Lists;
+import io.github.lxgaming.sledgehammer.util.Text;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.api.command.CommandResult;
-import org.spongepowered.api.command.CommandSource;
-import org.spongepowered.api.data.key.Keys;
-import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.item.ItemType;
-import org.spongepowered.api.item.ItemTypes;
-import org.spongepowered.api.item.inventory.ItemStack;
-import org.spongepowered.api.item.inventory.transaction.InventoryTransactionResult;
-import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.format.TextColors;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BookCommand extends AbstractCommand {
     
@@ -43,85 +44,97 @@ public class BookCommand extends AbstractCommand {
     }
     
     @Override
-    public CommandResult execute(CommandSource commandSource, List<String> arguments) {
-        if (!(commandSource instanceof Player)) {
-            commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "This command can only be executed by players."));
-            return CommandResult.empty();
+    public void execute(ICommandSender commandSender, List<String> arguments) {
+        if (!(commandSender instanceof EntityPlayer)) {
+            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "This command can only be executed by players."));
+            return;
         }
         
-        Player player = (Player) commandSource;
+        EntityPlayer player = (EntityPlayer) commandSender;
         if (arguments.size() != 2) {
-            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Invalid arguments: ", getUsage()));
-            return CommandResult.empty();
+            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Invalid arguments: " + getUsage()));
+            return;
         }
         
-        ItemType itemType = getType(arguments.remove(0));
-        if (itemType == ItemTypes.AIR) {
-            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Invalid type"));
-            return CommandResult.empty();
+        Item item = getType(arguments.remove(0));
+        if (item == null) {
+            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Invalid type"));
+            return;
         }
         
         Integer pages = Toolbox.parseInteger(arguments.remove(0)).orElse(null);
         if (pages == null) {
-            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Failed to parse pages"));
-            return CommandResult.empty();
+            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Failed to parse pages"));
+            return;
         }
         
         if (pages < 0 || pages > 3072) {
-            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Value is outside of the allowed range (0 ~ 3072)"));
-            return CommandResult.empty();
+            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Value is outside of the allowed range (0 ~ 3072)"));
+            return;
         }
         
-        ItemStack itemStack = generateBook(itemType, pages);
-        if (itemStack.getType() == ItemTypes.NONE) {
-            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Failed to generate book"));
-            return CommandResult.empty();
+        ItemStack itemStack = generateBook(item, pages, player.getName(), String.valueOf(System.currentTimeMillis()));
+        if (itemStack == null) {
+            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Failed to generate book"));
+            return;
         }
         
-        if (player.getInventory().offer(itemStack).getType() == InventoryTransactionResult.Type.SUCCESS) {
+        if (player.inventory.addItemStackToInventory(itemStack)) {
             player.sendMessage(Text.of(Toolbox.getTextPrefix(),
-                    TextColors.GREEN, "Generated ",
-                    TextColors.AQUA, StringUtils.substringAfter(itemType.getId(), ":"),
-                    TextColors.GREEN, " with ",
-                    TextColors.AQUA, pages, " ",
-                    TextColors.GREEN, Toolbox.formatUnit(pages, "page", "pages")));
-            return CommandResult.success();
+                    TextFormatting.GREEN, "Generated ",
+                    TextFormatting.AQUA, Toolbox.getResourceLocation(item).map(ResourceLocation::getPath).orElse("Unknown"),
+                    TextFormatting.GREEN, " with ",
+                    TextFormatting.AQUA, pages,
+                    TextFormatting.GREEN, " " + Toolbox.formatUnit(pages, "page", "pages")
+            ));
         } else {
-            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Failed to offer ItemStack"));
-            return CommandResult.empty();
+            player.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Failed to add ItemStack to your Inventory"));
         }
     }
     
-    private ItemStack generateBook(ItemType itemType, int size) {
+    private ItemStack generateBook(Item item, int size, String author, String title) {
         List<String> pages = Lists.newArrayList();
         for (int index = 0; index < size; index++) {
             pages.add(RandomStringUtils.random(255, true, true));
         }
         
-        ItemStack itemStack = ItemStack.of(itemType, 1);
-        if (itemType == ItemTypes.WRITABLE_BOOK) {
-            itemStack.offer(Keys.PLAIN_BOOK_PAGES, pages);
+        ItemStack itemStack = new ItemStack(item, 1);
+        if (item == Items.WRITABLE_BOOK) {
+            NBTTagList nbtTagList = new NBTTagList();
+            pages.stream()
+                    .map(NBTTagString::new)
+                    .forEach(nbtTagList::appendTag);
+            
+            itemStack.setTagInfo("pages", nbtTagList);
             return itemStack;
         }
         
-        if (itemType == ItemTypes.WRITTEN_BOOK) {
-            itemStack.offer(Keys.BOOK_PAGES, pages.stream().map(Text::of).collect(Collectors.toList()));
-            itemStack.offer(Keys.BOOK_AUTHOR, Text.of(System.currentTimeMillis()));
+        if (item == Items.WRITTEN_BOOK) {
+            NBTTagList nbtTagList = new NBTTagList();
+            pages.stream()
+                    .map(TextComponentString::new)
+                    .map(ITextComponent.Serializer::componentToJson)
+                    .map(NBTTagString::new)
+                    .forEach(nbtTagList::appendTag);
+            
+            itemStack.setTagInfo("pages", nbtTagList);
+            itemStack.setTagInfo("author", new NBTTagString(author));
+            itemStack.setTagInfo("title", new NBTTagString(title));
             return itemStack;
         }
         
-        return ItemStack.empty();
+        return null;
     }
     
-    private ItemType getType(String type) {
+    private Item getType(String type) {
         if (StringUtils.equalsIgnoreCase(type, "written")) {
-            return ItemTypes.WRITTEN_BOOK;
+            return Items.WRITTEN_BOOK;
         }
         
         if (StringUtils.equalsIgnoreCase(type, "writable")) {
-            return ItemTypes.WRITABLE_BOOK;
+            return Items.WRITABLE_BOOK;
         }
         
-        return ItemTypes.NONE;
+        return null;
     }
 }

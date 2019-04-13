@@ -18,6 +18,7 @@ package io.github.lxgaming.sledgehammer;
 
 import com.google.common.base.Preconditions;
 import io.github.lxgaming.sledgehammer.util.Reference;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
 import org.spongepowered.api.plugin.Plugin;
 
@@ -51,11 +52,61 @@ public class SledgehammerPlatform {
     }
     
     public Object getContainer() {
-        throw new IllegalStateException(String.format("%s injection failed", Reference.NAME));
+        throw new IllegalStateException("getContainer injection failed");
+    }
+    
+    public MinecraftServer getServer() {
+        throw new IllegalStateException("getServer injection failed");
+    }
+    
+    public State getState() {
+        throw new IllegalStateException("getState injection failed");
     }
     
     public Type getType() {
-        throw new IllegalStateException(String.format("%s injection failed", Reference.NAME));
+        throw new IllegalStateException("getType injection failed");
+    }
+    
+    public boolean isLoaded(String id) {
+        throw new IllegalStateException("isLoaded injection failed");
+    }
+    
+    public enum State {
+        
+        CONSTRUCTION("Construction"),
+        
+        PRE_INITIALIZATION("Pre Initialization"),
+        
+        INITIALIZATION("Initialization"),
+        
+        POST_INITIALIZATION("Post Initialization"),
+        
+        LOAD_COMPLETE("Load Complete"),
+        
+        SERVER_ABOUT_TO_START("Server About To Start"),
+        
+        SERVER_STARTING("Server Starting"),
+        
+        SERVER_STARTED("Server Started"),
+        
+        SERVER_STOPPING("Server Stopping"),
+        
+        SERVER_STOPPED("Server Stopped");
+        
+        private final String name;
+        
+        State(String name) {
+            this.name = name;
+        }
+        
+        public String getName() {
+            return name;
+        }
+        
+        @Override
+        public String toString() {
+            return getName();
+        }
     }
     
     public enum Type {
@@ -68,14 +119,6 @@ public class SledgehammerPlatform {
         
         Type(String name) {
             this.name = name;
-        }
-        
-        public boolean isForge() {
-            return this == FORGE;
-        }
-        
-        public boolean isSponge() {
-            return this == SPONGE;
         }
         
         public String getName() {

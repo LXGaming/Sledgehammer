@@ -20,7 +20,6 @@ import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -31,9 +30,10 @@ import org.spongepowered.api.event.network.ClientConnectionEvent;
 public class BotaniaIntegration extends AbstractIntegration {
     
     public BotaniaIntegration() {
-        addDependency("forge");
         addDependency("botania");
-        setState(GameState.INITIALIZATION);
+        addDependency("forge");
+        addDependency("sponge");
+        setState(SledgehammerPlatform.State.INITIALIZATION);
     }
     
     @Override

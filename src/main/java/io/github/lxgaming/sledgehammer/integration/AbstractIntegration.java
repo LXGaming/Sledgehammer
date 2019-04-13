@@ -17,14 +17,14 @@
 package io.github.lxgaming.sledgehammer.integration;
 
 import com.google.common.collect.Sets;
-import org.spongepowered.api.GameState;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 
 import java.util.Set;
 
 public abstract class AbstractIntegration {
     
     private final Set<String> dependencies = Sets.newLinkedHashSet();
-    private GameState state = GameState.INITIALIZATION;
+    private SledgehammerPlatform.State state = SledgehammerPlatform.State.INITIALIZATION;
     
     public abstract void execute() throws Exception;
     
@@ -36,11 +36,11 @@ public abstract class AbstractIntegration {
         return dependencies;
     }
     
-    public final GameState getState() {
+    public final SledgehammerPlatform.State getState() {
         return state;
     }
     
-    protected final void setState(GameState state) {
+    protected final void setState(SledgehammerPlatform.State state) {
         this.state = state;
     }
 }

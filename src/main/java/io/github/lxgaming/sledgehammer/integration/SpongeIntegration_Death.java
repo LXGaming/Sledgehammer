@@ -18,7 +18,6 @@ package io.github.lxgaming.sledgehammer.integration;
 
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
@@ -30,7 +29,7 @@ public class SpongeIntegration_Death extends AbstractIntegration {
     
     public SpongeIntegration_Death() {
         addDependency("sponge");
-        setState(GameState.INITIALIZATION);
+        setState(SledgehammerPlatform.State.INITIALIZATION);
     }
     
     @Override

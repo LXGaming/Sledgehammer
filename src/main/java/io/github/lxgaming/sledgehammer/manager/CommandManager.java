@@ -22,13 +22,13 @@ import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.command.AbstractCommand;
 import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
+import io.github.lxgaming.sledgehammer.util.Text;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import net.minecraft.command.CommandHandler;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.api.Sponge;
-import org.spongepowered.api.command.CommandResult;
-import org.spongepowered.api.command.CommandSource;
-import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.format.TextColors;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,32 +43,28 @@ public final class CommandManager {
         registerCommand(SledgehammerCommand.class);
     }
     
-    public static CommandResult process(AbstractCommand abstractCommand, CommandSource commandSource, String message) {
-        List<String> arguments = getArguments(message).map(Lists::newArrayList).orElse(null);
-        if (arguments == null) {
-            commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Failed to collect arguments"));
-            return CommandResult.empty();
-        }
-        
+    public static boolean process(AbstractCommand abstractCommand, ICommandSender commandSender, String[] args) {
+        List<String> arguments = getArguments(args);
         AbstractCommand command = getCommand(abstractCommand, arguments).orElse(null);
         if (command == null) {
-            commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Unknown command"));
-            return CommandResult.empty();
+            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Unknown command"));
+            return false;
         }
         
-        if (!command.testPermission(commandSource)) {
-            commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "You do not have permission to execute this command"));
-            return CommandResult.empty();
+        if (!command.checkPermission(commandSender)) {
+            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, new TextComponentTranslation("commands.generic.permission")));
+            return false;
         }
         
-        Sledgehammer.getInstance().debugMessage("Processing {} for {}", command.getPrimaryAlias().orElse("Unknown"), commandSource.getName());
+        Sledgehammer.getInstance().debugMessage("Processing {} for {}", command.getName(), commandSender.getName());
         
         try {
-            return command.execute(commandSource, arguments);
+            command.execute(commandSender, arguments);
+            return true;
         } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while executing {}", command.getClass().getSimpleName(), ex);
-            commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "An error has occurred. Details are available in console."));
-            return CommandResult.empty();
+            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "An error has occurred. Details are available in console."));
+            return false;
         }
     }
     
@@ -86,7 +82,7 @@ public final class CommandManager {
         }
         
         getCommands().add(command);
-        Sponge.getCommandManager().register(SledgehammerPlatform.getInstance().getContainer(), command, command.getAliases().toArray(new String[0]));
+        ((CommandHandler) SledgehammerPlatform.getInstance().getServer().getCommandManager()).registerCommand(command);
         Sledgehammer.getInstance().debugMessage("{} registered", commandClass.getSimpleName());
         return true;
     }
@@ -151,8 +147,16 @@ public final class CommandManager {
         return Optional.ofNullable(parentCommand);
     }
     
-    private static Optional<String[]> getArguments(String message) {
-        return Optional.ofNullable(StringUtils.split(Toolbox.filter(message), " "));
+    private static List<String> getArguments(String[] strings) {
+        List<String> arguments = Lists.newArrayList();
+        for (String string : strings) {
+            String argument = Toolbox.filter(string);
+            if (StringUtils.isNotBlank(argument)) {
+                arguments.add(argument);
+            }
+        }
+        
+        return arguments;
     }
     
     public static Set<AbstractCommand> getCommands() {

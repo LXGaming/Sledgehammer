@@ -18,6 +18,7 @@ package io.github.lxgaming.sledgehammer.integration;
 
 import com.google.common.collect.Lists;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -25,7 +26,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.spongepowered.api.GameState;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +34,7 @@ public class ForgeIntegration extends AbstractIntegration {
     
     public ForgeIntegration() {
         addDependency("forge");
-        setState(GameState.INITIALIZATION);
+        setState(SledgehammerPlatform.State.INITIALIZATION);
     }
     
     @Override

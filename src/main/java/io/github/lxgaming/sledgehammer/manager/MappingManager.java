@@ -18,6 +18,7 @@ package io.github.lxgaming.sledgehammer.manager;
 
 import com.google.common.collect.Maps;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ClientMixinCategory;
@@ -34,6 +35,7 @@ public final class MappingManager {
     
     private static final Map<String, Boolean> MIXIN_MAPPINGS = Maps.newHashMap();
     private static final Map<String, Boolean> MOD_MAPPINGS = Maps.newHashMap();
+    private static final Map<Enum, SledgehammerPlatform.State> STATE_MAPPINGS = Maps.newHashMap();
     
     public static void registerMixins() {
         // Client Mixin
@@ -142,11 +144,19 @@ public final class MappingManager {
         return Optional.ofNullable(getModMappings().get(mod));
     }
     
+    public static Optional<SledgehammerPlatform.State> getStateMapping(Enum state) {
+        return Optional.ofNullable(getStateMappings().get(state));
+    }
+    
     public static Map<String, Boolean> getMixinMappings() {
         return MIXIN_MAPPINGS;
     }
     
     public static Map<String, Boolean> getModMappings() {
         return MOD_MAPPINGS;
+    }
+    
+    public static Map<Enum, SledgehammerPlatform.State> getStateMappings() {
+        return STATE_MAPPINGS;
     }
 }

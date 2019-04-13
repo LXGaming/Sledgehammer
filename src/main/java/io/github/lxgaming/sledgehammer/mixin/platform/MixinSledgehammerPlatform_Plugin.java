@@ -20,14 +20,18 @@ import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
+import io.github.lxgaming.sledgehammer.manager.MappingManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import net.minecraft.server.MinecraftServer;
+import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameConstructionEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameLoadCompleteEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
+import org.spongepowered.api.event.game.state.GameStartingServerEvent;
 import org.spongepowered.api.event.game.state.GameStateEvent;
 import org.spongepowered.api.event.game.state.GameStoppedEvent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -44,6 +48,18 @@ public abstract class MixinSledgehammerPlatform_Plugin {
     public void onConstruction(GameConstructionEvent event) {
         instance = Toolbox.cast(this, SledgehammerPlatform.class);
         Sledgehammer.init();
+        
+        MappingManager.getStateMappings().put(GameState.CONSTRUCTION, SledgehammerPlatform.State.CONSTRUCTION);
+        MappingManager.getStateMappings().put(GameState.PRE_INITIALIZATION, SledgehammerPlatform.State.PRE_INITIALIZATION);
+        MappingManager.getStateMappings().put(GameState.INITIALIZATION, SledgehammerPlatform.State.INITIALIZATION);
+        MappingManager.getStateMappings().put(GameState.POST_INITIALIZATION, SledgehammerPlatform.State.POST_INITIALIZATION);
+        MappingManager.getStateMappings().put(GameState.LOAD_COMPLETE, SledgehammerPlatform.State.LOAD_COMPLETE);
+        MappingManager.getStateMappings().put(GameState.SERVER_ABOUT_TO_START, SledgehammerPlatform.State.SERVER_ABOUT_TO_START);
+        MappingManager.getStateMappings().put(GameState.SERVER_STARTING, SledgehammerPlatform.State.SERVER_STARTING);
+        MappingManager.getStateMappings().put(GameState.SERVER_STARTED, SledgehammerPlatform.State.SERVER_STARTED);
+        MappingManager.getStateMappings().put(GameState.SERVER_STOPPING, SledgehammerPlatform.State.SERVER_STOPPING);
+        MappingManager.getStateMappings().put(GameState.SERVER_STOPPED, SledgehammerPlatform.State.SERVER_STOPPED);
+        
         IntegrationManager.register();
     }
     
@@ -53,12 +69,16 @@ public abstract class MixinSledgehammerPlatform_Plugin {
     
     @Listener
     public void onInitialization(GameInitializationEvent event) {
-        CommandManager.register();
     }
     
     @Listener
     public void onLoadComplete(GameLoadCompleteEvent event) {
         Sledgehammer.getInstance().getLogger().info("{} v{} has loaded", Reference.NAME, Reference.VERSION);
+    }
+    
+    @Listener
+    public void onServerStarting(GameStartingServerEvent event) {
+        CommandManager.register();
     }
     
     @Listener
@@ -85,7 +105,38 @@ public abstract class MixinSledgehammerPlatform_Plugin {
      * @reason Sponge compatibility
      */
     @Overwrite
+    public MinecraftServer getServer() {
+        if (Sponge.isServerAvailable()) {
+            return (MinecraftServer) Sponge.getServer();
+        }
+        
+        return null;
+    }
+    
+    /**
+     * @author LX_Gaming
+     * @reason Sponge compatibility
+     */
+    @Overwrite
+    public SledgehammerPlatform.State getState() {
+        return MappingManager.getStateMapping(Sponge.getGame().getState()).orElse(null);
+    }
+    
+    /**
+     * @author LX_Gaming
+     * @reason Sponge compatibility
+     */
+    @Overwrite
     public SledgehammerPlatform.Type getType() {
         return SledgehammerPlatform.Type.SPONGE;
+    }
+    
+    /**
+     * @author LX_Gaming
+     * @reason Sponge compatibility
+     */
+    @Overwrite
+    public boolean isLoaded(String id) {
+        return Sponge.getPluginManager().isLoaded(id);
     }
 }

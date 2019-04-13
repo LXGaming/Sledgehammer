@@ -17,8 +17,11 @@
 package io.github.lxgaming.sledgehammer.integration;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
+import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -26,7 +29,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import nmd.primal.core.api.PrimalAPI;
 import nmd.primal.core.api.events.FlakeEvent;
 import nmd.primal.core.common.helper.PlayerHelper;
-import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.CauseStackManager;
 
@@ -35,7 +37,8 @@ public class PrimalIntegration extends AbstractIntegration {
     public PrimalIntegration() {
         addDependency("forge");
         addDependency("primal");
-        setState(GameState.INITIALIZATION);
+        addDependency("sponge");
+        setState(SledgehammerPlatform.State.INITIALIZATION);
     }
     
     @Override
@@ -63,7 +66,11 @@ public class PrimalIntegration extends AbstractIntegration {
             itemStack.setCount(PrimalAPI.getRandom().nextInt(1, Math.max(2, itemStack.getCount() + 1)));
             
             // Debugging
-            Sledgehammer.getInstance().debugMessage("{} got {}x {}", entityPlayer.getName(), itemStack.getCount(), itemStack.getItem().getRegistryName().toString());
+            Sledgehammer.getInstance().debugMessage("{} got {}x {}",
+                    entityPlayer.getName(),
+                    itemStack.getCount(),
+                    Toolbox.getResourceLocation(itemStack.getItem()).map(ResourceLocation::getPath).orElse("Unknown"));
+            
             PlayerHelper.spawnItemInAir(event.getWorld(), event.getPos(), itemStack);
         }
         

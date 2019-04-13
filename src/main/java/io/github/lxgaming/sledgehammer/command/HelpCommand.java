@@ -19,13 +19,14 @@ package io.github.lxgaming.sledgehammer.command;
 import com.google.common.collect.Lists;
 import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.util.Text;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.api.command.CommandResult;
-import org.spongepowered.api.command.CommandSource;
-import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.action.TextActions;
-import org.spongepowered.api.text.format.TextColors;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,49 +39,54 @@ public class HelpCommand extends AbstractCommand {
     }
     
     @Override
-    public CommandResult execute(CommandSource commandSource, List<String> arguments) {
+    public void execute(ICommandSender commandSender, List<String> arguments) {
         Optional<AbstractCommand> abstractCommand = CommandManager.getCommand(Lists.newArrayList(Reference.ID));
         if (!abstractCommand.isPresent()) {
-            return CommandResult.success();
+            return;
         }
         
-        commandSource.sendMessage(Text.of(Toolbox.getTextPrefix()));
+        commandSender.sendMessage(Toolbox.getTextPrefix());
         for (AbstractCommand command : abstractCommand.get().getChildren()) {
-            if (command == this || !command.testPermission(commandSource)) {
+            if (command == this || !command.checkPermission(commandSender)) {
                 continue;
             }
             
-            Text.Builder textBuilder = Text.builder();
-            textBuilder.onClick(TextActions.suggestCommand("/" + Reference.ID + " " + command.getPrimaryAlias().orElse("unknown")));
-            textBuilder.onHover(TextActions.showText(buildDescription(command)));
-            textBuilder.append(Text.of(TextColors.BLUE, "> "));
-            textBuilder.append(Text.of(TextColors.GREEN, "/", Reference.ID, " ", command.getPrimaryAlias().orElse("unknown")));
+            ITextComponent textComponent = Text.of("");
+            textComponent.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/" + Reference.ID + " " + command.getName()));
+            textComponent.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, buildDescription(command)));
+            
+            textComponent.appendSibling(Text.of(
+                    TextFormatting.BLUE, "> ",
+                    TextFormatting.GREEN, "/" + Reference.ID + " " + command.getName()
+            ));
+            
             if (StringUtils.isNotBlank(command.getUsage())) {
-                textBuilder.append(Text.of(" ", TextColors.GREEN, command.getUsage()));
+                textComponent.appendSibling(Text.of(TextFormatting.GREEN, " " + command.getUsage()));
             }
             
-            commandSource.sendMessage(textBuilder.build());
+            commandSender.sendMessage(textComponent);
         }
-        
-        return CommandResult.success();
     }
     
-    private Text buildDescription(AbstractCommand command) {
-        Text.Builder textBuilder = Text.builder();
-        textBuilder.append(Text.of(TextColors.AQUA, "Command: ", TextColors.DARK_GREEN, StringUtils.capitalize(command.getPrimaryAlias().orElse("unknown"))));
-        textBuilder.append(Text.NEW_LINE);
-        textBuilder.append(Text.of(TextColors.AQUA, "Description: ", TextColors.DARK_GREEN, StringUtils.defaultIfBlank(command.getDescription(), "No description provided")));
-        textBuilder.append(Text.NEW_LINE);
-        textBuilder.append(Text.of(TextColors.AQUA, "Usage: ", TextColors.DARK_GREEN, "/", Reference.ID, " ", command.getPrimaryAlias().orElse("unknown")));
+    private ITextComponent buildDescription(AbstractCommand command) {
+        ITextComponent textComponent = Text.of(
+                TextFormatting.AQUA, "Command: ", TextFormatting.DARK_GREEN, StringUtils.capitalize(command.getName()), Text.NEW_LINE,
+                TextFormatting.AQUA, "Description: ", TextFormatting.DARK_GREEN, StringUtils.defaultIfBlank(command.getDescription(), "No description provided"), Text.NEW_LINE,
+                TextFormatting.AQUA, "Usage: ", TextFormatting.DARK_GREEN, "/" + Reference.ID + " " + command.getName()
+        );
+        
         if (StringUtils.isNotBlank(command.getUsage())) {
-            textBuilder.append(Text.of(" ", TextColors.DARK_GREEN, command.getUsage()));
+            textComponent.appendSibling(Text.of(TextFormatting.DARK_GREEN, " " + command.getUsage()));
         }
         
-        textBuilder.append(Text.NEW_LINE);
-        textBuilder.append(Text.of(TextColors.AQUA, "Permission: ", TextColors.DARK_GREEN, StringUtils.defaultIfBlank(command.getPermission(), "None")));
-        textBuilder.append(Text.NEW_LINE);
-        textBuilder.append(Text.NEW_LINE);
-        textBuilder.append(Text.of(TextColors.GRAY, "Click to auto-complete."));
-        return textBuilder.build();
+        textComponent.appendSibling(Text.of(
+                Text.NEW_LINE,
+                TextFormatting.AQUA, "Permission: ", TextFormatting.DARK_GREEN, StringUtils.defaultIfBlank(command.getPermission(), "None"),
+                Text.NEW_LINE,
+                Text.NEW_LINE,
+                TextFormatting.GRAY, "Click to auto-complete."
+        ));
+        
+        return textComponent;
     }
 }

@@ -18,6 +18,7 @@ package io.github.lxgaming.sledgehammer.manager;
 
 import com.google.common.collect.Sets;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.integration.ClientIntegrationCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.integration.CommonIntegrationCategory;
@@ -31,7 +32,6 @@ import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border;
 import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Death;
 import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Phase;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
-import org.spongepowered.api.Sponge;
 
 import java.util.Set;
 import java.util.function.Function;
@@ -52,14 +52,19 @@ public final class IntegrationManager {
     }
     
     public static void process() {
+        SledgehammerPlatform.State state = SledgehammerPlatform.getInstance().getState();
+        if (state == null) {
+            return;
+        }
+        
         for (AbstractIntegration integration : getIntegrations()) {
-            if (integration.getState() == null || integration.getState() != Sponge.getGame().getState()) {
+            if (integration.getState() != state) {
                 continue;
             }
             
             Set<String> missingDependencies = Sets.newLinkedHashSet();
             for (String dependency : integration.getDependencies()) {
-                if (!Sponge.getPluginManager().isLoaded(dependency)) {
+                if (!SledgehammerPlatform.getInstance().isLoaded(dependency)) {
                     missingDependencies.add(dependency);
                 }
             }
@@ -70,7 +75,7 @@ public final class IntegrationManager {
                 continue;
             }
             
-            Sledgehammer.getInstance().debugMessage("Processing {} ({})", integration.getClass().getSimpleName(), integration.getState());
+            Sledgehammer.getInstance().debugMessage("Processing {} ({})", integration.getClass().getSimpleName(), state);
             
             try {
                 integration.execute();

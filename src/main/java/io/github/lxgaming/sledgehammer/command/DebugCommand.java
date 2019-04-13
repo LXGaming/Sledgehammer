@@ -19,11 +19,10 @@ package io.github.lxgaming.sledgehammer.command;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
+import io.github.lxgaming.sledgehammer.util.Text;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
-import org.spongepowered.api.command.CommandResult;
-import org.spongepowered.api.command.CommandSource;
-import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.format.TextColors;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.List;
 
@@ -35,21 +34,19 @@ public class DebugCommand extends AbstractCommand {
     }
     
     @Override
-    public CommandResult execute(CommandSource commandSource, List<String> arguments) {
+    public void execute(ICommandSender commandSender, List<String> arguments) {
         GeneralCategory generalCategory = Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).orElse(null);
         if (generalCategory == null) {
-            commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Configuration error"));
-            return CommandResult.empty();
+            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Configuration error"));
+            return;
         }
         
         if (generalCategory.isDebug()) {
             generalCategory.setDebug(false);
-            commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.RED, "Debugging disabled"));
+            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Debugging disabled"));
         } else {
             generalCategory.setDebug(true);
-            commandSource.sendMessage(Text.of(Toolbox.getTextPrefix(), TextColors.GREEN, "Debugging enabled"));
+            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.GREEN, "Debugging enabled"));
         }
-        
-        return CommandResult.success();
     }
 }

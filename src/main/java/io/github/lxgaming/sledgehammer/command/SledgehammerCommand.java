@@ -16,8 +16,10 @@
 
 package io.github.lxgaming.sledgehammer.command;
 
-import org.spongepowered.api.command.CommandResult;
-import org.spongepowered.api.command.CommandSource;
+import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.util.Text;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.List;
 
@@ -33,8 +35,7 @@ public class SledgehammerCommand extends AbstractCommand {
     }
     
     @Override
-    public CommandResult execute(CommandSource commandSource, List<String> arguments) {
-        getHelp(commandSource).ifPresent(commandSource::sendMessage);
-        return CommandResult.success();
+    public void execute(ICommandSender commandSender, List<String> arguments) {
+        commandSender.sendMessage(Text.of(TextFormatting.BLUE, "Use ", TextFormatting.GREEN, "/" + Reference.ID + " help ", TextFormatting.BLUE, "to view available commands."));
     }
 }

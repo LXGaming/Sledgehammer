@@ -19,7 +19,6 @@ package io.github.lxgaming.sledgehammer.integration;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockState;
@@ -40,7 +39,8 @@ public class MistIntegration extends AbstractIntegration {
     public MistIntegration() {
         addDependency("forge");
         addDependency("mist");
-        setState(GameState.INITIALIZATION);
+        addDependency("sponge");
+        setState(SledgehammerPlatform.State.INITIALIZATION);
     }
     
     @Override

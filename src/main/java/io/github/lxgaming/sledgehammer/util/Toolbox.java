@@ -17,25 +17,22 @@
 package io.github.lxgaming.sledgehammer.util;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
+import net.minecraft.block.Block;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.api.entity.EntityType;
-import org.spongepowered.api.item.ItemType;
-import org.spongepowered.common.launch.SpongeLaunch;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -44,72 +41,30 @@ import java.util.Optional;
 public class Toolbox {
     
     public static ITextComponent getTextPrefix() {
-        ITextComponent text = new TextComponentString("");
-        Style style = new Style()
-                .setColor(TextFormatting.BLUE)
-                .setBold(true)
-                .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, getPluginInformation()));
-        
-        text.appendSibling(new TextComponentString("[" + Reference.NAME + "]").setStyle(style));
-        return text;
+        return Text.of(
+                TextFormatting.BLUE, TextFormatting.BOLD,
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, getPluginInformation()),
+                "[" + Reference.NAME + "]", " "
+        );
     }
     
     public static ITextComponent getPluginInformation() {
-        ITextComponent text = new TextComponentString("");
-        text.appendSibling(new TextComponentString(Reference.NAME).setStyle(new Style().setColor(TextFormatting.BLUE).setBold(true)));
-        text.appendSibling(new TextComponentString("\n"));
-        text.appendSibling(new TextComponentString("    Version: ").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
-        text.appendSibling(new TextComponentString(Reference.VERSION).setStyle(new Style().setColor(TextFormatting.WHITE)));
-        text.appendSibling(new TextComponentString("\n"));
-        text.appendSibling(new TextComponentString("    Authors: ").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
-        text.appendSibling(new TextComponentString(Reference.AUTHORS).setStyle(new Style().setColor(TextFormatting.WHITE)));
-        text.appendSibling(new TextComponentString("\n"));
-        text.appendSibling(new TextComponentString("    Source: ").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
-        text.appendSibling(new TextComponentString(Reference.SOURCE).setStyle(getURLStyle(Reference.SOURCE)));
-        text.appendSibling(new TextComponentString("\n"));
-        text.appendSibling(new TextComponentString("    Website: ").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
-        text.appendSibling(new TextComponentString(Reference.WEBSITE).setStyle(getURLStyle(Reference.SOURCE)));
-        return text;
+        return Text.of(
+                TextFormatting.BLUE, TextFormatting.BOLD, Reference.NAME, Text.NEW_LINE,
+                TextFormatting.DARK_GRAY, "    Version: ", TextFormatting.WHITE, Reference.VERSION, Text.NEW_LINE,
+                TextFormatting.DARK_GRAY, "    Authors: ", TextFormatting.WHITE, Reference.AUTHORS, Text.NEW_LINE,
+                TextFormatting.DARK_GRAY, "    Source: ", TextFormatting.BLUE, createURLEvent(Reference.SOURCE), Reference.SOURCE, Text.NEW_LINE,
+                TextFormatting.DARK_GRAY, "    Website: ", TextFormatting.BLUE, createURLEvent(Reference.WEBSITE), Reference.WEBSITE
+        );
     }
     
-    public static Style getURLStyle(String url) {
-        return new Style().setColor(TextFormatting.BLUE).setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url));
+    public static ClickEvent createURLEvent(String url) {
+        return new ClickEvent(ClickEvent.Action.OPEN_URL, url);
     }
     
     public static String convertColor(String string) {
         return string.replaceAll("(?i)\u0026([0-9A-FK-OR])", "\u00A7$1");
     }
-    
-    /*
-    public static Text getTextPrefix() {
-        Text.Builder textBuilder = Text.builder();
-        textBuilder.onHover(TextActions.showText(getPluginInformation()));
-        textBuilder.append(Text.of(TextColors.BLUE, TextStyles.BOLD, "[", Reference.NAME, "]"));
-        return Text.of(textBuilder.build(), TextStyles.RESET, " ");
-    }
-    
-    public static Text getPluginInformation() {
-        Text.Builder textBuilder = Text.builder();
-        textBuilder.append(Text.of(TextColors.BLUE, TextStyles.BOLD, Reference.NAME, Text.NEW_LINE));
-        textBuilder.append(Text.of("    ", TextColors.DARK_GRAY, "Version: ", TextColors.WHITE, Reference.VERSION, Text.NEW_LINE));
-        textBuilder.append(Text.of("    ", TextColors.DARK_GRAY, "Authors: ", TextColors.WHITE, Reference.AUTHORS, Text.NEW_LINE));
-        textBuilder.append(Text.of("    ", TextColors.DARK_GRAY, "Source: ", TextColors.BLUE, getURLTextAction(Reference.SOURCE), Reference.SOURCE, Text.NEW_LINE));
-        textBuilder.append(Text.of("    ", TextColors.DARK_GRAY, "Website: ", TextColors.BLUE, getURLTextAction(Reference.WEBSITE), Reference.WEBSITE));
-        return textBuilder.build();
-    }
-    
-    public static TextAction<?> getURLTextAction(String url) {
-        try {
-            return TextActions.openUrl(new URL(url));
-        } catch (MalformedURLException ex) {
-            return TextActions.suggestCommand(url);
-        }
-    }
-    
-    public static Text convertColor(String string) {
-        return TextSerializers.FORMATTING_CODE.deserialize(string);
-    }
-    */
     
     public static String formatUnit(long unit, String singular, String plural) {
         if (unit == 1) {
@@ -120,8 +75,7 @@ public class Toolbox {
     }
     
     public static boolean saveCrashReport(CrashReport crashReport) {
-        Path crashPath = SpongeLaunch.getGameDir()
-                .resolve("crash-reports")
+        Path crashPath = Paths.get("crash-reports")
                 .resolve("crash-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.txt");
         
         if (crashReport.saveToFile(crashPath.toFile())) {
@@ -133,38 +87,31 @@ public class Toolbox {
         }
     }
     
-    /*
-    @Deprecated
-    public static CatalogType getRootType(Entity entity) {
-        if (entity instanceof Item) {
-            return ((Item) entity).getItemType();
-        }
-        
-        return entity.getType();
-    }
-    */
-    
     public static String getRootId(Entity entity) {
-        if (SledgehammerLaunch.isSpongeRegistered()) {
-            if (entity instanceof EntityItem) {
-                return ((ItemType) ((EntityItem) entity).getItem().getItem()).getId();
+        if (entity instanceof EntityItem) {
+            ItemStack itemStack = ((EntityItem) entity).getItem();
+            if (!itemStack.isEmpty()) {
+                return getResourceLocation(itemStack.getItem()).map(ResourceLocation::toString).orElse("Unknown");
             }
-            
-            return ((EntityType) entity).getId();
         }
         
-        if (SledgehammerLaunch.isForgeRegistered()) {
-            if (entity instanceof EntityItem) {
-                ResourceLocation resourceLocation = Item.REGISTRY.getNameForObject(((EntityItem) entity).getItem().getItem());
-                if (resourceLocation != null) {
-                    return resourceLocation.toString();
-                }
-            }
-            
-            return EntityList.getEntityString(entity);
+        return getResourceLocation(entity).map(ResourceLocation::toString).orElse("Unknown");
+    }
+    
+    public static Optional<ResourceLocation> getResourceLocation(Object object) {
+        if (object instanceof Block) {
+            return Optional.of(Block.REGISTRY.getNameForObject((Block) object));
         }
         
-        return "Unknown";
+        if (object instanceof Entity) {
+            return Optional.ofNullable(EntityList.getKey((Entity) object));
+        }
+        
+        if (object instanceof Item) {
+            return Optional.ofNullable(Item.REGISTRY.getNameForObject((Item) object));
+        }
+        
+        return Optional.empty();
     }
     
     /**
@@ -207,6 +154,14 @@ public class Toolbox {
         }
         
         return false;
+    }
+    
+    public static String getClassSimpleName(Class<?> clazz) {
+        if (clazz.getEnclosingClass() != null) {
+            return getClassSimpleName(clazz.getEnclosingClass()) + "." + clazz.getSimpleName();
+        }
+        
+        return clazz.getSimpleName();
     }
     
     public static <T> T cast(Object object, Class<T> type) {

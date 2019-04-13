@@ -23,8 +23,9 @@ import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.util.Broadcast;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.ChatType;
 import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.api.GameState;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -44,7 +45,7 @@ public class SpongeIntegration_Border extends AbstractIntegration {
     
     public SpongeIntegration_Border() {
         addDependency("sponge");
-        setState(GameState.INITIALIZATION);
+        setState(SledgehammerPlatform.State.INITIALIZATION);
     }
     
     @Override
@@ -84,12 +85,12 @@ public class SpongeIntegration_Border extends AbstractIntegration {
                     return;
                 }
                 
-                Broadcast broadcast = Broadcast.builder().message(Toolbox.convertColor(message)).type(Broadcast.Type.CHAT).build();
+                Broadcast broadcast = Broadcast.builder().message(Toolbox.convertColor(message)).type(ChatType.CHAT).build();
                 if (generalCategory.isDebug()) {
-                    broadcast.sendMessage(Sponge.getServer().getConsole());
+                    broadcast.sendMessage(SledgehammerPlatform.getInstance().getServer());
                 }
                 
-                broadcast.sendMessage(player);
+                broadcast.sendMessage((EntityPlayer) player);
             });
         }
     }
