@@ -61,10 +61,10 @@ public class ServerMixinCategory {
     @Setting(value = "flush-network-on-tick", comment = "Reduce Network usage by postponing flush")
     private boolean flushNetworkOnTick = false;
     
-    @Setting(value = "interact-events", comment = "Fix https://github.com/SpongePowered/SpongeCommon/issues/2013")
+    @Setting(value = "interact-events", comment = "Fix https://github.com/SpongePowered/SpongeCommon/issues/2013 (Sponge only)")
     private boolean interactEvents = false;
     
-    @Setting(value = "inventory-debug", comment = "Redirect inventory debugging messages added by Sponge")
+    @Setting(value = "inventory-debug", comment = "Redirect inventory debugging messages added by Sponge (Sponge only)")
     private boolean inventoryDebug = false;
     
     @Setting(value = "itemstack-exploit", comment = "Fix MC-134716 - Player kick exploit")
@@ -73,7 +73,7 @@ public class ServerMixinCategory {
     @Setting(value = "item-teleport", comment = "Prevent or delete any items that attempt to teleport across dimensions (Sponge only)")
     private boolean itemTeleport = false;
     
-    @Setting(value = "item-teleport-whitelist", comment = "Don't prevent these items from teleporting")
+    @Setting(value = "item-teleport-whitelist", comment = "Don't prevent these items from teleporting (Sponge only)")
     private List<String> itemTeleportWhitelist = Lists.newArrayList("draconicevolution:ender_energy_manipulator");
     
     @Setting(value = "limit-books", comment = "Limit books to 50 pages with 255 characters for each")
@@ -100,7 +100,7 @@ public class ServerMixinCategory {
     @Setting(value = "tomb-many-graves", comment = "Disable TombManyGraves functionality")
     private boolean tombManyGraves = false;
     
-    @Setting(value = "traveling-merchant", comment = "Fix https://github.com/Daveyx0/PrimitiveMobs/issues/59")
+    @Setting(value = "traveling-merchant", comment = "Fix https://github.com/Daveyx0/PrimitiveMobs/issues/59 (Sponge only)")
     private boolean travelingMerchant = false;
     
     public boolean isActuallyAdditionsDisruption() {
