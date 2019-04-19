@@ -64,6 +64,7 @@ public final class MappingManager {
         
         // - Core
         registerServerMixin("core.advancements.MixinAdvancementManager", ServerMixinCategory::isAdvancementStacktrace);
+        registerServerMixin("core.advancements.MixinPlayerAdvancements", category -> category.isAdvancementInitialized() && SledgehammerLaunch.isSpongeRegistered());
         registerServerMixin("core.block.MixinBlockGrass", ServerMixinCategory::isBlockGrass);
         registerServerMixin("core.block.MixinBlockIce", ServerMixinCategory::isBlockIce);
         registerServerMixin("core.crash.MixinCrashReport", category -> true);

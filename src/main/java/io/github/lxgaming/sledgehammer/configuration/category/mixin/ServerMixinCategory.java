@@ -28,6 +28,9 @@ public class ServerMixinCategory {
     @Setting(value = "actuallyadditions-disruption", comment = "Disable Disruption lens from ActuallyAdditions")
     private boolean actuallyAdditionsDisruption = false;
     
+    @Setting(value = "advancement-initialized", comment = "Catches IllegalStateException thrown by Sponge (Sponge only)")
+    private boolean advancementInitialized = false;
+    
     @Setting(value = "advancement-stacktrace", comment = "Print a single message instead of a stacktrace for advancement errors")
     private boolean advancementStacktrace = true;
     
@@ -114,6 +117,10 @@ public class ServerMixinCategory {
     
     public boolean isActuallyAdditionsDisruption() {
         return actuallyAdditionsDisruption;
+    }
+    
+    public boolean isAdvancementInitialized() {
+        return advancementInitialized;
     }
     
     public boolean isAdvancementStacktrace() {

@@ -8,6 +8,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "advancements.MixinAdvancementManager",
+    "advancements.MixinPlayerAdvancements",
     "block.MixinBlockGrass",
     "block.MixinBlockIce",
     "crash.MixinCrashReport",
