@@ -20,7 +20,7 @@ public class Reference {
     
     public static final String ID = "sledgehammer";
     public static final String NAME = "Sledgehammer";
-    public static final String VERSION = "1.12.2-1.4.0";
+    public static final String VERSION = "1.12.2-1.4.1";
     public static final String DESCRIPTION = "Smashes the stupid out of the client & server.";
     public static final String AUTHORS = "LX_Gaming";
     public static final String SOURCE = "https://github.com/LXGaming/Sledgehammer/";
