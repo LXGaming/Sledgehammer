@@ -59,6 +59,9 @@ public final class MappingManager {
         registerServerMixin("actuallyadditions.mod.tile.MixinTileEntityAtomicReconstructor", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isActuallyAdditionsDisruption());
         
+        // - CarryOn
+        registerServerMixin("carryon.common.event.MixinItemEvents", ServerMixinCategory::isCarryOnCME);
+        
         // - Core
         registerServerMixin("core.advancements.MixinAdvancementManager", ServerMixinCategory::isAdvancementStacktrace);
         registerServerMixin("core.block.MixinBlockGrass", ServerMixinCategory::isBlockGrass);
@@ -115,6 +118,7 @@ public final class MappingManager {
         Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).map(GeneralCategory::getModMappings).ifPresent(getModMappings()::putAll);
         registerMod("actuallyadditions", config -> config.getServerMixinCategory().isActuallyAdditionsDisruption());
         registerMod("AS_Ruins", config -> config.getServerMixinCategory().isRuinsDebug());
+        registerMod("carryon", config -> config.getServerMixinCategory().isCarryOnCME());
         registerMod("quark", config -> config.getServerMixinCategory().isQuarkImprovedSleeping());
         registerMod("xreliquary", config -> config.getServerMixinCategory().isReliquaryItemRendingGale());
     }

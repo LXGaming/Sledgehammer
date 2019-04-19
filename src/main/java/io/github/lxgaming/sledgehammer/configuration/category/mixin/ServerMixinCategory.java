@@ -40,6 +40,9 @@ public class ServerMixinCategory {
     @Setting(value = "block-ice", comment = "Prevent Ice turning into Water")
     private boolean blockIce = false;
     
+    @Setting(value = "carry-on-cme", comment = "Fixes ConcurrentModificationException onWorldTick")
+    private boolean carryOnCME = false;
+    
     @Setting(value = "ceremony-rain", comment = "Prevent Totemic from changing the weather")
     private boolean ceremonyRain = false;
     
@@ -127,6 +130,10 @@ public class ServerMixinCategory {
     
     public boolean isBlockIce() {
         return blockIce;
+    }
+    
+    public boolean isCarryOnCME() {
+        return carryOnCME;
     }
     
     public boolean isCeremonyRain() {
