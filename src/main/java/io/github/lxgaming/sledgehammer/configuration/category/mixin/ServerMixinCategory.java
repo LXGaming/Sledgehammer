@@ -58,6 +58,9 @@ public class ServerMixinCategory {
     @Setting(value = "chunk-save-shutdown", comment = "Generate a crash report and safely stops the server if a chunk fails to save")
     private boolean chunkSaveShutdown = false;
     
+    @Setting(value = "command-source", comment = "Fixes ClassCastException in WrapperCommandSource (Sponge only)")
+    private boolean commandSource = false;
+    
     @Setting(value = "flush-network-on-tick", comment = "Reduce Network usage by postponing flush")
     private boolean flushNetworkOnTick = false;
     
@@ -145,6 +148,10 @@ public class ServerMixinCategory {
     
     public boolean isChunkSaveShutdown() {
         return chunkSaveShutdown;
+    }
+    
+    public boolean isCommandSource() {
+        return commandSource;
     }
     
     public boolean isFlushNetworkOnTick() {

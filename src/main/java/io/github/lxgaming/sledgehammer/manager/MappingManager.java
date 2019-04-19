@@ -102,6 +102,7 @@ public final class MappingManager {
                 SledgehammerLaunch.isForgeRegistered() && category.isRuinsDebug());
         
         // - Sponge
+        registerServerMixin("sponge.common.command.MixinWrapperCommandSource", category -> category.isCommandSource() && SledgehammerLaunch.isSpongeRegistered());
         registerServerMixin("sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", category -> category.isInventoryDebug() && SledgehammerLaunch.isSpongeRegistered());
         registerServerMixin("sponge.common.event.MixinSpongeCommonEventFactory", category -> category.isInventoryDebug() && SledgehammerLaunch.isSpongeRegistered());
         
