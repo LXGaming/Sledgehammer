@@ -100,6 +100,9 @@ public class ServerMixinCategory {
     @Setting(value = "ruins-debug", comment = "Redirect ruins debugging messages")
     private boolean ruinsDebug = false;
     
+    @Setting(value = "tile-entity-stack-overflow", comment = "Prevent StackOverflow on writeToNBT (Sponge only)")
+    private boolean tileEntityStackOverflow = false;
+    
     @Setting(value = "tomb-many-graves", comment = "Disable TombManyGraves functionality")
     private boolean tombManyGraves = false;
     
@@ -204,6 +207,10 @@ public class ServerMixinCategory {
     
     public boolean isRuinsDebug() {
         return ruinsDebug;
+    }
+    
+    public boolean isTileEntityStackOverflow() {
+        return tileEntityStackOverflow;
     }
     
     public boolean isTombManyGraves() {

@@ -73,6 +73,7 @@ public final class MappingManager {
         registerServerMixin("core.network.MixinNetworkSystem", ServerMixinCategory::isNetworkSystem);
         registerServerMixin("core.server.management.MixinPlayerChunkMap", ServerMixinCategory::isPlayerChunkMap);
         registerServerMixin("core.server.MixinDedicatedServer", category -> true);
+        registerServerMixin("core.tileentity.MixinTileEntity", category -> category.isTileEntityStackOverflow() && SledgehammerLaunch.isSpongeRegistered());
         registerServerMixin("core.world.biome.MixinBiomeProvider", ServerMixinCategory::isBiomeProvider);
         registerServerMixin("core.world.chunk.storage.MixinAnvilChunkLoader", category ->
                 category.isChunkSaveAlert() || category.isChunkSavePurgeAll() || category.isChunkSavePurgeBlacklist() || category.isChunkSaveShutdown());
