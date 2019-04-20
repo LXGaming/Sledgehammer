@@ -137,6 +137,10 @@ public final class MappingManager {
         // - TombManyGraves
         registerServerMixin("tombmanygraves.events.MixinCommonEvents", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isTombManyGraves());
+        
+        // - Topography
+        registerServerMixin("topography.event.MixinEventSubscriber", category ->
+                SledgehammerLaunch.isForgeRegistered() && category.isTopographyDimensionChange());
     }
     
     public static void registerMods() {
@@ -146,6 +150,7 @@ public final class MappingManager {
         registerMod("carryon", config -> config.getServerMixinCategory().isCarryOnCME());
         registerMod("quark", config -> config.getServerMixinCategory().isQuarkImprovedSleeping());
         registerMod("tombmanygraves", config -> config.getServerMixinCategory().isTombManyGraves());
+        registerMod("topography", config -> config.getServerMixinCategory().isTopographyDimensionChange());
         registerMod("xreliquary", config -> config.getServerMixinCategory().isReliquaryItemRendingGale());
     }
     
