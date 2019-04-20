@@ -28,7 +28,7 @@ public class ServerMixinCategory {
     @Setting(value = "actuallyadditions-disruption", comment = "Disable Disruption lens from ActuallyAdditions")
     private boolean actuallyAdditionsDisruption = false;
     
-    @Setting(value = "advancement-initialized", comment = "Catches IllegalStateException thrown by Sponge (Sponge only)")
+    @Setting(value = "advancement-initialized", comment = "Catch IllegalStateException thrown by Sponge (Sponge only)")
     private boolean advancementInitialized = false;
     
     @Setting(value = "advancement-stacktrace", comment = "Print a single message instead of a stacktrace for advancement errors")
@@ -43,7 +43,7 @@ public class ServerMixinCategory {
     @Setting(value = "block-ice", comment = "Prevent Ice turning into Water")
     private boolean blockIce = false;
     
-    @Setting(value = "carry-on-cme", comment = "Fixes ConcurrentModificationException onWorldTick")
+    @Setting(value = "carry-on-cme", comment = "Fix ConcurrentModificationException onWorldTick")
     private boolean carryOnCME = false;
     
     @Setting(value = "ceremony-rain", comment = "Prevent Totemic from changing the weather")
@@ -64,7 +64,7 @@ public class ServerMixinCategory {
     @Setting(value = "chunk-save-shutdown", comment = "Generate a crash report and safely stops the server if a chunk fails to save")
     private boolean chunkSaveShutdown = false;
     
-    @Setting(value = "command-source", comment = "Fixes ClassCastException in WrapperCommandSource (Sponge only)")
+    @Setting(value = "command-source", comment = "Fix ClassCastException in WrapperCommandSource (Sponge only)")
     private boolean commandSource = false;
     
     @Setting(value = "flush-network-on-tick", comment = "Reduce Network usage by postponing flush")
