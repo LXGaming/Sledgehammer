@@ -31,6 +31,9 @@ public class ServerMixinCategory {
     @Setting(value = "advancement-initialized", comment = "Catch IllegalStateException thrown by Sponge (Sponge only)")
     private boolean advancementInitialized = false;
     
+    @Setting(value = "advancement-reload", comment = "Don't reload Advancements on World Load")
+    private boolean advancementReload = false;
+    
     @Setting(value = "advancement-stacktrace", comment = "Print a single message instead of a stacktrace for advancement errors")
     private boolean advancementStacktrace = true;
     
@@ -121,6 +124,10 @@ public class ServerMixinCategory {
     
     public boolean isAdvancementInitialized() {
         return advancementInitialized;
+    }
+    
+    public boolean isAdvancementReload() {
+        return advancementReload;
     }
     
     public boolean isAdvancementStacktrace() {

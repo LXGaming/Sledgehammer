@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Alex Thomson
+ * Copyright 2019 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = AdvancementManager.class, priority = 1337)
-public abstract class MixinAdvancementManager {
+public abstract class MixinAdvancementManager_Stacktrace {
     
     @Redirect(method = "loadCustomAdvancements", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", remap = false))
     private void onCustomAdvancementsError(Logger logger, String message, Throwable throwable) {
