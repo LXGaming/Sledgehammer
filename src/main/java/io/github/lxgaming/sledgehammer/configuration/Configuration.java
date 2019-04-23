@@ -22,16 +22,13 @@ import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 import ninja.leaping.configurate.objectmapping.ObjectMapper;
-import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 public class Configuration {
     
     private ConfigurationLoader<CommentedConfigurationNode> configurationLoader;
     private ObjectMapper<Config>.BoundInstance objectMapper;
-    private Config config;
     
     public Configuration(Path path) {
         try {
@@ -44,9 +41,9 @@ public class Configuration {
     
     public void loadConfiguration() {
         try {
-            config = getObjectMapper().populate(getConfigurationLoader().load());
+            getObjectMapper().populate(getConfigurationLoader().load());
             Sledgehammer.getInstance().getLogger().info("Successfully loaded configuration file.");
-        } catch (IOException | ObjectMappingException | RuntimeException ex) {
+        } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while loading config", ex);
         }
     }
@@ -57,7 +54,7 @@ public class Configuration {
             getObjectMapper().serialize(configurationNode);
             getConfigurationLoader().save(configurationNode);
             Sledgehammer.getInstance().getLogger().info("Successfully saved configuration file.");
-        } catch (IOException | ObjectMappingException | RuntimeException ex) {
+        } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while saving config", ex);
         }
     }
@@ -71,6 +68,6 @@ public class Configuration {
     }
     
     public Config getConfig() {
-        return config;
+        return getObjectMapper().getInstance();
     }
 }
