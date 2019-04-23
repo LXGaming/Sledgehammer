@@ -25,7 +25,14 @@ public class ClientMixinCategory {
     @Setting(value = "nuke-search-tree", comment = "Disable SearchTree reloading (Speeds up server connection process)")
     private boolean nukeSearchTree = true;
     
+    @Setting(value = "world-type-length", comment = "Increase the maximum length for a WorldType name in SPacketJoinGame")
+    private boolean worldTypeLength = false;
+    
     public boolean isNukeSearchTree() {
         return nukeSearchTree;
+    }
+    
+    public boolean isWorldTypeLength() {
+        return worldTypeLength;
     }
 }

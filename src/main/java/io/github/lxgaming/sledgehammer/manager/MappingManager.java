@@ -41,6 +41,7 @@ public final class MappingManager {
         // Client Mixin
         // - Core
         registerClientMixin("core.client.MixinMinecraft", category -> true);
+        registerClientMixin("core.network.play.server.MixinSPacketJoinGame", ClientMixinCategory::isWorldTypeLength);
         
         // - Forge
         registerClientMixin("forge.common.MixinForgeModContainer", ClientMixinCategory::isNukeSearchTree);
