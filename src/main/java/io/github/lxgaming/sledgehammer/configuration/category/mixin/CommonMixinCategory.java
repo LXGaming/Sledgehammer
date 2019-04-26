@@ -16,8 +16,16 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category.mixin;
 
+import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
 public class CommonMixinCategory {
+    
+    @Setting(value = "invalid-translation", comment = "Prevent crashes due to invalid translation keys")
+    private boolean invalidTranslation = true;
+    
+    public boolean isInvalidTranslation() {
+        return invalidTranslation;
+    }
 }

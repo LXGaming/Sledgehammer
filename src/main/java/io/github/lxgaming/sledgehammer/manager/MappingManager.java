@@ -47,6 +47,9 @@ public final class MappingManager {
         registerClientMixin("forge.common.MixinForgeModContainer", ClientMixinCategory::isNukeSearchTree);
         
         // Common Mixin
+        // - Core
+        registerCommonMixin("core.util.text.MixinTextComponentTranslation", CommonMixinCategory::isInvalidTranslation);
+        
         // - Platform
         registerCommonMixin("platform.MixinSledgehammerPlatform_Mod", category ->
                 SledgehammerLaunch.isForgeRegistered() && !SledgehammerLaunch.isSpongeRegistered());
