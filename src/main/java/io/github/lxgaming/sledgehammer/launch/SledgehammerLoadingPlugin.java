@@ -31,7 +31,11 @@ public class SledgehammerLoadingPlugin implements IFMLLoadingPlugin {
     
     public SledgehammerLoadingPlugin() {
         SledgehammerLaunch.configureClassLoader(Launch.classLoader);
-        SledgehammerLaunch.getTweakers().add(0, new SledgehammerTweaker());
+        if (SledgehammerLaunch.isDeobfuscatedEnvironment()) {
+            SledgehammerLaunch.configureEnvironment();
+        } else {
+            SledgehammerLaunch.getTweakers().add(0, new SledgehammerTweaker());
+        }
     }
     
     @Override

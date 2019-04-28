@@ -77,6 +77,10 @@ public class SledgehammerLaunch {
         return GlobalProperties.get("Tweaks");
     }
     
+    public static boolean isDeobfuscatedEnvironment() {
+        return GlobalProperties.get("fml.deobfuscatedEnvironment", false);
+    }
+    
     public static boolean isForgeRegistered() {
         return GlobalProperties.get(FORGE_INITIALIZED) != null;
     }

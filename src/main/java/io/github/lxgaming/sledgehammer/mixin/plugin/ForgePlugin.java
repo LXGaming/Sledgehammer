@@ -49,6 +49,7 @@ public class ForgePlugin extends AbstractPlugin {
         }
         
         if (INITIALIZED
+                || SledgehammerLaunch.isDeobfuscatedEnvironment()
                 || !SledgehammerLaunch.isForgeRegistered()
                 || !SledgehammerLaunch.isSledgehammerRegistered()
                 || MappingManager.getModMappings().isEmpty()) {
