@@ -164,11 +164,11 @@ public class Toolbox {
         return clazz.getSimpleName();
     }
     
-    public static <T> T cast(Object object, Class<T> type) {
+    public static <T> T cast(Object object, Class<? extends T> type) {
         return type.cast(object);
     }
     
-    public static <T> Optional<T> newInstance(Class<T> type) {
+    public static <T> Optional<T> newInstance(Class<? extends T> type) {
         try {
             return Optional.of(type.newInstance());
         } catch (Throwable ex) {
