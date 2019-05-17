@@ -29,7 +29,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-1.4.3"
+version = "1.12.2-1.4.4"
 
 minecraft {
     version = "1.12.2-14.23.5.2768"
@@ -55,6 +55,10 @@ configurations {
 
 repositories {
     jcenter()
+    maven {
+        name = "chickenbones"
+        url = "http://chickenbones.net/maven"
+    }
     maven {
         name = "curseforge"
         url = "https://minecraft.curseforge.com/api/maven"
@@ -94,6 +98,9 @@ dependencies {
         transitive = false
     }
     provided("actually-additions:ActuallyAdditions:1.12.2:r145")
+    provided("mrtjp:ProjectRed:1.12.2-4.9.1.92:mechanical") {
+        exclude(module: "jei_1.12.2")
+    }
     provided("primalcore:PrimalCore:1.12.2:0.6.51")
     provided("quark:Quark:r1.5:145")
     provided("reliquary-v1-3:Reliquary:1.12.2:1.3.4.786")
@@ -142,6 +149,7 @@ jar {
                         + "mixins.sledgehammer.core.json,"
                         + "mixins.sledgehammer.forge.json,"
                         + "mixins.sledgehammer.platform.json,"
+                        + "mixins.sledgehammer.projectred.json,"
                         + "mixins.sledgehammer.quark.json,"
                         + "mixins.sledgehammer.ruins.json,"
                         + "mixins.sledgehammer.sponge.json,"

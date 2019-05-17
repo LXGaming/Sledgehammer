@@ -100,6 +100,9 @@ public class ServerMixinCategory {
     @Setting(value = "player-chunk-map", comment = "Prevent ConcurrentModificationException in PlayerChunkMap")
     private boolean playerChunkMap = false;
     
+    @Setting(value = "project-red-exploit", comment = "Fix Item spawn packet exploit")
+    private boolean projectRedExploit = false;
+    
     @Setting(value = "quark-improved-sleeping", comment = "Disable Improved Sleeping from Quark")
     private boolean quarkImprovedSleeping = false;
     
@@ -219,6 +222,10 @@ public class ServerMixinCategory {
     
     public boolean isPlayerChunkMap() {
         return playerChunkMap;
+    }
+    
+    public boolean isProjectRedExploit() {
+        return projectRedExploit;
     }
     
     public boolean isQuarkImprovedSleeping() {

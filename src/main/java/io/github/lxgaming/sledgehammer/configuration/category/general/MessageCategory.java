@@ -31,6 +31,9 @@ public class MessageCategory {
     @Setting(value = "move-outside-border", comment = "Sent to the player when attempting to move outside the world border")
     private String moveOutsideBorder = "&cCannot move outside of the world border";
     
+    @Setting(value = "project-red-exploit", comment = "Sent to the player when attempting exploit ProjectRed")
+    private String projectRedExploit = "&cInvalid Item: &f[ID]";
+    
     public String getChunkSave() {
         return chunkSave;
     }
@@ -41,5 +44,9 @@ public class MessageCategory {
     
     public String getMoveOutsideBorder() {
         return moveOutsideBorder;
+    }
+    
+    public String getProjectRedExploit() {
+        return projectRedExploit;
     }
 }
