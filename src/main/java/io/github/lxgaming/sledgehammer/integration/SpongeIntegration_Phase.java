@@ -16,7 +16,9 @@
 
 package io.github.lxgaming.sledgehammer.integration;
 
+import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
+import io.github.lxgaming.sledgehammer.util.Reference;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -44,15 +46,17 @@ public class SpongeIntegration_Phase extends AbstractIntegration {
     
     @Listener(order = Order.LAST)
     public void onMoveEntityTeleport(MoveEntityEvent.Teleport event, @Root Player player) {
-        PhaseData currentPhase = PhaseTracker.getInstance().getCurrentPhaseData();
-        PhaseContext<?> context = currentPhase.context;
-        
         try {
+            PhaseData currentPhase = PhaseTracker.getInstance().getCurrentPhaseData();
+            PhaseContext<?> context = currentPhase.context;
+            
             Field field = PhaseContext.class.getDeclaredField("blockEntitySpawnSupplier");
             field.setAccessible(true);
             if (field.get(context) == null) {
                 field.set(context, new CapturedBlockEntitySpawnSupplier());
             }
+        } catch (NoSuchMethodError ex) {
+            Sledgehammer.getInstance().getLogger().warn("Disable `integration-server.sponge-phase` in the {} config", Reference.NAME);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
