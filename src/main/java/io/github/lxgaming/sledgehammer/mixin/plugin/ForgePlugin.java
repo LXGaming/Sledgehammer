@@ -27,11 +27,14 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.MetadataCollection;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.relauncher.CoreModManager;
+import net.minecraftforge.fml.relauncher.libraries.Artifact;
 import net.minecraftforge.fml.relauncher.libraries.LibraryManager;
+import net.minecraftforge.fml.relauncher.libraries.ModList;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarFile;
@@ -68,9 +71,19 @@ public class ForgePlugin extends AbstractPlugin {
         }
         
         IMixinLoader mixinLoader = (IMixinLoader) Loader.instance();
-        for (File file : LibraryManager.gatherLegacyCanidates(mixinLoader.getMinecraftDirectory())) {
+        
+        Set<File> files = Sets.newLinkedHashSet();
+        files.addAll(LibraryManager.gatherLegacyCanidates(mixinLoader.getMinecraftDirectory()));
+        ModList.getBasicLists(mixinLoader.getMinecraftDirectory()).stream()
+                .map(ModList::getArtifacts)
+                .flatMap(Collection::stream)
+                .map(Artifact::getFile)
+                .forEach(files::add);
+        
+        for (File file : files) {
             Map<String, ModMetadata> metadatas = getMetadataCollection(file).getMetadatas();
             if (metadatas.isEmpty()) {
+                Sledgehammer.getInstance().getLogger().debug("{}: No metadata", file.getName());
                 continue;
             }
             
