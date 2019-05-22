@@ -46,6 +46,9 @@ public final class MappingManager {
         // - Forge
         registerClientMixin("forge.common.MixinForgeModContainer", ClientMixinCategory::isNukeSearchTree);
         
+        // - ImmersiveEngineering
+        registerClientMixin("immersiveengineering.client.render.MixinTileRenderWorkbench", ClientMixinCategory::isImmersiveEngineeringWorkbenchRender);
+        
         // Common Mixin
         // - Core
         registerCommonMixin("core.util.text.MixinTextComponentTranslation", CommonMixinCategory::isInvalidTranslation);
@@ -156,6 +159,7 @@ public final class MappingManager {
         registerMod("actuallyadditions", config -> config.getServerMixinCategory().isActuallyAdditionsDisruption());
         registerMod("AS_Ruins", config -> config.getServerMixinCategory().isRuinsDebug());
         registerMod("carryon", config -> config.getServerMixinCategory().isCarryOnCME());
+        registerMod("immersiveengineering", config -> config.getClientMixinCategory().isImmersiveEngineeringWorkbenchRender());
         registerMod("projectred-transportation", config -> config.getServerMixinCategory().isProjectRedExploit());
         registerMod("quark", config -> config.getServerMixinCategory().isQuarkImprovedSleeping());
         registerMod("tombmanygraves", config -> config.getServerMixinCategory().isTombManyGraves());

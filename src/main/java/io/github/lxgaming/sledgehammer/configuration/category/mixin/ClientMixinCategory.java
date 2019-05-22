@@ -22,11 +22,18 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class ClientMixinCategory {
     
+    @Setting(value = "immersiveengineering-workbench-render", comment = "Fix https://github.com/BluSunrize/ImmersiveEngineering/issues/3474")
+    private boolean immersiveEngineeringWorkbenchRender = false;
+    
     @Setting(value = "nuke-search-tree", comment = "Disable SearchTree reloading (Speeds up server connection process)")
     private boolean nukeSearchTree = true;
     
     @Setting(value = "world-type-length", comment = "Increase the maximum length for a WorldType name in SPacketJoinGame")
     private boolean worldTypeLength = false;
+    
+    public boolean isImmersiveEngineeringWorkbenchRender() {
+        return immersiveEngineeringWorkbenchRender;
+    }
     
     public boolean isNukeSearchTree() {
         return nukeSearchTree;

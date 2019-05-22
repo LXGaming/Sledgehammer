@@ -29,7 +29,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-1.4.4"
+version = "1.12.2-1.4.5"
 
 minecraft {
     version = "1.12.2-14.23.5.2768"
@@ -98,6 +98,7 @@ dependencies {
         transitive = false
     }
     provided("actually-additions:ActuallyAdditions:1.12.2:r145")
+    provided("immersive-engineering:ImmersiveEngineering:0.12:89")
     provided("mrtjp:ProjectRed:1.12.2-4.9.1.92:mechanical") {
         exclude(module: "jei_1.12.2")
     }
@@ -148,6 +149,7 @@ jar {
                         + "mixins.sledgehammer.carryon.json,"
                         + "mixins.sledgehammer.core.json,"
                         + "mixins.sledgehammer.forge.json,"
+                        + "mixins.sledgehammer.immersiveengineering.json,"
                         + "mixins.sledgehammer.platform.json,"
                         + "mixins.sledgehammer.projectred.json,"
                         + "mixins.sledgehammer.quark.json,"
