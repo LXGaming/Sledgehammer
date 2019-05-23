@@ -26,7 +26,7 @@ public class ClientMixinCategory {
     private boolean immersiveEngineeringWorkbenchRender = false;
     
     @Setting(value = "nuke-search-tree", comment = "Disable SearchTree reloading (Speeds up server connection process)")
-    private boolean nukeSearchTree = true;
+    private boolean nukeSearchTree = false;
     
     @Setting(value = "world-type-length", comment = "Increase the maximum length for a WorldType name in SPacketJoinGame")
     private boolean worldTypeLength = false;

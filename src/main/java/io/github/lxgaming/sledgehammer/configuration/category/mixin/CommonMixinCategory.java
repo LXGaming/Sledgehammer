@@ -23,7 +23,7 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 public class CommonMixinCategory {
     
     @Setting(value = "invalid-translation", comment = "Prevent crashes due to invalid translation keys")
-    private boolean invalidTranslation = true;
+    private boolean invalidTranslation = false;
     
     public boolean isInvalidTranslation() {
         return invalidTranslation;

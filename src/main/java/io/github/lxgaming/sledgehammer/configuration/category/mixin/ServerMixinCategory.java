@@ -35,7 +35,7 @@ public class ServerMixinCategory {
     private boolean advancementReload = false;
     
     @Setting(value = "advancement-stacktrace", comment = "Print a single message instead of a stacktrace for advancement errors")
-    private boolean advancementStacktrace = true;
+    private boolean advancementStacktrace = false;
     
     @Setting(value = "biome-provider", comment = "Fix NullPointerException in BiomeProvider::findBiomePosition")
     private boolean biomeProvider = false;
@@ -92,7 +92,7 @@ public class ServerMixinCategory {
     private boolean limitBooks = false;
     
     @Setting(value = "network-system", comment = "Fix potential deadlock on shutdown")
-    private boolean networkSystem = true;
+    private boolean networkSystem = false;
     
     @Setting(value = "packet-spam", comment = "Cancel spammy packets")
     private boolean packetSpam = false;
