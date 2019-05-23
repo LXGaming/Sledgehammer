@@ -6,7 +6,7 @@
   "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
+  "client": [
     "client.render.MixinTileRenderWorkbench"
   ],
   "injectors": {
