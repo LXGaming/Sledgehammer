@@ -68,6 +68,7 @@ public abstract class MixinLoader {
             for (String id : entry.getValue()) {
                 if (MappingManager.getModMapping(id).isPresent()) {
                     file_canidates.removeIf(entry.getKey()::equals);
+                    maven_canidates.removeIf(artifact -> entry.getKey().equals(artifact.getFile()));
                     break;
                 }
             }
