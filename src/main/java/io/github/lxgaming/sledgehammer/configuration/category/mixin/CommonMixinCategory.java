@@ -25,7 +25,14 @@ public class CommonMixinCategory {
     @Setting(value = "invalid-translation", comment = "Prevent crashes due to invalid translation keys")
     private boolean invalidTranslation = false;
     
+    @Setting(value = "lazyload-thread-safe", comment = "Make LazyLoad Thread-safe (Should fix MC-68381)")
+    private boolean lazyLoadThreadSafe = false;
+    
     public boolean isInvalidTranslation() {
         return invalidTranslation;
+    }
+    
+    public boolean isLazyLoadThreadSafe() {
+        return lazyLoadThreadSafe;
     }
 }

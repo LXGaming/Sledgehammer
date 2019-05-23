@@ -23,6 +23,7 @@
     "network.MixinNetworkSystem",
     "tileentity.MixinTileEntity",
     "util.text.MixinTextComponentTranslation",
+    "util.MixinLazyLoadBase",
     "world.biome.MixinBiomeProvider",
     "world.chunk.storage.MixinAnvilChunkLoader",
     "world.chunk.storage.MixinRegionFileChunkBuffer"

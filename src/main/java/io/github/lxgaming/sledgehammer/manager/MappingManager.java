@@ -52,6 +52,7 @@ public final class MappingManager {
         // Common Mixin
         // - Core
         registerCommonMixin("core.util.text.MixinTextComponentTranslation", CommonMixinCategory::isInvalidTranslation);
+        registerCommonMixin("core.util.MixinLazyLoadBase", CommonMixinCategory::isLazyLoadThreadSafe);
         
         // - Platform
         registerCommonMixin("platform.MixinSledgehammerPlatform_Mod", category ->
