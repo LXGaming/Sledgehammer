@@ -60,12 +60,12 @@ repositories {
         url = "http://chickenbones.net/maven"
     }
     maven {
-        name = "curseforge"
-        url = "https://minecraft.curseforge.com/api/maven"
+        name = "lxgaming"
+        url = "https://lxgaming.github.io/maven"
     }
     maven {
-        name = "lolnet"
-        url = "https://repo.lolnet.co.nz/maven"
+        name = "curseforge"
+        url = "https://minecraft.curseforge.com/api/maven"
     }
     maven {
         name = "spongepowered"
