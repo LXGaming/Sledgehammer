@@ -23,7 +23,7 @@ public class Reference {
     public static final String VERSION = "1.12.2-1.4.7";
     public static final String DESCRIPTION = "Smashes the stupid out of the client & server.";
     public static final String AUTHORS = "LX_Gaming";
-    public static final String SOURCE = "https://github.com/LXGaming/Sledgehammer/";
+    public static final String SOURCE = "https://github.com/LXGaming/Sledgehammer";
     public static final String WEBSITE = "https://lxgaming.github.io/";
     
     public static final String ACCEPTED_VERSIONS = "[1.12.2]";
