@@ -56,7 +56,7 @@ public final class CommandManager {
             return false;
         }
         
-        Sledgehammer.getInstance().debugMessage("Processing {} for {}", command.getName(), commandSender.getName());
+        Sledgehammer.getInstance().debug("Processing {} for {}", command.getName(), commandSender.getName());
         
         try {
             command.execute(commandSender, arguments);
@@ -83,7 +83,7 @@ public final class CommandManager {
         
         getCommands().add(command);
         ((CommandHandler) SledgehammerPlatform.getInstance().getServer().getCommandManager()).registerCommand(command);
-        Sledgehammer.getInstance().debugMessage("{} registered", commandClass.getSimpleName());
+        Sledgehammer.getInstance().debug("{} registered", commandClass.getSimpleName());
         return true;
     }
     
@@ -94,7 +94,7 @@ public final class CommandManager {
         }
         
         command.getAliases().add(alias);
-        Sledgehammer.getInstance().debugMessage("{} registered for {}", alias, command.getClass().getSimpleName());
+        Sledgehammer.getInstance().debug("{} registered for {}", alias, command.getClass().getSimpleName());
         return true;
     }
     
@@ -117,7 +117,7 @@ public final class CommandManager {
         }
         
         parentCommand.getChildren().add(command);
-        Sledgehammer.getInstance().debugMessage("{} registered for {}", commandClass.getSimpleName(), parentCommand.getClass().getSimpleName());
+        Sledgehammer.getInstance().debug("{} registered for {}", commandClass.getSimpleName(), parentCommand.getClass().getSimpleName());
         return true;
     }
     

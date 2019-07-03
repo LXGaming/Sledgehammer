@@ -29,13 +29,13 @@ public abstract class MixinFMLEmbeddedChannel extends EmbeddedChannel {
     
     @Override
     public ChannelFuture writeAndFlush(Object msg) {
-        Sledgehammer.getInstance().debugMessage("FMLEmbeddedChannel::writeAndFlush(Object)");
+        Sledgehammer.getInstance().debug("FMLEmbeddedChannel::writeAndFlush(Object)");
         return NetworkChannelHelper.writeAndFlush(this, msg);
     }
     
     @Override
     public ChannelFuture writeAndFlush(Object msg, ChannelPromise promise) {
-        Sledgehammer.getInstance().debugMessage("FMLEmbeddedChannel::writeAndFlush(Object, ChannelPromise)");
+        Sledgehammer.getInstance().debug("FMLEmbeddedChannel::writeAndFlush(Object, ChannelPromise)");
         return NetworkChannelHelper.writeAndFlush(this, msg, promise);
     }
 }

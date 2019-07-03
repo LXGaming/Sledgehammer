@@ -30,7 +30,7 @@ public abstract class MixinNetworkManager {
     
     @Redirect(method = "dispatchPacket", at = @At(value = "INVOKE", target = "Lio/netty/channel/Channel;writeAndFlush(Ljava/lang/Object;)Lio/netty/channel/ChannelFuture;", remap = false))
     private ChannelFuture onDispatchPacket(Channel channel, Object object) {
-        Sledgehammer.getInstance().debugMessage("NetworkManager::dispatchPacket");
+        Sledgehammer.getInstance().debug("NetworkManager::dispatchPacket");
         return NetworkChannelHelper.writeAndFlush(channel, object);
     }
 }

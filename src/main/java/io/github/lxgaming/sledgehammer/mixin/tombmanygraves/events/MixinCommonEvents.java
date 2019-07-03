@@ -29,6 +29,6 @@ public abstract class MixinCommonEvents {
     @Inject(method = "onPlayerDeath", at = @At(value = "INVOKE"))
     private void onPlayerDeath(CallbackInfo callbackInfo) {
         callbackInfo.cancel();
-        Sledgehammer.getInstance().debugMessage("TombManyGraves was blocked");
+        Sledgehammer.getInstance().debug("TombManyGraves was blocked");
     }
 }

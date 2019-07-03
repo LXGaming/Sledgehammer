@@ -66,7 +66,7 @@ public class PrimalIntegration extends AbstractIntegration {
             itemStack.setCount(PrimalAPI.getRandom().nextInt(1, Math.max(2, itemStack.getCount() + 1)));
             
             // Debugging
-            Sledgehammer.getInstance().debugMessage("{} got {}x {}",
+            Sledgehammer.getInstance().debug("{} got {}x {}",
                     entityPlayer.getName(),
                     itemStack.getCount(),
                     Toolbox.getResourceLocation(itemStack.getItem()).map(ResourceLocation::getPath).orElse("Unknown"));

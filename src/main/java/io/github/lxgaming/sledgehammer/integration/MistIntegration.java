@@ -57,7 +57,7 @@ public class MistIntegration extends AbstractIntegration {
         Location<World> location = blockSnapshot.getLocation().orElse(null);
         if (location != null && isValidPortalBlock(location.getBlockRelative(Direction.DOWN).getBlock()) && isValidPortalBlock(location.getBlockRelative(Direction.UP).getBlock())) {
             event.setCancelled(true);
-            Sledgehammer.getInstance().debugMessage("Portal Tick Cancelled {}", location.getBlockPosition().toString());
+            Sledgehammer.getInstance().debug("Portal Tick Cancelled {}", location.getBlockPosition().toString());
         }
     }
     

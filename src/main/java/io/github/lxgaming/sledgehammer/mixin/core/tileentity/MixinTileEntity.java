@@ -32,7 +32,7 @@ public abstract class MixinTileEntity {
     @Inject(method = "writeToNBT", at = @At(value = "HEAD"), cancellable = true)
     private void onWriteToNBTPre(NBTTagCompound compound, CallbackInfoReturnable<NBTTagCompound> callbackInfoReturnable) {
         if (writing) {
-            Sledgehammer.getInstance().debugMessage("Captured potential StackOverflow: {}", getClass().getName());
+            Sledgehammer.getInstance().debug("Captured potential StackOverflow: {}", getClass().getName());
             callbackInfoReturnable.setReturnValue(compound);
         } else {
             writing = true;

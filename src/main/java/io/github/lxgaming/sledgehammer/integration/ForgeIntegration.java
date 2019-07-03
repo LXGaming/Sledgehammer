@@ -55,7 +55,7 @@ public class ForgeIntegration extends AbstractIntegration {
             return;
         }
         
-        Sledgehammer.getInstance().debugMessage("{} ran the command: /{}", entityPlayer.getName(), String.join(" ", arguments));
+        Sledgehammer.getInstance().debug("{} ran the command: /{}", entityPlayer.getName(), String.join(" ", arguments));
         if (!entityPlayer.canUseCommand(4, String.join(".", arguments))) {
             event.setCanceled(true);
             TextComponentTranslation textComponentTranslation = new TextComponentTranslation("commands.generic.permission");

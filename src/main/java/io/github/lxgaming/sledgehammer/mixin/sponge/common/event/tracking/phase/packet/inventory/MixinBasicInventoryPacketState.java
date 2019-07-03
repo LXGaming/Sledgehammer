@@ -28,6 +28,6 @@ public abstract class MixinBasicInventoryPacketState {
     
     @Redirect(method = "unwind", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;)V"))
     private void onUnwindInfo(Logger logger, String message) {
-        Sledgehammer.getInstance().debugMessage(message);
+        Sledgehammer.getInstance().debug(message);
     }
 }

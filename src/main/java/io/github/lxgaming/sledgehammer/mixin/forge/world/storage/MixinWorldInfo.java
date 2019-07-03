@@ -32,7 +32,7 @@ public abstract class MixinWorldInfo {
     private void onSetRaining(boolean isRaining, CallbackInfo callbackInfo) {
         if (SledgehammerPlatform.getInstance().isLoaded("totemic") && Toolbox.isClassStackFrame("pokefenn.totemic.ceremony.CeremonyRain", Thread.currentThread().getStackTrace())) {
             callbackInfo.cancel();
-            Sledgehammer.getInstance().debugMessage("CeremonyRain from Totemic was blocked");
+            Sledgehammer.getInstance().debug("CeremonyRain from Totemic was blocked");
         }
     }
     
@@ -40,7 +40,7 @@ public abstract class MixinWorldInfo {
     private void onSetRainTime(int time, CallbackInfo callbackInfo) {
         if (SledgehammerPlatform.getInstance().isLoaded("totemic") && Toolbox.isClassStackFrame("pokefenn.totemic.ceremony.CeremonyRain", Thread.currentThread().getStackTrace())) {
             callbackInfo.cancel();
-            Sledgehammer.getInstance().debugMessage("CeremonyRain from Totemic was blocked");
+            Sledgehammer.getInstance().debug("CeremonyRain from Totemic was blocked");
         }
     }
 }

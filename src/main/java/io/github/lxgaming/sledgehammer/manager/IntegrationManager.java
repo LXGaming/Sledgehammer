@@ -75,7 +75,7 @@ public final class IntegrationManager {
                 continue;
             }
             
-            Sledgehammer.getInstance().debugMessage("Processing {} ({})", integration.getClass().getSimpleName(), state);
+            Sledgehammer.getInstance().debug("Processing {} ({})", integration.getClass().getSimpleName(), state);
             
             try {
                 integration.execute();
@@ -115,7 +115,7 @@ public final class IntegrationManager {
         }
         
         getIntegrations().add(integration);
-        Sledgehammer.getInstance().debugMessage("{} registered", integrationClass.getSimpleName());
+        Sledgehammer.getInstance().debug("{} registered", integrationClass.getSimpleName());
         return true;
     }
     

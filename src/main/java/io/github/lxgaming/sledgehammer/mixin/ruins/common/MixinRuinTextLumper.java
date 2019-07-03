@@ -28,6 +28,6 @@ public abstract class MixinRuinTextLumper {
     
     @Redirect(method = "lump", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"), remap = false)
     private void onPrintln(PrintStream printStream, String input) {
-        Sledgehammer.getInstance().debugMessage(input);
+        Sledgehammer.getInstance().debug(input);
     }
 }

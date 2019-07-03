@@ -30,7 +30,7 @@ public abstract class MixinSimpleChannelHandlerWrapper {
     
     @Redirect(method = "channelRead0", at = @At(value = "INVOKE", target = "Lio/netty/channel/ChannelHandlerContext;writeAndFlush(Ljava/lang/Object;)Lio/netty/channel/ChannelFuture;"))
     private ChannelFuture onChannelRead0(ChannelHandlerContext channelHandlerContext, Object object) {
-        Sledgehammer.getInstance().debugMessage("SimpleChannelHandlerWrapper::channelRead0");
+        Sledgehammer.getInstance().debug("SimpleChannelHandlerWrapper::channelRead0");
         return NetworkChannelHelper.writeAndFlush(channelHandlerContext, object);
     }
 }

@@ -51,12 +51,12 @@ public class BotaniaIntegration extends AbstractIntegration {
         NBTTagCompound persisted = entityData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
         if (!persisted.getBoolean("Botania-MadeIsland")) {
             persisted.setBoolean("Botania-MadeIsland", true);
-            Sledgehammer.getInstance().debugMessage("Set Botania-MadeIsland=true for {} ({})", player.getName(), player.getUniqueId());
+            Sledgehammer.getInstance().debug("Set Botania-MadeIsland=true for {} ({})", player.getName(), player.getUniqueId());
         }
         
         if (!persisted.getBoolean("Botania-HasOwnIsland")) {
             persisted.setBoolean("Botania-HasOwnIsland", true);
-            Sledgehammer.getInstance().debugMessage("Set Botania-HasOwnIsland=true for {} ({})", player.getName(), player.getUniqueId());
+            Sledgehammer.getInstance().debug("Set Botania-HasOwnIsland=true for {} ({})", player.getName(), player.getUniqueId());
         }
     }
 }

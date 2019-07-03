@@ -30,7 +30,7 @@ public abstract class MixinFMLEventChannel {
     
     @Redirect(method = "fireRead", at = @At(value = "INVOKE", target = "Lio/netty/channel/ChannelHandlerContext;writeAndFlush(Ljava/lang/Object;)Lio/netty/channel/ChannelFuture;"))
     private ChannelFuture onFireRead(ChannelHandlerContext channelHandlerContext, Object object) {
-        Sledgehammer.getInstance().debugMessage("FMLEmbeddedChannel::fireRead");
+        Sledgehammer.getInstance().debug("FMLEmbeddedChannel::fireRead");
         return NetworkChannelHelper.writeAndFlush(channelHandlerContext, object);
     }
 }
