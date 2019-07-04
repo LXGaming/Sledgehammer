@@ -17,7 +17,6 @@
 package io.github.lxgaming.sledgehammer.launch;
 
 import io.github.lxgaming.sledgehammer.util.Reference;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.apache.commons.lang3.StringUtils;
@@ -27,14 +26,13 @@ import java.util.Map;
 
 @IFMLLoadingPlugin.MCVersion(value = "1.12.2")
 @IFMLLoadingPlugin.Name(value = Reference.NAME)
+@IFMLLoadingPlugin.SortingIndex(value = Integer.MIN_VALUE)
 public class SledgehammerLoadingPlugin implements IFMLLoadingPlugin {
     
     public SledgehammerLoadingPlugin() {
-        SledgehammerLaunch.configureClassLoader(Launch.classLoader);
-        if (SledgehammerLaunch.isDeobfuscatedEnvironment()) {
-            SledgehammerLaunch.configureEnvironment();
-        } else {
-            SledgehammerLaunch.getTweakers().add(0, new SledgehammerTweaker());
+        if (!SledgehammerLaunch.isTweakerQueued(SledgehammerTweaker.class)) {
+            SledgehammerLaunch.getLogger().debug("Initializing {} from {}", SledgehammerTweaker.class.getSimpleName(), getClass().getSimpleName());
+            new SledgehammerTweaker();
         }
     }
     

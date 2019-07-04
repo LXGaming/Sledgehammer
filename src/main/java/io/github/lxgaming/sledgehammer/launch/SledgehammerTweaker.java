@@ -16,13 +16,32 @@
 
 package io.github.lxgaming.sledgehammer.launch;
 
+import io.github.lxgaming.sledgehammer.util.Reference;
 import net.minecraft.launchwrapper.ITweaker;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
+import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
+import org.apache.commons.lang3.text.WordUtils;
+import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.io.File;
 import java.util.List;
 
 public class SledgehammerTweaker implements ITweaker {
+    
+    public SledgehammerTweaker() {
+        SledgehammerLaunch.configureClassLoader(Launch.classLoader);
+        if (SledgehammerLaunch.isDeobfuscatedEnvironment()) {
+            SledgehammerLaunch.getLogger().debug("Deobfuscated environment");
+            SledgehammerLaunch.configureEnvironment();
+        } else if (SledgehammerLaunch.isMixinRegistered()) {
+            SledgehammerLaunch.getLogger().debug("Mixin v{} already initialized", SledgehammerLaunch.getMixinVersion());
+            SledgehammerLaunch.configureEnvironment();
+        } else {
+            SledgehammerLaunch.getLogger().debug("Prioritizing {}", getClass().getSimpleName());
+            SledgehammerLaunch.getTweakers().add(0, this);
+        }
+    }
     
     @Override
     public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile) {
@@ -30,6 +49,18 @@ public class SledgehammerTweaker implements ITweaker {
     
     @Override
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
+        if (!SledgehammerLaunch.isMixinRegistered()) {
+            if (!SledgehammerLaunch.isEarly()) {
+                SledgehammerLaunch.getLogger().warn("---------- WARNING ----------");
+                SledgehammerLaunch.getLogger().warn("{} has detected that it hasn't loaded early enough", Reference.NAME);
+                SledgehammerLaunch.getLogger().warn("Expect the {} to crash", WordUtils.capitalizeFully(FMLLaunchHandler.side().toString()));
+                SledgehammerLaunch.getLogger().warn("---------- WARNING ----------");
+            }
+            
+            MixinBootstrap.init();
+        }
+        
+        SledgehammerLaunch.getLogger().debug("Finalizing initialization");
         SledgehammerLaunch.configureEnvironment();
     }
     

@@ -21,8 +21,10 @@ import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import net.minecraftforge.common.ForgeVersion;
+import net.minecraftforge.fml.common.launcher.FMLDeobfTweaker;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.launch.GlobalProperties;
-import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.Mixins;
 import org.spongepowered.common.SpongeImpl;
 
@@ -30,6 +32,7 @@ import java.util.List;
 
 public class SledgehammerLaunch {
     
+    private static final Logger LOGGER = LogManager.getLogger(Reference.NAME + " Launch");
     private static final String FORGE_CLASS = "net.minecraftforge.fml.relauncher.CoreModManager";
     private static final String FORGE_INITIALIZED = ForgeVersion.MOD_ID + ".initialized";
     private static final String SLEDGEHAMMER_INITIALIZED = Reference.ID + ".initialized";
@@ -48,14 +51,10 @@ public class SledgehammerLaunch {
             registerForge();
         }
         
-        if (!isMixinRegistered()) {
-            MixinBootstrap.init();
-        }
-        
         if (!isSledgehammerRegistered()) {
             registerSledgehammer();
             
-            if (getTweakers().stream().anyMatch(SledgehammerTweaker.class::isInstance)) {
+            if (isTweakerQueued(SledgehammerTweaker.class)) {
                 Mixins.addConfiguration("mixins.sledgehammer.preinit.json");
             }
         }
@@ -65,12 +64,33 @@ public class SledgehammerLaunch {
         }
     }
     
+    public static boolean isEarly() {
+        return !isClassPresent(FORGE_CLASS) || isTweakerQueued(FMLDeobfTweaker.class);
+    }
+    
     public static boolean isClassPresent(String name) {
         try {
             return Class.forName(name, false, Launch.classLoader) != null;
         } catch (Throwable ex) {
             return false;
         }
+    }
+    
+    public static boolean isTweakerQueued(Class<? extends ITweaker> tweakerClass) {
+        return isTweakerQueued(tweakerClass.getName());
+    }
+    
+    public static boolean isTweakerQueued(String tweakerClass) {
+        return getTweakerClasses().contains(tweakerClass)
+                || getTweakers().stream().map(ITweaker::getClass).map(Class::getName).anyMatch(tweakerClass::equals);
+    }
+    
+    public static Logger getLogger() {
+        return LOGGER;
+    }
+    
+    public static List<String> getTweakerClasses() {
+        return GlobalProperties.get("TweakClasses");
     }
     
     public static List<ITweaker> getTweakers() {
@@ -90,7 +110,11 @@ public class SledgehammerLaunch {
     }
     
     public static boolean isMixinRegistered() {
-        return GlobalProperties.get(GlobalProperties.Keys.INIT) != null;
+        return getMixinVersion() != null;
+    }
+    
+    public static String getMixinVersion() {
+        return GlobalProperties.get(GlobalProperties.Keys.INIT);
     }
     
     public static boolean isSledgehammerRegistered() {

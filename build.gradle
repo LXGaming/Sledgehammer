@@ -29,7 +29,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-1.4.7"
+version = "1.12.2-1.4.8"
 
 minecraft {
     version = "1.12.2-14.23.5.2768"
@@ -126,6 +126,11 @@ shadowJar {
     relocate("com.typesafe.config", "io.github.lxgaming.sledgehammer.lib.config")
     relocate("ninja.leaping.configurate", "io.github.lxgaming.sledgehammer.lib.configurate")
     relocate("org.checkerframework", "io.github.lxgaming.sledgehammer.lib.checkerframework")
+    manifest {
+        attributes(
+                "TweakClass": "io.github.lxgaming.sledgehammer.launch.SledgehammerTweaker"
+        )
+    }
 }
 
 reobf {
