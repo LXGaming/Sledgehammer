@@ -30,7 +30,6 @@ import io.github.lxgaming.sledgehammer.integration.MistIntegration;
 import io.github.lxgaming.sledgehammer.integration.PrimalIntegration;
 import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border;
 import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Death;
-import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Phase;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 
 import java.util.Set;
@@ -48,7 +47,6 @@ public final class IntegrationManager {
         registerServerIntegration(PrimalIntegration.class, ServerIntegrationCategory::isPrimal);
         registerServerIntegration(SpongeIntegration_Border.class, ServerIntegrationCategory::isSpongeBorder);
         registerServerIntegration(SpongeIntegration_Death.class, ServerIntegrationCategory::isSpongeDeath);
-        registerServerIntegration(SpongeIntegration_Phase.class, ServerIntegrationCategory::isSpongePhase);
     }
     
     public static void process() {

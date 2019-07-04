@@ -40,9 +40,6 @@ public class ServerIntegrationCategory {
     @Setting(value = "sponge-death", comment = "Prevent sending blank death messages")
     private boolean spongeDeath = false;
     
-    @Setting(value = "sponge-phase", comment = "Fix https://github.com/SpongePowered/SpongeForge/issues/2355")
-    private boolean spongePhase = false;
-    
     public boolean isBotania() {
         return botania;
     }
@@ -65,9 +62,5 @@ public class ServerIntegrationCategory {
     
     public boolean isSpongeDeath() {
         return spongeDeath;
-    }
-    
-    public boolean isSpongePhase() {
-        return spongePhase;
     }
 }
