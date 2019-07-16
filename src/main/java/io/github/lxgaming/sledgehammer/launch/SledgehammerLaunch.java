@@ -44,6 +44,8 @@ public class SledgehammerLaunch {
     
     public static void configureClassLoader(LaunchClassLoader classLoader) {
         classLoader.addClassLoaderExclusion("io.github.lxgaming.sledgehammer.launch.");
+        classLoader.addTransformerExclusion("io.github.lxgaming.sledgehammer.launch.");
+        classLoader.addTransformerExclusion("io.github.lxgaming.sledgehammer.lib.");
     }
     
     public static void configureEnvironment() {
