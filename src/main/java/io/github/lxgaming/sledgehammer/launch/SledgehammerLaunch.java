@@ -20,13 +20,10 @@ import io.github.lxgaming.sledgehammer.util.Reference;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
-import net.minecraftforge.common.ForgeVersion;
-import net.minecraftforge.fml.common.launcher.FMLDeobfTweaker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.launch.GlobalProperties;
 import org.spongepowered.asm.mixin.Mixins;
-import org.spongepowered.common.SpongeImpl;
 
 import java.util.List;
 
@@ -34,10 +31,11 @@ public class SledgehammerLaunch {
     
     private static final Logger LOGGER = LogManager.getLogger(Reference.NAME + " Launch");
     private static final String FORGE_CLASS = "net.minecraftforge.fml.relauncher.CoreModManager";
-    private static final String FORGE_INITIALIZED = ForgeVersion.MOD_ID + ".initialized";
+    private static final String FORGE_DEOBF_TWEAKER_CLASS = "net.minecraftforge.fml.common.launcher.FMLDeobfTweaker";
+    private static final String FORGE_INITIALIZED = "forge.initialized";
     private static final String SLEDGEHAMMER_INITIALIZED = Reference.ID + ".initialized";
     private static final String SPONGE_CLASS = "org.spongepowered.common.launch.SpongeLaunch";
-    private static final String SPONGE_INITIALIZED = SpongeImpl.ECOSYSTEM_ID + ".initialized";
+    private static final String SPONGE_INITIALIZED = "sponge.initialized";
     
     private SledgehammerLaunch() {
     }
@@ -67,7 +65,7 @@ public class SledgehammerLaunch {
     }
     
     public static boolean isEarly() {
-        return !isClassPresent(FORGE_CLASS) || isTweakerQueued(FMLDeobfTweaker.class);
+        return !isClassPresent(FORGE_CLASS) || isTweakerQueued(FORGE_DEOBF_TWEAKER_CLASS);
     }
     
     public static boolean isClassPresent(String name) {
@@ -104,11 +102,11 @@ public class SledgehammerLaunch {
     }
     
     public static boolean isForgeRegistered() {
-        return GlobalProperties.get(FORGE_INITIALIZED) != null;
+        return GlobalProperties.get(FORGE_INITIALIZED) == Boolean.TRUE;
     }
     
     private static void registerForge() {
-        GlobalProperties.put(FORGE_INITIALIZED, ForgeVersion.getVersion());
+        GlobalProperties.put(FORGE_INITIALIZED, Boolean.TRUE);
     }
     
     public static boolean isMixinRegistered() {
@@ -128,10 +126,10 @@ public class SledgehammerLaunch {
     }
     
     public static boolean isSpongeRegistered() {
-        return GlobalProperties.get(SPONGE_INITIALIZED) != null;
+        return GlobalProperties.get(SPONGE_INITIALIZED) == Boolean.TRUE;
     }
     
     private static void registerSponge() {
-        GlobalProperties.put(SPONGE_INITIALIZED, SpongeImpl.MINECRAFT_VERSION.getName());
+        GlobalProperties.put(SPONGE_INITIALIZED, Boolean.TRUE);
     }
 }

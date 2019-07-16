@@ -20,8 +20,6 @@ import io.github.lxgaming.sledgehammer.util.Reference;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
-import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
-import org.apache.commons.lang3.text.WordUtils;
 import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.io.File;
@@ -53,7 +51,6 @@ public class SledgehammerTweaker implements ITweaker {
             if (!SledgehammerLaunch.isEarly()) {
                 SledgehammerLaunch.getLogger().warn("---------- WARNING ----------");
                 SledgehammerLaunch.getLogger().warn("{} has detected that it hasn't loaded early enough", Reference.NAME);
-                SledgehammerLaunch.getLogger().warn("Expect the {} to crash", WordUtils.capitalizeFully(FMLLaunchHandler.side().toString()));
                 SledgehammerLaunch.getLogger().warn("---------- WARNING ----------");
             }
             
