@@ -19,6 +19,7 @@ package io.github.lxgaming.sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.Configuration;
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
+import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
 import io.github.lxgaming.sledgehammer.util.Reference;
 import org.apache.logging.log4j.LogManager;
@@ -42,6 +43,7 @@ public class Sledgehammer {
             return false;
         }
         
+        SledgehammerLaunch.configureEnvironment();
         Sledgehammer sledgehammer = new Sledgehammer();
         sledgehammer.getConfiguration().loadConfiguration();
         // ModMappings need to be populated for PreInit Mixins

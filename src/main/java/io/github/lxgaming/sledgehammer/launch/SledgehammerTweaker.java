@@ -35,10 +35,10 @@ public class SledgehammerTweaker implements ITweaker {
         } else if (SledgehammerLaunch.isMixinRegistered()) {
             SledgehammerLaunch.getLogger().debug("Mixin v{} already initialized", SledgehammerLaunch.getMixinVersion());
             SledgehammerLaunch.configureEnvironment();
-        } else {
-            SledgehammerLaunch.getLogger().debug("Prioritizing {}", getClass().getSimpleName());
-            SledgehammerLaunch.getTweakers().add(0, this);
         }
+        
+        SledgehammerLaunch.getLogger().debug("Prioritizing {}", getClass().getSimpleName());
+        SledgehammerLaunch.getTweakers().add(0, this);
     }
     
     @Override

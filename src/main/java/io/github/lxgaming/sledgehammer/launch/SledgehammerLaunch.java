@@ -49,18 +49,20 @@ public class SledgehammerLaunch {
     public static void configureEnvironment() {
         if (!isForgeRegistered() && isClassPresent(FORGE_CLASS)) {
             registerForge();
+            SledgehammerLaunch.getLogger().debug("Detected CoreModManager");
         }
         
-        if (!isSledgehammerRegistered()) {
+        if (!isSledgehammerRegistered() && isTweakerQueued(SledgehammerTweaker.class)) {
             registerSledgehammer();
             
-            if (isTweakerQueued(SledgehammerTweaker.class)) {
-                Mixins.addConfiguration("mixins.sledgehammer.preinit.json");
-            }
+            // Triggers IMixinConfigPlugin::onLoad
+            Mixins.addConfiguration("mixins.sledgehammer.preinit.json");
+            SledgehammerLaunch.getLogger().debug("Detected SledgehammerTweaker");
         }
         
         if (!isSpongeRegistered() && isClassPresent(SPONGE_CLASS)) {
             registerSponge();
+            SledgehammerLaunch.getLogger().debug("Detected SpongeLaunch");
         }
     }
     
