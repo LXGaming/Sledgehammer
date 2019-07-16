@@ -40,118 +40,118 @@ public final class MappingManager {
     public static void registerMixins() {
         // Client Mixin
         // - Core
-        registerClientMixin("core.client.MixinMinecraft", category -> true);
-        registerClientMixin("core.network.play.server.MixinSPacketJoinGame", ClientMixinCategory::isWorldTypeLength);
+        registerClientMixin("core.client.MinecraftMixin", category -> true);
+        registerClientMixin("core.network.play.server.SPacketJoinGameMixin", ClientMixinCategory::isWorldTypeLength);
         
         // - Forge
-        registerClientMixin("forge.common.MixinForgeModContainer", ClientMixinCategory::isNukeSearchTree);
+        registerClientMixin("forge.common.ForgeModContainerMixin", ClientMixinCategory::isNukeSearchTree);
         
         // - ImmersiveEngineering
-        registerClientMixin("immersiveengineering.client.render.MixinTileRenderWorkbench", ClientMixinCategory::isImmersiveEngineeringWorkbenchRender);
+        registerClientMixin("immersiveengineering.client.render.TileRenderWorkbenchMixin", ClientMixinCategory::isImmersiveEngineeringWorkbenchRender);
         
         // Common Mixin
         // - Core
-        registerCommonMixin("core.util.text.MixinTextComponentTranslation", CommonMixinCategory::isInvalidTranslation);
-        registerCommonMixin("core.util.MixinLazyLoadBase", CommonMixinCategory::isLazyLoadThreadSafe);
+        registerCommonMixin("core.util.text.TextComponentTranslationMixin", CommonMixinCategory::isInvalidTranslation);
+        registerCommonMixin("core.util.LazyLoadBaseMixin", CommonMixinCategory::isLazyLoadThreadSafe);
         
         // - Platform
-        registerCommonMixin("platform.MixinSledgehammerPlatform_Mod", category ->
+        registerCommonMixin("platform.SledgehammerPlatformMixin_Mod", category ->
                 SledgehammerLaunch.isForgeRegistered() && !SledgehammerLaunch.isSpongeRegistered());
         
-        registerCommonMixin("platform.MixinSledgehammerPlatform_Plugin", category ->
+        registerCommonMixin("platform.SledgehammerPlatformMixin_Plugin", category ->
                 SledgehammerLaunch.isSpongeRegistered());
         
         // - PreInit
-        registerCommonMixin("forge.fml.common.MixinLoader", category -> !getModMappings().isEmpty());
-        registerCommonMixin("forge.fml.common.MixinMetadataCollection", category -> !getModMappings().isEmpty());
+        registerCommonMixin("forge.fml.common.LoaderMixin", category -> !getModMappings().isEmpty());
+        registerCommonMixin("forge.fml.common.MetadataCollectionAccessor", category -> !getModMappings().isEmpty());
         
         // Server Mixin
         // - ActuallyAdditions
-        registerServerMixin("actuallyadditions.mod.tile.MixinTileEntityAtomicReconstructor", category ->
+        registerServerMixin("actuallyadditions.mod.tile.TileEntityAtomicReconstructorMixin", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isActuallyAdditionsDisruption());
         
         // - CarryOn
-        registerServerMixin("carryon.common.event.MixinItemEvents", category ->
+        registerServerMixin("carryon.common.event.ItemEventsMixin", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isCarryOnCME());
         
         // - Core
-        registerServerMixin("core.advancements.MixinAdvancementManager_Reload", ServerMixinCategory::isAdvancementReload);
-        registerServerMixin("core.advancements.MixinAdvancementManager_Stacktrace", ServerMixinCategory::isAdvancementStacktrace);
-        registerServerMixin("core.advancements.MixinPlayerAdvancements", category ->
+        registerServerMixin("core.advancements.AdvancementManagerMixin_Reload", ServerMixinCategory::isAdvancementReload);
+        registerServerMixin("core.advancements.AdvancementManagerMixin_Stacktrace", ServerMixinCategory::isAdvancementStacktrace);
+        registerServerMixin("core.advancements.PlayerAdvancementsMixin", category ->
                 category.isAdvancementInitialized() && SledgehammerLaunch.isSpongeRegistered());
         
-        registerServerMixin("core.block.MixinBlockGrass", ServerMixinCategory::isBlockGrass);
-        registerServerMixin("core.block.MixinBlockIce", ServerMixinCategory::isBlockIce);
-        registerServerMixin("core.crash.MixinCrashReport", category -> true);
-        registerServerMixin("core.entity.MixinEntity_Teleport", category ->
+        registerServerMixin("core.block.BlockGrassMixin", ServerMixinCategory::isBlockGrass);
+        registerServerMixin("core.block.BlockIceMixin", ServerMixinCategory::isBlockIce);
+        registerServerMixin("core.crash.CrashReportMixin", category -> true);
+        registerServerMixin("core.entity.EntityMixin_Teleport", category ->
                 category.isItemTeleport() && SledgehammerLaunch.isSpongeRegistered());
         
-        registerServerMixin("core.item.MixinItemStack_Exploit", ServerMixinCategory::isItemstackExploit);
-        registerServerMixin("core.item.MixinItemWritableBook", ServerMixinCategory::isLimitBooks);
-        registerServerMixin("core.network.MixinNetHandlerPlayServer_Book", ServerMixinCategory::isLimitBooks);
-        registerServerMixin("core.network.MixinNetHandlerPlayServer_Event", category ->
+        registerServerMixin("core.item.ItemStackMixin_Exploit", ServerMixinCategory::isItemstackExploit);
+        registerServerMixin("core.item.ItemWritableBookMixin", ServerMixinCategory::isLimitBooks);
+        registerServerMixin("core.network.NetHandlerPlayServerMixin_Book", ServerMixinCategory::isLimitBooks);
+        registerServerMixin("core.network.NetHandlerPlayServerMixin_Event", category ->
                 category.isInteractEvents() && SledgehammerLaunch.isSpongeRegistered());
         
-        registerServerMixin("core.network.MixinNetworkManager", ServerMixinCategory::isFlushNetworkOnTick);
-        registerServerMixin("core.network.MixinNetworkSystem", ServerMixinCategory::isNetworkSystem);
-        registerServerMixin("core.server.management.MixinPlayerChunkMap", ServerMixinCategory::isPlayerChunkMap);
-        registerServerMixin("core.server.MixinDedicatedServer", category -> true);
-        registerServerMixin("core.tileentity.MixinTileEntity", category ->
+        registerServerMixin("core.network.NetworkManagerMixin", ServerMixinCategory::isFlushNetworkOnTick);
+        registerServerMixin("core.network.NetworkSystemMixin", ServerMixinCategory::isNetworkSystem);
+        registerServerMixin("core.server.management.PlayerChunkMapMixin", ServerMixinCategory::isPlayerChunkMap);
+        registerServerMixin("core.server.DedicatedServerMixin", category -> true);
+        registerServerMixin("core.tileentity.TileEntityMixin", category ->
                 category.isTileEntityStackOverflow() && SledgehammerLaunch.isSpongeRegistered());
         
-        registerServerMixin("core.world.biome.MixinBiomeProvider", ServerMixinCategory::isBiomeProvider);
-        registerServerMixin("core.world.chunk.storage.MixinAnvilChunkLoader", category ->
+        registerServerMixin("core.world.biome.BiomeProviderMixin", ServerMixinCategory::isBiomeProvider);
+        registerServerMixin("core.world.chunk.storage.AnvilChunkLoaderMixin", category ->
                 category.isChunkSaveAlert() || category.isChunkSavePurgeAll() || category.isChunkSavePurgeBlacklist() || category.isChunkSaveShutdown());
         
-        registerServerMixin("core.world.chunk.storage.MixinRegionFileChunkBuffer", category ->
+        registerServerMixin("core.world.chunk.storage.RegionFileChunkBufferMixin", category ->
                 category.isChunkSaveAlert() || category.isChunkSavePurgeAll() || category.isChunkSavePurgeBlacklist() || category.isChunkSaveShutdown());
         
         // - Forge
-        registerServerMixin("forge.common.MixinForgeHooks_Advancement", ServerMixinCategory::isAdvancementStacktrace);
-        registerServerMixin("forge.entity.passive.MixinEntityVillager", category ->
+        registerServerMixin("forge.common.ForgeHooksMixin_Advancement", ServerMixinCategory::isAdvancementStacktrace);
+        registerServerMixin("forge.entity.passive.EntityVillagerMixin", category ->
                 category.isTravelingMerchant() && SledgehammerLaunch.isSpongeRegistered());
         
-        registerServerMixin("forge.entity.MixinEntity_Teleport", category ->
+        registerServerMixin("forge.entity.EntityMixin_Teleport", category ->
                 category.isItemTeleport() && SledgehammerLaunch.isSpongeRegistered());
         
-        registerServerMixin("forge.fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper", ServerMixinCategory::isFlushNetworkOnTick);
-        registerServerMixin("forge.fml.common.network.simpleimpl.MixinSimpleNetworkWrapper", ServerMixinCategory::isPacketSpam);
-        registerServerMixin("forge.fml.common.network.MixinFMLEmbeddedChannel", ServerMixinCategory::isFlushNetworkOnTick);
-        registerServerMixin("forge.fml.common.network.MixinFMLEventChannel", ServerMixinCategory::isFlushNetworkOnTick);
-        registerServerMixin("forge.world.storage.MixinWorldInfo", ServerMixinCategory::isCeremonyRain);
+        registerServerMixin("forge.fml.common.network.simpleimpl.SimpleChannelHandlerWrapperMixin", ServerMixinCategory::isFlushNetworkOnTick);
+        registerServerMixin("forge.fml.common.network.simpleimpl.SimpleNetworkWrapperMixin", ServerMixinCategory::isPacketSpam);
+        registerServerMixin("forge.fml.common.network.FMLEmbeddedChannelMixin", ServerMixinCategory::isFlushNetworkOnTick);
+        registerServerMixin("forge.fml.common.network.FMLEventChannelMixin", ServerMixinCategory::isFlushNetworkOnTick);
+        registerServerMixin("forge.world.storage.WorldInfoMixin", ServerMixinCategory::isCeremonyRain);
         
         // - ProjectRed
-        registerServerMixin("projectred.transportation.MixinTransportationSPH", category ->
+        registerServerMixin("projectred.transportation.TransportationSPHMixin", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isProjectRedExploit());
         
         // - Quark
-        registerServerMixin("quark.base.module.MixinModuleLoader", category ->
+        registerServerMixin("quark.base.module.ModuleLoaderMixin", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isQuarkImprovedSleeping());
         
         // - Reliquary
-        registerServerMixin("xreliquary.items.MixinItemRendingGale", category ->
+        registerServerMixin("xreliquary.items.ItemRendingGaleMixin", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isReliquaryItemRendingGale());
         
         // - Ruins
-        registerServerMixin("ruins.common.MixinRuinTextLumper", category ->
+        registerServerMixin("ruins.common.RuinTextLumperMixin", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isRuinsDebug());
         
         // - Sponge
-        registerServerMixin("sponge.common.command.MixinWrapperCommandSource", category ->
+        registerServerMixin("sponge.common.command.WrapperCommandSourceMixin", category ->
                 category.isCommandSource() && SledgehammerLaunch.isSpongeRegistered());
         
-        registerServerMixin("sponge.common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState", category ->
+        registerServerMixin("sponge.common.event.tracking.phase.packet.inventory.BasicInventoryPacketStateMixin", category ->
                 category.isInventoryDebug() && SledgehammerLaunch.isSpongeRegistered());
         
-        registerServerMixin("sponge.common.event.MixinSpongeCommonEventFactory", category ->
+        registerServerMixin("sponge.common.event.SpongeCommonEventFactoryMixin", category ->
                 category.isInventoryDebug() && SledgehammerLaunch.isSpongeRegistered());
         
         // - TombManyGraves
-        registerServerMixin("tombmanygraves.events.MixinCommonEvents", category ->
+        registerServerMixin("tombmanygraves.events.CommonEventsMixin", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isTombManyGraves());
         
         // - Topography
-        registerServerMixin("topography.event.MixinEventSubscriber", category ->
+        registerServerMixin("topography.event.EventSubscriberMixin", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isTopographyDimensionChange());
     }
     

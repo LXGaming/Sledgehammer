@@ -7,9 +7,9 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "common.command.MixinWrapperCommandSource",
-    "common.event.tracking.phase.packet.inventory.MixinBasicInventoryPacketState",
-    "common.event.MixinSpongeCommonEventFactory"
+    "common.command.WrapperCommandSourceMixin",
+    "common.event.tracking.phase.packet.inventory.BasicInventoryPacketStateMixin",
+    "common.event.SpongeCommonEventFactoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -7,7 +7,7 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "items.MixinItemRendingGale"
+    "items.ItemRendingGaleMixin"
   ],
   "injectors": {
     "defaultRequire": 1

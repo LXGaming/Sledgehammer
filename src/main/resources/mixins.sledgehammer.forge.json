@@ -7,17 +7,17 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "common.MixinForgeHooks_Advancement",
-    "entity.passive.MixinEntityVillager",
-    "entity.MixinEntity_Teleport",
-    "fml.common.network.simpleimpl.MixinSimpleChannelHandlerWrapper",
-    "fml.common.network.simpleimpl.MixinSimpleNetworkWrapper",
-    "fml.common.network.MixinFMLEmbeddedChannel",
-    "fml.common.network.MixinFMLEventChannel",
-    "world.storage.MixinWorldInfo"
+    "common.ForgeHooksMixin_Advancement",
+    "entity.passive.EntityVillagerMixin",
+    "entity.EntityMixin_Teleport",
+    "fml.common.network.simpleimpl.SimpleChannelHandlerWrapperMixin",
+    "fml.common.network.simpleimpl.SimpleNetworkWrapperMixin",
+    "fml.common.network.FMLEmbeddedChannelMixin",
+    "fml.common.network.FMLEventChannelMixin",
+    "world.storage.WorldInfoMixin"
   ],
   "client": [
-    "common.MixinForgeModContainer"
+    "common.ForgeModContainerMixin"
   ],
   "server": [
   ],

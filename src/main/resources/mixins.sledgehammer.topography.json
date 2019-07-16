@@ -7,7 +7,7 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "event.MixinEventSubscriber"
+    "event.EventSubscriberMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -7,7 +7,7 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "common.MixinRuinTextLumper"
+    "common.RuinTextLumperMixin"
   ],
   "injectors": {
     "defaultRequire": 1

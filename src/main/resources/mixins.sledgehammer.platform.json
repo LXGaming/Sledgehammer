@@ -7,8 +7,8 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinSledgehammerPlatform_Mod",
-    "MixinSledgehammerPlatform_Plugin"
+    "SledgehammerPlatformMixin_Mod",
+    "SledgehammerPlatformMixin_Plugin"
   ],
   "injectors": {
     "defaultRequire": 1

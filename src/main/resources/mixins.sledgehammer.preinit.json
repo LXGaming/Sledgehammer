@@ -7,8 +7,8 @@
   "target": "@env(PREINIT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "fml.common.MixinLoader",
-    "fml.common.MixinMetadataCollection"
+    "fml.common.LoaderMixin",
+    "fml.common.MetadataCollectionAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

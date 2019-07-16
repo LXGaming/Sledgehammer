@@ -7,7 +7,7 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "base.module.MixinModuleLoader"
+    "base.module.ModuleLoaderMixin"
   ],
   "injectors": {
     "defaultRequire": 1
