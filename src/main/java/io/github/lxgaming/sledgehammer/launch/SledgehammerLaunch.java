@@ -30,12 +30,13 @@ import java.util.List;
 public class SledgehammerLaunch {
     
     private static final Logger LOGGER = LogManager.getLogger(Reference.NAME + " Launch");
+    private static final String FORGE_INITIALIZED = "forge.initialized";
     private static final String FORGE_CLASS = "net.minecraftforge.fml.relauncher.CoreModManager";
     private static final String FORGE_DEOBF_TWEAKER_CLASS = "net.minecraftforge.fml.common.launcher.FMLDeobfTweaker";
-    private static final String FORGE_INITIALIZED = "forge.initialized";
+    private static final String MIXIN_STATE_TWEAKER_CLASS = "org.spongepowered.asm.mixin.EnvironmentStateTweaker";
     private static final String SLEDGEHAMMER_INITIALIZED = Reference.ID + ".initialized";
-    private static final String SPONGE_CLASS = "org.spongepowered.common.launch.SpongeLaunch";
     private static final String SPONGE_INITIALIZED = "sponge.initialized";
+    private static final String SPONGE_CLASS = "org.spongepowered.common.launch.SpongeLaunch";
     
     private SledgehammerLaunch() {
     }
@@ -49,25 +50,30 @@ public class SledgehammerLaunch {
     public static void configureEnvironment() {
         if (!isForgeRegistered() && isClassPresent(FORGE_CLASS)) {
             registerForge();
-            SledgehammerLaunch.getLogger().debug("Detected CoreModManager");
-        }
-        
-        if (!isSledgehammerRegistered() && isTweakerQueued(SledgehammerTweaker.class)) {
-            registerSledgehammer();
-            
-            // Triggers IMixinConfigPlugin::onLoad
-            Mixins.addConfiguration("mixins.sledgehammer.preinit.json");
-            SledgehammerLaunch.getLogger().debug("Detected SledgehammerTweaker");
+            SledgehammerLaunch.getLogger().debug("Detected Forge");
         }
         
         if (!isSpongeRegistered() && isClassPresent(SPONGE_CLASS)) {
             registerSponge();
-            SledgehammerLaunch.getLogger().debug("Detected SpongeLaunch");
+            SledgehammerLaunch.getLogger().debug("Detected Sponge");
+        }
+        
+        if (!isSledgehammerRegistered() && isMixinRegistered() && isTweakerQueued(SledgehammerTweaker.class)) {
+            registerSledgehammer();
+            
+            // Triggers IMixinConfigPlugin::onLoad
+            // ConcurrentModificationException - SpongeVanilla
+            Mixins.addConfiguration("mixins.sledgehammer.preinit.json");
+            SledgehammerLaunch.getLogger().debug("Detected Mixin & SledgehammerTweaker");
         }
     }
     
     public static boolean isEarly() {
         return !isClassPresent(FORGE_CLASS) || isTweakerQueued(FORGE_DEOBF_TWEAKER_CLASS);
+    }
+    
+    public static boolean isStateTweakerPresent() {
+        return isTweakerQueued(MIXIN_STATE_TWEAKER_CLASS) && isClassPresentInStackTrace(MIXIN_STATE_TWEAKER_CLASS);
     }
     
     public static boolean isClassPresent(String name) {

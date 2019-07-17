@@ -32,12 +32,10 @@ public class SledgehammerTweaker implements ITweaker {
         if (SledgehammerLaunch.isDeobfuscatedEnvironment()) {
             SledgehammerLaunch.getLogger().debug("Deobfuscated environment");
             SledgehammerLaunch.configureEnvironment();
-        } else if (SledgehammerLaunch.isMixinRegistered()) {
-            SledgehammerLaunch.getLogger().debug("Mixin v{} already initialized", SledgehammerLaunch.getMixinVersion());
-            SledgehammerLaunch.configureEnvironment();
+            return;
         }
         
-        SledgehammerLaunch.getLogger().debug("Prioritizing {}", getClass().getSimpleName());
+        SledgehammerLaunch.getLogger().debug("Injecting {}", getClass().getSimpleName());
         SledgehammerLaunch.getTweakers().add(0, this);
     }
     
@@ -49,12 +47,14 @@ public class SledgehammerTweaker implements ITweaker {
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
         if (!SledgehammerLaunch.isMixinRegistered()) {
             if (!SledgehammerLaunch.isEarly()) {
-                SledgehammerLaunch.getLogger().warn("---------- WARNING ----------");
+                SledgehammerLaunch.getLogger().warn("------------------------- WARNING -------------------------");
                 SledgehammerLaunch.getLogger().warn("{} has detected that it hasn't loaded early enough", Reference.NAME);
-                SledgehammerLaunch.getLogger().warn("---------- WARNING ----------");
+                SledgehammerLaunch.getLogger().warn("------------------------- WARNING -------------------------");
             }
             
             MixinBootstrap.init();
+        } else {
+            SledgehammerLaunch.getLogger().debug("Mixin v{} already initialized", SledgehammerLaunch.getMixinVersion());
         }
         
         SledgehammerLaunch.getLogger().debug("Finalizing initialization");
