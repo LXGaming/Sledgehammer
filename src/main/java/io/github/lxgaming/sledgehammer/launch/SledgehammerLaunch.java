@@ -78,6 +78,16 @@ public class SledgehammerLaunch {
         }
     }
     
+    public static boolean isClassPresentInStackTrace(String className) {
+        for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
+            if (stackTraceElement.getClassName().equals(className)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     public static boolean isTweakerQueued(Class<? extends ITweaker> tweakerClass) {
         return isTweakerQueued(tweakerClass.getName());
     }

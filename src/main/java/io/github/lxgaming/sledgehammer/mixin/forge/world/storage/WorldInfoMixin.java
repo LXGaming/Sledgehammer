@@ -18,7 +18,7 @@ package io.github.lxgaming.sledgehammer.mixin.forge.world.storage;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
-import io.github.lxgaming.sledgehammer.util.Toolbox;
+import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import net.minecraft.world.storage.WorldInfo;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,7 +30,7 @@ public abstract class WorldInfoMixin {
     
     @Inject(method = "setRaining", at = @At(value = "HEAD"), cancellable = true)
     private void onSetRaining(boolean isRaining, CallbackInfo callbackInfo) {
-        if (SledgehammerPlatform.getInstance().isLoaded("totemic") && Toolbox.isClassStackFrame("pokefenn.totemic.ceremony.CeremonyRain", Thread.currentThread().getStackTrace())) {
+        if (SledgehammerPlatform.getInstance().isLoaded("totemic") && SledgehammerLaunch.isClassPresentInStackTrace("pokefenn.totemic.ceremony.CeremonyRain")) {
             callbackInfo.cancel();
             Sledgehammer.getInstance().debug("CeremonyRain from Totemic was blocked");
         }
@@ -38,7 +38,7 @@ public abstract class WorldInfoMixin {
     
     @Inject(method = "setRainTime", at = @At(value = "HEAD"), cancellable = true)
     private void onSetRainTime(int time, CallbackInfo callbackInfo) {
-        if (SledgehammerPlatform.getInstance().isLoaded("totemic") && Toolbox.isClassStackFrame("pokefenn.totemic.ceremony.CeremonyRain", Thread.currentThread().getStackTrace())) {
+        if (SledgehammerPlatform.getInstance().isLoaded("totemic") && SledgehammerLaunch.isClassPresentInStackTrace("pokefenn.totemic.ceremony.CeremonyRain")) {
             callbackInfo.cancel();
             Sledgehammer.getInstance().debug("CeremonyRain from Totemic was blocked");
         }
