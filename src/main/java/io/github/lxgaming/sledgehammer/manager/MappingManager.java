@@ -120,6 +120,10 @@ public final class MappingManager {
         registerServerMixin("forge.fml.common.network.FMLEventChannelMixin", ServerMixinCategory::isFlushNetworkOnTick);
         registerServerMixin("forge.world.storage.WorldInfoMixin", ServerMixinCategory::isCeremonyRain);
         
+        // - MatterOverdrive
+        registerServerMixin("matteroverdrive.machines.analyzer.TileEntityMachineMatterAnalyzerMixin", category ->
+                SledgehammerLaunch.isForgeRegistered() && category.isMatterOverdriveMachineMatterAnalyzer());
+        
         // - ProjectRed
         registerServerMixin("projectred.transportation.TransportationSPHMixin", category ->
                 SledgehammerLaunch.isForgeRegistered() && category.isProjectRedExploit());
@@ -161,6 +165,7 @@ public final class MappingManager {
         registerMod("AS_Ruins", config -> config.getServerMixinCategory().isRuinsDebug());
         registerMod("carryon", config -> config.getServerMixinCategory().isCarryOnCME());
         registerMod("immersiveengineering", config -> config.getClientMixinCategory().isImmersiveEngineeringWorkbenchRender());
+        registerMod("matteroverdrive", config -> config.getServerMixinCategory().isMatterOverdriveMachineMatterAnalyzer());
         registerMod("projectred-transportation", config -> config.getServerMixinCategory().isProjectRedExploit());
         registerMod("quark", config -> config.getServerMixinCategory().isQuarkImprovedSleeping());
         registerMod("tombmanygraves", config -> config.getServerMixinCategory().isTombManyGraves());

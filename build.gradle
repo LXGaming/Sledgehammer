@@ -29,7 +29,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-1.5.0"
+version = "1.12.2-1.5.1"
 
 minecraft {
     version = "1.12.2-14.23.5.2838"
@@ -99,6 +99,7 @@ dependencies {
     }
     provided("actually-additions:ActuallyAdditions:1.12.2:r145")
     provided("immersive-engineering:ImmersiveEngineering:0.12:89")
+    provided("matteroverdrive:MatterOverdrive-1.12.2:0.7.1.0:universal")
     provided("mrtjp:ProjectRed:1.12.2-4.9.1.92:mechanical") {
         exclude(module: "jei_1.12.2")
     }
@@ -150,6 +151,7 @@ jar {
                         + "mixins.sledgehammer.core.json,"
                         + "mixins.sledgehammer.forge.json,"
                         + "mixins.sledgehammer.immersiveengineering.json,"
+                        + "mixins.sledgehammer.matteroverdrive.json,"
                         + "mixins.sledgehammer.platform.json,"
                         + "mixins.sledgehammer.projectred.json,"
                         + "mixins.sledgehammer.quark.json,"

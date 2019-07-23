@@ -91,6 +91,9 @@ public class ServerMixinCategory {
     @Setting(value = "limit-books", comment = "Limit books to 50 pages with 255 characters for each")
     private boolean limitBooks = false;
     
+    @Setting(value = "matteroverdrive-machine-matter-analyzer", comment = "Fix IllegalArgumentException")
+    private boolean matterOverdriveMachineMatterAnalyzer = false;
+    
     @Setting(value = "network-system", comment = "Fix potential deadlock on shutdown")
     private boolean networkSystem = false;
     
@@ -210,6 +213,10 @@ public class ServerMixinCategory {
     
     public boolean isLimitBooks() {
         return limitBooks;
+    }
+    
+    public boolean isMatterOverdriveMachineMatterAnalyzer() {
+        return matterOverdriveMachineMatterAnalyzer;
     }
     
     public boolean isNetworkSystem() {
