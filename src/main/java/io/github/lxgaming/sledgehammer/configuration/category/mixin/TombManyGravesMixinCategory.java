@@ -14,10 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.configuration.category.integration;
+package io.github.lxgaming.sledgehammer.configuration.category.mixin;
 
+import io.github.lxgaming.sledgehammer.configuration.annotation.Mapping;
+import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
-public class ClientIntegrationCategory {
+public class TombManyGravesMixinCategory {
+    
+    @Mapping(value = "tombmanygraves.events.CommonEventsMixin", dependencies = {"tombmanygraves"})
+    @Setting(value = "functionality", comment = "If 'true', disables TombManyGraves functionality.")
+    private boolean functionality = false;
+    
+    public boolean isFunctionality() {
+        return functionality;
+    }
 }

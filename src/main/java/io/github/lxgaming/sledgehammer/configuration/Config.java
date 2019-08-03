@@ -17,12 +17,8 @@
 package io.github.lxgaming.sledgehammer.configuration;
 
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.integration.ClientIntegrationCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.integration.CommonIntegrationCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.integration.ServerIntegrationCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ClientMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.CommonMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ServerMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
@@ -32,49 +28,21 @@ public class Config {
     @Setting(value = "general")
     private GeneralCategory generalCategory = new GeneralCategory();
     
-    @Setting(value = "integration-client")
-    private ClientIntegrationCategory clientIntegrationCategory = new ClientIntegrationCategory();
+    @Setting(value = "integration")
+    private IntegrationCategory integrationCategory = new IntegrationCategory();
     
-    @Setting(value = "integration-common")
-    private CommonIntegrationCategory commonIntegrationCategory = new CommonIntegrationCategory();
-    
-    @Setting(value = "integration-server")
-    private ServerIntegrationCategory serverIntegrationCategory = new ServerIntegrationCategory();
-    
-    @Setting(value = "mixin-client")
-    private ClientMixinCategory clientMixinCategory = new ClientMixinCategory();
-    
-    @Setting(value = "mixin-common")
-    private CommonMixinCategory commonMixinCategory = new CommonMixinCategory();
-    
-    @Setting(value = "mixin-server")
-    private ServerMixinCategory serverMixinCategory = new ServerMixinCategory();
+    @Setting(value = "mixin")
+    private MixinCategory mixinCategory = new MixinCategory();
     
     public GeneralCategory getGeneralCategory() {
         return generalCategory;
     }
     
-    public ClientIntegrationCategory getClientIntegrationCategory() {
-        return clientIntegrationCategory;
+    public IntegrationCategory getIntegrationCategory() {
+        return integrationCategory;
     }
     
-    public CommonIntegrationCategory getCommonIntegrationCategory() {
-        return commonIntegrationCategory;
-    }
-    
-    public ServerIntegrationCategory getServerIntegrationCategory() {
-        return serverIntegrationCategory;
-    }
-    
-    public ClientMixinCategory getClientMixinCategory() {
-        return clientMixinCategory;
-    }
-    
-    public CommonMixinCategory getCommonMixinCategory() {
-        return commonMixinCategory;
-    }
-    
-    public ServerMixinCategory getServerMixinCategory() {
-        return serverMixinCategory;
+    public MixinCategory getMixinCategory() {
+        return mixinCategory;
     }
 }

@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.configuration.category.integration;
+package io.github.lxgaming.sledgehammer.configuration.category;
 
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
-public class ServerIntegrationCategory {
+public class IntegrationCategory {
     
-    @Setting(value = "botania", comment = "Prevent Botania from creating islands")
+    @Setting(value = "botania", comment = "If 'true', prevents Botania from creating islands")
     private boolean botania = false;
     
-    @Setting(value = "forge", comment = "Force permission check for OP based commands")
+    @Setting(value = "forge", comment = "If 'true', forces permission check for OP based commands")
     private boolean forge = false;
     
-    @Setting(value = "mist", comment = "Fix Misty World portal issues")
+    @Setting(value = "mist", comment = "If 'true', fixes Misty World portal issues")
     private boolean mist = false;
     
-    @Setting(value = "primal", comment = "Fix https://github.com/An-Sar/PrimalCore/issues/210 (Fixed in 0.6.56 according to Dev)")
+    @Setting(value = "primal", comment = "If 'true', fixes https://github.com/An-Sar/PrimalCore/issues/210 (Fixed in 0.6.56 according to Dev)")
     private boolean primal = false;
     
-    @Setting(value = "sponge-border", comment = "Prevent movement outside of the world border")
+    @Setting(value = "sponge-border", comment = "If 'true', prevents movement outside of the world border")
     private boolean spongeBorder = false;
     
-    @Setting(value = "sponge-death", comment = "Prevent sending blank death messages")
+    @Setting(value = "sponge-death", comment = "If 'true', prevents sending blank death messages")
     private boolean spongeDeath = false;
     
     public boolean isBotania() {

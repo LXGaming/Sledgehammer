@@ -16,12 +16,12 @@
 
 package io.github.lxgaming.sledgehammer.mixin.core.world.chunk.storage;
 
-import com.google.common.collect.Lists;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.bridge.crash.CrashReportBridge;
 import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ServerMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
 import io.github.lxgaming.sledgehammer.exception.ChunkSaveException;
 import io.github.lxgaming.sledgehammer.util.Broadcast;
 import io.github.lxgaming.sledgehammer.util.Reference;
@@ -45,7 +45,6 @@ import org.spongepowered.asm.util.PrettyPrinter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -80,11 +79,19 @@ public abstract class AnvilChunkLoaderMixin {
         NBTTagCompound level = compound.getCompoundTag("Level");
         boolean saveRequired;
         
+        CoreMixinCategory mixinCategory = Sledgehammer.getInstance().getConfig()
+                .map(Config::getMixinCategory)
+                .map(MixinCategory::getCoreMixinCategory).orElse(null);
+        
+        if (mixinCategory == null) {
+            Sledgehammer.getInstance().getLogger().error("CoreMixinCategory is unavailable");
+            return;
+        }
+        
         // Remove Blacklisted items from Entities and TileEntities
-        if (Sledgehammer.getInstance().getConfig().map(Config::getServerMixinCategory).map(ServerMixinCategory::isChunkSavePurgeBlacklist).orElse(false)) {
-            List<String> blacklist = Sledgehammer.getInstance().getConfig().map(Config::getServerMixinCategory).map(ServerMixinCategory::getChunkSaveBlacklist).orElseGet(Lists::newArrayList);
-            saveRequired = sledgehammer$removeEntityItems(level, item -> sledgehammer$checkItem(item, blacklist::contains));
-            saveRequired |= sledgehammer$removeTileEntityItems(level, item -> sledgehammer$checkItem(item, blacklist::contains));
+        if (mixinCategory.isChunkSavePurgeBlacklist()) {
+            saveRequired = sledgehammer$removeEntityItems(level, item -> sledgehammer$checkItem(item, mixinCategory.getChunkSaveBlacklist()::contains));
+            saveRequired |= sledgehammer$removeTileEntityItems(level, item -> sledgehammer$checkItem(item, mixinCategory.getChunkSaveBlacklist()::contains));
             if (saveRequired && sledgehammer$writeChunk(pos, compound)) {
                 Sledgehammer.getInstance().getLogger().info("Chunk ({}, {}) saved after removing Blacklisted Items from Entities and TileEntities", pos.x, pos.z);
                 return;
@@ -92,7 +99,7 @@ public abstract class AnvilChunkLoaderMixin {
         }
         
         // Remove all Entities and TileEntities
-        if (Sledgehammer.getInstance().getConfig().map(Config::getServerMixinCategory).map(ServerMixinCategory::isChunkSavePurgeAll).orElse(false)) {
+        if (mixinCategory.isChunkSavePurgeAll()) {
             saveRequired = sledgehammer$removeEntities(level, entity -> true);
             saveRequired |= sledgehammer$removeTileEntities(level, tileEntity -> true);
             if (saveRequired && sledgehammer$writeChunk(pos, compound)) {
@@ -107,14 +114,14 @@ public abstract class AnvilChunkLoaderMixin {
         }
         
         // Shutdown
-        if (Sledgehammer.getInstance().getConfig().map(Config::getServerMixinCategory).map(ServerMixinCategory::isChunkSaveShutdown).orElse(false)) {
+        if (mixinCategory.isChunkSaveShutdown()) {
             World world = sledgehammer$getWorld().orElse(null);
             
             CrashReport crashReport = CrashReport.makeCrashReport(new ChunkSaveException(), "Chunk (" + pos.x + ", " + pos.z + ") failed to save");
             CrashReportCategory crashReportCategory = new CrashReportCategory(crashReport, "Affected level");
             crashReportCategory.addDetail("World", () -> {
                 if (world != null) {
-                    return String.format("%s", world.getWorldInfo().getWorldName());
+                    return world.getWorldInfo().getWorldName();
                 }
                 
                 return "Unknown";
@@ -143,7 +150,7 @@ public abstract class AnvilChunkLoaderMixin {
         }
         
         // Broadcast
-        if (Sledgehammer.getInstance().getConfig().map(Config::getServerMixinCategory).map(ServerMixinCategory::isChunkSaveAlert).orElse(false)) {
+        if (mixinCategory.isChunkSaveAlert()) {
             Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).ifPresent(generalCategory -> {
                 String message = generalCategory.getMessageCategory().getChunkSave();
                 if (StringUtils.isBlank(message)) {

@@ -14,10 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.configuration.category.integration;
+package io.github.lxgaming.sledgehammer.configuration.category.mixin;
 
+import io.github.lxgaming.sledgehammer.configuration.annotation.Mapping;
+import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
-public class CommonIntegrationCategory {
+public class TotemicMixinCategory {
+    
+    @Mapping(value = "forge.world.storage.WorldInfoMixin")
+    @Setting(value = "rain-dance-ceremony", comment = "If 'true', prevents the Rain Dance Ceremony from changing the weather.")
+    private boolean rainDanceCeremony = false;
+    
+    public boolean isRainDanceCeremony() {
+        return rainDanceCeremony;
+    }
 }

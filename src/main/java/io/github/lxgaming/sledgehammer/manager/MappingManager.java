@@ -16,20 +16,20 @@
 
 package io.github.lxgaming.sledgehammer.manager;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
+import io.github.lxgaming.sledgehammer.configuration.annotation.Mapping;
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ClientMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.CommonMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ServerMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 public final class MappingManager {
     
@@ -37,161 +37,57 @@ public final class MappingManager {
     private static final Map<String, Boolean> MOD_MAPPINGS = Maps.newHashMap();
     private static final Map<Enum, SledgehammerPlatform.State> STATE_MAPPINGS = Maps.newHashMap();
     
-    public static void registerMixins() {
-        // Client Mixin
-        // - Core
-        registerClientMixin("core.client.MinecraftMixin", category -> true);
-        registerClientMixin("core.network.play.server.SPacketJoinGameMixin", ClientMixinCategory::isWorldTypeLength);
-        
-        // - Forge
-        registerClientMixin("forge.common.ForgeModContainerMixin", ClientMixinCategory::isNukeSearchTree);
-        
-        // - ImmersiveEngineering
-        registerClientMixin("immersiveengineering.client.render.TileRenderWorkbenchMixin", ClientMixinCategory::isImmersiveEngineeringWorkbenchRender);
-        
-        // Common Mixin
-        // - Core
-        registerCommonMixin("core.util.text.TextComponentTranslationMixin", CommonMixinCategory::isInvalidTranslation);
-        registerCommonMixin("core.util.LazyLoadBaseMixin", CommonMixinCategory::isLazyLoadThreadSafe);
-        
-        // - Platform
-        registerCommonMixin("platform.SledgehammerPlatformMixin_Mod", category ->
-                SledgehammerLaunch.isForgeRegistered() && !SledgehammerLaunch.isSpongeRegistered());
-        
-        registerCommonMixin("platform.SledgehammerPlatformMixin_Plugin", category ->
-                SledgehammerLaunch.isSpongeRegistered());
-        
-        // - PreInit
-        registerCommonMixin("forge.fml.common.LoaderMixin", category -> !getModMappings().isEmpty());
-        registerCommonMixin("forge.fml.common.MetadataCollectionAccessor", category -> !getModMappings().isEmpty());
-        
-        // Server Mixin
-        // - ActuallyAdditions
-        registerServerMixin("actuallyadditions.mod.tile.TileEntityAtomicReconstructorMixin", category ->
-                SledgehammerLaunch.isForgeRegistered() && category.isActuallyAdditionsDisruption());
-        
-        // - CarryOn
-        registerServerMixin("carryon.common.event.ItemEventsMixin", category ->
-                SledgehammerLaunch.isForgeRegistered() && category.isCarryOnCME());
-        
-        // - Core
-        registerServerMixin("core.advancements.AdvancementManagerMixin_Reload", ServerMixinCategory::isAdvancementReload);
-        registerServerMixin("core.advancements.AdvancementManagerMixin_Stacktrace", ServerMixinCategory::isAdvancementStacktrace);
-        registerServerMixin("core.advancements.PlayerAdvancementsMixin", category ->
-                category.isAdvancementInitialized() && SledgehammerLaunch.isSpongeRegistered());
-        
-        registerServerMixin("core.block.BlockGrassMixin", ServerMixinCategory::isBlockGrass);
-        registerServerMixin("core.block.BlockIceMixin", ServerMixinCategory::isBlockIce);
-        registerServerMixin("core.crash.CrashReportMixin", category -> true);
-        registerServerMixin("core.entity.EntityMixin_Teleport", category ->
-                category.isItemTeleport() && SledgehammerLaunch.isSpongeRegistered());
-        
-        registerServerMixin("core.item.ItemStackMixin_Exploit", ServerMixinCategory::isItemstackExploit);
-        registerServerMixin("core.item.ItemWritableBookMixin", ServerMixinCategory::isLimitBooks);
-        registerServerMixin("core.network.NetHandlerPlayServerMixin_Book", ServerMixinCategory::isLimitBooks);
-        registerServerMixin("core.network.NetHandlerPlayServerMixin_Event", category ->
-                category.isInteractEvents() && SledgehammerLaunch.isSpongeRegistered());
-        
-        registerServerMixin("core.network.NetworkManagerMixin", ServerMixinCategory::isFlushNetworkOnTick);
-        registerServerMixin("core.network.NetworkSystemMixin", ServerMixinCategory::isNetworkSystem);
-        registerServerMixin("core.server.management.PlayerChunkMapMixin", ServerMixinCategory::isPlayerChunkMap);
-        registerServerMixin("core.server.DedicatedServerMixin", category -> true);
-        registerServerMixin("core.tileentity.TileEntityMixin", category ->
-                category.isTileEntityStackOverflow() && SledgehammerLaunch.isSpongeRegistered());
-        
-        registerServerMixin("core.world.biome.BiomeProviderMixin", ServerMixinCategory::isBiomeProvider);
-        registerServerMixin("core.world.chunk.storage.AnvilChunkLoaderMixin", category ->
-                category.isChunkSaveAlert() || category.isChunkSavePurgeAll() || category.isChunkSavePurgeBlacklist() || category.isChunkSaveShutdown());
-        
-        registerServerMixin("core.world.chunk.storage.RegionFileChunkBufferMixin", category ->
-                category.isChunkSaveAlert() || category.isChunkSavePurgeAll() || category.isChunkSavePurgeBlacklist() || category.isChunkSaveShutdown());
-        
-        // - Forge
-        registerServerMixin("forge.common.ForgeHooksMixin_Advancement", ServerMixinCategory::isAdvancementStacktrace);
-        registerServerMixin("forge.entity.passive.EntityVillagerMixin", category ->
-                category.isTravelingMerchant() && SledgehammerLaunch.isSpongeRegistered());
-        
-        registerServerMixin("forge.entity.EntityMixin_Teleport", category ->
-                category.isItemTeleport() && SledgehammerLaunch.isSpongeRegistered());
-        
-        registerServerMixin("forge.fml.common.network.simpleimpl.SimpleChannelHandlerWrapperMixin", ServerMixinCategory::isFlushNetworkOnTick);
-        registerServerMixin("forge.fml.common.network.simpleimpl.SimpleNetworkWrapperMixin", ServerMixinCategory::isPacketSpam);
-        registerServerMixin("forge.fml.common.network.FMLEmbeddedChannelMixin", ServerMixinCategory::isFlushNetworkOnTick);
-        registerServerMixin("forge.fml.common.network.FMLEventChannelMixin", ServerMixinCategory::isFlushNetworkOnTick);
-        registerServerMixin("forge.world.storage.WorldInfoMixin", ServerMixinCategory::isCeremonyRain);
-        
-        // - MatterOverdrive
-        registerServerMixin("matteroverdrive.machines.analyzer.TileEntityMachineMatterAnalyzerMixin", category ->
-                SledgehammerLaunch.isForgeRegistered() && category.isMatterOverdriveMachineMatterAnalyzer());
-        
-        // - ProjectRed
-        registerServerMixin("projectred.transportation.TransportationSPHMixin", category ->
-                SledgehammerLaunch.isForgeRegistered() && category.isProjectRedExploit());
-        
-        // - Quark
-        registerServerMixin("quark.base.module.ModuleLoaderMixin", category ->
-                SledgehammerLaunch.isForgeRegistered() && category.isQuarkImprovedSleeping());
-        
-        // - Reliquary
-        registerServerMixin("xreliquary.items.ItemRendingGaleMixin", category ->
-                SledgehammerLaunch.isForgeRegistered() && category.isReliquaryItemRendingGale());
-        
-        // - Ruins
-        registerServerMixin("ruins.common.RuinTextLumperMixin", category ->
-                SledgehammerLaunch.isForgeRegistered() && category.isRuinsDebug());
-        
-        // - Sponge
-        registerServerMixin("sponge.common.command.WrapperCommandSourceMixin", category ->
-                category.isCommandSource() && SledgehammerLaunch.isSpongeRegistered());
-        
-        registerServerMixin("sponge.common.event.tracking.phase.packet.inventory.BasicInventoryPacketStateMixin", category ->
-                category.isInventoryDebug() && SledgehammerLaunch.isSpongeRegistered());
-        
-        registerServerMixin("sponge.common.event.SpongeCommonEventFactoryMixin", category ->
-                category.isInventoryDebug() && SledgehammerLaunch.isSpongeRegistered());
-        
-        // - TombManyGraves
-        registerServerMixin("tombmanygraves.events.CommonEventsMixin", category ->
-                SledgehammerLaunch.isForgeRegistered() && category.isTombManyGraves());
-        
-        // - Topography
-        registerServerMixin("topography.event.EventSubscriberMixin", category ->
-                SledgehammerLaunch.isForgeRegistered() && category.isTopographyDimensionChange());
-    }
-    
-    public static void registerMods() {
+    public static void register() {
         Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).map(GeneralCategory::getModMappings).ifPresent(getModMappings()::putAll);
-        registerMod("actuallyadditions", config -> config.getServerMixinCategory().isActuallyAdditionsDisruption());
-        registerMod("AS_Ruins", config -> config.getServerMixinCategory().isRuinsDebug());
-        registerMod("carryon", config -> config.getServerMixinCategory().isCarryOnCME());
-        registerMod("immersiveengineering", config -> config.getClientMixinCategory().isImmersiveEngineeringWorkbenchRender());
-        registerMod("matteroverdrive", config -> config.getServerMixinCategory().isMatterOverdriveMachineMatterAnalyzer());
-        registerMod("projectred-transportation", config -> config.getServerMixinCategory().isProjectRedExploit());
-        registerMod("quark", config -> config.getServerMixinCategory().isQuarkImprovedSleeping());
-        registerMod("tombmanygraves", config -> config.getServerMixinCategory().isTombManyGraves());
-        registerMod("topography", config -> config.getServerMixinCategory().isTopographyDimensionChange());
-        registerMod("xreliquary", config -> config.getServerMixinCategory().isReliquaryItemRendingGale());
+        
+        MixinCategory mixinCategory = Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).orElseThrow(NullPointerException::new);
+        for (Field field : mixinCategory.getClass().getDeclaredFields()) {
+            try {
+                field.setAccessible(true);
+                registerMixinMappings(field.get(mixinCategory));
+            } catch (Exception ex) {
+                Sledgehammer.getInstance().getLogger().error("Encountered an error while registering {} ({})", field.getType().getSimpleName(), field.getName());
+            }
+        }
+        
+        // Internal Mixins
+        MIXIN_MAPPINGS.put("core.client.MinecraftMixin", true);
+        MIXIN_MAPPINGS.put("core.crash.CrashReportMixin", true);
+        MIXIN_MAPPINGS.put("core.server.DedicatedServerMixin", true);
+        MIXIN_MAPPINGS.put("forge.fml.common.LoaderMixin", SledgehammerLaunch.isForgeRegistered() && !MOD_MAPPINGS.isEmpty());
+        MIXIN_MAPPINGS.put("forge.fml.common.MetadataCollectionAccessor", SledgehammerLaunch.isForgeRegistered() && !MOD_MAPPINGS.isEmpty());
+        MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Mod", SledgehammerLaunch.isForgeRegistered() && !SledgehammerLaunch.isSpongeRegistered());
+        MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Plugin", SledgehammerLaunch.isSpongeRegistered());
     }
     
-    private static void registerClientMixin(String mixin, Function<ClientMixinCategory, Boolean> function) {
-        registerMixin(mixin, config -> function.apply(config.getClientMixinCategory()));
+    private static void registerMixinMappings(Object object) throws Exception {
+        Preconditions.checkNotNull(object);
+        for (Field field : object.getClass().getDeclaredFields()) {
+            Mapping[] mappings = field.getDeclaredAnnotationsByType(Mapping.class);
+            if (mappings.length == 0) {
+                continue;
+            }
+            
+            field.setAccessible(true);
+            boolean value = field.getBoolean(object);
+            
+            for (Mapping mapping : mappings) {
+                if (value) {
+                    registerModMappings(mapping.dependencies());
+                }
+                
+                // Don't overwrite the mapping value if it's already true
+                if (!MIXIN_MAPPINGS.getOrDefault(mapping.value(), false)) {
+                    MIXIN_MAPPINGS.put(mapping.value(), value);
+                }
+            }
+        }
     }
     
-    private static void registerCommonMixin(String mixin, Function<CommonMixinCategory, Boolean> function) {
-        registerMixin(mixin, config -> function.apply(config.getCommonMixinCategory()));
-    }
-    
-    private static void registerServerMixin(String mixin, Function<ServerMixinCategory, Boolean> function) {
-        registerMixin(mixin, config -> function.apply(config.getServerMixinCategory()));
-    }
-    
-    private static void registerMixin(String mixin, Function<Config, Boolean> function) {
-        getMixinMappings().put(mixin, Sledgehammer.getInstance().getConfig().map(function).orElse(false));
-    }
-    
-    private static void registerMod(String mod, Function<Config, Boolean> function) {
-        if (Sledgehammer.getInstance().getConfig().map(function).orElse(false)) {
-            getModMappings().put(mod, true);
+    private static void registerModMappings(String... dependencies) {
+        Preconditions.checkNotNull(dependencies);
+        for (String dependency : dependencies) {
+            MOD_MAPPINGS.putIfAbsent(dependency, true);
         }
     }
     

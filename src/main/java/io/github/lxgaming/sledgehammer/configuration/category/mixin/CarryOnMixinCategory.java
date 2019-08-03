@@ -16,23 +16,18 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category.mixin;
 
+import io.github.lxgaming.sledgehammer.configuration.annotation.Mapping;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
-public class CommonMixinCategory {
+public class CarryOnMixinCategory {
     
-    @Setting(value = "invalid-translation", comment = "Prevent crashes due to invalid translation keys")
-    private boolean invalidTranslation = false;
+    @Mapping(value = "carryon.common.event.ItemEventsMixin", dependencies = {"carryon"})
+    @Setting(value = "concurrent-modification-exception", comment = "If 'true', fixes a ConcurrentModificationException caused by the onWorldTick method.")
+    private boolean concurrentModificationException = false;
     
-    @Setting(value = "lazyload-thread-safe", comment = "Make LazyLoad Thread-safe (Should fix MC-68381)")
-    private boolean lazyLoadThreadSafe = false;
-    
-    public boolean isInvalidTranslation() {
-        return invalidTranslation;
-    }
-    
-    public boolean isLazyLoadThreadSafe() {
-        return lazyLoadThreadSafe;
+    public boolean isConcurrentModificationException() {
+        return concurrentModificationException;
     }
 }

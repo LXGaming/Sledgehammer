@@ -46,9 +46,7 @@ public class Sledgehammer {
         SledgehammerLaunch.configureEnvironment();
         Sledgehammer sledgehammer = new Sledgehammer();
         sledgehammer.getConfiguration().loadConfiguration();
-        // ModMappings need to be populated for PreInit Mixins
-        MappingManager.registerMods();
-        MappingManager.registerMixins();
+        MappingManager.register();
         sledgehammer.getConfiguration().saveConfiguration();
         return true;
     }

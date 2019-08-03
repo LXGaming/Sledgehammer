@@ -20,9 +20,7 @@ import com.google.common.collect.Sets;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.integration.ClientIntegrationCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.integration.CommonIntegrationCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.integration.ServerIntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
 import io.github.lxgaming.sledgehammer.integration.AbstractIntegration;
 import io.github.lxgaming.sledgehammer.integration.BotaniaIntegration;
 import io.github.lxgaming.sledgehammer.integration.ForgeIntegration;
@@ -41,12 +39,12 @@ public final class IntegrationManager {
     private static final Set<Class<? extends AbstractIntegration>> INTEGRATION_CLASSES = Sets.newLinkedHashSet();
     
     public static void register() {
-        registerServerIntegration(BotaniaIntegration.class, ServerIntegrationCategory::isBotania);
-        registerServerIntegration(ForgeIntegration.class, ServerIntegrationCategory::isForge);
-        registerServerIntegration(MistIntegration.class, ServerIntegrationCategory::isMist);
-        registerServerIntegration(PrimalIntegration.class, ServerIntegrationCategory::isPrimal);
-        registerServerIntegration(SpongeIntegration_Border.class, ServerIntegrationCategory::isSpongeBorder);
-        registerServerIntegration(SpongeIntegration_Death.class, ServerIntegrationCategory::isSpongeDeath);
+        registerIntegration(BotaniaIntegration.class, IntegrationCategory::isBotania);
+        registerIntegration(ForgeIntegration.class, IntegrationCategory::isForge);
+        registerIntegration(MistIntegration.class, IntegrationCategory::isMist);
+        registerIntegration(PrimalIntegration.class, IntegrationCategory::isPrimal);
+        registerIntegration(SpongeIntegration_Border.class, IntegrationCategory::isSpongeBorder);
+        registerIntegration(SpongeIntegration_Death.class, IntegrationCategory::isSpongeDeath);
     }
     
     public static void process() {
@@ -83,26 +81,14 @@ public final class IntegrationManager {
         }
     }
     
-    private static boolean registerClientIntegration(Class<? extends AbstractIntegration> integrationClass, Function<ClientIntegrationCategory, Boolean> function) {
-        return registerIntegration(integrationClass, config -> function.apply(config.getClientIntegrationCategory()));
-    }
-    
-    private static boolean registerCommonIntegration(Class<? extends AbstractIntegration> integrationClass, Function<CommonIntegrationCategory, Boolean> function) {
-        return registerIntegration(integrationClass, config -> function.apply(config.getCommonIntegrationCategory()));
-    }
-    
-    private static boolean registerServerIntegration(Class<? extends AbstractIntegration> integrationClass, Function<ServerIntegrationCategory, Boolean> function) {
-        return registerIntegration(integrationClass, config -> function.apply(config.getServerIntegrationCategory()));
-    }
-    
-    private static boolean registerIntegration(Class<? extends AbstractIntegration> integrationClass, Function<Config, Boolean> function) {
+    private static boolean registerIntegration(Class<? extends AbstractIntegration> integrationClass, Function<IntegrationCategory, Boolean> function) {
         if (getIntegrationClasses().contains(integrationClass)) {
             Sledgehammer.getInstance().getLogger().warn("{} is already registered", integrationClass.getSimpleName());
             return false;
         }
         
         getIntegrationClasses().add(integrationClass);
-        if (!Sledgehammer.getInstance().getConfig().map(function).orElse(false)) {
+        if (!Sledgehammer.getInstance().getConfig().map(Config::getIntegrationCategory).map(function).orElse(false)) {
             return false;
         }
         

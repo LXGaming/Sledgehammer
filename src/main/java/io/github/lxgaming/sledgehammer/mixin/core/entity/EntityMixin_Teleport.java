@@ -19,7 +19,8 @@ package io.github.lxgaming.sledgehammer.mixin.core.entity;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ServerMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.SpongeMixinCategory;
 import io.github.lxgaming.sledgehammer.util.Broadcast;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.entity.Entity;
@@ -80,8 +81,9 @@ public abstract class EntityMixin_Teleport {
         }
         
         return Sledgehammer.getInstance().getConfig()
-                .map(Config::getServerMixinCategory)
-                .map(ServerMixinCategory::getItemTeleportWhitelist)
+                .map(Config::getMixinCategory)
+                .map(MixinCategory::getSpongeMixinCategory)
+                .map(SpongeMixinCategory::getItemTeleportWhitelist)
                 .map(list -> !list.contains(Toolbox.getRootId(entity))).orElse(false);
     }
 }

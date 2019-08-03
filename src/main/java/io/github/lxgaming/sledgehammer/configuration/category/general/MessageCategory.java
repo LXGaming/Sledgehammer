@@ -22,16 +22,16 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class MessageCategory {
     
-    @Setting(value = "chunk-save", comment = "Sent when a chunk fails to save")
+    @Setting(value = "chunk-save", comment = "Sent when a chunk fails to save.")
     private String chunkSave = "&fChunk ([X], [Z]) &cfailed to save";
     
-    @Setting(value = "item-teleport", comment = "Sent to the player when a thrown item gets deleted")
+    @Setting(value = "item-teleport", comment = "Sent to the player when a thrown item gets deleted.")
     private String itemTeleport = "&f[ID] &cwas lost in time and space";
     
-    @Setting(value = "move-outside-border", comment = "Sent to the player when attempting to move outside the world border")
+    @Setting(value = "move-outside-border", comment = "Sent to the player when attempting to move outside the world border.")
     private String moveOutsideBorder = "&cCannot move outside of the world border";
     
-    @Setting(value = "project-red-exploit", comment = "Sent to the player when attempting exploit ProjectRed")
+    @Setting(value = "project-red-exploit", comment = "Sent to the player when attempting exploit ProjectRed.")
     private String projectRedExploit = "&cInvalid Item: &f[ID]";
     
     public String getChunkSave() {
