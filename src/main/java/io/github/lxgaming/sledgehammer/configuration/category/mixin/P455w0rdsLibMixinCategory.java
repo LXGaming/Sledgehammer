@@ -23,7 +23,7 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class P455w0rdsLibMixinCategory {
     
-    @Mapping(value = "p455w0rdslib.LibEventsMixin")
+    @Mapping(value = "p455w0rdslib.LibEventsMixin", dependencies = {"p455w0rdslib"})
     @Setting(value = "events", comment = "If 'true', disables onMapGen, onChunkLoad and onBlockGen events which cause client stuttering")
     private boolean events = false;
 }
