@@ -7,7 +7,10 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "machines.analyzer.TileEntityMachineMatterAnalyzerMixin"
+    "machines.analyzer.TileEntityMachineMatterAnalyzerMixin",
+    "machines.pattern_monitor.TileEntityMachinePatternMonitorMixin",
+    "machines.pattern_storage.TileEntityMachinePatternStorageMixin",
+    "machines.replicator.TileEntityMachineReplicatorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

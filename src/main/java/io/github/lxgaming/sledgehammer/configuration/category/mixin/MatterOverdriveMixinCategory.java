@@ -24,10 +24,13 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 public class MatterOverdriveMixinCategory {
     
     @Mapping(value = "matteroverdrive.machines.analyzer.TileEntityMachineMatterAnalyzerMixin", dependencies = {"matteroverdrive"})
-    @Setting(value = "machine-matter-analyzer", comment = "If 'true', fixes IllegalArgumentException.")
-    private boolean machineMatterAnalyzer = false;
+    @Mapping(value = "matteroverdrive.machines.pattern_monitor.TileEntityMachinePatternMonitorMixin", dependencies = {"matteroverdrive"})
+    @Mapping(value = "matteroverdrive.machines.pattern_storage.TileEntityMachinePatternStorageMixin", dependencies = {"matteroverdrive"})
+    @Mapping(value = "matteroverdrive.machines.replicator.TileEntityMachineReplicatorMixin", dependencies = {"matteroverdrive"})
+    @Setting(value = "can-connect-from-side", comment = "If 'true', fixes IllegalArgumentException caused by the canConnectFromSide method.")
+    private boolean canConnectFromSide = false;
     
-    public boolean isMachineMatterAnalyzer() {
-        return machineMatterAnalyzer;
+    public boolean isCanConnectFromSide() {
+        return canConnectFromSide;
     }
 }
