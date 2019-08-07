@@ -100,6 +100,7 @@ dependencies {
     provided("actually-additions:ActuallyAdditions:1.12.2:r145")
     provided("immersive-engineering:ImmersiveEngineering:0.12:89")
     provided("matteroverdrive:MatterOverdrive-1.12.2:0.7.1.0:universal")
+    provided("morph:Morph:1.12.2:7.1.3")
     provided("mrtjp:ProjectRed:1.12.2-4.9.1.92:mechanical") {
         exclude(module: "jei_1.12.2")
     }
@@ -153,6 +154,7 @@ jar {
                         + "mixins.sledgehammer.forge.json,"
                         + "mixins.sledgehammer.immersiveengineering.json,"
                         + "mixins.sledgehammer.matteroverdrive.json,"
+                        + "mixins.sledgehammer.morph.json,"
                         + "mixins.sledgehammer.p455w0rdslib.json,"
                         + "mixins.sledgehammer.platform.json,"
                         + "mixins.sledgehammer.projectred.json,"

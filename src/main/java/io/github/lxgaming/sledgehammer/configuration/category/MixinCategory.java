@@ -22,6 +22,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCat
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ImmersiveEngineeringMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MatterOverdriveMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.MorphMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.P455w0rdsLibMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveMobsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ProjectRedMixinCategory;
@@ -55,6 +56,9 @@ public class MixinCategory {
     
     @Setting(value = "matter-overdrive", comment = "Matter Overdrive")
     private MatterOverdriveMixinCategory matterOverdriveMixinCategory = new MatterOverdriveMixinCategory();
+    
+    @Setting(value = "morph", comment = "Morph")
+    private MorphMixinCategory morphMixinCategory = new MorphMixinCategory();
     
     @Setting(value = "p455w0rdslib", comment = "p455w0rd's Library")
     private P455w0rdsLibMixinCategory p455w0rdsLibMixinCategory = new P455w0rdsLibMixinCategory();
@@ -108,6 +112,10 @@ public class MixinCategory {
     
     public MatterOverdriveMixinCategory getMatterOverdriveMixinCategory() {
         return matterOverdriveMixinCategory;
+    }
+    
+    public MorphMixinCategory getMorphMixinCategory() {
+        return morphMixinCategory;
     }
     
     public P455w0rdsLibMixinCategory getP455w0rdsLibMixinCategory() {
