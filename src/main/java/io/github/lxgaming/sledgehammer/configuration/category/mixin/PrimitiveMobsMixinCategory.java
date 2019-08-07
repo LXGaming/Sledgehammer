@@ -23,9 +23,17 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class PrimitiveMobsMixinCategory {
     
+    @Mapping(value = "primitivemobs.message.MessagePrimitiveJumpingMixin", dependencies = {"primitivemobs"})
+    @Setting(value = "networking", comment = "If 'true', fixes NullPointerException caused by MessagePrimitiveJumping")
+    private boolean network = false;
+    
     @Mapping(value = "forge.entity.passive.EntityVillagerMixin")
     @Setting(value = "traveling-merchant", comment = "If 'true', fixes https://github.com/Daveyx0/PrimitiveMobs/issues/59 (Sponge only).")
     private boolean travelingMerchant = false;
+    
+    public boolean isNetwork() {
+        return network;
+    }
     
     public boolean isTravelingMerchant() {
         return travelingMerchant;
