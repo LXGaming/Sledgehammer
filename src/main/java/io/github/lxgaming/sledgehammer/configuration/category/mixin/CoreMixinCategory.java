@@ -98,6 +98,10 @@ public class CoreMixinCategory {
     @Mapping(value = "core.network.play.server.SPacketJoinGameMixin")
     @Setting(value = "world-type-length", comment = "If 'true', increases the maximum length for a WorldType name in SPacketJoinGame packet.")
     private boolean worldTypeLength = false;
+
+    @Mapping(value = "core.network.play.server.SPacketChunkDataMixin")
+    @Setting(value = "get-update-tag-crash", comment = "If 'true', adds TileEntity data to the crash report from calls to 'getUpdateTag' that fail.")
+    private boolean getUpdateTagCrash = false;
     
     public boolean isAdvancementReload() {
         return advancementReload;
@@ -165,5 +169,9 @@ public class CoreMixinCategory {
     
     public boolean isWorldTypeLength() {
         return worldTypeLength;
+    }
+
+    public boolean isGetUpdateTagCrash() {
+        return getUpdateTagCrash;
     }
 }
