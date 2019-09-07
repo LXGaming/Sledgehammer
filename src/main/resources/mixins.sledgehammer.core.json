@@ -16,6 +16,7 @@
     "entity.EntityMixin_Teleport",
     "item.ItemStackMixin_Exploit",
     "item.ItemWritableBookMixin",
+    "network.play.server.SPacketChunkDataMixin",
     "network.play.server.SPacketJoinGameMixin",
     "network.NetHandlerPlayServerMixin_Book",
     "network.NetHandlerPlayServerMixin_Event",
