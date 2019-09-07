@@ -34,6 +34,9 @@ public class MessageCategory {
     @Setting(value = "project-red-exploit", comment = "Sent to the player when attempting exploit ProjectRed.")
     private String projectRedExploit = "&cInvalid Item: &f[ID]";
     
+    @Setting(value = "storage-network-exploit", comment = "Sent to the player when attempting exploit Storage Network.")
+    private String storageNetworkExploit = "&cInvalid Item: &f[ID]";
+    
     public String getChunkSave() {
         return chunkSave;
     }
@@ -48,5 +51,9 @@ public class MessageCategory {
     
     public String getProjectRedExploit() {
         return projectRedExploit;
+    }
+    
+    public String getStorageNetworkExploit() {
+        return storageNetworkExploit;
     }
 }

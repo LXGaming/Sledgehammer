@@ -110,6 +110,7 @@ dependencies {
     provided("quark:Quark:r1.5:145")
     provided("reliquary-v1-3:Reliquary:1.12.2:1.3.4.786")
     provided("ruins-structure-spawning-system:Ruins:1.12.2")
+    provided("simple-storage-network:SimpleStorageNetwork:1.12.2:1.7.8")
     provided("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
     provided("topography:Topography:1.12.2:1.5.1")
     provided("tschipp:carryon:1.12.1")
@@ -163,6 +164,7 @@ jar {
                         + "mixins.sledgehammer.quark.json,"
                         + "mixins.sledgehammer.ruins.json,"
                         + "mixins.sledgehammer.sponge.json,"
+                        + "mixins.sledgehammer.storagenetwork.json,"
                         + "mixins.sledgehammer.tombmanygraves.json,"
                         + "mixins.sledgehammer.topography.json,"
                         + "mixins.sledgehammer.xreliquary.json",

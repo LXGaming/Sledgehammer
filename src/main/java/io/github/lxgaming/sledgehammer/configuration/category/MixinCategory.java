@@ -30,6 +30,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.QuarkMixinCa
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ReliquaryMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.RuinsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.SpongeMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.StorageNetworkMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TombManyGravesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TopographyMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TotemicMixinCategory;
@@ -80,6 +81,9 @@ public class MixinCategory {
     
     @Setting(value = "sponge", comment = "SpongeForge / SpongeVanilla")
     private SpongeMixinCategory spongeMixinCategory = new SpongeMixinCategory();
+    
+    @Setting(value = "storage-network", comment = "Storage Network")
+    private StorageNetworkMixinCategory storageNetworkMixinCategory = new StorageNetworkMixinCategory();
     
     @Setting(value = "tomb-many-graves", comment = "Tomb Many Graves")
     private TombManyGravesMixinCategory tombManyGravesMixinCategory = new TombManyGravesMixinCategory();
@@ -144,6 +148,10 @@ public class MixinCategory {
     
     public SpongeMixinCategory getSpongeMixinCategory() {
         return spongeMixinCategory;
+    }
+    
+    public StorageNetworkMixinCategory getStorageNetworkMixinCategory() {
+        return storageNetworkMixinCategory;
     }
     
     public TombManyGravesMixinCategory getTombManyGravesMixinCategory() {
