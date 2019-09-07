@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin (value = SPacketChunkData.class, priority = 1337)
-public class SPacketChunkDataMixin {
-
-    @Redirect (method = "<init>(Lnet/minecraft/world/chunk/Chunk;I)V", at = @At (value = "INVOKE", target = "Lnet/minecraft/tileentity/TileEntity;getUpdateTag()Lnet/minecraft/nbt/NBTTagCompound;"))
-    public NBTTagCompound onGetUpdateTag(TileEntity tile) {
+@Mixin(value = SPacketChunkData.class, priority = 1337)
+public abstract class SPacketChunkDataMixin {
+    
+    @Redirect(method = "<init>(Lnet/minecraft/world/chunk/Chunk;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/tileentity/TileEntity;getUpdateTag()Lnet/minecraft/nbt/NBTTagCompound;"))
+    private NBTTagCompound onGetUpdateTag(TileEntity tile) {
         try {
             return tile.getUpdateTag();
         } catch (Throwable t) {
@@ -22,5 +22,4 @@ public class SPacketChunkDataMixin {
             throw new ReportedException(crashReport);
         }
     }
-
 }

@@ -70,6 +70,10 @@ public class CoreMixinCategory {
     @Setting(value = "chunk-save-shutdown", comment = "If 'true', generates a crash report and safely stops the server if a chunk fails to save.")
     private boolean chunkSaveShutdown = false;
     
+    @Mapping(value = "core.network.play.server.SPacketChunkDataMixin")
+    @Setting(value = "get-update-tag-crash", comment = "If 'true', adds TileEntity data to the crash report from calls to 'getUpdateTag' that fail.")
+    private boolean getUpdateTagCrash = false;
+    
     @Mapping(value = "core.util.text.TextComponentTranslationMixin")
     @Setting(value = "invalid-translation", comment = "If 'true', prevents crash due to invalid translation keys.")
     private boolean invalidTranslation = false;
@@ -98,10 +102,6 @@ public class CoreMixinCategory {
     @Mapping(value = "core.network.play.server.SPacketJoinGameMixin")
     @Setting(value = "world-type-length", comment = "If 'true', increases the maximum length for a WorldType name in SPacketJoinGame packet.")
     private boolean worldTypeLength = false;
-
-    @Mapping(value = "core.network.play.server.SPacketChunkDataMixin")
-    @Setting(value = "get-update-tag-crash", comment = "If 'true', adds TileEntity data to the crash report from calls to 'getUpdateTag' that fail.")
-    private boolean getUpdateTagCrash = false;
     
     public boolean isAdvancementReload() {
         return advancementReload;
@@ -143,6 +143,10 @@ public class CoreMixinCategory {
         return chunkSaveShutdown;
     }
     
+    public boolean isGetUpdateTagCrash() {
+        return getUpdateTagCrash;
+    }
+    
     public boolean isInvalidTranslation() {
         return invalidTranslation;
     }
@@ -169,9 +173,5 @@ public class CoreMixinCategory {
     
     public boolean isWorldTypeLength() {
         return worldTypeLength;
-    }
-
-    public boolean isGetUpdateTagCrash() {
-        return getUpdateTagCrash;
     }
 }
