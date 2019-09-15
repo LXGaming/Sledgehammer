@@ -26,21 +26,13 @@ import org.spongepowered.common.event.SpongeCommonEventFactory;
 @Mixin(value = SpongeCommonEventFactory.class, priority = 1337, remap = false)
 public abstract class SpongeCommonEventFactoryMixin {
     
-    @Redirect(method = "captureTransaction(Lorg/spongepowered/common/bridge/inventory/TrackedInventoryBridge;Lorg/spongepowered/api/item/inventory/Inventory;ILnet/minecraft/item/ItemStack;)V",
+    @SuppressWarnings("AmbiguousMixinReference")
+    @Redirect(method = "captureTransaction",
             at = @At(value = "INVOKE",
                     target = "Lorg/apache/logging/log4j/Logger;warn(Ljava/lang/String;)V"
             )
     )
-    private static void onCaptureTransactionWarnFirst(Logger logger, String message) {
-        Sledgehammer.getInstance().debug(message);
-    }
-    
-    @Redirect(method = "captureTransaction(Lorg/spongepowered/common/bridge/inventory/TrackedInventoryBridge;Lorg/spongepowered/api/item/inventory/Inventory;ILjava/util/function/Supplier;)Lnet/minecraft/item/ItemStack;",
-            at = @At(value = "INVOKE",
-                    target = "Lorg/apache/logging/log4j/Logger;warn(Ljava/lang/String;)V"
-            )
-    )
-    private static void onCaptureTransactionWarnSecond(Logger logger, String message) {
+    private static void onCaptureTransactionWarn(Logger logger, String message) {
         Sledgehammer.getInstance().debug(message);
     }
 }

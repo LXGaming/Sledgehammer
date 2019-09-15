@@ -27,7 +27,7 @@ import org.spongepowered.common.event.tracking.phase.packet.inventory.BasicInven
 public abstract class BasicInventoryPacketStateMixin {
     
     @Redirect(method = "unwind", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;warn(Ljava/lang/String;)V"))
-    private void onUnwindInfo(Logger logger, String message) {
+    private void onUnwindWarn(Logger logger, String message) {
         Sledgehammer.getInstance().debug(message);
     }
 }
