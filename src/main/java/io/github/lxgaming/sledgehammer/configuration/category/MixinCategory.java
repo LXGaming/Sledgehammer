@@ -34,6 +34,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.StorageNetwo
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TombManyGravesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TopographyMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TotemicMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.VaultopicMixinCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
@@ -93,6 +94,9 @@ public class MixinCategory {
     
     @Setting(value = "totemic", comment = "Totemic")
     private TotemicMixinCategory totemicMixinCategory = new TotemicMixinCategory();
+    
+    @Setting(value = "vaultopic", comment = "Vaultopic - Early Inventory Management")
+    private VaultopicMixinCategory vaultopicMixinCategory = new VaultopicMixinCategory();
     
     public ActuallyAdditionsMixinCategory getActuallyAdditionsMixinCategory() {
         return actuallyAdditionsMixinCategory;
@@ -164,5 +168,9 @@ public class MixinCategory {
     
     public TotemicMixinCategory getTotemicMixinCategory() {
         return totemicMixinCategory;
+    }
+    
+    public VaultopicMixinCategory getVaultopicMixinCategory() {
+        return vaultopicMixinCategory;
     }
 }

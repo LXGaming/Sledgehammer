@@ -114,6 +114,7 @@ dependencies {
     provided("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
     provided("topography:Topography:1.12.2:1.5.1")
     provided("tschipp:carryon:1.12.1")
+    provided("vaultopic-early-inventory-management:vaultopic:2.1")
 }
 
 test {
@@ -167,6 +168,7 @@ jar {
                         + "mixins.sledgehammer.storagenetwork.json,"
                         + "mixins.sledgehammer.tombmanygraves.json,"
                         + "mixins.sledgehammer.topography.json,"
+                        + "mixins.sledgehammer.vaultopic.json,"
                         + "mixins.sledgehammer.xreliquary.json",
                 "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
                 "TweakOrder": 0
