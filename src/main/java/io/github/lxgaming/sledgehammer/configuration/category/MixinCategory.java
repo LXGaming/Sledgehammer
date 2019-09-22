@@ -26,6 +26,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.MorphMixinCa
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.P455w0rdsLibMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveMobsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ProjectRedMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.PyrotechMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.QuarkMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ReliquaryMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.RuinsMixinCategory;
@@ -70,6 +71,9 @@ public class MixinCategory {
     
     @Setting(value = "project-red", comment = "Project Red")
     private ProjectRedMixinCategory projectRedMixinCategory = new ProjectRedMixinCategory();
+    
+    @Setting(value = "pyrotech", comment = "Pyrotech")
+    private PyrotechMixinCategory pyrotechMixinCategory = new PyrotechMixinCategory();
     
     @Setting(value = "quark", comment = "Quark")
     private QuarkMixinCategory quarkMixinCategory = new QuarkMixinCategory();
@@ -136,6 +140,10 @@ public class MixinCategory {
     
     public ProjectRedMixinCategory getProjectRedMixinCategory() {
         return projectRedMixinCategory;
+    }
+    
+    public PyrotechMixinCategory getPyrotechMixinCategory() {
+        return pyrotechMixinCategory;
     }
     
     public QuarkMixinCategory getQuarkMixinCategory() {
