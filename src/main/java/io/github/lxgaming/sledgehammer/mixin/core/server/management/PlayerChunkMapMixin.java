@@ -34,25 +34,25 @@ import java.util.stream.Collectors;
 @Mixin(value = PlayerChunkMap.class, priority = 1337)
 public abstract class PlayerChunkMapMixin {
     
-    private final AtomicBoolean impl$lock = new AtomicBoolean(false);
+    private final AtomicBoolean sledgehammer$lock = new AtomicBoolean(false);
     
     @Inject(method = "tick", at = @At(value = "HEAD"))
     private void onTickPre(CallbackInfo callbackInfo) {
-        if (!impl$lock.compareAndSet(false, true)) {
+        if (!sledgehammer$lock.compareAndSet(false, true)) {
             Sledgehammer.getInstance().getLogger().error("Unexpected lock state: true");
         }
     }
     
     @Inject(method = "tick", at = @At(value = "RETURN"))
     private void onTickPost(CallbackInfo callbackInfo) {
-        if (!impl$lock.compareAndSet(true, false)) {
+        if (!sledgehammer$lock.compareAndSet(true, false)) {
             Sledgehammer.getInstance().getLogger().error("Unexpected lock state: false");
         }
     }
     
     @Inject(method = "entryChanged", at = @At(value = "HEAD"), cancellable = true)
     private void onEntryChanged(PlayerChunkMapEntry entry, CallbackInfo callbackInfo) {
-        if (impl$lock.get()) {
+        if (sledgehammer$lock.get()) {
             new PrettyPrinter(50)
                     .add("Tried to mark PlayerChunkMapEntry as dirty while locked").centre().hr()
                     .add("Chunk: %d, %d", entry.getPos().x, entry.getPos().z)
@@ -67,7 +67,7 @@ public abstract class PlayerChunkMapMixin {
     
     @Inject(method = "removeEntry", at = @At(value = "HEAD"), cancellable = true)
     private void onRemoveEntry(PlayerChunkMapEntry entry, CallbackInfo callbackInfo) {
-        if (impl$lock.get()) {
+        if (sledgehammer$lock.get()) {
             new PrettyPrinter(50)
                     .add("Tried to remove PlayerChunkMapEntry while locked").centre().hr()
                     .add("Chunk: %d, %d", entry.getPos().x, entry.getPos().z)

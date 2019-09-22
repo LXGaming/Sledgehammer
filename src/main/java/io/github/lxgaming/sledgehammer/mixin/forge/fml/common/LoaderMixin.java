@@ -47,7 +47,7 @@ public abstract class LoaderMixin implements LoaderBridge {
     @Shadow
     private static File minecraftDir;
     
-    private final Map<File, Set<String>> impl$mappings = Maps.newHashMap();
+    private final Map<File, Set<String>> sledgehammer$mappings = Maps.newHashMap();
     
     @Inject(method = "identifyMods",
             at = @At(value = "INVOKE_ASSIGN",
@@ -57,7 +57,7 @@ public abstract class LoaderMixin implements LoaderBridge {
     )
     private void onGatherLegacyCanidates(List<String> additionalContainers, CallbackInfoReturnable<ModDiscoverer> callbackInfoReturnable,
                                          ModDiscoverer discoverer, List<Artifact> maven_canidates, List<File> file_canidates) {
-        for (Map.Entry<File, Set<String>> entry : impl$mappings.entrySet()) {
+        for (Map.Entry<File, Set<String>> entry : sledgehammer$mappings.entrySet()) {
             if (CoreModManager.getReparseableCoremods().contains(entry.getKey().getName())) {
                 continue;
             }
@@ -71,7 +71,7 @@ public abstract class LoaderMixin implements LoaderBridge {
             }
         }
         
-        impl$mappings.clear();
+        sledgehammer$mappings.clear();
     }
     
     public void bridge$addFile(File file) {
@@ -92,6 +92,6 @@ public abstract class LoaderMixin implements LoaderBridge {
     }
     
     public Map<File, Set<String>> bridge$getMappings() {
-        return impl$mappings;
+        return sledgehammer$mappings;
     }
 }

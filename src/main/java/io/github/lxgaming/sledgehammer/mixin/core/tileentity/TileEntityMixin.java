@@ -27,20 +27,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = TileEntity.class, priority = 137)
 public abstract class TileEntityMixin {
     
-    private boolean impl$writing = false;
+    private boolean sledgehammer$writing = false;
     
     @Inject(method = "writeToNBT", at = @At(value = "HEAD"), cancellable = true)
     private void onWriteToNBTPre(NBTTagCompound compound, CallbackInfoReturnable<NBTTagCompound> callbackInfoReturnable) {
-        if (impl$writing) {
+        if (sledgehammer$writing) {
             Sledgehammer.getInstance().debug("Captured potential StackOverflow: {}", getClass().getName());
             callbackInfoReturnable.setReturnValue(compound);
         } else {
-            impl$writing = true;
+            sledgehammer$writing = true;
         }
     }
     
     @Inject(method = "writeToNBT", at = @At(value = "RETURN"))
     private void onWriteToNBTPost(NBTTagCompound compound, CallbackInfoReturnable<NBTTagCompound> callbackInfoReturnable) {
-        impl$writing = false;
+        sledgehammer$writing = false;
     }
 }

@@ -31,11 +31,11 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(value = TileRenderWorkbench.class, priority = 1337, remap = false)
 public abstract class TileRenderWorkbenchMixin {
     
-    private int impl$expectedValue = 0;
+    private int sledgehammer$expectedValue = 0;
     
     @Inject(method = "render", at = @At(value = "HEAD"))
     private void onRender(CallbackInfo callbackInfo) {
-        this.impl$expectedValue = 0;
+        this.sledgehammer$expectedValue = 0;
     }
     
     @Inject(method = "render",
@@ -48,8 +48,8 @@ public abstract class TileRenderWorkbenchMixin {
     private void onRender(TileEntityModWorkbench te, double x, double y, double z, float partialTicks, int destroyStage, float alpha, CallbackInfo callbackInfo,
                           EnumFacing facing, float angle, ItemStack stack, boolean showIngredients, double playerDistanceSq, BlueprintCraftingRecipe[] recipes,
                           float lineWidth, int l, int perRow, float scale, int i, BlueprintCraftingRecipe recipe) {
-        if (this.impl$expectedValue == i) {
-            this.impl$expectedValue++;
+        if (this.sledgehammer$expectedValue == i) {
+            this.sledgehammer$expectedValue++;
         } else {
             GlStateManager.popMatrix();
             GlStateManager.popMatrix();

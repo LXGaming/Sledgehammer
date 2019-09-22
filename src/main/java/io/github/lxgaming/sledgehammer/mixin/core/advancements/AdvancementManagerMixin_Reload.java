@@ -25,16 +25,16 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = AdvancementManager.class, priority = 1337)
 public abstract class AdvancementManagerMixin_Reload {
     
-    private static boolean impl$INITIALIZED = false;
+    private static boolean sledgehammer$INITIALIZED = false;
     
     @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/AdvancementManager;reload()V"))
     private void onReload(AdvancementManager advancementManager) {
-        if (impl$INITIALIZED) {
+        if (sledgehammer$INITIALIZED) {
             Sledgehammer.getInstance().getLogger().warn("Advancement Reload Cancelled");
             return;
         }
         
-        impl$INITIALIZED = true;
+        sledgehammer$INITIALIZED = true;
         Sledgehammer.getInstance().getLogger().info("Advancement Reloading...");
         advancementManager.reload();
     }

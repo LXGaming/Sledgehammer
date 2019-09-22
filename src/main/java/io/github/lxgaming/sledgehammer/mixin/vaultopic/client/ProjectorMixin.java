@@ -34,15 +34,15 @@ public abstract class ProjectorMixin {
     @Shadow
     private static Method setupCameraTransform;
     
-    private static boolean impl$state = false;
+    private static boolean sledgehammer$state = false;
     
     @Inject(method = "loadMatrixes", at = @At(value = "HEAD"))
     private static void onLoadMatrixes(float partialTicks, CallbackInfo callbackInfo) {
         try {
-            if (setupCameraTransform == null && !impl$state) {
+            if (setupCameraTransform == null && !sledgehammer$state) {
                 setupCameraTransform = EntityRenderer.class.getDeclaredMethod("func_78479_a", Float.TYPE, Integer.TYPE);
                 setupCameraTransform.setAccessible(true);
-                impl$state = true;
+                sledgehammer$state = true;
                 Vaultopic.logger.info("{} fixed setupCameraTransform", Reference.NAME);
             }
         } catch (Exception ex) {
