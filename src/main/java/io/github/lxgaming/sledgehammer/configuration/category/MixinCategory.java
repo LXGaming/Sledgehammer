@@ -23,6 +23,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCa
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ImmersiveEngineeringMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MatterOverdriveMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MorphMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.NoTreePunchingMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.P455w0rdsLibMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveMobsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ProjectRedMixinCategory;
@@ -62,6 +63,9 @@ public class MixinCategory {
     
     @Setting(value = "morph", comment = "Morph")
     private MorphMixinCategory morphMixinCategory = new MorphMixinCategory();
+    
+    @Setting(value = "no-tree-punching", comment = "No Tree Punching")
+    private NoTreePunchingMixinCategory noTreePunchingMixinCategory = new NoTreePunchingMixinCategory();
     
     @Setting(value = "p455w0rdslib", comment = "p455w0rd's Library")
     private P455w0rdsLibMixinCategory p455w0rdsLibMixinCategory = new P455w0rdsLibMixinCategory();
@@ -128,6 +132,10 @@ public class MixinCategory {
     
     public MorphMixinCategory getMorphMixinCategory() {
         return morphMixinCategory;
+    }
+    
+    public NoTreePunchingMixinCategory getNoTreePunchingMixinCategory() {
+        return noTreePunchingMixinCategory;
     }
     
     public P455w0rdsLibMixinCategory getP455w0rdsLibMixinCategory() {

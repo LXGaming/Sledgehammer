@@ -105,6 +105,7 @@ dependencies {
     provided("mrtjp:ProjectRed:1.12.2-4.9.1.92:mechanical") {
         exclude(module: "jei_1.12.2")
     }
+    provided("no-tree-punching:notreepunching:2.0.13")
     provided("p455w0rds-library:p455w0rdslib:1.12.2:2.2.151")
     provided("primalcore:PrimalCore:1.12.2:0.6.51")
     provided("primitive-mobs:primitivemobs:1.2.3a")
@@ -160,6 +161,7 @@ jar {
                         + "mixins.sledgehammer.immersiveengineering.json,"
                         + "mixins.sledgehammer.matteroverdrive.json,"
                         + "mixins.sledgehammer.morph.json,"
+                        + "mixins.sledgehammer.notreepunching.json,"
                         + "mixins.sledgehammer.p455w0rdslib.json,"
                         + "mixins.sledgehammer.platform.json,"
                         + "mixins.sledgehammer.primitivemobs.json,"
