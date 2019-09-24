@@ -22,18 +22,17 @@ import com.codetaylor.mc.pyrotech.modules.tech.refractory.ModuleTechRefractory;
 import com.codetaylor.mc.pyrotech.modules.tech.refractory.tile.TileActivePile;
 import com.codetaylor.mc.pyrotech.modules.tech.refractory.tile.TilePitAsh;
 import com.google.common.collect.Lists;
-import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
+import com.google.common.util.concurrent.ListenableFutureTask;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.ItemStackHandler;
-import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.common.event.ShouldFire;
 
 import java.util.List;
 
@@ -79,9 +78,11 @@ public abstract class TileActivePileMixin extends TileBurnableBase {
         this.world.setBlockState(this.pos, blockState);
         
         // Sledgehammer Start
-        if (SledgehammerLaunch.isSpongeRegistered() && ShouldFire.CHANGE_BLOCK_EVENT) {
+        MinecraftServer server = this.world.getMinecraftServer();
+        if (server != null && SledgehammerLaunch.isSpongeRegistered()) {
             // Runs the logic at the start of the next tick.
-            Task.builder().execute(() -> sledgehammer$applyItemStacks(this.pos, itemStacks)).submit(SledgehammerPlatform.getInstance());
+            // addScheduledTask won't work as it executes the task immediately if it's scheduled while on the Main Thread.
+            server.futureTaskQueue.add(ListenableFutureTask.create(() -> sledgehammer$applyItemStacks(this.pos, itemStacks), null));
         } else {
             sledgehammer$applyItemStacks(this.pos, itemStacks);
         }
