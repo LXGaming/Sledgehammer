@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.configuration.category;
 
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ActuallyAdditionsMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.BetterSurvivalMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
@@ -45,6 +46,9 @@ public class MixinCategory {
     
     @Setting(value = "actually-additions", comment = "Actually Additions")
     private ActuallyAdditionsMixinCategory actuallyAdditionsMixinCategory = new ActuallyAdditionsMixinCategory();
+    
+    @Setting(value = "better-survival", comment = "Better Survival")
+    private BetterSurvivalMixinCategory betterSurvivalMixinCategory = new BetterSurvivalMixinCategory();
     
     @Setting(value = "carry-on", comment = "Carry On")
     private CarryOnMixinCategory carryOnMixinCategory = new CarryOnMixinCategory();
@@ -108,6 +112,10 @@ public class MixinCategory {
     
     public ActuallyAdditionsMixinCategory getActuallyAdditionsMixinCategory() {
         return actuallyAdditionsMixinCategory;
+    }
+    
+    public BetterSurvivalMixinCategory getBetterSurvivalMixinCategory() {
+        return betterSurvivalMixinCategory;
     }
     
     public CarryOnMixinCategory getCarryOnMixinCategory() {

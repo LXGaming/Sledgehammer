@@ -99,6 +99,7 @@ dependencies {
     }
     provided("actually-additions:ActuallyAdditions:1.12.2:r145")
     provided("athenaeum:athenaeum:1.12.2:1.17.4")
+    provided("better-survival-mod:Better_Survival:1.3.4(1.12.1)")
     provided("immersive-engineering:ImmersiveEngineering:0.12:89")
     provided("matteroverdrive:MatterOverdrive-1.12.2:0.7.1.0:universal")
     provided("morph:Morph:1.12.2:7.1.3")
@@ -155,6 +156,7 @@ jar {
                 "ForceLoadAsMod": true,
                 "MixinConfigs": ""
                         + "mixins.sledgehammer.actuallyadditions.json,"
+                        + "mixins.sledgehammer.bettersurvival.json,"
                         + "mixins.sledgehammer.carryon.json,"
                         + "mixins.sledgehammer.core.json,"
                         + "mixins.sledgehammer.forge.json,"
