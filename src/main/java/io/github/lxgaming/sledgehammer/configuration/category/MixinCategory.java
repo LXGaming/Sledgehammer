@@ -38,6 +38,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.TombManyGrav
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TopographyMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TotemicMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.VaultopicMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.WolforceMixinCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
@@ -109,6 +110,9 @@ public class MixinCategory {
     
     @Setting(value = "vaultopic", comment = "Vaultopic - Early Inventory Management")
     private VaultopicMixinCategory vaultopicMixinCategory = new VaultopicMixinCategory();
+    
+    @Setting(value = "wolforce", comment = "Hearth Well")
+    private WolforceMixinCategory wolforceMixinCategory = new WolforceMixinCategory();
     
     public ActuallyAdditionsMixinCategory getActuallyAdditionsMixinCategory() {
         return actuallyAdditionsMixinCategory;
@@ -196,5 +200,9 @@ public class MixinCategory {
     
     public VaultopicMixinCategory getVaultopicMixinCategory() {
         return vaultopicMixinCategory;
+    }
+    
+    public WolforceMixinCategory getWolforceMixinCategory() {
+        return wolforceMixinCategory;
     }
 }

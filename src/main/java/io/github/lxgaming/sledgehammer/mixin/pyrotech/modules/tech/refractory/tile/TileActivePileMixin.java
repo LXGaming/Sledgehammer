@@ -61,7 +61,7 @@ public abstract class TileActivePileMixin extends TileBurnableBase {
      * @reason The BulkBlockCapture in Sponge's PhaseTracker causes the call setBlockState to get delayed,
      * This delay causes the call getTileEntity to return inconsistent results.
      * <p>
-     * The fix implemented is to check if Sponge is firing the ChangeBlockEvent and to re-schedule the logic if need be.
+     * The fix implemented is to check if Sponge is present and to re-schedule the logic if need be.
      */
     @Overwrite
     protected void onAllBurnStagesComplete() {
