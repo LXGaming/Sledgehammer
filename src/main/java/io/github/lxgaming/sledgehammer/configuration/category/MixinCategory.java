@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.configuration.category;
 
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ActuallyAdditionsMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BetterSurvivalMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
@@ -47,6 +48,9 @@ public class MixinCategory {
     
     @Setting(value = "actually-additions", comment = "Actually Additions")
     private ActuallyAdditionsMixinCategory actuallyAdditionsMixinCategory = new ActuallyAdditionsMixinCategory();
+    
+    @Setting(value = "bdsm", comment = "Barrels, Drums, Storage & More")
+    private BDSMMixinCategory bdsmMixinCategory = new BDSMMixinCategory();
     
     @Setting(value = "better-survival", comment = "Better Survival")
     private BetterSurvivalMixinCategory betterSurvivalMixinCategory = new BetterSurvivalMixinCategory();
@@ -116,6 +120,10 @@ public class MixinCategory {
     
     public ActuallyAdditionsMixinCategory getActuallyAdditionsMixinCategory() {
         return actuallyAdditionsMixinCategory;
+    }
+    
+    public BDSMMixinCategory getBdsmMixinCategory() {
+        return bdsmMixinCategory;
     }
     
     public BetterSurvivalMixinCategory getBetterSurvivalMixinCategory() {
