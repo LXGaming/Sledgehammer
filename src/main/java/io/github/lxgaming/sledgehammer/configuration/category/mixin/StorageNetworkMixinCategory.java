@@ -23,7 +23,7 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class StorageNetworkMixinCategory {
     
-    @Mapping(value = "storagenetwork.network.InsertMessage$1Mixin", dependencies = {"storagenetwork"})
+    @Mapping(value = "storagenetwork.network.InsertMessage_1Mixin", dependencies = {"storagenetwork"})
     @Mapping(value = "storagenetwork.network.InsertMessageAccessor", dependencies = {"storagenetwork"})
     @Setting(value = "packet-exploit", comment = "If 'true', fixes item spawn packet exploit.")
     private boolean packetExploit = false;

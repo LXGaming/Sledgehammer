@@ -36,7 +36,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = "mrriegel/storagenetwork/network/InsertMessage$1", priority = 1337, remap = false)
-public abstract class InsertMessage$1Mixin {
+public abstract class InsertMessage_1Mixin {
     
     @Shadow(aliases = {"val$player"})
     @Final
