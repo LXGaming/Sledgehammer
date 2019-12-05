@@ -3,7 +3,7 @@ buildscript {
         jcenter()
         maven {
             name = "minecraftforge"
-            url = "http://files.minecraftforge.net/maven"
+            url = "https://files.minecraftforge.net/maven"
         }
         maven {
             name = "spongepowered"
@@ -56,16 +56,16 @@ configurations {
 repositories {
     jcenter()
     maven {
-        name = "chickenbones"
-        url = "http://chickenbones.net/maven"
-    }
-    maven {
-        name = "lxgaming"
-        url = "https://lxgaming.github.io/maven"
+        name = "covers1624"
+        url = "https://maven.covers1624.net/"
     }
     maven {
         name = "curseforge"
         url = "https://minecraft.curseforge.com/api/maven"
+    }
+    maven {
+        name = "lxgaming"
+        url = "https://lxgaming.github.io/maven"
     }
     maven {
         name = "spongepowered"
