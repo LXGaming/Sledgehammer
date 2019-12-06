@@ -55,7 +55,7 @@ public class PrimalIntegration extends AbstractIntegration {
         }
         
         for (ItemStack output : event.getRecipe().getOutput()) {
-            if (!PrimalAPI.randomCheck(event.getRecipe().getFailure_chance())) {
+            if (!PrimalAPI.randomCheck(event.getRecipe().getFailureChance())) {
                 continue;
             }
             

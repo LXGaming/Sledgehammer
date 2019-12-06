@@ -105,12 +105,12 @@ dependencies {
     provided("immersive-engineering:ImmersiveEngineering:0.12:89")
     provided("matteroverdrive:MatterOverdrive-1.12.2:0.7.1.0:universal")
     provided("morph:Morph:1.12.2:7.1.3")
-    provided("mrtjp:ProjectRed:1.12.2-4.9.1.92:mechanical") {
+    provided("mrtjp:ProjectRed:1.12.2-4.9.3.116:mechanical") {
         exclude(module: "jei_1.12.2")
     }
     provided("no-tree-punching:notreepunching:2.0.13")
     provided("p455w0rds-library:p455w0rdslib:1.12.2:2.2.151")
-    provided("primalcore:PrimalCore:1.12.2:0.6.51")
+    provided("primalcore:PrimalCore:1.12.2:0.6.105")
     provided("primitive-mobs:primitivemobs:1.2.3a")
     provided("pyrotech:pyrotech:1.12.2:1.3.13")
     provided("quark:Quark:r1.5:145")
