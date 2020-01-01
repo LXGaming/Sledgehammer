@@ -1,6 +1,12 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 buildscript {
     repositories {
         jcenter()
+        maven {
+            name = "lxgaming"
+            url = "https://dl.bintray.com/lxgaming/maven"
+        }
         maven {
             name = "minecraftforge"
             url = "https://files.minecraftforge.net/maven"
@@ -12,9 +18,9 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.github.jengelman.gradle.plugins:shadow:4.0.4")
-        classpath("net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT")
-        classpath("org.spongepowered:mixingradle:0.6-SNAPSHOT")
+        classpath("com.github.jengelman.gradle.plugins:shadow:5.2.0")
+        classpath("net.minecraftforge.gradle:ForgeGradle:2.3-20191227.215244-1")
+        classpath("org.spongepowered:mixingradle:0.6-20191227.220440-1")
     }
 }
 
@@ -50,6 +56,7 @@ configurations {
     }
 
     build.dependsOn("signJar")
+    compileJava.dependsOn("filterJava")
     jar.classifier = "sponge"
 }
 
@@ -74,7 +81,7 @@ repositories {
 }
 
 dependencies {
-    testCompile("org.junit.jupiter:junit-jupiter-engine:5.5.0")
+    testCompile("org.junit.jupiter:junit-jupiter-engine:5.5.2")
     shadow("org.spongepowered:configurate-hocon:3.6.1") {
         exclude(module: "guava")
     }
@@ -97,6 +104,8 @@ dependencies {
     provided("org.spongepowered:spongevanilla:1.12.2-7.1.7-RC243:dev") {
         transitive = false
     }
+
+    // Third Party Mods
     provided("actually-additions:ActuallyAdditions:1.12.2:r145")
     provided("athenaeum:athenaeum:1.12.2:1.17.4")
     provided("barrels-drums-storage-more:BarrelsDrumsStorageAndMore:0.0.24")
@@ -123,30 +132,13 @@ dependencies {
     provided("vaultopic-early-inventory-management:vaultopic:2.1")
 }
 
-test {
-    testLogging {
-        exceptionFormat = "full"
-        showStandardStreams = true
-    }
-    
-    useJUnitPlatform()
+artifacts {
+    archives shadowJar
 }
 
-shadowJar {
-    classifier = null
-    configurations = [project.configurations.shadow]
-    relocate("com.typesafe.config", "io.github.lxgaming.sledgehammer.lib.config")
-    relocate("ninja.leaping.configurate", "io.github.lxgaming.sledgehammer.lib.configurate")
-    relocate("org.checkerframework", "io.github.lxgaming.sledgehammer.lib.checkerframework")
-}
-
-reobf {
-    jar {
-        mappingType = "SEARGE"
-    }
-
-    shadowJar {
-        mappingType = "SEARGE"
+compileJava {
+    doFirst {
+        source = filterJava.outputs
     }
 }
 
@@ -202,7 +194,7 @@ jar {
 
 processResources {
     from("LICENSE")
-    rename("LICENSE", "LICENSE-" + archivesBaseName)
+    rename("LICENSE", "LICENSE-${archivesBaseName}")
 
     from (sourceSets.main.resources.srcDirs) {
         include("mcmod.info")
@@ -210,8 +202,37 @@ processResources {
     }
 }
 
-artifacts {
-    archives shadowJar
+reobf {
+    jar {
+        mappingType = "SEARGE"
+    }
+
+    shadowJar {
+        mappingType = "SEARGE"
+    }
+}
+
+shadowJar {
+    classifier = null
+    configurations = [project.configurations.shadow]
+    relocate("com.typesafe.config", "io.github.lxgaming.sledgehammer.lib.config")
+    relocate("ninja.leaping.configurate", "io.github.lxgaming.sledgehammer.lib.configurate")
+    relocate("org.checkerframework", "io.github.lxgaming.sledgehammer.lib.checkerframework")
+}
+
+test {
+    testLogging {
+        exceptionFormat = "full"
+    }
+
+    useJUnitPlatform()
+}
+
+task filterJava(type: Sync) {
+    from(sourceSets.main.java)
+    into("$buildDir/tmp/$name")
+
+    filter(ReplaceTokens, tokens: [version: version])
 }
 
 task signJar {
