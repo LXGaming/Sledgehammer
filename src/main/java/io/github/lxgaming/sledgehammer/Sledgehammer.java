@@ -20,6 +20,9 @@ import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.Configuration;
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
+import io.github.lxgaming.sledgehammer.manager.CommandManager;
+import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
+import io.github.lxgaming.sledgehammer.manager.LocaleManager;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,6 +64,9 @@ public class Sledgehammer {
             return false;
         }
         
+        CommandManager.prepare();
+        IntegrationManager.prepare();
+        LocaleManager.prepare();
         MappingManager.prepare();
         
         sledgehammer.getConfiguration().saveConfiguration();
