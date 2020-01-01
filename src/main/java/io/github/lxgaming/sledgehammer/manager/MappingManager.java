@@ -102,6 +102,12 @@ public final class MappingManager {
     }
     
     public static Optional<SledgehammerPlatform.State> getStateMapping(Class<?> stateClass) {
-        return Optional.ofNullable(STATE_MAPPINGS.get(stateClass));
+        for (Map.Entry<Class<?>, SledgehammerPlatform.State> entry : STATE_MAPPINGS.entrySet()) {
+            if (entry.getKey().isAssignableFrom(stateClass)) {
+                return Optional.ofNullable(entry.getValue());
+            }
+        }
+        
+        return Optional.empty();
     }
 }
