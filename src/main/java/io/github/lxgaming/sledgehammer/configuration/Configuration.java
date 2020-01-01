@@ -41,7 +41,7 @@ public class Configuration {
     
     public void loadConfiguration() {
         try {
-            getObjectMapper().populate(getConfigurationLoader().load());
+            this.objectMapper.populate(this.configurationLoader.load());
             Sledgehammer.getInstance().getLogger().info("Successfully loaded configuration file.");
         } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while loading config", ex);
@@ -50,24 +50,16 @@ public class Configuration {
     
     public void saveConfiguration() {
         try {
-            ConfigurationNode configurationNode = getConfigurationLoader().createEmptyNode();
-            getObjectMapper().serialize(configurationNode);
-            getConfigurationLoader().save(configurationNode);
+            ConfigurationNode configurationNode = this.configurationLoader.createEmptyNode();
+            this.objectMapper.serialize(configurationNode);
+            this.configurationLoader.save(configurationNode);
             Sledgehammer.getInstance().getLogger().info("Successfully saved configuration file.");
         } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while saving config", ex);
         }
     }
     
-    private ConfigurationLoader<CommentedConfigurationNode> getConfigurationLoader() {
-        return configurationLoader;
-    }
-    
-    private ObjectMapper<Config>.BoundInstance getObjectMapper() {
-        return objectMapper;
-    }
-    
     public Config getConfig() {
-        return getObjectMapper().getInstance();
+        return this.objectMapper.getInstance();
     }
 }
