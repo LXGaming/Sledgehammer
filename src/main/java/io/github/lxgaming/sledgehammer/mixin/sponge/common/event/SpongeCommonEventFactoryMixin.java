@@ -26,7 +26,7 @@ import org.spongepowered.common.event.SpongeCommonEventFactory;
 @Mixin(value = SpongeCommonEventFactory.class, priority = 1337, remap = false)
 public abstract class SpongeCommonEventFactoryMixin {
     
-    @SuppressWarnings("AmbiguousMixinSledgehammer.")
+    @SuppressWarnings("AmbiguousMixinReference")
     @Redirect(
             method = "captureTransaction",
             at = @At(

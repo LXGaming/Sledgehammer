@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = ForgeHooks.class, priority = 1337, remap = false)
 public abstract class ForgeHooksMixin_Advancement {
     
-    @SuppressWarnings("UnresolvedMixinSledgehammer.")
+    @SuppressWarnings("UnresolvedMixinReference")
     @Redirect(
             method = "lambda$loadAdvancements$0",
             at = @At(
