@@ -22,6 +22,7 @@ import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
 import io.github.lxgaming.sledgehammer.integration.BotaniaIntegration;
+import io.github.lxgaming.sledgehammer.integration.CommandIntegration;
 import io.github.lxgaming.sledgehammer.integration.ForgeIntegration;
 import io.github.lxgaming.sledgehammer.integration.Integration;
 import io.github.lxgaming.sledgehammer.integration.MistIntegration;
@@ -39,6 +40,9 @@ public final class IntegrationManager {
     private static final Set<Class<? extends Integration>> INTEGRATION_CLASSES = Sets.newHashSet();
     
     public static void prepare() {
+        // Internal Integration
+        registerIntegration(CommandIntegration.class, category -> true);
+        
         registerIntegration(BotaniaIntegration.class, IntegrationCategory::isBotania);
         registerIntegration(ForgeIntegration.class, IntegrationCategory::isForge);
         registerIntegration(MistIntegration.class, IntegrationCategory::isMist);
