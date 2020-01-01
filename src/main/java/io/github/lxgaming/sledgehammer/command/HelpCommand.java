@@ -46,7 +46,7 @@ public class HelpCommand extends Command {
     public void execute(ICommandSender commandSender, List<String> arguments) throws Exception {
         LocaleAdapter.sendFeedback(commandSender, Locale.GENERAL_PREFIX);
         for (Command command : CommandManager.COMMANDS) {
-            if (command == this || !(StringUtils.isNotBlank(command.getPermission()) && commandSender.canUseCommand(4, command.getPermission()))) {
+            if (command == this || (StringUtils.isNotBlank(command.getPermission()) && !commandSender.canUseCommand(4, command.getPermission()))) {
                 continue;
             }
             
