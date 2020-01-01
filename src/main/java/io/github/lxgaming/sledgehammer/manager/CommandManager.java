@@ -22,6 +22,7 @@ import io.github.lxgaming.sledgehammer.command.Command;
 import io.github.lxgaming.sledgehammer.command.DebugCommand;
 import io.github.lxgaming.sledgehammer.command.HelpCommand;
 import io.github.lxgaming.sledgehammer.command.InformationCommand;
+import io.github.lxgaming.sledgehammer.command.ReloadCommand;
 import io.github.lxgaming.sledgehammer.exception.CommandException;
 import io.github.lxgaming.sledgehammer.util.Locale;
 import io.github.lxgaming.sledgehammer.util.StringUtils;
@@ -41,6 +42,7 @@ public final class CommandManager {
         registerCommand(DebugCommand.class);
         registerCommand(HelpCommand.class);
         registerCommand(InformationCommand.class);
+        registerCommand(ReloadCommand.class);
     }
     
     public static boolean execute(ICommandSender commandSender, List<String> arguments) {
