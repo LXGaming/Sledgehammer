@@ -21,6 +21,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
 import org.spongepowered.api.plugin.Plugin;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 @Mod(
         modid = Sledgehammer.ID,
         name = Sledgehammer.NAME,
@@ -50,24 +53,28 @@ public class SledgehammerPlatform {
         return instance;
     }
     
+    public boolean isLoaded(@Nonnull String id) {
+        throw new IllegalStateException("isLoaded injection failed");
+    }
+    
+    @Nullable
     public Object getContainer() {
         throw new IllegalStateException("getContainer injection failed");
     }
     
+    @Nullable
     public MinecraftServer getServer() {
         throw new IllegalStateException("getServer injection failed");
     }
     
+    @Nonnull
     public State getState() {
         throw new IllegalStateException("getState injection failed");
     }
     
+    @Nonnull
     public Type getType() {
         throw new IllegalStateException("getType injection failed");
-    }
-    
-    public boolean isLoaded(String id) {
-        throw new IllegalStateException("isLoaded injection failed");
     }
     
     public enum State {
@@ -98,13 +105,14 @@ public class SledgehammerPlatform {
             this.name = name;
         }
         
+        @Nonnull
         public String getName() {
             return name;
         }
         
         @Override
         public String toString() {
-            return getName();
+            return name().toLowerCase();
         }
     }
     
@@ -120,13 +128,14 @@ public class SledgehammerPlatform {
             this.name = name;
         }
         
+        @Nonnull
         public String getName() {
             return name;
         }
         
         @Override
         public String toString() {
-            return getName();
+            return name().toLowerCase();
         }
     }
 }

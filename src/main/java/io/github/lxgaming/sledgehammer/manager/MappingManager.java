@@ -26,6 +26,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import io.github.lxgaming.sledgehammer.util.StringUtils;
+import io.github.lxgaming.sledgehammer.util.Toolbox;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -35,7 +36,7 @@ public final class MappingManager {
     
     public static final Map<String, Boolean> MIXIN_MAPPINGS = Maps.newHashMap();
     public static final Map<String, Boolean> MOD_MAPPINGS = Maps.newHashMap();
-    public static final Map<Enum<?>, SledgehammerPlatform.State> STATE_MAPPINGS = Maps.newHashMap();
+    public static final Map<Class<?>, SledgehammerPlatform.State> STATE_MAPPINGS = Maps.newHashMap();
     
     public static void prepare() {
         Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).map(GeneralCategory::getModMappings).ifPresent(MOD_MAPPINGS::putAll);
@@ -46,7 +47,7 @@ public final class MappingManager {
                 field.setAccessible(true);
                 registerMixinMappings(field.get(mixinCategory));
             } catch (Exception ex) {
-                Sledgehammer.getInstance().getLogger().error("Encountered an error while registering {} ({})", field.getType().getSimpleName(), field.getName());
+                Sledgehammer.getInstance().getLogger().error("Encountered an error while registering {} ({})", Toolbox.getClassSimpleName(field.getType()), field.getName());
             }
         }
         
@@ -100,7 +101,7 @@ public final class MappingManager {
         return Optional.ofNullable(MOD_MAPPINGS.get(mod));
     }
     
-    public static Optional<SledgehammerPlatform.State> getStateMapping(Enum<?> state) {
-        return Optional.ofNullable(STATE_MAPPINGS.get(state));
+    public static Optional<SledgehammerPlatform.State> getStateMapping(Class<?> stateClass) {
+        return Optional.ofNullable(STATE_MAPPINGS.get(stateClass));
     }
 }

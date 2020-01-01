@@ -18,18 +18,15 @@ package io.github.lxgaming.sledgehammer.manager;
 
 import com.google.common.collect.Sets;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.command.Command;
 import io.github.lxgaming.sledgehammer.command.DebugCommand;
 import io.github.lxgaming.sledgehammer.command.HelpCommand;
 import io.github.lxgaming.sledgehammer.command.InformationCommand;
-import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
 import io.github.lxgaming.sledgehammer.exception.CommandException;
 import io.github.lxgaming.sledgehammer.util.Locale;
 import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
-import net.minecraft.command.CommandHandler;
 import net.minecraft.command.ICommandSender;
 
 import java.util.List;
@@ -44,8 +41,6 @@ public final class CommandManager {
         registerCommand(DebugCommand.class);
         registerCommand(HelpCommand.class);
         registerCommand(InformationCommand.class);
-        
-        ((CommandHandler) SledgehammerPlatform.getInstance().getServer().getCommandManager()).registerCommand(new SledgehammerCommand());
     }
     
     public static boolean execute(ICommandSender commandSender, List<String> arguments) {
@@ -83,12 +78,12 @@ public final class CommandManager {
     
     public static boolean registerAlias(Command command, String alias) {
         if (StringUtils.containsIgnoreCase(command.getAliases(), alias)) {
-            Sledgehammer.getInstance().getLogger().warn("{} is already registered for {}", alias, command.getClass().getSimpleName());
+            Sledgehammer.getInstance().getLogger().warn("{} is already registered for {}", alias, Toolbox.getClassSimpleName(command.getClass()));
             return false;
         }
         
         command.getAliases().add(alias);
-        Sledgehammer.getInstance().debug("{} registered for {}", alias, command.getClass().getSimpleName());
+        Sledgehammer.getInstance().getLogger().debug("{} registered for {}", alias, Toolbox.getClassSimpleName(command.getClass()));
         return true;
     }
     
@@ -104,13 +99,13 @@ public final class CommandManager {
     
     public static boolean registerCommand(Command parentCommand, Class<? extends Command> commandClass) {
         if (parentCommand.getClass() == commandClass) {
-            Sledgehammer.getInstance().getLogger().warn("{} attempted to register itself", parentCommand.getClass().getSimpleName());
+            Sledgehammer.getInstance().getLogger().warn("{} attempted to register itself", Toolbox.getClassSimpleName(parentCommand.getClass()));
             return false;
         }
         
         Command command = registerCommand(parentCommand.getChildren(), commandClass);
         if (command != null) {
-            Sledgehammer.getInstance().getLogger().debug("{} registered for {}", commandClass.getSimpleName(), parentCommand.getClass().getSimpleName());
+            Sledgehammer.getInstance().getLogger().debug("{} registered for {}", Toolbox.getClassSimpleName(commandClass), Toolbox.getClassSimpleName(parentCommand.getClass()));
             return true;
         }
         

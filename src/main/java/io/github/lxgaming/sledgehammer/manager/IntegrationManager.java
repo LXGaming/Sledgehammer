@@ -67,12 +67,12 @@ public final class IntegrationManager {
                 continue;
             }
             
-            Sledgehammer.getInstance().debug("Processing {} ({})", integration.getClass().getSimpleName(), state);
+            Sledgehammer.getInstance().getLogger().debug("Processing {} ({})", Toolbox.getClassSimpleName(integration.getClass()), state);
             
             try {
                 integration.execute();
             } catch (Exception ex) {
-                Sledgehammer.getInstance().getLogger().error("Encountered an error while executing {}", integration.getClass().getSimpleName(), ex);
+                Sledgehammer.getInstance().getLogger().error("Encountered an error while executing {}", Toolbox.getClassSimpleName(integration.getClass()), ex);
             }
         }
     }
