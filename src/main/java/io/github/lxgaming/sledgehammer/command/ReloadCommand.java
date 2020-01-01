@@ -29,6 +29,8 @@ public class ReloadCommand extends Command {
     @Override
     public boolean prepare() {
         addAlias("Reload");
+        description("Reloads locale system");
+        permission("sledgehammer.reload.base");
         return true;
     }
     

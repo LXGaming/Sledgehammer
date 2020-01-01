@@ -32,7 +32,9 @@ public class DebugCommand extends Command {
     @Override
     public boolean prepare() {
         addAlias("Debug");
-        permission("sledgehammer.debug");
+        description("For debugging purposes");
+        permission("sledgehammer.debug.base");
+        usage("[State]");
         return true;
     }
     

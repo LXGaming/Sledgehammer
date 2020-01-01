@@ -56,7 +56,7 @@ public final class CommandManager {
             return false;
         }
         
-        if (StringUtils.isBlank(command.getPermission()) || !commandSender.canUseCommand(4, command.getPermission())) {
+        if (!commandSender.canUseCommand(4, command.getPermission())) {
             LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_NO_PERMISSION);
             return false;
         }
