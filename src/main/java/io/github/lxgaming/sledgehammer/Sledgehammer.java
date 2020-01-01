@@ -64,12 +64,7 @@ public class Sledgehammer {
             return false;
         }
         
-        CommandManager.prepare();
-        IntegrationManager.prepare();
-        LocaleManager.prepare();
         MappingManager.prepare();
-        
-        sledgehammer.getConfiguration().saveConfiguration();
         return true;
     }
     

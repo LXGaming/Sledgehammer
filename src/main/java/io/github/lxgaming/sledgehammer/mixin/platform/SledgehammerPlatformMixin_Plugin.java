@@ -18,7 +18,9 @@ package io.github.lxgaming.sledgehammer.mixin.platform;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
+import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
+import io.github.lxgaming.sledgehammer.manager.LocaleManager;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.server.MinecraftServer;
@@ -79,6 +81,9 @@ public abstract class SledgehammerPlatformMixin_Plugin {
         this.platform$state = SledgehammerPlatform.State.CONSTRUCTION;
         
         Sledgehammer.init();
+        CommandManager.prepare();
+        IntegrationManager.prepare();
+        LocaleManager.prepare();
         
         MappingManager.STATE_MAPPINGS.put(GamePreInitializationEvent.class, SledgehammerPlatform.State.PRE_INITIALIZATION);
         MappingManager.STATE_MAPPINGS.put(GameInitializationEvent.class, SledgehammerPlatform.State.INITIALIZATION);
