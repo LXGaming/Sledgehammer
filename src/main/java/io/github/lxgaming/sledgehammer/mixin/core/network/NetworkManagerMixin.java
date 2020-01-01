@@ -28,7 +28,14 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = NetworkManager.class, priority = 1337)
 public abstract class NetworkManagerMixin {
     
-    @Redirect(method = "dispatchPacket", at = @At(value = "INVOKE", target = "Lio/netty/channel/Channel;writeAndFlush(Ljava/lang/Object;)Lio/netty/channel/ChannelFuture;", remap = false))
+    @Redirect(
+            method = "dispatchPacket",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lio/netty/channel/Channel;writeAndFlush(Ljava/lang/Object;)Lio/netty/channel/ChannelFuture;",
+                    remap = false
+            )
+    )
     private ChannelFuture onDispatchPacket(Channel channel, Object object) {
         Sledgehammer.getInstance().debug("NetworkManager::dispatchPacket");
         return NetworkChannelHelper.writeAndFlush(channel, object);

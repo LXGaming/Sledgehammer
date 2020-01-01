@@ -27,7 +27,13 @@ public abstract class AdvancementManagerMixin_Reload {
     
     private static boolean sledgehammer$INITIALIZED = false;
     
-    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/AdvancementManager;reload()V"))
+    @Redirect(
+            method = "<init>",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/advancements/AdvancementManager;reload()V"
+            )
+    )
     private void onReload(AdvancementManager advancementManager) {
         if (sledgehammer$INITIALIZED) {
             Sledgehammer.getInstance().getLogger().warn("Advancement Reload Cancelled");

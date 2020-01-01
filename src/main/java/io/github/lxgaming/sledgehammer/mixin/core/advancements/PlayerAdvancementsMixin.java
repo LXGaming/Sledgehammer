@@ -26,7 +26,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = PlayerAdvancements.class, priority = 1337)
 public abstract class PlayerAdvancementsMixin {
     
-    @Redirect(method = "grantCriterion", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/AdvancementProgress;grantCriterion(Ljava/lang/String;)Z"))
+    @Redirect(
+            method = "grantCriterion",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/advancements/AdvancementProgress;grantCriterion(Ljava/lang/String;)Z"
+            )
+    )
     private boolean onGrantCriterion(AdvancementProgress advancementProgress, String criterion) {
         try {
             return advancementProgress.grantCriterion(criterion);

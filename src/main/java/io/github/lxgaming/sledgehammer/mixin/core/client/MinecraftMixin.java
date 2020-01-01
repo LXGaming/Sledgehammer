@@ -33,7 +33,12 @@ public abstract class MinecraftMixin {
     @Final
     private static Logger LOGGER;
     
-    @Inject(method = "init", at = @At(value = "RETURN"))
+    @Inject(
+            method = "init",
+            at = @At(
+                    value = "RETURN"
+            )
+    )
     private void onInit(CallbackInfo callbackInfo) {
         LOGGER.info("{} v{} was successfully applied!", Reference.NAME, Reference.VERSION);
     }

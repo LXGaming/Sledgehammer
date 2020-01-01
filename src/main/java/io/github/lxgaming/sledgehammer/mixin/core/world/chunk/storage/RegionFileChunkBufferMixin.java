@@ -38,7 +38,13 @@ public abstract class RegionFileChunkBufferMixin extends ByteArrayOutputStream {
     @Final
     private int chunkZ;
     
-    @Inject(method = "close", at = @At(value = "HEAD"), remap = false)
+    @Inject(
+            method = "close",
+            at = @At(
+                    value = "HEAD"
+            ),
+            remap = false
+    )
     private void onClose(CallbackInfo callbackInfo) throws IOException {
         int length = (this.count + 5) / 4096 + 1;
         if (length >= 256) {

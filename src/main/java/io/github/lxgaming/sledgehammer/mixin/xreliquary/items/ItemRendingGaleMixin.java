@@ -25,7 +25,14 @@ import xreliquary.items.ItemRendingGale;
 @Mixin(value = ItemRendingGale.class, priority = 1337)
 public abstract class ItemRendingGaleMixin {
     
-    @Inject(method = "spawnFlightParticles", at = @At(value = "HEAD"), cancellable = true, remap = false)
+    @Inject(
+            method = "spawnFlightParticles",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true,
+            remap = false
+    )
     private void onSpawnFlightParticles(CallbackInfo callbackInfo) {
         callbackInfo.cancel();
     }

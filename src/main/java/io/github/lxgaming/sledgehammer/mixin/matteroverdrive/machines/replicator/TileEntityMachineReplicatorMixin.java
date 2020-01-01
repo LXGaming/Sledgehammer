@@ -28,7 +28,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = TileEntityMachineReplicator.class, priority = 1337, remap = false)
 public abstract class TileEntityMachineReplicatorMixin {
     
-    @Inject(method = "canConnectFromSide", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "canConnectFromSide",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void onCanConnectFromSide(IBlockState blockState, EnumFacing side, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (blockState == null || blockState.getBlock() == Blocks.AIR) {
             callbackInfoReturnable.setReturnValue(false);

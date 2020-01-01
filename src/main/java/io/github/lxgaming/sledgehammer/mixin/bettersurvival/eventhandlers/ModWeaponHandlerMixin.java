@@ -26,8 +26,10 @@ import java.io.PrintStream;
 @Mixin(value = ModWeaponHandler.class, priority = 1337, remap = false)
 public abstract class ModWeaponHandlerMixin {
     
-    @Redirect(method = "onEvent(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V",
-            at = @At(value = "INVOKE",
+    @Redirect(
+            method = "onEvent(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V",
+            at = @At(
+                    value = "INVOKE",
                     target = "Ljava/io/PrintStream;println(Ljava/lang/Object;)V"
             )
     )

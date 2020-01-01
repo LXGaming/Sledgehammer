@@ -26,8 +26,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = MorphInfo.class, priority = 1337, remap = false)
 public abstract class MorphInfoMixin {
     
-    @Redirect(method = "tick",
-            at = @At(value = "INVOKE",
+    @Redirect(
+            method = "tick",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lnet/minecraft/entity/EntityLivingBase;onUpdate()V",
                     remap = true
             )

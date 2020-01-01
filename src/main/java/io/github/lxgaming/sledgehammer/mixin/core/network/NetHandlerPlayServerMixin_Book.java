@@ -30,8 +30,10 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(value = NetHandlerPlayServer.class, priority = 137)
 public abstract class NetHandlerPlayServerMixin_Book {
     
-    @Inject(method = "processCustomPayload",
-            at = @At(value = "INVOKE",
+    @Inject(
+            method = "processCustomPayload",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lnet/minecraft/item/ItemWritableBook;isNBTValid(Lnet/minecraft/nbt/NBTTagCompound;)Z"
             ),
             locals = LocalCapture.CAPTURE_FAILHARD
@@ -45,8 +47,10 @@ public abstract class NetHandlerPlayServerMixin_Book {
         }
     }
     
-    @Inject(method = "processCustomPayload",
-            at = @At(value = "INVOKE",
+    @Inject(
+            method = "processCustomPayload",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lnet/minecraft/item/ItemWrittenBook;validBookTagContents(Lnet/minecraft/nbt/NBTTagCompound;)Z"
             ),
             locals = LocalCapture.CAPTURE_FAILHARD

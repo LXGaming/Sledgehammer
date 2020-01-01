@@ -36,7 +36,12 @@ public abstract class ProjectorMixin {
     
     private static boolean sledgehammer$state = false;
     
-    @Inject(method = "loadMatrixes", at = @At(value = "HEAD"))
+    @Inject(
+            method = "loadMatrixes",
+            at = @At(
+                    value = "HEAD"
+            )
+    )
     private static void onLoadMatrixes(float partialTicks, CallbackInfo callbackInfo) {
         try {
             if (setupCameraTransform == null && !sledgehammer$state) {

@@ -42,8 +42,10 @@ public abstract class TextComponentTranslationMixin {
     @Shadow
     public abstract String getKey();
     
-    @Redirect(method = "ensureInitialized",
-            at = @At(value = "INVOKE",
+    @Redirect(
+            method = "ensureInitialized",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lnet/minecraft/util/text/TextComponentTranslation;initializeFromFormat(Ljava/lang/String;)V",
                     ordinal = 1
             )

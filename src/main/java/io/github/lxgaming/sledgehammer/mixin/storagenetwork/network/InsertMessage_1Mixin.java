@@ -46,9 +46,12 @@ public abstract class InsertMessage_1Mixin {
     @Final
     private InsertMessage message;
     
-    @SuppressWarnings("UnresolvedMixinReference")
-    @Inject(method = "run()V",
-            at = @At(value = "HEAD"),
+    @SuppressWarnings("UnresolvedMixinSledgehammer.")
+    @Inject(
+            method = "run()V",
+            at = @At(
+                    value = "HEAD"
+            ),
             cancellable = true
     )
     private void onRun(CallbackInfo callbackInfo) {

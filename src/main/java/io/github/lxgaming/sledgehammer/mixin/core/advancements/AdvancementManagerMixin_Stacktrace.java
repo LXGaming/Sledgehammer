@@ -26,12 +26,26 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = AdvancementManager.class, priority = 1337)
 public abstract class AdvancementManagerMixin_Stacktrace {
     
-    @Redirect(method = "loadCustomAdvancements", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", remap = false))
+    @Redirect(
+            method = "loadCustomAdvancements",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V",
+                    remap = false
+            )
+    )
     private void onCustomAdvancementsError(Logger logger, String message, Throwable throwable) {
         Sledgehammer.getInstance().getLogger().error("{} - {}", message, throwable.getMessage());
     }
     
-    @Redirect(method = "loadBuiltInAdvancements", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", remap = false))
+    @Redirect(
+            method = "loadBuiltInAdvancements",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V",
+                    remap = false
+            )
+    )
     private void onBuiltInAdvancementsError(Logger logger, String message, Throwable throwable) {
         Sledgehammer.getInstance().getLogger().error("{} - {}", message, throwable.getMessage());
     }

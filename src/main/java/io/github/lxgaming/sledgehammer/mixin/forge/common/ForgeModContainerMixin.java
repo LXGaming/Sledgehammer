@@ -29,7 +29,13 @@ public abstract class ForgeModContainerMixin {
     /**
      * Thanks covers1624
      */
-    @Redirect(method = "mappingChanged", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/fml/common/FMLCommonHandler;reloadSearchTrees()V"))
+    @Redirect(
+            method = "mappingChanged",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraftforge/fml/common/FMLCommonHandler;reloadSearchTrees()V"
+            )
+    )
     private void onReloadSearchTrees(FMLCommonHandler handler) {
         Sledgehammer.getInstance().getLogger().warn("Skipping reloadSearchTrees");
     }

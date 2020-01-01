@@ -36,21 +36,37 @@ public abstract class PlayerChunkMapMixin {
     
     private final AtomicBoolean sledgehammer$lock = new AtomicBoolean(false);
     
-    @Inject(method = "tick", at = @At(value = "HEAD"))
+    @Inject(
+            method = "tick",
+            at = @At(
+                    value = "HEAD"
+            )
+    )
     private void onTickPre(CallbackInfo callbackInfo) {
         if (!sledgehammer$lock.compareAndSet(false, true)) {
             Sledgehammer.getInstance().getLogger().error("Unexpected lock state: true");
         }
     }
     
-    @Inject(method = "tick", at = @At(value = "RETURN"))
+    @Inject(
+            method = "tick",
+            at = @At(
+                    value = "RETURN"
+            )
+    )
     private void onTickPost(CallbackInfo callbackInfo) {
         if (!sledgehammer$lock.compareAndSet(true, false)) {
             Sledgehammer.getInstance().getLogger().error("Unexpected lock state: false");
         }
     }
     
-    @Inject(method = "entryChanged", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "entryChanged",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void onEntryChanged(PlayerChunkMapEntry entry, CallbackInfo callbackInfo) {
         if (sledgehammer$lock.get()) {
             new PrettyPrinter(50)
@@ -65,7 +81,13 @@ public abstract class PlayerChunkMapMixin {
         }
     }
     
-    @Inject(method = "removeEntry", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "removeEntry",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void onRemoveEntry(PlayerChunkMapEntry entry, CallbackInfo callbackInfo) {
         if (sledgehammer$lock.get()) {
             new PrettyPrinter(50)

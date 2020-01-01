@@ -39,7 +39,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = Entity.class, priority = 1337)
 public abstract class EntityMixin_Teleport {
     
-    @Inject(method = "changeDimension(ILnet/minecraftforge/common/util/ITeleporter;)Lnet/minecraft/entity/Entity;", at = @At(value = "HEAD"), remap = false)
+    @Inject(
+            method = "changeDimension(ILnet/minecraftforge/common/util/ITeleporter;)Lnet/minecraft/entity/Entity;",
+            at = @At(
+                    value = "HEAD"
+            ),
+            remap = false
+    )
     private void onChangeDimension(int dimension, ITeleporter teleporter, CallbackInfoReturnable<Entity> callbackInfoReturnable) {
         Entity entity = Toolbox.cast(this, Entity.class);
         if (sledgehammer$shouldRemove(entity)) {

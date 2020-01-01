@@ -26,8 +26,14 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = ForgeHooks.class, priority = 1337, remap = false)
 public abstract class ForgeHooksMixin_Advancement {
     
-    @SuppressWarnings("UnresolvedMixinReference")
-    @Redirect(method = "lambda$loadAdvancements$0", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V"))
+    @SuppressWarnings("UnresolvedMixinSledgehammer.")
+    @Redirect(
+            method = "lambda$loadAdvancements$0",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V"
+            )
+    )
     private static void onLoadAdvancementsError(Logger logger, String message, Throwable throwable) {
         Sledgehammer.getInstance().getLogger().error("{} - {}", message, throwable.getMessage());
     }

@@ -25,7 +25,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = SPacketJoinGame.class, priority = 1337)
 public abstract class SPacketJoinGameMixin {
     
-    @Redirect(method = "readPacketData", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/PacketBuffer;readString(I)Ljava/lang/String;"))
+    @Redirect(
+            method = "readPacketData",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/network/PacketBuffer;readString(I)Ljava/lang/String;"
+            )
+    )
     private String onReadString(PacketBuffer packetBuffer, int maxLength) {
         // debug_all_block_states WorldType exceeds the maxLength of 16
         return packetBuffer.readString(32);

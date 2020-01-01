@@ -27,7 +27,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = SimpleNetworkWrapper.class, priority = 1337, remap = false)
 public abstract class SimpleNetworkWrapperMixin {
     
-    @Inject(method = "sendToAll", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "sendToAll",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void sendToAll(IMessage message, CallbackInfo callbackInfo) {
         if (SledgehammerPlatform.getInstance().isLoaded("lootbags") && message.getClass().getName().startsWith("mal.lootbags.network.message.")) {
             callbackInfo.cancel();

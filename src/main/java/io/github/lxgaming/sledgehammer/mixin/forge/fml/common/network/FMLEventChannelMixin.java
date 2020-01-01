@@ -28,7 +28,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = FMLEventChannel.class, priority = 1337, remap = false)
 public abstract class FMLEventChannelMixin {
     
-    @Redirect(method = "fireRead", at = @At(value = "INVOKE", target = "Lio/netty/channel/ChannelHandlerContext;writeAndFlush(Ljava/lang/Object;)Lio/netty/channel/ChannelFuture;"))
+    @Redirect(
+            method = "fireRead",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lio/netty/channel/ChannelHandlerContext;writeAndFlush(Ljava/lang/Object;)Lio/netty/channel/ChannelFuture;"
+            )
+    )
     private ChannelFuture onFireRead(ChannelHandlerContext channelHandlerContext, Object object) {
         Sledgehammer.getInstance().debug("FMLEmbeddedChannel::fireRead");
         return NetworkChannelHelper.writeAndFlush(channelHandlerContext, object);

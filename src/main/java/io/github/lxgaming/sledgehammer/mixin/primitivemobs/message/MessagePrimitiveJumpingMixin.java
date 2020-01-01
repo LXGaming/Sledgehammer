@@ -31,8 +31,10 @@ import java.util.UUID;
 @Mixin(value = MessagePrimitiveJumping.Handler.class, priority = 1337, remap = false)
 public abstract class MessagePrimitiveJumpingMixin {
     
-    @Inject(method = "onMessage",
-            at = @At(value = "INVOKE_ASSIGN",
+    @Inject(
+            method = "onMessage",
+            at = @At(
+                    value = "INVOKE_ASSIGN",
                     target = "Lnet/minecraft/world/World;getPlayerEntityByUUID(Ljava/util/UUID;)Lnet/minecraft/entity/player/EntityPlayer;"
             ),
             remap = true,

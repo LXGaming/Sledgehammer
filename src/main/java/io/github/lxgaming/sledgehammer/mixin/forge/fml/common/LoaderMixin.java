@@ -49,8 +49,10 @@ public abstract class LoaderMixin implements LoaderBridge {
     
     private final Map<File, Set<String>> sledgehammer$mappings = Maps.newHashMap();
     
-    @Inject(method = "identifyMods",
-            at = @At(value = "INVOKE_ASSIGN",
+    @Inject(
+            method = "identifyMods",
+            at = @At(
+                    value = "INVOKE_ASSIGN",
                     target = "Lnet/minecraftforge/fml/relauncher/libraries/LibraryManager;gatherLegacyCanidates(Ljava/io/File;)Ljava/util/List;"
             ),
             locals = LocalCapture.CAPTURE_FAILHARD

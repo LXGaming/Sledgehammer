@@ -57,14 +57,26 @@ public abstract class EntityVillagerMixin extends EntityAgeable implements Entit
         this.careerId = careerId;
     }
     
-    @Inject(method = "populateBuyingList", at = @At(value = "RETURN"), cancellable = true)
+    @Inject(
+            method = "populateBuyingList",
+            at = @At(
+                    value = "RETURN"
+            ),
+            cancellable = true
+    )
     private void onPopulateBuyingListReturn(CallbackInfo callbackInfo) {
         if (SledgehammerPlatform.getInstance().isLoaded("primitivemobs") && StringUtils.equals(Toolbox.cast(this, Entity.class).getType().getId(), "primitivemobs:travelingmerchant")) {
             sledgehammer$populateTravelingMerchant();
         }
     }
     
-    @Inject(method = "processInteract", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "processInteract",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void onProcessInteract(EntityPlayer player, EnumHand hand, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (SledgehammerPlatform.getInstance().isLoaded("primitivemobs") && StringUtils.equals(Toolbox.cast(this, Entity.class).getType().getId(), "primitivemobs:travelingmerchant")) {
             sledgehammer$populateTravelingMerchant();

@@ -30,8 +30,10 @@ import java.util.List;
 @Mixin(value = ModEventHandler.class, priority = 1337, remap = false)
 public abstract class ModEventHandlerMixin {
     
-    @Redirect(method = "harvestBlock",
-            at = @At(value = "INVOKE",
+    @Redirect(
+            method = "harvestBlock",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lcom/alcatrazescapee/notreepunching/util/HarvestBlockHandler;addExtraDrops(Ljava/util/List;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/item/ItemStack;)V"
             )
     )
@@ -43,8 +45,10 @@ public abstract class ModEventHandlerMixin {
         }
     }
     
-    @Redirect(method = "harvestBlock",
-            at = @At(value = "INVOKE",
+    @Redirect(
+            method = "harvestBlock",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lcom/alcatrazescapee/notreepunching/util/HarvestBlockHandler;isInvalidTool(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/block/state/IBlockState;)Z"
             )
     )

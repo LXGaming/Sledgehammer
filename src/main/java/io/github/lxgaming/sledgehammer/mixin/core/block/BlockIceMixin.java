@@ -36,13 +36,20 @@ public abstract class BlockIceMixin extends Block {
         super(materialIn);
     }
     
-    @Inject(method = "<init>*", at = @At(value = "RETURN"))
+    @Inject(
+            method = "<init>*",
+            at = @At(
+                    value = "RETURN"
+            )
+    )
     private void onInit(CallbackInfo callbackInfo) {
         setTickRandomly(false);
     }
     
-    @Inject(method = "updateTick",
-            at = @At(value = "INVOKE",
+    @Inject(
+            method = "updateTick",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lnet/minecraft/block/BlockIce;turnIntoWater(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V",
                     ordinal = 0
             ),

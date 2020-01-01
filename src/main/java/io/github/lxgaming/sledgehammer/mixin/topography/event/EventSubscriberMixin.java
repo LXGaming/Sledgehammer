@@ -25,7 +25,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = EventSubscriber.class, priority = 1337, remap = false)
 public abstract class EventSubscriberMixin {
     
-    @Inject(method = "onDimensionChange", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "onDimensionChange",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void onDimensionChange(CallbackInfo callbackInfo) {
         callbackInfo.cancel();
     }

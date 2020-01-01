@@ -36,13 +36,20 @@ public abstract class BlockGrassMixin extends Block {
         super(materialIn);
     }
     
-    @Inject(method = "<init>*", at = @At(value = "RETURN"))
+    @Inject(
+            method = "<init>*",
+            at = @At(
+                    value = "RETURN"
+            )
+    )
     private void onInit(CallbackInfo callbackInfo) {
         setTickRandomly(false);
     }
     
-    @Inject(method = "updateTick",
-            at = @At(value = "INVOKE",
+    @Inject(
+            method = "updateTick",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lnet/minecraft/world/World;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;)Z",
                     ordinal = 0
             ),

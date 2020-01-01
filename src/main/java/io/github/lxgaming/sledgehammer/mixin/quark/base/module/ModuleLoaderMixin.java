@@ -27,7 +27,14 @@ import vazkii.quark.tweaks.feature.ImprovedSleeping;
 @Mixin(value = ModuleLoader.class, priority = 1337)
 public abstract class ModuleLoaderMixin {
     
-    @Inject(method = "isFeatureEnabled", at = @At(value = "HEAD"), cancellable = true, remap = false)
+    @Inject(
+            method = "isFeatureEnabled",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true,
+            remap = false
+    )
     private static void onIsFeatureEnabled(Class<? extends Feature> featureClass, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (featureClass == ImprovedSleeping.class) {
             callbackInfoReturnable.setReturnValue(false);

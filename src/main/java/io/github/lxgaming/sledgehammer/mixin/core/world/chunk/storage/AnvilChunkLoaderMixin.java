@@ -60,8 +60,10 @@ public abstract class AnvilChunkLoaderMixin {
     @Final
     public File chunkSaveLocation;
     
-    @Redirect(method = "writeNextIO",
-            at = @At(value = "INVOKE",
+    @Redirect(
+            method = "writeNextIO",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lnet/minecraft/world/chunk/storage/AnvilChunkLoader;writeChunkData(Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/nbt/NBTTagCompound;)V"
             )
     )

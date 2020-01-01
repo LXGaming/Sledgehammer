@@ -28,7 +28,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = SimpleChannelHandlerWrapper.class, priority = 1337, remap = false)
 public abstract class SimpleChannelHandlerWrapperMixin {
     
-    @Redirect(method = "channelRead0", at = @At(value = "INVOKE", target = "Lio/netty/channel/ChannelHandlerContext;writeAndFlush(Ljava/lang/Object;)Lio/netty/channel/ChannelFuture;"))
+    @Redirect(
+            method = "channelRead0",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lio/netty/channel/ChannelHandlerContext;writeAndFlush(Ljava/lang/Object;)Lio/netty/channel/ChannelFuture;"
+            )
+    )
     private ChannelFuture onChannelRead0(ChannelHandlerContext channelHandlerContext, Object object) {
         Sledgehammer.getInstance().debug("SimpleChannelHandlerWrapper::channelRead0");
         return NetworkChannelHelper.writeAndFlush(channelHandlerContext, object);

@@ -26,7 +26,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = CommonEvents.class, priority = 1337, remap = false)
 public abstract class CommonEventsMixin {
     
-    @Inject(method = "onPlayerDeath", at = @At(value = "INVOKE"))
+    @Inject(
+            method = "onPlayerDeath",
+            at = @At(
+                    value = "INVOKE"
+            )
+    )
     private void onPlayerDeath(CallbackInfo callbackInfo) {
         callbackInfo.cancel();
         Sledgehammer.getInstance().debug("TombManyGraves was blocked");

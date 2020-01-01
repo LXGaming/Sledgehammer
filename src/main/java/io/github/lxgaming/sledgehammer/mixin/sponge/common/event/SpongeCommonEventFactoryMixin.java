@@ -26,9 +26,11 @@ import org.spongepowered.common.event.SpongeCommonEventFactory;
 @Mixin(value = SpongeCommonEventFactory.class, priority = 1337, remap = false)
 public abstract class SpongeCommonEventFactoryMixin {
     
-    @SuppressWarnings("AmbiguousMixinReference")
-    @Redirect(method = "captureTransaction",
-            at = @At(value = "INVOKE",
+    @SuppressWarnings("AmbiguousMixinSledgehammer.")
+    @Redirect(
+            method = "captureTransaction",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lorg/apache/logging/log4j/Logger;warn(Ljava/lang/String;)V"
             )
     )

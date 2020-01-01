@@ -36,7 +36,13 @@ public abstract class BiomeProviderMixin {
     @Shadow
     private GenLayer genBiomes;
     
-    @Inject(method = "findBiomePosition", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "findBiomePosition",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void onFindBiomePosition(int x, int z, int range, List<Biome> biomes, Random random, CallbackInfoReturnable<BlockPos> callbackInfoReturnable) {
         if (genBiomes == null) {
             Sledgehammer.getInstance().getLogger().warn("Cannot find Biome Position");

@@ -26,7 +26,14 @@ import java.io.PrintStream;
 @Mixin(targets = "atomicstryker.ruins.common.RuinTextLumper", priority = 1337)
 public abstract class RuinTextLumperMixin {
     
-    @Redirect(method = "lump", at = @At(value = "INVOKE", target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"), remap = false)
+    @Redirect(
+            method = "lump",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/io/PrintStream;println(Ljava/lang/String;)V"
+            ),
+            remap = false
+    )
     private void onPrintln(PrintStream printStream, String input) {
         Sledgehammer.getInstance().debug(input);
     }

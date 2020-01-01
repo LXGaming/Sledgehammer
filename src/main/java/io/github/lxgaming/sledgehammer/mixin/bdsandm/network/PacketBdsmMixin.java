@@ -32,7 +32,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value = PacketBdsm.ServerHandler.class, priority = 1337, remap = false)
 public abstract class PacketBdsmMixin {
     
-    @Redirect(method = "onMessage", at = @At(value = "INVOKE", target = "Lfunwayguy/bdsandm/blocks/IStorageBlock;onPlayerInteract(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/util/EnumFacing;Lnet/minecraft/entity/player/EntityPlayerMP;Lnet/minecraft/util/EnumHand;ZZI)V"))
+    @Redirect(
+            method = "onMessage",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lfunwayguy/bdsandm/blocks/IStorageBlock;onPlayerInteract(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/util/EnumFacing;Lnet/minecraft/entity/player/EntityPlayerMP;Lnet/minecraft/util/EnumHand;ZZI)V"
+            )
+    )
     private void impl$onPlayerInteract(IStorageBlock storageBlock, World world, BlockPos blockPos, IBlockState blockState, EnumFacing enumFacing, EntityPlayerMP entityPlayer, EnumHand enumHand, boolean isHit, boolean altMode, int delay) {
         FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
             storageBlock.onPlayerInteract(world, blockPos, blockState, enumFacing, entityPlayer, enumHand, isHit, altMode, delay);

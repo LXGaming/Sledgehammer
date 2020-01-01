@@ -29,7 +29,13 @@ public abstract class TileEntityMixin {
     
     private boolean sledgehammer$writing = false;
     
-    @Inject(method = "writeToNBT", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "writeToNBT",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void onWriteToNBTPre(NBTTagCompound compound, CallbackInfoReturnable<NBTTagCompound> callbackInfoReturnable) {
         if (sledgehammer$writing) {
             Sledgehammer.getInstance().debug("Captured potential StackOverflow: {}", getClass().getName());
@@ -39,7 +45,12 @@ public abstract class TileEntityMixin {
         }
     }
     
-    @Inject(method = "writeToNBT", at = @At(value = "RETURN"))
+    @Inject(
+            method = "writeToNBT",
+            at = @At(
+                    value = "RETURN"
+            )
+    )
     private void onWriteToNBTPost(NBTTagCompound compound, CallbackInfoReturnable<NBTTagCompound> callbackInfoReturnable) {
         sledgehammer$writing = false;
     }

@@ -25,17 +25,35 @@ import p455w0rdslib.LibEvents;
 @Mixin(value = LibEvents.class, priority = 1337, remap = false)
 public abstract class LibEventsMixin {
     
-    @Inject(method = "onMapGen", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "onMapGen",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private static void onMapGen(CallbackInfo callbackInfo) {
         callbackInfo.cancel();
     }
     
-    @Inject(method = "onChunkLoad", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "onChunkLoad",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private static void onChunkLoad(CallbackInfo callbackInfo) {
         callbackInfo.cancel();
     }
     
-    @Inject(method = "onBlockGen", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "onBlockGen",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private static void onBlockGen(CallbackInfo callbackInfo) {
         callbackInfo.cancel();
     }

@@ -44,7 +44,14 @@ public abstract class NetHandlerPlayServerMixin_Event {
     @Shadow
     public EntityPlayerMP player;
     
-    @Inject(method = "processTryUseItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/MinecraftServer;getWorld(I)Lnet/minecraft/world/WorldServer;"), cancellable = true)
+    @Inject(
+            method = "processTryUseItem",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/server/MinecraftServer;getWorld(I)Lnet/minecraft/world/WorldServer;"
+            ),
+            cancellable = true
+    )
     private void onProcessTryUseItem(CPacketPlayerTryUseItem packet, CallbackInfo callbackInfo) {
         try (CauseStackManager.StackFrame frame = Sponge.getCauseStackManager().pushCauseFrame()) {
             // Avoids firing a second event

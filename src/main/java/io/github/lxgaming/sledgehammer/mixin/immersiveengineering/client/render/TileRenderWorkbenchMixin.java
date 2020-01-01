@@ -33,13 +33,20 @@ public abstract class TileRenderWorkbenchMixin {
     
     private int sledgehammer$expectedValue = 0;
     
-    @Inject(method = "render", at = @At(value = "HEAD"))
+    @Inject(
+            method = "render",
+            at = @At(
+                    value = "HEAD"
+            )
+    )
     private void onRender(CallbackInfo callbackInfo) {
         this.sledgehammer$expectedValue = 0;
     }
     
-    @Inject(method = "render",
-            at = @At(value = "INVOKE",
+    @Inject(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lblusunrize/immersiveengineering/client/render/TileRenderAutoWorkbench;getBlueprintDrawable(Lblusunrize/immersiveengineering/api/crafting/BlueprintCraftingRecipe;Lnet/minecraft/world/World;)Lblusunrize/immersiveengineering/client/render/TileRenderAutoWorkbench$BlueprintLines;"
             ),
             locals = LocalCapture.CAPTURE_FAILHARD,

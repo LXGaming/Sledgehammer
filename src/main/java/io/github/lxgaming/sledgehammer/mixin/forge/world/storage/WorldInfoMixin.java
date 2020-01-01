@@ -28,7 +28,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = WorldInfo.class, priority = 1337)
 public abstract class WorldInfoMixin {
     
-    @Inject(method = "setRaining", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "setRaining",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void onSetRaining(boolean isRaining, CallbackInfo callbackInfo) {
         if (SledgehammerPlatform.getInstance().isLoaded("totemic") && SledgehammerLaunch.isClassPresentInStackTrace("pokefenn.totemic.ceremony.CeremonyRain")) {
             callbackInfo.cancel();
@@ -36,7 +42,13 @@ public abstract class WorldInfoMixin {
         }
     }
     
-    @Inject(method = "setRainTime", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(
+            method = "setRainTime",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void onSetRainTime(int time, CallbackInfo callbackInfo) {
         if (SledgehammerPlatform.getInstance().isLoaded("totemic") && SledgehammerLaunch.isClassPresentInStackTrace("pokefenn.totemic.ceremony.CeremonyRain")) {
             callbackInfo.cancel();
