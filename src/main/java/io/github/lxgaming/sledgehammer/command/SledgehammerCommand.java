@@ -28,7 +28,6 @@ public class SledgehammerCommand extends AbstractCommand {
     public SledgehammerCommand() {
         addAlias("sledgehammer");
         addAlias("sh");
-        addChild(BookCommand.class);
         addChild(DebugCommand.class);
         addChild(HelpCommand.class);
         addChild(InfoCommand.class);
