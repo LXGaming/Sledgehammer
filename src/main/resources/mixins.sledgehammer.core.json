@@ -20,6 +20,7 @@
     "network.play.server.SPacketJoinGameMixin",
     "network.NetHandlerPlayServerMixin_Book",
     "network.NetHandlerPlayServerMixin_Event",
+    "network.NetHandlerPlayServerMixin_Sleep",
     "network.NetworkManagerMixin",
     "network.NetworkSystemMixin",
     "tileentity.TileEntityMixin",

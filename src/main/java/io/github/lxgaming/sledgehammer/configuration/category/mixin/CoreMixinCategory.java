@@ -86,6 +86,10 @@ public class CoreMixinCategory {
     @Setting(value = "lazyload-thread-safe", comment = "If 'true', makes LazyLoad Thread-safe (Should fix MC-68381).")
     private boolean lazyLoadThreadSafe = false;
     
+    @Mapping(value = "core.network.NetHandlerPlayServerMixin_Sleep")
+    @Setting(value = "leave-sleep", comment = "If 'true', allows players to exit the sleep screen.")
+    private boolean leaveSleep = false;
+    
     @Mapping(value = "core.item.ItemWritableBookMixin")
     @Mapping(value = "core.network.NetHandlerPlayServerMixin_Book")
     @Setting(value = "limit-books", comment = "If 'true', enforces limits for books to 50 pages with 255 characters for each.")
@@ -157,6 +161,10 @@ public class CoreMixinCategory {
     
     public boolean isLazyLoadThreadSafe() {
         return lazyLoadThreadSafe;
+    }
+    
+    public boolean isLeaveSleep() {
+        return leaveSleep;
     }
     
     public boolean isLimitBooks() {
