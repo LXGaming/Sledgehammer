@@ -200,6 +200,8 @@ processResources {
         include("mcmod.info")
         expand("version": version, "mcversion": minecraft.version)
     }
+
+    exclude("sledgehammer_at.cfg")
 }
 
 reobf {

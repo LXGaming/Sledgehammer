@@ -16,11 +16,11 @@
 
 package io.github.lxgaming.sledgehammer.mixin.core.item;
 
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 import net.minecraft.item.ItemWritableBook;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 

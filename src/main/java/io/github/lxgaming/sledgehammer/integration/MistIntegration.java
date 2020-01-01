@@ -18,7 +18,7 @@ package io.github.lxgaming.sledgehammer.integration;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
-import org.apache.commons.lang3.StringUtils;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.block.BlockSnapshot;
 import org.spongepowered.api.block.BlockState;
@@ -34,17 +34,19 @@ import org.spongepowered.api.util.Direction;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
-public class MistIntegration extends AbstractIntegration {
+public class MistIntegration extends Integration {
     
-    public MistIntegration() {
+    @Override
+    public boolean prepare() {
         addDependency("forge");
         addDependency("mist");
         addDependency("sponge");
-        setState(SledgehammerPlatform.State.INITIALIZATION);
+        state(SledgehammerPlatform.State.INITIALIZATION);
+        return true;
     }
     
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         Sponge.getEventManager().registerListeners(SledgehammerPlatform.getInstance().getContainer(), this);
     }
     

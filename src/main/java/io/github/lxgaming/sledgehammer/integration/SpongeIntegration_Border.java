@@ -18,14 +18,10 @@ package io.github.lxgaming.sledgehammer.integration;
 
 import com.flowpowered.math.vector.Vector3d;
 import com.google.common.collect.Maps;
-import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
-import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.util.Broadcast;
-import io.github.lxgaming.sledgehammer.util.Toolbox;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.text.ChatType;
-import org.apache.commons.lang3.StringUtils;
+import io.github.lxgaming.sledgehammer.util.Locale;
+import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
+import net.minecraft.entity.player.EntityPlayerMP;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -39,17 +35,19 @@ import org.spongepowered.api.world.World;
 import java.util.Map;
 import java.util.UUID;
 
-public class SpongeIntegration_Border extends AbstractIntegration {
+public class SpongeIntegration_Border extends Integration {
     
     private final Map<UUID, Long> cooldown = Maps.newHashMap();
     
-    public SpongeIntegration_Border() {
+    @Override
+    public boolean prepare() {
         addDependency("sponge");
-        setState(SledgehammerPlatform.State.INITIALIZATION);
+        state(SledgehammerPlatform.State.INITIALIZATION);
+        return true;
     }
     
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         Sponge.getEventManager().registerListeners(SledgehammerPlatform.getInstance().getContainer(), this);
     }
     
@@ -79,19 +77,7 @@ public class SpongeIntegration_Border extends AbstractIntegration {
             }
             
             this.cooldown.put(player.getUniqueId(), currentTime);
-            Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).ifPresent(generalCategory -> {
-                String message = generalCategory.getMessageCategory().getMoveOutsideBorder();
-                if (StringUtils.isBlank(message)) {
-                    return;
-                }
-                
-                Broadcast broadcast = Broadcast.builder().message(Toolbox.convertColor(message)).type(ChatType.CHAT).build();
-                if (generalCategory.isDebug()) {
-                    broadcast.sendMessage(SledgehammerPlatform.getInstance().getServer());
-                }
-                
-                broadcast.sendMessage((EntityPlayer) player);
-            });
+            LocaleAdapter.sendMessage((EntityPlayerMP) player, Locale.MESSAGE_MOVE_OUTSIDE_BORDER);
         }
     }
 }

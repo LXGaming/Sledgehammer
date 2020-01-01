@@ -14,32 +14,23 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.mixin.core.client;
+package io.github.lxgaming.sledgehammer.mixin.core.util.text;
 
-import io.github.lxgaming.sledgehammer.Sledgehammer;
-import net.minecraft.client.Minecraft;
-import org.apache.logging.log4j.Logger;
+import io.github.lxgaming.sledgehammer.bridge.util.text.TextFormattingBridge;
+import net.minecraft.util.text.TextFormatting;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = Minecraft.class, priority = 1337)
-public abstract class MinecraftMixin {
+@Mixin(value = TextFormatting.class)
+public abstract class TextFormattingMixin implements TextFormattingBridge {
     
     @Shadow
     @Final
-    private static Logger LOGGER;
+    private char formattingCode;
     
-    @Inject(
-            method = "init",
-            at = @At(
-                    value = "RETURN"
-            )
-    )
-    private void onInit(CallbackInfo callbackInfo) {
-        LOGGER.info("{} v{} was successfully applied!", Sledgehammer.NAME, Sledgehammer.VERSION);
+    @Override
+    public char bridge$getFormattingCode() {
+        return this.formattingCode;
     }
 }

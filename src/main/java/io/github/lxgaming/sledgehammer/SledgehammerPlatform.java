@@ -17,34 +17,33 @@
 package io.github.lxgaming.sledgehammer;
 
 import com.google.common.base.Preconditions;
-import io.github.lxgaming.sledgehammer.util.Reference;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
 import org.spongepowered.api.plugin.Plugin;
 
 @Mod(
-        modid = Reference.ID,
-        name = Reference.NAME,
-        version = Reference.VERSION,
-        acceptedMinecraftVersions = Reference.ACCEPTED_VERSIONS,
-        acceptableRemoteVersions = Reference.ACCEPTABLE_REMOTE_VERSIONS,
-        certificateFingerprint = Reference.CERTIFICATE_FINGERPRINT
+        modid = Sledgehammer.ID,
+        name = Sledgehammer.NAME,
+        version = Sledgehammer.VERSION,
+        acceptedMinecraftVersions = Sledgehammer.ACCEPTED_VERSIONS,
+        acceptableRemoteVersions = Sledgehammer.ACCEPTABLE_REMOTE_VERSIONS,
+        certificateFingerprint = Sledgehammer.CERTIFICATE_FINGERPRINT
 )
 @Plugin(
-        id = Reference.ID,
-        name = Reference.NAME,
-        version = Reference.VERSION,
-        description = Reference.DESCRIPTION,
-        authors = {Reference.AUTHORS},
-        url = Reference.WEBSITE
+        id = Sledgehammer.ID,
+        name = Sledgehammer.NAME,
+        version = Sledgehammer.VERSION,
+        description = Sledgehammer.DESCRIPTION,
+        authors = {Sledgehammer.AUTHORS},
+        url = Sledgehammer.WEBSITE
 )
 public class SledgehammerPlatform {
     
     private static SledgehammerPlatform instance;
     
     public SledgehammerPlatform() {
-        Preconditions.checkState(Sledgehammer.getInstance() != null, "%s has not been initialized!", Reference.NAME);
-        Sledgehammer.getInstance().getLogger().info("{} v{} ({})", Reference.NAME, Reference.VERSION, getType());
+        Preconditions.checkState(Sledgehammer.getInstance() != null, "%s has not been initialized!", Sledgehammer.NAME);
+        Sledgehammer.getInstance().getLogger().info("{} v{} ({})", Sledgehammer.NAME, Sledgehammer.VERSION, getType());
     }
     
     public static SledgehammerPlatform getInstance() {

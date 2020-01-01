@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.launch;
 
-import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.Sledgehammer;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
@@ -29,12 +29,12 @@ import java.util.List;
 
 public class SledgehammerLaunch {
     
-    private static final Logger LOGGER = LogManager.getLogger(Reference.NAME + " Launch");
+    private static final Logger LOGGER = LogManager.getLogger(Sledgehammer.NAME + " Launch");
     private static final String FORGE_INITIALIZED = "forge.initialized";
     private static final String FORGE_CLASS = "net.minecraftforge.fml.relauncher.CoreModManager";
     private static final String FORGE_DEOBF_TWEAKER_CLASS = "net.minecraftforge.fml.common.launcher.FMLDeobfTweaker";
     private static final String MIXIN_STATE_TWEAKER_CLASS = "org.spongepowered.asm.mixin.EnvironmentStateTweaker";
-    private static final String SLEDGEHAMMER_INITIALIZED = Reference.ID + ".initialized";
+    private static final String SLEDGEHAMMER_INITIALIZED = Sledgehammer.ID + ".initialized";
     private static final String SPONGE_INITIALIZED = "sponge.initialized";
     private static final String SPONGE_CLASS = "org.spongepowered.common.launch.SpongeLaunch";
     
@@ -140,7 +140,7 @@ public class SledgehammerLaunch {
     }
     
     private static void registerSledgehammer() {
-        GlobalProperties.put(SLEDGEHAMMER_INITIALIZED, Reference.VERSION);
+        GlobalProperties.put(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
     }
     
     public static boolean isSpongeRegistered() {

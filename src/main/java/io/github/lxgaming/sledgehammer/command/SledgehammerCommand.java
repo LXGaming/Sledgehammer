@@ -16,25 +16,58 @@
 
 package io.github.lxgaming.sledgehammer.command;
 
-import io.github.lxgaming.sledgehammer.util.Reference;
-import io.github.lxgaming.sledgehammer.util.Text;
+import com.google.common.collect.Lists;
+import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.manager.CommandManager;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 
-public class SledgehammerCommand extends AbstractCommand {
+public class SledgehammerCommand implements ICommand {
     
-    public SledgehammerCommand() {
-        addAlias("sledgehammer");
-        addAlias("sh");
-        addChild(DebugCommand.class);
-        addChild(HelpCommand.class);
-        addChild(InfoCommand.class);
+    @Override
+    public String getName() {
+        return Sledgehammer.ID;
     }
     
     @Override
-    public void execute(ICommandSender commandSender, List<String> arguments) {
-        commandSender.sendMessage(Text.of(TextFormatting.BLUE, "Use ", TextFormatting.GREEN, "/" + Reference.ID + " help ", TextFormatting.BLUE, "to view available commands."));
+    public String getUsage(ICommandSender sender) {
+        return "";
+    }
+    
+    @Override
+    public List<String> getAliases() {
+        return Lists.newArrayList();
+    }
+    
+    @Override
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        CommandManager.execute(sender, Lists.newArrayList(args));
+    }
+    
+    @Override
+    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
+        return true;
+    }
+    
+    @Override
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        return Lists.newArrayList();
+    }
+    
+    @Override
+    public boolean isUsernameIndex(String[] args, int index) {
+        return false;
+    }
+    
+    @Override
+    public int compareTo(ICommand o) {
+        return Objects.compare(getName(), o.getName(), String::compareTo);
     }
 }

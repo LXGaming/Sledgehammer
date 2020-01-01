@@ -16,79 +16,73 @@
 
 package io.github.lxgaming.sledgehammer.manager;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
-import io.github.lxgaming.sledgehammer.command.AbstractCommand;
+import io.github.lxgaming.sledgehammer.command.Command;
+import io.github.lxgaming.sledgehammer.command.DebugCommand;
+import io.github.lxgaming.sledgehammer.command.HelpCommand;
+import io.github.lxgaming.sledgehammer.command.InformationCommand;
 import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
-import io.github.lxgaming.sledgehammer.util.Text;
+import io.github.lxgaming.sledgehammer.exception.CommandException;
+import io.github.lxgaming.sledgehammer.util.Locale;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
 import net.minecraft.command.CommandHandler;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public final class CommandManager {
     
-    private static final Set<AbstractCommand> COMMANDS = Sets.newLinkedHashSet();
-    private static final Set<Class<? extends AbstractCommand>> COMMAND_CLASSES = Sets.newLinkedHashSet();
+    public static final Set<Command> COMMANDS = Sets.newLinkedHashSet();
+    private static final Set<Class<? extends Command>> COMMAND_CLASSES = Sets.newHashSet();
     
-    public static void register() {
-        registerCommand(SledgehammerCommand.class);
+    public static void prepare() {
+        registerCommand(DebugCommand.class);
+        registerCommand(HelpCommand.class);
+        registerCommand(InformationCommand.class);
+        
+        ((CommandHandler) SledgehammerPlatform.getInstance().getServer().getCommandManager()).registerCommand(new SledgehammerCommand());
     }
     
-    public static boolean process(AbstractCommand abstractCommand, ICommandSender commandSender, String[] args) {
-        List<String> arguments = getArguments(args);
-        AbstractCommand command = getCommand(abstractCommand, arguments).orElse(null);
+    public static boolean execute(ICommandSender commandSender, List<String> arguments) {
+        String content = String.join(" ", arguments);
+        if (arguments.isEmpty() || StringUtils.isBlank(content)) {
+            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_BASE, Sledgehammer.ID);
+            return false;
+        }
+        
+        Command command = getCommand(arguments);
         if (command == null) {
-            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Unknown command"));
+            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_NOT_FOUND);
             return false;
         }
         
-        if (!command.checkPermission(commandSender)) {
-            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, new TextComponentTranslation("commands.generic.permission")));
+        if (StringUtils.isBlank(command.getPermission()) || !commandSender.canUseCommand(4, command.getPermission())) {
+            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_NO_PERMISSION);
             return false;
         }
         
-        Sledgehammer.getInstance().debug("Processing {} for {}", command.getName(), commandSender.getName());
+        Sledgehammer.getInstance().debug("Processing {} for {}", content, commandSender.getName());
         
         try {
             command.execute(commandSender, arguments);
             return true;
+        } catch (CommandException ex) {
+            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_ERROR, ex.getMessage());
+            return false;
         } catch (Exception ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error while executing {}", command.getClass().getSimpleName(), ex);
-            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "An error has occurred. Details are available in console."));
+            Sledgehammer.getInstance().getLogger().error("Encountered an error while executing {}", Toolbox.getClassSimpleName(command.getClass()), ex);
+            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_EXCEPTION);
             return false;
         }
     }
     
-    public static boolean registerCommand(Class<? extends AbstractCommand> commandClass) {
-        if (getCommandClasses().contains(commandClass)) {
-            Sledgehammer.getInstance().getLogger().warn("{} is already registered", commandClass.getSimpleName());
-            return false;
-        }
-        
-        getCommandClasses().add(commandClass);
-        AbstractCommand command = Toolbox.newInstance(commandClass).orElse(null);
-        if (command == null) {
-            Sledgehammer.getInstance().getLogger().error("{} failed to initialize", commandClass.getSimpleName());
-            return false;
-        }
-        
-        getCommands().add(command);
-        ((CommandHandler) SledgehammerPlatform.getInstance().getServer().getCommandManager()).registerCommand(command);
-        Sledgehammer.getInstance().debug("{} registered", commandClass.getSimpleName());
-        return true;
-    }
-    
-    public static boolean registerAlias(AbstractCommand command, String alias) {
-        if (Toolbox.containsIgnoreCase(command.getAliases(), alias)) {
+    public static boolean registerAlias(Command command, String alias) {
+        if (StringUtils.containsIgnoreCase(command.getAliases(), alias)) {
             Sledgehammer.getInstance().getLogger().warn("{} is already registered for {}", alias, command.getClass().getSimpleName());
             return false;
         }
@@ -98,72 +92,105 @@ public final class CommandManager {
         return true;
     }
     
-    public static boolean registerCommand(AbstractCommand parentCommand, Class<? extends AbstractCommand> commandClass) {
+    public static boolean registerCommand(Class<? extends Command> commandClass) {
+        Command command = registerCommand(COMMANDS, commandClass);
+        if (command != null) {
+            Sledgehammer.getInstance().getLogger().debug("{} registered", Toolbox.getClassSimpleName(commandClass));
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public static boolean registerCommand(Command parentCommand, Class<? extends Command> commandClass) {
         if (parentCommand.getClass() == commandClass) {
             Sledgehammer.getInstance().getLogger().warn("{} attempted to register itself", parentCommand.getClass().getSimpleName());
             return false;
         }
         
-        if (getCommandClasses().contains(commandClass)) {
-            Sledgehammer.getInstance().getLogger().warn("{} is already registered", commandClass.getSimpleName());
-            return false;
+        Command command = registerCommand(parentCommand.getChildren(), commandClass);
+        if (command != null) {
+            Sledgehammer.getInstance().getLogger().debug("{} registered for {}", commandClass.getSimpleName(), parentCommand.getClass().getSimpleName());
+            return true;
         }
         
-        getCommandClasses().add(commandClass);
-        AbstractCommand command = Toolbox.newInstance(commandClass).orElse(null);
+        return false;
+    }
+    
+    private static Command registerCommand(Set<Command> commands, Class<? extends Command> commandClass) {
+        if (COMMAND_CLASSES.contains(commandClass)) {
+            Sledgehammer.getInstance().getLogger().warn("{} is already registered", Toolbox.getClassSimpleName(commandClass));
+            return null;
+        }
+        
+        COMMAND_CLASSES.add(commandClass);
+        Command command = Toolbox.newInstance(commandClass);
         if (command == null) {
-            Sledgehammer.getInstance().getLogger().error("{} failed to initialize", commandClass.getSimpleName());
-            return false;
+            Sledgehammer.getInstance().getLogger().error("{} failed to initialize", Toolbox.getClassSimpleName(commandClass));
+            return null;
         }
         
-        parentCommand.getChildren().add(command);
-        Sledgehammer.getInstance().debug("{} registered for {}", commandClass.getSimpleName(), parentCommand.getClass().getSimpleName());
-        return true;
+        if (!command.prepare()) {
+            Sledgehammer.getInstance().getLogger().warn("{} failed to prepare", Toolbox.getClassSimpleName(commandClass));
+            return null;
+        }
+        
+        if (commands.add(command)) {
+            return command;
+        }
+        
+        return null;
     }
     
-    public static Optional<AbstractCommand> getCommand(List<String> arguments) {
-        return getCommand(null, arguments);
+    public static Command getCommand(Class<? extends Command> commandClass) {
+        return getCommand(null, commandClass);
     }
     
-    private static Optional<AbstractCommand> getCommand(AbstractCommand parentCommand, List<String> arguments) {
-        Set<AbstractCommand> commands = Sets.newLinkedHashSet();
+    public static Command getCommand(Command parentCommand, Class<? extends Command> commandClass) {
+        Set<Command> commands = Sets.newLinkedHashSet();
         if (parentCommand != null) {
             commands.addAll(parentCommand.getChildren());
         } else {
-            commands.addAll(getCommands());
+            commands.addAll(COMMANDS);
         }
         
-        if (arguments.isEmpty() || commands.isEmpty()) {
-            return Optional.ofNullable(parentCommand);
+        for (Command command : commands) {
+            if (command.getClass() == commandClass) {
+                return command;
+            }
+            
+            Command childCommand = getCommand(command, commandClass);
+            if (childCommand != null) {
+                return childCommand;
+            }
         }
         
-        for (AbstractCommand command : commands) {
-            if (Toolbox.containsIgnoreCase(command.getAliases(), arguments.get(0))) {
+        return null;
+    }
+    
+    public static Command getCommand(List<String> arguments) {
+        return getCommand(null, arguments);
+    }
+    
+    private static Command getCommand(Command parentCommand, List<String> arguments) {
+        if (arguments.isEmpty()) {
+            return parentCommand;
+        }
+        
+        Set<Command> commands = Sets.newLinkedHashSet();
+        if (parentCommand != null) {
+            commands.addAll(parentCommand.getChildren());
+        } else {
+            commands.addAll(COMMANDS);
+        }
+        
+        for (Command command : commands) {
+            if (StringUtils.containsIgnoreCase(command.getAliases(), arguments.get(0))) {
                 arguments.remove(0);
                 return getCommand(command, arguments);
             }
         }
         
-        return Optional.ofNullable(parentCommand);
-    }
-    
-    private static List<String> getArguments(String[] strings) {
-        List<String> arguments = Lists.newArrayList();
-        for (String string : strings) {
-            String argument = Toolbox.filter(string);
-            if (StringUtils.isNotBlank(argument)) {
-                arguments.add(argument);
-            }
-        }
-        
-        return arguments;
-    }
-    
-    public static Set<AbstractCommand> getCommands() {
-        return COMMANDS;
-    }
-    
-    private static Set<Class<? extends AbstractCommand>> getCommandClasses() {
-        return COMMAND_CLASSES;
+        return parentCommand;
     }
 }

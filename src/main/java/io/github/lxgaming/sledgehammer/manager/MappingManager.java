@@ -25,7 +25,7 @@ import io.github.lxgaming.sledgehammer.configuration.annotation.Mapping;
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
-import org.apache.commons.lang3.StringUtils;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -33,12 +33,12 @@ import java.util.Optional;
 
 public final class MappingManager {
     
-    private static final Map<String, Boolean> MIXIN_MAPPINGS = Maps.newHashMap();
-    private static final Map<String, Boolean> MOD_MAPPINGS = Maps.newHashMap();
-    private static final Map<Enum, SledgehammerPlatform.State> STATE_MAPPINGS = Maps.newHashMap();
+    public static final Map<String, Boolean> MIXIN_MAPPINGS = Maps.newHashMap();
+    public static final Map<String, Boolean> MOD_MAPPINGS = Maps.newHashMap();
+    public static final Map<Enum<?>, SledgehammerPlatform.State> STATE_MAPPINGS = Maps.newHashMap();
     
-    public static void register() {
-        Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).map(GeneralCategory::getModMappings).ifPresent(getModMappings()::putAll);
+    public static void prepare() {
+        Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).map(GeneralCategory::getModMappings).ifPresent(MOD_MAPPINGS::putAll);
         
         MixinCategory mixinCategory = Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).orElseThrow(NullPointerException::new);
         for (Field field : mixinCategory.getClass().getDeclaredFields()) {
@@ -54,6 +54,7 @@ public final class MappingManager {
         MIXIN_MAPPINGS.put("core.client.MinecraftMixin", true);
         MIXIN_MAPPINGS.put("core.crash.CrashReportMixin", true);
         MIXIN_MAPPINGS.put("core.server.DedicatedServerMixin", true);
+        MIXIN_MAPPINGS.put("core.util.text.TextFormattingMixin", true);
         MIXIN_MAPPINGS.put("forge.fml.common.LoaderMixin", SledgehammerLaunch.isForgeRegistered() && !MOD_MAPPINGS.isEmpty());
         MIXIN_MAPPINGS.put("forge.fml.common.MetadataCollectionAccessor", SledgehammerLaunch.isForgeRegistered() && !MOD_MAPPINGS.isEmpty());
         MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Mod", SledgehammerLaunch.isForgeRegistered() && !SledgehammerLaunch.isSpongeRegistered());
@@ -92,26 +93,14 @@ public final class MappingManager {
     }
     
     public static Optional<Boolean> getMixinMapping(String mixin) {
-        return Optional.ofNullable(getMixinMappings().get(StringUtils.removeStart(mixin, "io.github.lxgaming.sledgehammer.mixin.")));
+        return Optional.ofNullable(MIXIN_MAPPINGS.get(StringUtils.removeStart(mixin, "io.github.lxgaming.sledgehammer.mixin.")));
     }
     
     public static Optional<Boolean> getModMapping(String mod) {
-        return Optional.ofNullable(getModMappings().get(mod));
+        return Optional.ofNullable(MOD_MAPPINGS.get(mod));
     }
     
-    public static Optional<SledgehammerPlatform.State> getStateMapping(Enum state) {
-        return Optional.ofNullable(getStateMappings().get(state));
-    }
-    
-    public static Map<String, Boolean> getMixinMappings() {
-        return MIXIN_MAPPINGS;
-    }
-    
-    public static Map<String, Boolean> getModMappings() {
-        return MOD_MAPPINGS;
-    }
-    
-    public static Map<Enum, SledgehammerPlatform.State> getStateMappings() {
-        return STATE_MAPPINGS;
+    public static Optional<SledgehammerPlatform.State> getStateMapping(Enum<?> state) {
+        return Optional.ofNullable(STATE_MAPPINGS.get(state));
     }
 }

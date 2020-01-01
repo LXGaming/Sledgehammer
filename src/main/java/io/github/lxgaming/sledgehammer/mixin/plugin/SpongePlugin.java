@@ -17,7 +17,7 @@
 package io.github.lxgaming.sledgehammer.mixin.plugin;
 
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
-import org.apache.commons.lang3.StringUtils;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 
 public class SpongePlugin extends AbstractPlugin {
     

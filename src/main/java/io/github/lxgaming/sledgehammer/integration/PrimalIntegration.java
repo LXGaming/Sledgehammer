@@ -32,17 +32,19 @@ import nmd.primal.core.common.helper.PlayerHelper;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.CauseStackManager;
 
-public class PrimalIntegration extends AbstractIntegration {
+public class PrimalIntegration extends Integration {
     
-    public PrimalIntegration() {
+    @Override
+    public boolean prepare() {
         addDependency("forge");
         addDependency("primal");
         addDependency("sponge");
-        setState(SledgehammerPlatform.State.INITIALIZATION);
+        state(SledgehammerPlatform.State.INITIALIZATION);
+        return true;
     }
     
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         MinecraftForge.EVENT_BUS.register(this);
     }
     

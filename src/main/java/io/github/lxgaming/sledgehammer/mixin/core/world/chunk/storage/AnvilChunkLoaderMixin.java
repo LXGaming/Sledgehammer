@@ -23,18 +23,19 @@ import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
 import io.github.lxgaming.sledgehammer.exception.ChunkSaveException;
-import io.github.lxgaming.sledgehammer.util.Broadcast;
-import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.manager.LocaleManager;
+import io.github.lxgaming.sledgehammer.util.Locale;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import io.github.lxgaming.sledgehammer.util.text.adapter.TextAdapter;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.text.ChatType;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -153,19 +154,14 @@ public abstract class AnvilChunkLoaderMixin {
         
         // Broadcast
         if (mixinCategory.isChunkSaveAlert()) {
-            Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).ifPresent(generalCategory -> {
-                String message = generalCategory.getMessageCategory().getChunkSave();
-                if (StringUtils.isBlank(message)) {
-                    return;
+            ITextComponent textComponent = LocaleManager.serialize(Locale.MESSAGE_CHUNK_SAVE, pos.x, pos.z);
+            for (EntityPlayer player : SledgehammerPlatform.getInstance().getServer().getPlayerList().getPlayers()) {
+                if (!player.canUseCommand(4, "sledgehammer.broadcast.chunksave")) {
+                    continue;
                 }
                 
-                Broadcast.builder()
-                        .message(Toolbox.convertColor(message.replace("[X]", String.valueOf(pos.x)).replace("[Z]", String.valueOf(pos.z))))
-                        .permission(Reference.ID + ".broadcast.chunksave")
-                        .type(ChatType.CHAT)
-                        .build()
-                        .sendMessage();
-            });
+                TextAdapter.sendMessage(player, textComponent);
+            }
         }
     }
     

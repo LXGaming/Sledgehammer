@@ -16,18 +16,14 @@
 
 package io.github.lxgaming.sledgehammer.mixin.storagenetwork.network;
 
-import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.util.Broadcast;
-import io.github.lxgaming.sledgehammer.util.Text;
+import io.github.lxgaming.sledgehammer.util.Locale;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
 import mrriegel.storagenetwork.gui.IStorageContainer;
 import mrriegel.storagenetwork.network.InsertMessage;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ChatType;
-import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -63,23 +59,7 @@ public abstract class InsertMessage_1Mixin {
         ItemStack packetItemStack = ((InsertMessageAccessor) message).accessor$getItemStack();
         if (!ItemStack.areItemStacksEqual(player.inventory.getItemStack(), packetItemStack)) {
             callbackInfo.cancel();
-            sledgehammer$disconnect(player, packetItemStack);
+            LocaleAdapter.disconnect(player, Locale.MESSAGE_STORAGE_NETWORK_EXPLOIT, Toolbox.getResourceLocation(packetItemStack.getItem()).map(ResourceLocation::toString).orElse("Unknown"));
         }
-    }
-    
-    private void sledgehammer$disconnect(EntityPlayerMP player, ItemStack itemStack) {
-        Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).ifPresent(generalCategory -> {
-            String message = generalCategory.getMessageCategory().getStorageNetworkExploit();
-            if (StringUtils.isBlank(message)) {
-                return;
-            }
-            
-            Broadcast broadcast = Broadcast.builder()
-                    .message(Toolbox.convertColor(message.replace("[ID]", Toolbox.getResourceLocation(itemStack.getItem()).map(ResourceLocation::toString).orElse("Unknown"))))
-                    .type(ChatType.CHAT)
-                    .build();
-            
-            player.connection.disconnect(Text.of(Toolbox.getTextPrefix(), broadcast.getMessage()));
-        });
     }
 }

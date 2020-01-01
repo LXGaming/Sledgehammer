@@ -14,23 +14,9 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.command;
+package io.github.lxgaming.sledgehammer.bridge.util.text;
 
-import io.github.lxgaming.sledgehammer.util.Toolbox;
-import net.minecraft.command.ICommandSender;
-
-import java.util.List;
-
-public class InfoCommand extends AbstractCommand {
+public interface TextFormattingBridge {
     
-    public InfoCommand() {
-        addAlias("info");
-        addAlias("information");
-        addAlias("version");
-    }
-    
-    @Override
-    public void execute(ICommandSender commandSender, List<String> arguments) {
-        commandSender.sendMessage(Toolbox.getPluginInformation());
-    }
+    char bridge$getFormattingCode();
 }

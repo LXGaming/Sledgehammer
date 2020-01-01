@@ -1,0 +1,28 @@
+{
+  "command.base": "{general.prefix} &9Use &a/{} help &9to view available commands.",
+  "command.error": "{general.prefix} &cAn error has occurred: &f{}",
+  "command.exception": "{general.prefix} &cAn error has occurred. Details are available in console.",
+  "command.invalid_arguments": "Invalid arguments: {}",
+  "command.no_permission": "&cYou do not have permission to execute this command!",
+  "command.not_found": "{general.prefix} &cCommand not found.",
+  "command.debug.disable": "{general.prefix} &cDebugging disabled",
+  "command.debug.enable": "{general.prefix} &aDebugging enabled",
+  "command.reload.failure": "&cAn error occurred. Please check the console",
+  "command.reload.success": "&aSuccessfully reloaded",
+  "configuration.error": "{general.prefix} &cConfiguration error.",
+  "general.information": [
+    "&9&lSledgehammer&r",
+    "    &8Version: &f{}",
+    "    &8Authors: &f{}",
+    "    &8Source: &9{}",
+    "    &8Website: &9{}"
+  ],
+  "general.prefix": "&9&l[Sledgehammer]",
+  "message.chunk_save": "&fChunk ({}, {}) &cfailed to save",
+  "message.item_teleport": "&f{} &cwas lost in time and space",
+  "message.move_outside_border": "&cCannot move outside of the world border",
+  "message.project_red_exploit": "&cInvalid Item: &f{}",
+  "message.storage_network_exploit": "&cInvalid Item: &f{}",
+  "parse.boolean.error": "Failed to parse {} as a boolean",
+  "translation.invalid": "&cInvalid translation: &f{}"
+}

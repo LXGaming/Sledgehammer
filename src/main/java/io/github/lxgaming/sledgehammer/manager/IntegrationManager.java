@@ -21,9 +21,9 @@ import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
-import io.github.lxgaming.sledgehammer.integration.AbstractIntegration;
 import io.github.lxgaming.sledgehammer.integration.BotaniaIntegration;
 import io.github.lxgaming.sledgehammer.integration.ForgeIntegration;
+import io.github.lxgaming.sledgehammer.integration.Integration;
 import io.github.lxgaming.sledgehammer.integration.MistIntegration;
 import io.github.lxgaming.sledgehammer.integration.PrimalIntegration;
 import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border;
@@ -35,10 +35,10 @@ import java.util.function.Function;
 
 public final class IntegrationManager {
     
-    private static final Set<AbstractIntegration> INTEGRATIONS = Sets.newLinkedHashSet();
-    private static final Set<Class<? extends AbstractIntegration>> INTEGRATION_CLASSES = Sets.newLinkedHashSet();
+    public static final Set<Integration> INTEGRATIONS = Sets.newLinkedHashSet();
+    private static final Set<Class<? extends Integration>> INTEGRATION_CLASSES = Sets.newHashSet();
     
-    public static void register() {
+    public static void prepare() {
         registerIntegration(BotaniaIntegration.class, IntegrationCategory::isBotania);
         registerIntegration(ForgeIntegration.class, IntegrationCategory::isForge);
         registerIntegration(MistIntegration.class, IntegrationCategory::isMist);
@@ -47,13 +47,9 @@ public final class IntegrationManager {
         registerIntegration(SpongeIntegration_Death.class, IntegrationCategory::isSpongeDeath);
     }
     
-    public static void process() {
+    public static void execute() {
         SledgehammerPlatform.State state = SledgehammerPlatform.getInstance().getState();
-        if (state == null) {
-            return;
-        }
-        
-        for (AbstractIntegration integration : getIntegrations()) {
+        for (Integration integration : INTEGRATIONS) {
             if (integration.getState() != state) {
                 continue;
             }
@@ -67,7 +63,7 @@ public final class IntegrationManager {
             
             if (!missingDependencies.isEmpty()) {
                 Sledgehammer.getInstance().getLogger().warn("{} is missing the following dependencies: {}",
-                        integration.getClass().getSimpleName(), String.join(", ", missingDependencies));
+                        Toolbox.getClassSimpleName(integration.getClass()), String.join(", ", missingDependencies));
                 continue;
             }
             
@@ -81,33 +77,30 @@ public final class IntegrationManager {
         }
     }
     
-    private static boolean registerIntegration(Class<? extends AbstractIntegration> integrationClass, Function<IntegrationCategory, Boolean> function) {
-        if (getIntegrationClasses().contains(integrationClass)) {
-            Sledgehammer.getInstance().getLogger().warn("{} is already registered", integrationClass.getSimpleName());
+    private static boolean registerIntegration(Class<? extends Integration> integrationClass, Function<IntegrationCategory, Boolean> function) {
+        if (INTEGRATION_CLASSES.contains(integrationClass)) {
+            Sledgehammer.getInstance().getLogger().warn("{} is already registered", Toolbox.getClassSimpleName(integrationClass));
             return false;
         }
         
-        getIntegrationClasses().add(integrationClass);
+        INTEGRATION_CLASSES.add(integrationClass);
         if (!Sledgehammer.getInstance().getConfig().map(Config::getIntegrationCategory).map(function).orElse(false)) {
             return false;
         }
         
-        AbstractIntegration integration = Toolbox.newInstance(integrationClass).orElse(null);
+        Integration integration = Toolbox.newInstance(integrationClass);
         if (integration == null) {
-            Sledgehammer.getInstance().getLogger().error("{} failed to initialize", integrationClass.getSimpleName());
+            Sledgehammer.getInstance().getLogger().error("{} failed to initialize", Toolbox.getClassSimpleName(integrationClass));
             return false;
         }
         
-        getIntegrations().add(integration);
-        Sledgehammer.getInstance().debug("{} registered", integrationClass.getSimpleName());
+        if (!integration.prepare()) {
+            Sledgehammer.getInstance().getLogger().warn("{} failed to prepare", Toolbox.getClassSimpleName(integrationClass));
+            return false;
+        }
+        
+        INTEGRATIONS.add(integration);
+        Sledgehammer.getInstance().getLogger().debug("{} registered", Toolbox.getClassSimpleName(integrationClass));
         return true;
-    }
-    
-    public static Set<AbstractIntegration> getIntegrations() {
-        return INTEGRATIONS;
-    }
-    
-    private static Set<Class<? extends AbstractIntegration>> getIntegrationClasses() {
-        return INTEGRATION_CLASSES;
     }
 }

@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.mixin.core.server;
 
-import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.Sledgehammer;
 import net.minecraft.server.dedicated.DedicatedServer;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
@@ -41,7 +41,7 @@ public abstract class DedicatedServerMixin {
     )
     private void onInit(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (callbackInfoReturnable.getReturnValue()) {
-            LOGGER.info("{} v{} was successfully applied!", Reference.NAME, Reference.VERSION);
+            LOGGER.info("{} v{} was successfully applied!", Sledgehammer.NAME, Sledgehammer.VERSION);
         }
     }
 }

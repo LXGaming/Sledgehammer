@@ -17,7 +17,6 @@
 package io.github.lxgaming.sledgehammer.mixin.core.server.management;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.util.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.management.PlayerChunkMap;
 import net.minecraft.server.management.PlayerChunkMapEntry;
@@ -74,7 +73,7 @@ public abstract class PlayerChunkMapMixin {
                     .add("Chunk: %d, %d", entry.getPos().x, entry.getPos().z)
                     .add("Players: %s", entry.getWatchingPlayers().stream().map(EntityPlayer::getName).collect(Collectors.joining(", ")))
                     .add("StackTrace:")
-                    .add(new Exception(String.format("%s v%s", Reference.NAME, Reference.VERSION)))
+                    .add(new Exception(String.format("%s v%s", Sledgehammer.NAME, Sledgehammer.VERSION)))
                     .log(Sledgehammer.getInstance().getLogger(), Level.ERROR);
             
             callbackInfo.cancel();
@@ -95,7 +94,7 @@ public abstract class PlayerChunkMapMixin {
                     .add("Chunk: %d, %d", entry.getPos().x, entry.getPos().z)
                     .add("Players: %s", entry.getWatchingPlayers().stream().map(EntityPlayer::getName).collect(Collectors.joining(", ")))
                     .add("StackTrace:")
-                    .add(new Exception(String.format("%s v%s", Reference.NAME, Reference.VERSION)))
+                    .add(new Exception(String.format("%s v%s", Sledgehammer.NAME, Sledgehammer.VERSION)))
                     .log(Sledgehammer.getInstance().getLogger(), Level.ERROR);
             
             callbackInfo.cancel();

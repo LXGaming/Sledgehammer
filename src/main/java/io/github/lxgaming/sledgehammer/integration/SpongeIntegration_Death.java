@@ -17,7 +17,7 @@
 package io.github.lxgaming.sledgehammer.integration;
 
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
-import org.apache.commons.lang3.StringUtils;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
@@ -25,15 +25,17 @@ import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
 import org.spongepowered.api.event.entity.DestructEntityEvent;
 import org.spongepowered.api.event.filter.cause.Root;
 
-public class SpongeIntegration_Death extends AbstractIntegration {
+public class SpongeIntegration_Death extends Integration {
     
-    public SpongeIntegration_Death() {
+    @Override
+    public boolean prepare() {
         addDependency("sponge");
-        setState(SledgehammerPlatform.State.INITIALIZATION);
+        state(SledgehammerPlatform.State.INITIALIZATION);
+        return true;
     }
     
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         Sponge.getEventManager().registerListeners(SledgehammerPlatform.getInstance().getContainer(), this);
     }
     

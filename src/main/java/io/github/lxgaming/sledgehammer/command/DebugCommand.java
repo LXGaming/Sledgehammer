@@ -19,34 +19,56 @@ package io.github.lxgaming.sledgehammer.command;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
-import io.github.lxgaming.sledgehammer.util.Text;
-import io.github.lxgaming.sledgehammer.util.Toolbox;
+import io.github.lxgaming.sledgehammer.util.Locale;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
+import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.text.TextFormatting;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.List;
 
-public class DebugCommand extends AbstractCommand {
+public class DebugCommand extends Command {
     
-    public DebugCommand() {
-        addAlias("debug");
-        setPermission("sledgehammer.debug");
+    @Override
+    public boolean prepare() {
+        addAlias("Debug");
+        permission("sledgehammer.debug");
+        return true;
     }
     
     @Override
-    public void execute(ICommandSender commandSender, List<String> arguments) {
+    public void execute(ICommandSender commandSender, List<String> arguments) throws Exception {
         GeneralCategory generalCategory = Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).orElse(null);
         if (generalCategory == null) {
-            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Configuration error"));
+            LocaleAdapter.sendFeedback(commandSender, Locale.CONFIGURATION_ERROR);
             return;
         }
         
-        if (generalCategory.isDebug()) {
-            generalCategory.setDebug(false);
-            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.RED, "Debugging disabled"));
+        Boolean state;
+        if (!arguments.isEmpty()) {
+            String argument = arguments.remove(0);
+            if (StringUtils.isNotBlank(argument)) {
+                state = BooleanUtils.toBooleanObject(argument);
+                if (state == null) {
+                    LocaleAdapter.sendFeedback(commandSender, Locale.PARSE_BOOLEAN_ERROR, argument);
+                }
+            } else {
+                state = null;
+            }
         } else {
-            generalCategory.setDebug(true);
-            commandSender.sendMessage(Text.of(Toolbox.getTextPrefix(), TextFormatting.GREEN, "Debugging enabled"));
+            state = null;
+        }
+        
+        if (state != null) {
+            generalCategory.setDebug(state);
+        } else {
+            generalCategory.setDebug(!generalCategory.isDebug());
+        }
+        
+        if (generalCategory.isDebug()) {
+            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_DEBUG_ENABLE);
+        } else {
+            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_DEBUG_DISABLE);
         }
     }
 }

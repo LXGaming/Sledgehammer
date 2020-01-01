@@ -21,7 +21,6 @@ import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
-import io.github.lxgaming.sledgehammer.util.Reference;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.api.GameState;
@@ -49,18 +48,18 @@ public abstract class SledgehammerPlatformMixin_Plugin {
         instance = Toolbox.cast(this, SledgehammerPlatform.class);
         Sledgehammer.init();
         
-        MappingManager.getStateMappings().put(GameState.CONSTRUCTION, SledgehammerPlatform.State.CONSTRUCTION);
-        MappingManager.getStateMappings().put(GameState.PRE_INITIALIZATION, SledgehammerPlatform.State.PRE_INITIALIZATION);
-        MappingManager.getStateMappings().put(GameState.INITIALIZATION, SledgehammerPlatform.State.INITIALIZATION);
-        MappingManager.getStateMappings().put(GameState.POST_INITIALIZATION, SledgehammerPlatform.State.POST_INITIALIZATION);
-        MappingManager.getStateMappings().put(GameState.LOAD_COMPLETE, SledgehammerPlatform.State.LOAD_COMPLETE);
-        MappingManager.getStateMappings().put(GameState.SERVER_ABOUT_TO_START, SledgehammerPlatform.State.SERVER_ABOUT_TO_START);
-        MappingManager.getStateMappings().put(GameState.SERVER_STARTING, SledgehammerPlatform.State.SERVER_STARTING);
-        MappingManager.getStateMappings().put(GameState.SERVER_STARTED, SledgehammerPlatform.State.SERVER_STARTED);
-        MappingManager.getStateMappings().put(GameState.SERVER_STOPPING, SledgehammerPlatform.State.SERVER_STOPPING);
-        MappingManager.getStateMappings().put(GameState.SERVER_STOPPED, SledgehammerPlatform.State.SERVER_STOPPED);
+        MappingManager.STATE_MAPPINGS.put(GameState.CONSTRUCTION, SledgehammerPlatform.State.CONSTRUCTION);
+        MappingManager.STATE_MAPPINGS.put(GameState.PRE_INITIALIZATION, SledgehammerPlatform.State.PRE_INITIALIZATION);
+        MappingManager.STATE_MAPPINGS.put(GameState.INITIALIZATION, SledgehammerPlatform.State.INITIALIZATION);
+        MappingManager.STATE_MAPPINGS.put(GameState.POST_INITIALIZATION, SledgehammerPlatform.State.POST_INITIALIZATION);
+        MappingManager.STATE_MAPPINGS.put(GameState.LOAD_COMPLETE, SledgehammerPlatform.State.LOAD_COMPLETE);
+        MappingManager.STATE_MAPPINGS.put(GameState.SERVER_ABOUT_TO_START, SledgehammerPlatform.State.SERVER_ABOUT_TO_START);
+        MappingManager.STATE_MAPPINGS.put(GameState.SERVER_STARTING, SledgehammerPlatform.State.SERVER_STARTING);
+        MappingManager.STATE_MAPPINGS.put(GameState.SERVER_STARTED, SledgehammerPlatform.State.SERVER_STARTED);
+        MappingManager.STATE_MAPPINGS.put(GameState.SERVER_STOPPING, SledgehammerPlatform.State.SERVER_STOPPING);
+        MappingManager.STATE_MAPPINGS.put(GameState.SERVER_STOPPED, SledgehammerPlatform.State.SERVER_STOPPED);
         
-        IntegrationManager.register();
+        IntegrationManager.prepare();
     }
     
     @Listener
@@ -73,22 +72,22 @@ public abstract class SledgehammerPlatformMixin_Plugin {
     
     @Listener
     public void onLoadComplete(GameLoadCompleteEvent event) {
-        Sledgehammer.getInstance().getLogger().info("{} v{} has loaded", Reference.NAME, Reference.VERSION);
+        Sledgehammer.getInstance().getLogger().info("{} v{} has loaded", Sledgehammer.NAME, Sledgehammer.VERSION);
     }
     
     @Listener
     public void onServerStarting(GameStartingServerEvent event) {
-        CommandManager.register();
+        CommandManager.prepare();
     }
     
     @Listener
     public void onStopped(GameStoppedEvent event) {
-        Sledgehammer.getInstance().getLogger().info("{} v{} has stopped", Reference.NAME, Reference.VERSION);
+        Sledgehammer.getInstance().getLogger().info("{} v{} has stopped", Sledgehammer.NAME, Sledgehammer.VERSION);
     }
     
     @Listener
     public void onGameState(GameStateEvent event) {
-        IntegrationManager.process();
+        IntegrationManager.execute();
     }
     
     /**
@@ -97,7 +96,7 @@ public abstract class SledgehammerPlatformMixin_Plugin {
      */
     @Overwrite
     public Object getContainer() {
-        return Sponge.getPluginManager().getPlugin(Reference.ID).orElse(null);
+        return Sponge.getPluginManager().getPlugin(Sledgehammer.ID).orElse(null);
     }
     
     /**

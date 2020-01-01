@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.mixin.vaultopic.client;
 
-import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.Sledgehammer;
 import net.minecraft.client.renderer.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -48,10 +48,10 @@ public abstract class ProjectorMixin {
                 setupCameraTransform = EntityRenderer.class.getDeclaredMethod("func_78479_a", Float.TYPE, Integer.TYPE);
                 setupCameraTransform.setAccessible(true);
                 sledgehammer$state = true;
-                Vaultopic.logger.info("{} fixed setupCameraTransform", Reference.NAME);
+                Vaultopic.logger.info("{} fixed setupCameraTransform", Sledgehammer.NAME);
             }
         } catch (Exception ex) {
-            Vaultopic.logger.info("{} failed to fix setupCameraTransform", Reference.NAME);
+            Vaultopic.logger.info("{} failed to fix setupCameraTransform", Sledgehammer.NAME);
         }
     }
 }

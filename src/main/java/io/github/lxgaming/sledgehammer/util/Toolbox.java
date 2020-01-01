@@ -25,46 +25,14 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import org.apache.commons.lang3.StringUtils;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 
 public class Toolbox {
-    
-    public static ITextComponent getTextPrefix() {
-        return Text.of(
-                TextFormatting.BLUE, TextFormatting.BOLD,
-                new HoverEvent(HoverEvent.Action.SHOW_TEXT, getPluginInformation()),
-                "[" + Reference.NAME + "]", " "
-        );
-    }
-    
-    public static ITextComponent getPluginInformation() {
-        return Text.of(
-                TextFormatting.BLUE, TextFormatting.BOLD, Reference.NAME, Text.NEW_LINE,
-                TextFormatting.DARK_GRAY, "    Version: ", TextFormatting.WHITE, Reference.VERSION, Text.NEW_LINE,
-                TextFormatting.DARK_GRAY, "    Authors: ", TextFormatting.WHITE, Reference.AUTHORS, Text.NEW_LINE,
-                TextFormatting.DARK_GRAY, "    Source: ", TextFormatting.BLUE, createURLEvent(Reference.SOURCE), Reference.SOURCE, Text.NEW_LINE,
-                TextFormatting.DARK_GRAY, "    Website: ", TextFormatting.BLUE, createURLEvent(Reference.WEBSITE), Reference.WEBSITE
-        );
-    }
-    
-    public static ClickEvent createURLEvent(String url) {
-        return new ClickEvent(ClickEvent.Action.OPEN_URL, url);
-    }
-    
-    public static String convertColor(String string) {
-        return string.replaceAll("(?i)\u0026([0-9A-FK-OR])", "\u00A7$1");
-    }
     
     public static String formatUnit(long unit, String singular, String plural) {
         if (unit == 1) {
@@ -114,55 +82,23 @@ public class Toolbox {
         return Optional.empty();
     }
     
-    /**
-     * Removes non-printable characters (excluding new line and carriage return) in the provided {@link java.lang.String String}.
-     *
-     * @param string The {@link java.lang.String String} to filter.
-     * @return The filtered {@link java.lang.String String}.
-     */
-    public static String filter(String string) {
-        return StringUtils.replaceAll(string, "[^\\x20-\\x7E\\x0A\\x0D]", "");
-    }
-    
-    public static boolean containsIgnoreCase(Collection<String> list, String targetString) {
-        if (list == null || list.isEmpty()) {
-            return false;
+    public static String getClassSimpleName(Class<?> type) {
+        if (type.getEnclosingClass() != null) {
+            return getClassSimpleName(type.getEnclosingClass()) + "." + type.getSimpleName();
         }
         
-        for (String string : list) {
-            if (StringUtils.equalsIgnoreCase(string, targetString)) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
-    public static Optional<Integer> parseInteger(String string) {
-        try {
-            return Optional.of(Integer.parseInt(string));
-        } catch (NumberFormatException ex) {
-            return Optional.empty();
-        }
-    }
-    
-    public static String getClassSimpleName(Class<?> clazz) {
-        if (clazz.getEnclosingClass() != null) {
-            return getClassSimpleName(clazz.getEnclosingClass()) + "." + clazz.getSimpleName();
-        }
-        
-        return clazz.getSimpleName();
+        return type.getSimpleName();
     }
     
     public static <T> T cast(Object object, Class<? extends T> type) {
         return type.cast(object);
     }
     
-    public static <T> Optional<T> newInstance(Class<? extends T> type) {
+    public static <T> T newInstance(Class<? extends T> type) {
         try {
-            return Optional.of(type.newInstance());
+            return type.newInstance();
         } catch (Throwable ex) {
-            return Optional.empty();
+            return null;
         }
     }
 }

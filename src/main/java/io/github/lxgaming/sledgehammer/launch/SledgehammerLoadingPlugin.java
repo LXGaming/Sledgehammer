@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.launch;
 
-import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.Sledgehammer;
 import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
@@ -24,14 +24,14 @@ import java.io.File;
 import java.util.Map;
 
 @IFMLLoadingPlugin.MCVersion(value = "1.12.2")
-@IFMLLoadingPlugin.Name(value = Reference.NAME)
+@IFMLLoadingPlugin.Name(value = Sledgehammer.NAME)
 @IFMLLoadingPlugin.SortingIndex(value = Integer.MIN_VALUE)
 public class SledgehammerLoadingPlugin implements IFMLLoadingPlugin {
     
     public SledgehammerLoadingPlugin() {
         if (SledgehammerLaunch.isStateTweakerPresent()) {
             SledgehammerLaunch.getLogger().error("------------------------- ERROR -------------------------");
-            SledgehammerLaunch.getLogger().error("An attempt to initialize {} was made by the EnvironmentStateTweaker", Reference.NAME);
+            SledgehammerLaunch.getLogger().error("An attempt to initialize {} was made by the EnvironmentStateTweaker", Sledgehammer.NAME);
             SledgehammerLaunch.getLogger().error("This indicates that Mixin has been initialized incorrectly");
             SledgehammerLaunch.getLogger().error("------------------------- ERROR -------------------------");
             return;
@@ -69,9 +69,9 @@ public class SledgehammerLoadingPlugin implements IFMLLoadingPlugin {
         }
         
         // Remove Transformer
-        if (CoreModManager.getTransformers().remove(Reference.NAME + " (" + location + ")") == null) {
+        if (CoreModManager.getTransformers().remove(Sledgehammer.NAME + " (" + location + ")") == null) {
             // Remove Transformer fallback
-            CoreModManager.getTransformers().keySet().removeIf(name -> name.startsWith(Reference.NAME) || name.startsWith(getClass().getSimpleName()));
+            CoreModManager.getTransformers().keySet().removeIf(name -> name.startsWith(Sledgehammer.NAME) || name.startsWith(getClass().getSimpleName()));
         }
     }
     

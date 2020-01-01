@@ -21,7 +21,7 @@ import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
-import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -33,7 +33,6 @@ import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLStateEvent;
-import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -55,33 +54,33 @@ public abstract class SledgehammerPlatformMixin_Mod {
         instance = Toolbox.cast(this, SledgehammerPlatform.class);
         Sledgehammer.init();
         
-        MappingManager.getStateMappings().put(LoaderState.CONSTRUCTING, SledgehammerPlatform.State.CONSTRUCTION);
-        MappingManager.getStateMappings().put(LoaderState.PREINITIALIZATION, SledgehammerPlatform.State.PRE_INITIALIZATION);
-        MappingManager.getStateMappings().put(LoaderState.INITIALIZATION, SledgehammerPlatform.State.INITIALIZATION);
-        MappingManager.getStateMappings().put(LoaderState.POSTINITIALIZATION, SledgehammerPlatform.State.POST_INITIALIZATION);
-        MappingManager.getStateMappings().put(LoaderState.AVAILABLE, SledgehammerPlatform.State.LOAD_COMPLETE);
-        MappingManager.getStateMappings().put(LoaderState.SERVER_ABOUT_TO_START, SledgehammerPlatform.State.SERVER_ABOUT_TO_START);
-        MappingManager.getStateMappings().put(LoaderState.SERVER_STARTING, SledgehammerPlatform.State.SERVER_STARTING);
-        MappingManager.getStateMappings().put(LoaderState.SERVER_STARTED, SledgehammerPlatform.State.SERVER_STARTED);
-        MappingManager.getStateMappings().put(LoaderState.SERVER_STOPPING, SledgehammerPlatform.State.SERVER_STOPPING);
-        MappingManager.getStateMappings().put(LoaderState.SERVER_STOPPED, SledgehammerPlatform.State.SERVER_STOPPED);
+        MappingManager.STATE_MAPPINGS.put(LoaderState.CONSTRUCTING, SledgehammerPlatform.State.CONSTRUCTION);
+        MappingManager.STATE_MAPPINGS.put(LoaderState.PREINITIALIZATION, SledgehammerPlatform.State.PRE_INITIALIZATION);
+        MappingManager.STATE_MAPPINGS.put(LoaderState.INITIALIZATION, SledgehammerPlatform.State.INITIALIZATION);
+        MappingManager.STATE_MAPPINGS.put(LoaderState.POSTINITIALIZATION, SledgehammerPlatform.State.POST_INITIALIZATION);
+        MappingManager.STATE_MAPPINGS.put(LoaderState.AVAILABLE, SledgehammerPlatform.State.LOAD_COMPLETE);
+        MappingManager.STATE_MAPPINGS.put(LoaderState.SERVER_ABOUT_TO_START, SledgehammerPlatform.State.SERVER_ABOUT_TO_START);
+        MappingManager.STATE_MAPPINGS.put(LoaderState.SERVER_STARTING, SledgehammerPlatform.State.SERVER_STARTING);
+        MappingManager.STATE_MAPPINGS.put(LoaderState.SERVER_STARTED, SledgehammerPlatform.State.SERVER_STARTED);
+        MappingManager.STATE_MAPPINGS.put(LoaderState.SERVER_STOPPING, SledgehammerPlatform.State.SERVER_STOPPING);
+        MappingManager.STATE_MAPPINGS.put(LoaderState.SERVER_STOPPED, SledgehammerPlatform.State.SERVER_STOPPED);
         
-        IntegrationManager.register();
+        IntegrationManager.prepare();
         
         ModContainer modContainer = Loader.instance().activeModContainer();
-        if (modContainer != null && StringUtils.equals(modContainer.getModId(), Reference.ID)) {
-            modContainer.getMetadata().logoFile = Reference.ID + ".png";
+        if (modContainer != null && StringUtils.equals(modContainer.getModId(), Sledgehammer.ID)) {
+            modContainer.getMetadata().logoFile = Sledgehammer.ID + ".png";
         }
     }
     
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
-        CommandManager.register();
+        CommandManager.prepare();
     }
     
     @Mod.EventHandler
     public void onState(FMLStateEvent event) {
-        IntegrationManager.process();
+        IntegrationManager.execute();
     }
     
     /**
@@ -90,7 +89,7 @@ public abstract class SledgehammerPlatformMixin_Mod {
      */
     @Overwrite
     public Object getContainer() {
-        return Loader.instance().getIndexedModList().get(Reference.ID);
+        return Loader.instance().getIndexedModList().get(Sledgehammer.ID);
     }
     
     /**

@@ -21,7 +21,6 @@ import io.github.lxgaming.sledgehammer.configuration.Configuration;
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
-import io.github.lxgaming.sledgehammer.util.Reference;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,12 +29,25 @@ import java.util.Optional;
 
 public class Sledgehammer {
     
+    public static final String ID = "sledgehammer";
+    public static final String NAME = "Sledgehammer";
+    public static final String VERSION = "@version@";
+    public static final String DESCRIPTION = "Smashes the stupid out of the client & server.";
+    public static final String AUTHORS = "LX_Gaming";
+    public static final String SOURCE = "https://github.io/LXGaming/Sledgehammer";
+    public static final String WEBSITE = "https://lxgaming.github.io/";
+    public static final String ACCEPTED_VERSIONS = "[1.12.2]";
+    public static final String ACCEPTABLE_REMOTE_VERSIONS = "*";
+    public static final String CERTIFICATE_FINGERPRINT = "565fa4dbf20e7c3c4423950ca8e0bdabf7568796";
+    
     private static Sledgehammer instance;
-    private final Logger logger = LogManager.getLogger(Reference.NAME);
-    private final Configuration configuration = new Configuration(Paths.get("config").resolve(Reference.ID + ".conf"));
+    private final Logger logger;
+    private final Configuration configuration;
     
     private Sledgehammer() {
         instance = this;
+        this.logger = LogManager.getLogger(Sledgehammer.NAME);
+        this.configuration = new Configuration(Paths.get("config").resolve(Sledgehammer.ID + ".conf"));
     }
     
     public static boolean init() {
@@ -45,9 +57,23 @@ public class Sledgehammer {
         
         SledgehammerLaunch.configureEnvironment();
         Sledgehammer sledgehammer = new Sledgehammer();
-        sledgehammer.getConfiguration().loadConfiguration();
-        MappingManager.register();
+        if (!sledgehammer.reload()) {
+            return false;
+        }
+        
+        MappingManager.prepare();
+        
         sledgehammer.getConfiguration().saveConfiguration();
+        return true;
+    }
+    
+    public boolean reload() {
+        getConfiguration().loadConfiguration();
+        if (!getConfig().isPresent()) {
+            return false;
+        }
+        
+        getConfiguration().saveConfiguration();
         return true;
     }
     
@@ -70,10 +96,6 @@ public class Sledgehammer {
     }
     
     public Optional<Config> getConfig() {
-        if (getConfiguration() != null) {
-            return Optional.ofNullable(getConfiguration().getConfig());
-        }
-        
-        return Optional.empty();
+        return Optional.ofNullable(getConfiguration().getConfig());
     }
 }

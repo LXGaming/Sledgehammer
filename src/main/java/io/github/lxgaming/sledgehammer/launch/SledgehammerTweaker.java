@@ -16,7 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.launch;
 
-import io.github.lxgaming.sledgehammer.util.Reference;
+import io.github.lxgaming.sledgehammer.Sledgehammer;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
@@ -48,7 +48,7 @@ public class SledgehammerTweaker implements ITweaker {
         if (!SledgehammerLaunch.isMixinRegistered()) {
             if (!SledgehammerLaunch.isEarly()) {
                 SledgehammerLaunch.getLogger().warn("------------------------- WARNING -------------------------");
-                SledgehammerLaunch.getLogger().warn("{} has detected that it hasn't loaded early enough", Reference.NAME);
+                SledgehammerLaunch.getLogger().warn("{} has detected that it hasn't loaded early enough", Sledgehammer.NAME);
                 SledgehammerLaunch.getLogger().warn("------------------------- WARNING -------------------------");
             }
             

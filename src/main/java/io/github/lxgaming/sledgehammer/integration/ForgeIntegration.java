@@ -30,15 +30,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Collections;
 import java.util.List;
 
-public class ForgeIntegration extends AbstractIntegration {
+public class ForgeIntegration extends Integration {
     
-    public ForgeIntegration() {
+    @Override
+    public boolean prepare() {
         addDependency("forge");
-        setState(SledgehammerPlatform.State.INITIALIZATION);
+        state(SledgehammerPlatform.State.INITIALIZATION);
+        return true;
     }
     
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         MinecraftForge.EVENT_BUS.register(this);
     }
     

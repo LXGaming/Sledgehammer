@@ -21,15 +21,17 @@ import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 
 import java.util.Set;
 
-public abstract class AbstractIntegration {
+public abstract class Integration {
     
     private final Set<String> dependencies = Sets.newLinkedHashSet();
-    private SledgehammerPlatform.State state = SledgehammerPlatform.State.INITIALIZATION;
+    private SledgehammerPlatform.State state;
+    
+    public abstract boolean prepare();
     
     public abstract void execute() throws Exception;
     
     protected final void addDependency(String dependency) {
-        getDependencies().add(dependency);
+        this.dependencies.add(dependency);
     }
     
     public final Set<String> getDependencies() {
@@ -40,7 +42,7 @@ public abstract class AbstractIntegration {
         return state;
     }
     
-    protected final void setState(SledgehammerPlatform.State state) {
+    protected final void state(SledgehammerPlatform.State state) {
         this.state = state;
     }
 }

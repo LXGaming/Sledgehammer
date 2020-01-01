@@ -18,6 +18,7 @@ package io.github.lxgaming.sledgehammer.mixin.forge.entity.passive;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IMerchant;
@@ -27,7 +28,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
-import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

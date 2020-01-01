@@ -17,11 +17,9 @@
 package io.github.lxgaming.sledgehammer.mixin.projectred.transportation;
 
 import codechicken.lib.packet.PacketCustom;
-import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.configuration.Config;
-import io.github.lxgaming.sledgehammer.util.Broadcast;
-import io.github.lxgaming.sledgehammer.util.Text;
+import io.github.lxgaming.sledgehammer.util.Locale;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
 import mrtjp.projectred.ProjectRedTransportation;
 import mrtjp.projectred.transportation.ItemRoutingChip;
 import mrtjp.projectred.transportation.RoutingChip;
@@ -29,8 +27,6 @@ import mrtjp.projectred.transportation.TransportationSPH$;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ChatType;
-import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -57,19 +53,7 @@ public abstract class TransportationSPHMixin {
                 player.inventory.markDirty();
             }
         } else {
-            Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).ifPresent(generalCategory -> {
-                String message = generalCategory.getMessageCategory().getProjectRedExploit();
-                if (StringUtils.isBlank(message)) {
-                    return;
-                }
-                
-                Broadcast broadcast = Broadcast.builder()
-                        .message(Toolbox.convertColor(message.replace("[ID]", Toolbox.getResourceLocation(stack.getItem()).map(ResourceLocation::toString).orElse("Unknown"))))
-                        .type(ChatType.CHAT)
-                        .build();
-                
-                player.connection.disconnect(Text.of(Toolbox.getTextPrefix(), broadcast.getMessage()));
-            });
+            LocaleAdapter.disconnect(player, Locale.MESSAGE_PROJECT_RED_EXPLOIT, Toolbox.getResourceLocation(stack.getItem()).map(ResourceLocation::toString).orElse("Unknown"));
         }
     }
 }

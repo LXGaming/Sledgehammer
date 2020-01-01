@@ -24,6 +24,7 @@
     "network.NetworkSystemMixin",
     "tileentity.TileEntityMixin",
     "util.text.TextComponentTranslationMixin",
+    "util.text.TextFormattingMixin",
     "util.LazyLoadBaseMixin",
     "world.biome.BiomeProviderMixin",
     "world.chunk.storage.AnvilChunkLoaderMixin",

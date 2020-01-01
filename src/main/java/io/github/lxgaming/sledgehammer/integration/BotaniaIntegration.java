@@ -27,17 +27,19 @@ import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.filter.Getter;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 
-public class BotaniaIntegration extends AbstractIntegration {
+public class BotaniaIntegration extends Integration {
     
-    public BotaniaIntegration() {
+    @Override
+    public boolean prepare() {
         addDependency("botania");
         addDependency("forge");
         addDependency("sponge");
-        setState(SledgehammerPlatform.State.INITIALIZATION);
+        state(SledgehammerPlatform.State.INITIALIZATION);
+        return true;
     }
     
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         Sponge.getEventManager().registerListeners(SledgehammerPlatform.getInstance().getContainer(), this);
     }
     

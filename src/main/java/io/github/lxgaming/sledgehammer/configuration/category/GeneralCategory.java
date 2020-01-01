@@ -17,20 +17,25 @@
 package io.github.lxgaming.sledgehammer.configuration.category;
 
 import com.google.common.collect.Maps;
-import io.github.lxgaming.sledgehammer.configuration.category.general.MessageCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
+import java.util.List;
 import java.util.Map;
 
 @ConfigSerializable
 public class GeneralCategory {
     
+    public static final String DEFAULT_LOCALE = "en_us";
+    
     @Setting(value = "debug", comment = "For debugging purposes")
     private boolean debug = false;
     
-    @Setting(value = "message")
-    private MessageCategory messageCategory = new MessageCategory();
+    @Setting(value = "locale")
+    private String locale = DEFAULT_LOCALE;
+    
+    @Setting(value = "locale-override")
+    private Map<String, List<String>> localeOverrides = Maps.newHashMap();
     
     @Setting(value = "mod", comment = ""
             + "False: Mod will not be loaded.\n"
@@ -45,8 +50,12 @@ public class GeneralCategory {
         this.debug = debug;
     }
     
-    public MessageCategory getMessageCategory() {
-        return messageCategory;
+    public String getLocale() {
+        return locale;
+    }
+    
+    public Map<String, List<String>> getLocaleOverrides() {
+        return localeOverrides;
     }
     
     public Map<String, Boolean> getModMappings() {

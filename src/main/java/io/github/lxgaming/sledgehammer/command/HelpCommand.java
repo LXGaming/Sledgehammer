@@ -16,77 +16,105 @@
 
 package io.github.lxgaming.sledgehammer.command;
 
-import com.google.common.collect.Lists;
+import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.manager.CommandManager;
-import io.github.lxgaming.sledgehammer.util.Reference;
-import io.github.lxgaming.sledgehammer.util.Text;
-import io.github.lxgaming.sledgehammer.util.Toolbox;
+import io.github.lxgaming.sledgehammer.util.Locale;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
+import io.github.lxgaming.sledgehammer.util.text.EmptyTextComponent;
+import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
+import io.github.lxgaming.sledgehammer.util.text.adapter.TextAdapter;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
 
-public class HelpCommand extends AbstractCommand {
+public class HelpCommand extends Command {
     
-    public HelpCommand() {
-        addAlias("help");
+    @Override
+    public boolean prepare() {
+        addAlias("Help");
         addAlias("?");
+        return true;
     }
     
     @Override
-    public void execute(ICommandSender commandSender, List<String> arguments) {
-        Optional<AbstractCommand> abstractCommand = CommandManager.getCommand(Lists.newArrayList(Reference.ID));
-        if (!abstractCommand.isPresent()) {
-            return;
-        }
-        
-        commandSender.sendMessage(Toolbox.getTextPrefix());
-        for (AbstractCommand command : abstractCommand.get().getChildren()) {
-            if (command == this || !command.checkPermission(commandSender)) {
+    public void execute(ICommandSender commandSender, List<String> arguments) throws Exception {
+        LocaleAdapter.sendFeedback(commandSender, Locale.GENERAL_PREFIX);
+        for (Command command : CommandManager.COMMANDS) {
+            if (command == this || !(StringUtils.isNotBlank(command.getPermission()) && commandSender.canUseCommand(4, command.getPermission()))) {
                 continue;
             }
             
-            ITextComponent textComponent = Text.of("");
-            textComponent.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/" + Reference.ID + " " + command.getName()));
-            textComponent.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, buildDescription(command)));
-            
-            textComponent.appendSibling(Text.of(
-                    TextFormatting.BLUE, "> ",
-                    TextFormatting.GREEN, "/" + Reference.ID + " " + command.getName()
-            ));
+            EmptyTextComponent rootTextComponent = new EmptyTextComponent();
+            rootTextComponent.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/" + Sledgehammer.ID + " " + String.join(" ", command.getPath()).toLowerCase()));
+            rootTextComponent.getStyle().setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, buildDescription(command)));
+            rootTextComponent.appendSibling(new TextComponentString("> ")
+                    .setStyle(new Style().setColor(TextFormatting.BLUE))
+            );
+            rootTextComponent.appendSibling(new TextComponentString("/" + Sledgehammer.ID + " " + String.join(" ", command.getPath()).toLowerCase())
+                    .setStyle(new Style().setColor(TextFormatting.GREEN))
+            );
             
             if (StringUtils.isNotBlank(command.getUsage())) {
-                textComponent.appendSibling(Text.of(TextFormatting.GREEN, " " + command.getUsage()));
+                rootTextComponent.appendSibling(new TextComponentString(" " + command.getUsage())
+                        .setStyle(new Style().setColor(TextFormatting.GREEN))
+                );
             }
             
-            commandSender.sendMessage(textComponent);
+            TextAdapter.sendFeedback(commandSender, rootTextComponent);
         }
     }
     
-    private ITextComponent buildDescription(AbstractCommand command) {
-        ITextComponent textComponent = Text.of(
-                TextFormatting.AQUA, "Command: ", TextFormatting.DARK_GREEN, StringUtils.capitalize(command.getName()), Text.NEW_LINE,
-                TextFormatting.AQUA, "Description: ", TextFormatting.DARK_GREEN, StringUtils.defaultIfBlank(command.getDescription(), "No description provided"), Text.NEW_LINE,
-                TextFormatting.AQUA, "Usage: ", TextFormatting.DARK_GREEN, "/" + Reference.ID + " " + command.getName()
+    private ITextComponent buildDescription(Command command) {
+        EmptyTextComponent rootTextComponent = new EmptyTextComponent();
+        rootTextComponent.appendSibling(new TextComponentString("Command: ")
+                .setStyle(new Style().setColor(TextFormatting.AQUA))
+        );
+        rootTextComponent.appendSibling(new TextComponentString(command.getPrimaryAlias().orElse("unknown"))
+                .setStyle(new Style().setColor(TextFormatting.DARK_GREEN))
+        );
+        
+        rootTextComponent.appendSibling(new TextComponentString("\n"));
+        rootTextComponent.appendSibling(new TextComponentString("Description: ")
+                .setStyle(new Style().setColor(TextFormatting.AQUA))
+        );
+        rootTextComponent.appendSibling(new TextComponentString(StringUtils.defaultIfEmpty(command.getDescription(), "No description provided"))
+                .setStyle(new Style().setColor(TextFormatting.DARK_GREEN))
+        );
+        
+        rootTextComponent.appendSibling(new TextComponentString("\n"));
+        rootTextComponent.appendSibling(new TextComponentString("Usage: ")
+                .setStyle(new Style().setColor(TextFormatting.AQUA))
+        );
+        rootTextComponent.appendSibling(new TextComponentString("/" + Sledgehammer.ID + " " + String.join(" ", command.getPath()).toLowerCase())
+                .setStyle(new Style().setColor(TextFormatting.DARK_GREEN))
         );
         
         if (StringUtils.isNotBlank(command.getUsage())) {
-            textComponent.appendSibling(Text.of(TextFormatting.DARK_GREEN, " " + command.getUsage()));
+            rootTextComponent.appendSibling(new TextComponentString(" " + command.getUsage())
+                    .setStyle(new Style().setColor(TextFormatting.DARK_GREEN))
+            );
         }
         
-        textComponent.appendSibling(Text.of(
-                Text.NEW_LINE,
-                TextFormatting.AQUA, "Permission: ", TextFormatting.DARK_GREEN, StringUtils.defaultIfBlank(command.getPermission(), "None"),
-                Text.NEW_LINE,
-                Text.NEW_LINE,
-                TextFormatting.GRAY, "Click to auto-complete."
-        ));
+        rootTextComponent.appendSibling(new TextComponentString("\n"));
+        rootTextComponent.appendSibling(new TextComponentString("Permission: ")
+                .setStyle(new Style().setColor(TextFormatting.AQUA))
+        );
+        rootTextComponent.appendSibling(new TextComponentString(StringUtils.defaultIfEmpty(command.getPermission(), "None"))
+                .setStyle(new Style().setColor(TextFormatting.DARK_GREEN))
+        );
         
-        return textComponent;
+        rootTextComponent.appendSibling(new TextComponentString("\n"));
+        rootTextComponent.appendSibling(new TextComponentString("\n"));
+        rootTextComponent.appendSibling(new TextComponentString("Click to auto-complete.")
+                .setStyle(new Style().setColor(TextFormatting.GRAY))
+        );
+        
+        return rootTextComponent;
     }
 }
