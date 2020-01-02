@@ -16,138 +16,36 @@
 
 package io.github.lxgaming.sledgehammer.launch;
 
-import io.github.lxgaming.sledgehammer.Sledgehammer;
-import net.minecraft.launchwrapper.ITweaker;
-import net.minecraft.launchwrapper.Launch;
-import net.minecraft.launchwrapper.LaunchClassLoader;
+import cpw.mods.modlauncher.Launcher;
+import cpw.mods.modlauncher.api.IEnvironment;
+import cpw.mods.modlauncher.api.TypesafeMap;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.spongepowered.asm.launch.GlobalProperties;
-import org.spongepowered.asm.mixin.Mixins;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public class SledgehammerLaunch {
     
-    private static final Logger LOGGER = LogManager.getLogger(Sledgehammer.NAME + " Launch");
-    private static final String FORGE_INITIALIZED = "forge.initialized";
-    private static final String FORGE_CLASS = "net.minecraftforge.fml.relauncher.CoreModManager";
-    private static final String FORGE_DEOBF_TWEAKER_CLASS = "net.minecraftforge.fml.common.launcher.FMLDeobfTweaker";
-    private static final String MIXIN_STATE_TWEAKER_CLASS = "org.spongepowered.asm.mixin.EnvironmentStateTweaker";
-    private static final String SLEDGEHAMMER_INITIALIZED = Sledgehammer.ID + ".initialized";
-    private static final String SPONGE_INITIALIZED = "sponge.initialized";
-    private static final String SPONGE_CLASS = "org.spongepowered.common.launch.SpongeLaunch";
-    
-    private SledgehammerLaunch() {
-    }
-    
-    public static void configureClassLoader(LaunchClassLoader classLoader) {
-        classLoader.addClassLoaderExclusion("io.github.lxgaming.sledgehammer.launch.");
-        classLoader.addTransformerExclusion("io.github.lxgaming.sledgehammer.launch.");
-        classLoader.addTransformerExclusion("io.github.lxgaming.sledgehammer.lib.");
-    }
+    private static final Logger LOGGER = LogManager.getLogger("Sledgehammer Launch");
+    private static final Supplier<TypesafeMap.Key<Boolean>> FORGE_INITIALIZED = IEnvironment.buildKey("forge.initialized", Boolean.class);
     
     public static void configureEnvironment() {
-        if (!isForgeRegistered() && isClassPresent(FORGE_CLASS)) {
-            registerForge();
-            SledgehammerLaunch.getLogger().debug("Detected Forge");
-        }
-        
-        if (!isSpongeRegistered() && isClassPresent(SPONGE_CLASS)) {
-            registerSponge();
-            SledgehammerLaunch.getLogger().debug("Detected Sponge");
-        }
-        
-        if (!isSledgehammerRegistered() && isMixinRegistered() && isTweakerQueued(SledgehammerTweaker.class)) {
-            registerSledgehammer();
+        List<Map<String, String>> modlist = Launcher.INSTANCE.environment().getProperty(IEnvironment.Keys.MODLIST.get()).orElseThrow(() -> new RuntimeException("The MODLIST isn't set, huh?"));
+        for (Map<String, String> mod : modlist) {
+            String name = mod.get("name");
+            String type = mod.get("type");
             
-            // Triggers IMixinConfigPlugin::onLoad
-            // ConcurrentModificationException - SpongeVanilla
-            Mixins.addConfiguration("mixins.sledgehammer.preinit.json");
-            SledgehammerLaunch.getLogger().debug("Detected Mixin & SledgehammerTweaker");
-        }
-    }
-    
-    public static boolean isEarly() {
-        return !isClassPresent(FORGE_CLASS) || isTweakerQueued(FORGE_DEOBF_TWEAKER_CLASS);
-    }
-    
-    public static boolean isStateTweakerPresent() {
-        return isTweakerQueued(MIXIN_STATE_TWEAKER_CLASS) && isClassPresentInStackTrace(MIXIN_STATE_TWEAKER_CLASS);
-    }
-    
-    public static boolean isClassPresent(String name) {
-        try {
-            return Class.forName(name, false, Launch.classLoader) != null;
-        } catch (Throwable ex) {
-            return false;
-        }
-    }
-    
-    public static boolean isClassPresentInStackTrace(String className) {
-        for (StackTraceElement stackTraceElement : Thread.currentThread().getStackTrace()) {
-            if (stackTraceElement.getClassName().equals(className)) {
-                return true;
+            if (StringUtils.equals(name, "fml") && StringUtils.equals(type, "TRANSFORMATIONSERVICE")) {
+                Launcher.INSTANCE.environment().computePropertyIfAbsent(FORGE_INITIALIZED.get(), key -> true);
+                LOGGER.debug("Detected Forge");
             }
         }
-        
-        return false;
     }
     
-    public static boolean isTweakerQueued(Class<? extends ITweaker> tweakerClass) {
-        return isTweakerQueued(tweakerClass.getName());
-    }
-    
-    public static boolean isTweakerQueued(String tweakerClass) {
-        return getTweakerClasses().contains(tweakerClass)
-                || getTweakers().stream().map(ITweaker::getClass).map(Class::getName).anyMatch(tweakerClass::equals);
-    }
-    
-    public static Logger getLogger() {
-        return LOGGER;
-    }
-    
-    public static List<String> getTweakerClasses() {
-        return GlobalProperties.get("TweakClasses");
-    }
-    
-    public static List<ITweaker> getTweakers() {
-        return GlobalProperties.get("Tweaks");
-    }
-    
-    public static boolean isDeobfuscatedEnvironment() {
-        return GlobalProperties.get("fml.deobfuscatedEnvironment", false);
-    }
-    
-    public static boolean isForgeRegistered() {
-        return GlobalProperties.get(FORGE_INITIALIZED) == Boolean.TRUE;
-    }
-    
-    private static void registerForge() {
-        GlobalProperties.put(FORGE_INITIALIZED, Boolean.TRUE);
-    }
-    
-    public static boolean isMixinRegistered() {
-        return getMixinVersion() != null;
-    }
-    
-    public static String getMixinVersion() {
-        return GlobalProperties.get(GlobalProperties.Keys.INIT);
-    }
-    
-    public static boolean isSledgehammerRegistered() {
-        return GlobalProperties.get(SLEDGEHAMMER_INITIALIZED) != null;
-    }
-    
-    private static void registerSledgehammer() {
-        GlobalProperties.put(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
-    }
-    
-    public static boolean isSpongeRegistered() {
-        return GlobalProperties.get(SPONGE_INITIALIZED) == Boolean.TRUE;
-    }
-    
-    private static void registerSponge() {
-        GlobalProperties.put(SPONGE_INITIALIZED, Boolean.TRUE);
+    public static boolean isForgeInitialized() {
+        return Launcher.INSTANCE.environment().getProperty(FORGE_INITIALIZED.get()).orElse(false);
     }
 }

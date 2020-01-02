@@ -17,9 +17,9 @@
 package io.github.lxgaming.sledgehammer.util.text;
 
 import com.google.common.base.MoreObjects;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 
-public final class EmptyTextComponent extends TextComponentString {
+public final class EmptyTextComponent extends StringTextComponent {
     
     public EmptyTextComponent() {
         this("");

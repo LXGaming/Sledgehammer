@@ -16,30 +16,28 @@
 
 package io.github.lxgaming.sledgehammer.mixin.core.client;
 
-import io.github.lxgaming.sledgehammer.Sledgehammer;
 import net.minecraft.client.Minecraft;
-import org.apache.logging.log4j.Logger;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.item.ItemEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = Minecraft.class)
-public abstract class MinecraftMixin {
+public abstract class MinecraftMixin_DropItem {
     
-    @Shadow
-    @Final
-    private static Logger LOGGER;
-    
-    @Inject(
-            method = "init",
+    @Redirect(
+            method = "processKeyBinds",
             at = @At(
-                    value = "RETURN"
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/entity/player/ClientPlayerEntity;dropItem(Z)Lnet/minecraft/entity/item/ItemEntity;"
             )
     )
-    private void onInit(CallbackInfo callbackInfo) {
-        LOGGER.info("{} v{} was successfully applied!", Sledgehammer.NAME, Sledgehammer.VERSION);
+    private ItemEntity onDropItem(ClientPlayerEntity player, boolean dropAll) {
+        if (player.openContainer == null) {
+            return player.dropItem(dropAll);
+        }
+        
+        return null;
     }
 }

@@ -1,44 +1,30 @@
 {
   "required": false,
-  "minVersion": "0.7.10",
+  "minVersion": "0.8",
   "package": "io.github.lxgaming.sledgehammer.mixin.core",
   "refmap": "mixins.sledgehammer.refmap.json",
   "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "advancements.AdvancementManagerMixin_Reload",
-    "advancements.AdvancementManagerMixin_Stacktrace",
-    "advancements.PlayerAdvancementsMixin",
-    "block.BlockGrassMixin",
-    "block.BlockIceMixin",
-    "crash.CrashReportMixin",
-    "entity.EntityMixin_Teleport",
-    "item.ItemStackMixin_Exploit",
-    "item.ItemWritableBookMixin",
-    "network.play.server.SPacketChunkDataMixin",
-    "network.play.server.SPacketJoinGameMixin",
-    "network.NetHandlerPlayServerMixin_Book",
-    "network.NetHandlerPlayServerMixin_Event",
-    "network.NetHandlerPlayServerMixin_Sleep",
-    "network.NetworkManagerMixin",
-    "network.NetworkSystemMixin",
-    "tileentity.TileEntityMixin",
-    "util.text.TextComponentTranslationMixin",
+    "network.play.server.SJoinGamePacketMixin",
+    "network.play.ServerPlayNetHandlerMixin_Sleep",
     "util.text.TextFormattingMixin",
-    "util.LazyLoadBaseMixin",
-    "world.biome.BiomeProviderMixin",
-    "world.chunk.storage.AnvilChunkLoaderMixin",
-    "world.chunk.storage.RegionFileChunkBufferMixin"
+    "util.text.TranslationTextComponentMixin",
+    "util.LazyLoadBaseMixin"
   ],
   "client": [
-    "client.MinecraftMixin"
+    "client.GameSettingsMixin",
+    "client.MinecraftMixin",
+    "client.MinecraftMixin_DropItem"
   ],
   "server": [
-    "server.management.PlayerChunkMapMixin",
-    "server.DedicatedServerMixin"
+    "server.dedicated.DedicatedServerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
+  },
+  "overwrites": {
+    "conformVisibility": true
   }
 }

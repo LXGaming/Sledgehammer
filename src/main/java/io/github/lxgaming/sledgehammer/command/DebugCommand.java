@@ -16,49 +16,46 @@
 
 package io.github.lxgaming.sledgehammer.command;
 
+import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
 import io.github.lxgaming.sledgehammer.util.Locale;
-import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
-import net.minecraft.command.ICommandSender;
-import org.apache.commons.lang3.BooleanUtils;
-
-import java.util.List;
+import net.minecraft.command.CommandSource;
 
 public class DebugCommand extends Command {
+    
+    private static final String STATE_ARGUMENT = "state";
     
     @Override
     public boolean prepare() {
         addAlias("Debug");
-        description("For debugging purposes");
-        permission("sledgehammer.debug.base");
-        usage("[State]");
         return true;
     }
     
     @Override
-    public void execute(ICommandSender commandSender, List<String> arguments) throws Exception {
+    public void register(LiteralArgumentBuilder<CommandSource> argumentBuilder) {
+        argumentBuilder
+                .requires(commandSource -> commandSource.hasPermissionLevel(4))
+                .executes(context -> {
+                    return execute(context.getSource());
+                })
+                .then(argument(STATE_ARGUMENT, BoolArgumentType.bool()).executes(context -> {
+                    return execute(context.getSource(), BoolArgumentType.getBool(context, STATE_ARGUMENT));
+                }));
+    }
+    
+    private int execute(CommandSource commandSource) {
+        return execute(commandSource, null);
+    }
+    
+    private int execute(CommandSource commandSource, Boolean state) {
         GeneralCategory generalCategory = Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).orElse(null);
         if (generalCategory == null) {
-            LocaleAdapter.sendFeedback(commandSender, Locale.CONFIGURATION_ERROR);
-            return;
-        }
-        
-        Boolean state;
-        if (!arguments.isEmpty()) {
-            String argument = arguments.remove(0);
-            if (StringUtils.isNotBlank(argument)) {
-                state = BooleanUtils.toBooleanObject(argument);
-                if (state == null) {
-                    LocaleAdapter.sendFeedback(commandSender, Locale.PARSE_BOOLEAN_ERROR, argument);
-                }
-            } else {
-                state = null;
-            }
-        } else {
-            state = null;
+            LocaleAdapter.sendFeedback(commandSource, Locale.CONFIGURATION_ERROR);
+            return 0;
         }
         
         if (state != null) {
@@ -68,9 +65,11 @@ public class DebugCommand extends Command {
         }
         
         if (generalCategory.isDebug()) {
-            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_DEBUG_ENABLE);
+            LocaleAdapter.sendFeedback(commandSource, Locale.COMMAND_DEBUG_ENABLE);
         } else {
-            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_DEBUG_DISABLE);
+            LocaleAdapter.sendFeedback(commandSource, Locale.COMMAND_DEBUG_DISABLE);
         }
+        
+        return 1;
     }
 }

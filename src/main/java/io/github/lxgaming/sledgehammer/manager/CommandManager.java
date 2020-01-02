@@ -19,17 +19,10 @@ package io.github.lxgaming.sledgehammer.manager;
 import com.google.common.collect.Sets;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.command.Command;
-import io.github.lxgaming.sledgehammer.command.DebugCommand;
-import io.github.lxgaming.sledgehammer.command.HelpCommand;
-import io.github.lxgaming.sledgehammer.command.InformationCommand;
-import io.github.lxgaming.sledgehammer.command.ReloadCommand;
-import io.github.lxgaming.sledgehammer.util.Locale;
+import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
 import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
-import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
-import net.minecraft.command.ICommandSender;
 
-import java.util.List;
 import java.util.Set;
 
 public final class CommandManager {
@@ -38,40 +31,7 @@ public final class CommandManager {
     private static final Set<Class<? extends Command>> COMMAND_CLASSES = Sets.newHashSet();
     
     public static void prepare() {
-        registerCommand(DebugCommand.class);
-        registerCommand(HelpCommand.class);
-        registerCommand(InformationCommand.class);
-        registerCommand(ReloadCommand.class);
-    }
-    
-    public static boolean execute(ICommandSender commandSender, List<String> arguments) {
-        String content = String.join(" ", arguments);
-        if (arguments.isEmpty() || StringUtils.isBlank(content)) {
-            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_BASE, Sledgehammer.ID);
-            return false;
-        }
-        
-        Command command = getCommand(arguments);
-        if (command == null) {
-            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_NOT_FOUND);
-            return false;
-        }
-        
-        if (StringUtils.isNotBlank(command.getPermission()) && !commandSender.canUseCommand(4, command.getPermission())) {
-            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_NO_PERMISSION);
-            return false;
-        }
-        
-        Sledgehammer.getInstance().debug("Processing {} for {}", content, commandSender.getName());
-        
-        try {
-            command.execute(commandSender, arguments);
-            return true;
-        } catch (Exception ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error while executing {}", Toolbox.getClassSimpleName(command.getClass()), ex);
-            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_EXCEPTION);
-            return false;
-        }
+        registerCommand(SledgehammerCommand.class);
     }
     
     public static boolean registerAlias(Command command, String alias) {
@@ -133,57 +93,5 @@ public final class CommandManager {
         }
         
         return null;
-    }
-    
-    public static Command getCommand(Class<? extends Command> commandClass) {
-        return getCommand(null, commandClass);
-    }
-    
-    public static Command getCommand(Command parentCommand, Class<? extends Command> commandClass) {
-        Set<Command> commands = Sets.newLinkedHashSet();
-        if (parentCommand != null) {
-            commands.addAll(parentCommand.getChildren());
-        } else {
-            commands.addAll(COMMANDS);
-        }
-        
-        for (Command command : commands) {
-            if (command.getClass() == commandClass) {
-                return command;
-            }
-            
-            Command childCommand = getCommand(command, commandClass);
-            if (childCommand != null) {
-                return childCommand;
-            }
-        }
-        
-        return null;
-    }
-    
-    public static Command getCommand(List<String> arguments) {
-        return getCommand(null, arguments);
-    }
-    
-    private static Command getCommand(Command parentCommand, List<String> arguments) {
-        if (arguments.isEmpty()) {
-            return parentCommand;
-        }
-        
-        Set<Command> commands = Sets.newLinkedHashSet();
-        if (parentCommand != null) {
-            commands.addAll(parentCommand.getChildren());
-        } else {
-            commands.addAll(COMMANDS);
-        }
-        
-        for (Command command : commands) {
-            if (StringUtils.containsIgnoreCase(command.getAliases(), arguments.get(0))) {
-                arguments.remove(0);
-                return getCommand(command, arguments);
-            }
-        }
-        
-        return parentCommand;
     }
 }

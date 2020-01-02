@@ -22,24 +22,25 @@ import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.manager.LocaleManager;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
-import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
-import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
-import net.minecraftforge.fml.common.event.FMLStateEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLFingerprintViolationEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.event.lifecycle.ModLifecycleEvent;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
+import net.minecraftforge.fml.event.server.ServerLifecycleEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -50,7 +51,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-@Mixin(value = SledgehammerPlatform.class, priority = 1337, remap = false)
+@Mixin(value = SledgehammerPlatform.class, remap = false)
 public abstract class SledgehammerPlatformMixin_Mod {
     
     @Shadow
@@ -58,13 +59,18 @@ public abstract class SledgehammerPlatformMixin_Mod {
     
     private SledgehammerPlatform.State platform$state;
     
-    @Mod.EventHandler
+    @SubscribeEvent
     public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
         Sledgehammer.getInstance().getLogger().warn("Certificate Fingerprint Violation Detected!");
     }
     
-    @Mod.EventHandler
-    public void onState(FMLStateEvent event) {
+    @SubscribeEvent
+    public void onModLifecycle(ModLifecycleEvent event) {
+        MappingManager.getStateMapping(event.getClass()).ifPresent(this::platform$setState);
+    }
+    
+    @SubscribeEvent
+    public void onServerLifecycle(ServerLifecycleEvent event) {
         MappingManager.getStateMapping(event.getClass()).ifPresent(this::platform$setState);
     }
     
@@ -83,9 +89,9 @@ public abstract class SledgehammerPlatformMixin_Mod {
         IntegrationManager.prepare();
         LocaleManager.prepare();
         
-        MappingManager.STATE_MAPPINGS.put(FMLPreInitializationEvent.class, SledgehammerPlatform.State.PRE_INITIALIZATION);
-        MappingManager.STATE_MAPPINGS.put(FMLInitializationEvent.class, SledgehammerPlatform.State.INITIALIZATION);
-        MappingManager.STATE_MAPPINGS.put(FMLPostInitializationEvent.class, SledgehammerPlatform.State.POST_INITIALIZATION);
+        MappingManager.STATE_MAPPINGS.put(FMLCommonSetupEvent.class, SledgehammerPlatform.State.COMMON_SETUP);
+        MappingManager.STATE_MAPPINGS.put(FMLClientSetupEvent.class, SledgehammerPlatform.State.CLIENT_SETUP);
+        MappingManager.STATE_MAPPINGS.put(FMLDedicatedServerSetupEvent.class, SledgehammerPlatform.State.DEDICATED_SERVER_SETUP);
         MappingManager.STATE_MAPPINGS.put(FMLLoadCompleteEvent.class, SledgehammerPlatform.State.LOAD_COMPLETE);
         MappingManager.STATE_MAPPINGS.put(FMLServerAboutToStartEvent.class, SledgehammerPlatform.State.SERVER_ABOUT_TO_START);
         MappingManager.STATE_MAPPINGS.put(FMLServerStartingEvent.class, SledgehammerPlatform.State.SERVER_STARTING);
@@ -95,10 +101,8 @@ public abstract class SledgehammerPlatformMixin_Mod {
         
         IntegrationManager.execute();
         
-        ModContainer modContainer = Loader.instance().activeModContainer();
-        if (modContainer != null && StringUtils.equals(modContainer.getModId(), Sledgehammer.ID)) {
-            modContainer.getMetadata().logoFile = Sledgehammer.ID + ".png";
-        }
+        FMLJavaModLoadingContext.get().getModEventBus().register(instance);
+        MinecraftForge.EVENT_BUS.register(instance);
     }
     
     /**
@@ -107,7 +111,7 @@ public abstract class SledgehammerPlatformMixin_Mod {
      */
     @Overwrite
     public boolean isLoaded(@Nonnull String id) {
-        return Loader.isModLoaded(id);
+        return ModList.get().isLoaded(id);
     }
     
     /**
@@ -117,7 +121,7 @@ public abstract class SledgehammerPlatformMixin_Mod {
     @Overwrite
     @Nullable
     public Object getContainer() {
-        return Loader.instance().getIndexedModList().get(Sledgehammer.ID);
+        return ModList.get().getModContainerById(Sledgehammer.ID);
     }
     
     /**
@@ -127,7 +131,7 @@ public abstract class SledgehammerPlatformMixin_Mod {
     @Overwrite
     @Nullable
     public MinecraftServer getServer() {
-        return FMLCommonHandler.instance().getMinecraftServerInstance();
+        return ServerLifecycleHooks.getCurrentServer();
     }
     
     /**

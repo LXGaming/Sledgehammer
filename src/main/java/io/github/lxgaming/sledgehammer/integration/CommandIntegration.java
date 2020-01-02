@@ -16,11 +16,18 @@
 
 package io.github.lxgaming.sledgehammer.integration;
 
+import com.google.common.collect.Lists;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.tree.CommandNode;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
-import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
-import net.minecraft.command.CommandHandler;
+import io.github.lxgaming.sledgehammer.command.Command;
+import io.github.lxgaming.sledgehammer.manager.CommandManager;
+import net.minecraft.command.CommandSource;
 import net.minecraft.server.MinecraftServer;
+
+import java.util.List;
 
 public class CommandIntegration extends Integration {
     
@@ -38,6 +45,45 @@ public class CommandIntegration extends Integration {
             return;
         }
         
-        ((CommandHandler) server.getCommandManager()).registerCommand(new SledgehammerCommand());
+        CommandDispatcher<CommandSource> dispatcher = server.getCommandManager().getDispatcher();
+        if (dispatcher.getRoot() == null) {
+            Sledgehammer.getInstance().getLogger().warn("RootCommandNode is unavailable");
+            return;
+        }
+        
+        for (Command command : CommandManager.COMMANDS) {
+            List<CommandNode<CommandSource>> commandNodes = register(command);
+            for (CommandNode<CommandSource> commandNode : commandNodes) {
+                dispatcher.getRoot().addChild(commandNode);
+            }
+        }
+    }
+    
+    private List<CommandNode<CommandSource>> register(Command command) {
+        List<CommandNode<CommandSource>> commandNodes = Lists.newArrayList();
+        for (String alias : command.getAliases()) {
+            LiteralArgumentBuilder<CommandSource> argumentBuilder = Command.literal(alias);
+            command.register(argumentBuilder);
+            commandNodes.add(argumentBuilder.build());
+        }
+        
+        for (Command childCommand : command.getChildren()) {
+            List<CommandNode<CommandSource>> childCommandNodes = register(childCommand);
+            addChildren(commandNodes, childCommandNodes);
+        }
+        
+        return commandNodes;
+    }
+    
+    private void addChildren(List<CommandNode<CommandSource>> parentCommandNodes, List<CommandNode<CommandSource>> childCommandNodes) {
+        if (parentCommandNodes.isEmpty() || childCommandNodes.isEmpty()) {
+            return;
+        }
+        
+        for (CommandNode<CommandSource> parentCommandNode : parentCommandNodes) {
+            for (CommandNode<CommandSource> childCommandNode : childCommandNodes) {
+                parentCommandNode.addChild(childCommandNode);
+            }
+        }
     }
 }

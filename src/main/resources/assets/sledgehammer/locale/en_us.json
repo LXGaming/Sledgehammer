@@ -1,5 +1,5 @@
 {
-  "command.base": "{general.prefix} &9Use &a/{} help &9to view available commands.",
+  "command.base": "{general.prefix} &9Use &a/help {} &9to view available commands.",
   "command.exception": "{general.prefix} &cAn error has occurred. Details are available in console.",
   "command.invalid_arguments": "Invalid arguments: {}",
   "command.no_permission": "&cYou do not have permission to execute this command!",
@@ -17,11 +17,5 @@
     "    &8Website: &9{}"
   ],
   "general.prefix": "&9&l[Sledgehammer]",
-  "message.chunk_save": "&fChunk ({}, {}) &cfailed to save",
-  "message.item_teleport": "&f{} &cwas lost in time and space",
-  "message.move_outside_border": "&cCannot move outside of the world border",
-  "message.project_red_exploit": "&cInvalid Item: &f{}",
-  "message.storage_network_exploit": "&cInvalid Item: &f{}",
-  "parse.boolean.error": "Failed to parse {} as a boolean",
   "translation.invalid": "&cInvalid translation: &f{}"
 }

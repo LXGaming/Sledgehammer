@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.mixin.core.client;
+package io.github.lxgaming.sledgehammer.mixin.core.server.dedicated;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import net.minecraft.client.Minecraft;
+import net.minecraft.server.dedicated.DedicatedServer;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = Minecraft.class)
-public abstract class MinecraftMixin {
+@Mixin(value = DedicatedServer.class)
+public abstract class DedicatedServerMixin {
     
     @Shadow
     @Final
@@ -39,7 +39,9 @@ public abstract class MinecraftMixin {
                     value = "RETURN"
             )
     )
-    private void onInit(CallbackInfo callbackInfo) {
-        LOGGER.info("{} v{} was successfully applied!", Sledgehammer.NAME, Sledgehammer.VERSION);
+    private void onInit(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+        if (callbackInfoReturnable.getReturnValue()) {
+            LOGGER.info("{} v{} was successfully applied!", Sledgehammer.NAME, Sledgehammer.VERSION);
+        }
     }
 }

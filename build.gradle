@@ -4,10 +4,6 @@ buildscript {
     repositories {
         jcenter()
         maven {
-            name = "lxgaming"
-            url = "https://dl.bintray.com/lxgaming/maven"
-        }
-        maven {
             name = "minecraftforge"
             url = "https://files.minecraftforge.net/maven"
         }
@@ -19,14 +15,14 @@ buildscript {
 
     dependencies {
         classpath("com.github.jengelman.gradle.plugins:shadow:5.2.0")
-        classpath("net.minecraftforge.gradle:ForgeGradle:2.3-20191227.215244-1")
-        classpath("org.spongepowered:mixingradle:0.6-20191227.220440-1")
+        classpath("net.minecraftforge.gradle:ForgeGradle:3.+")
+        classpath("org.spongepowered:mixingradle:0.7-SNAPSHOT")
     }
 }
 
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "java"
-apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: "net.minecraftforge.gradle"
 apply plugin: "org.spongepowered.mixin"
 apply plugin: "signing"
 
@@ -35,17 +31,29 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-2.0.0-BETA"
+version = "1.14.4-2.0.0-BETA"
 
 minecraft {
-    version = "1.12.2-14.23.5.2838"
-    runDir = "run"
-    mappings = "stable_39"
-    makeObfSourceJar = false
+    accessTransformer(file("src/main/resources/accesstransformer.cfg"))
+    mappings(channel: "snapshot", version: "20191122-1.14.3")
+    runs {
+        client = {
+            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            properties("forge.logging.console.level": "debug")
+            workingDirectory(project.file("run").canonicalPath)
+            source(sourceSets.main)
+        }
+
+        server = {
+            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            properties("forge.logging.console.level": "debug")
+            workingDirectory(project.file("run").canonicalPath)
+            source(sourceSets.main)
+        }
+    }
 }
 
 mixin {
-    defaultObfuscationEnv = searge
     disableRefMapWarning = true
     add(sourceSets.main, "mixins.sledgehammer.refmap.json")
 }
@@ -53,6 +61,10 @@ mixin {
 configurations {
     provided {
         compile.extendsFrom(provided)
+    }
+
+    shadow {
+        runtime.extendsFrom(shadow)
     }
 
     build.dependsOn("signJar")
@@ -63,16 +75,8 @@ configurations {
 repositories {
     jcenter()
     maven {
-        name = "covers1624"
-        url = "https://maven.covers1624.net/"
-    }
-    maven {
         name = "curseforge"
         url = "https://minecraft.curseforge.com/api/maven"
-    }
-    maven {
-        name = "lxgaming"
-        url = "https://lxgaming.github.io/maven"
     }
     maven {
         name = "spongepowered"
@@ -81,55 +85,25 @@ repositories {
 }
 
 dependencies {
+    minecraft("net.minecraftforge:forge:1.14.4-28.1.96")
+    shadow("org.checkerframework:checker-qual:2.11.1")
     testCompile("org.junit.jupiter:junit-jupiter-engine:5.5.2")
+    runtime("org.ow2.asm:asm-analysis:6.2")
+    runtime("org.ow2.asm:asm-util:6.2")
     shadow("org.spongepowered:configurate-hocon:3.6.1") {
+        exclude(module: "checker-qual")
         exclude(module: "guava")
     }
-    shadow("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
-        transitive = false
-    }
-    annotationProcessor("org.spongepowered:spongecommon:1.12.2-7.1.7-SNAPSHOT:dev")
-    provided("org.spongepowered:spongecommon:1.12.2-7.1.7-SNAPSHOT:dev") {
-        exclude(module: "configurate-core")
-        exclude(module: "configurate-hocon")
-        exclude(module: "commons-io")
-        exclude(module: "gson")
-        exclude(module: "guava")
-        exclude(module: "launchwrapper")
-        exclude(module: "mixin")
-    }
-    provided("org.spongepowered:spongeforge:1.12.2-2838-7.1.7-RC3848:dev") {
-        transitive = false
-    }
-    provided("org.spongepowered:spongevanilla:1.12.2-7.1.7-RC243:dev") {
+    annotationProcessor("org.spongepowered:mixin:0.8-SNAPSHOT")
+    provided("org.spongepowered:mixin:0.8-SNAPSHOT") {
         transitive = false
     }
 
+    // First Party Mods
+    // provided("northerncompass:NorthernCompass:1.14.4:1.0.0")
+    // provided("sumsang:Sumsang:1.2.0")
+
     // Third Party Mods
-    provided("actually-additions:ActuallyAdditions:1.12.2:r145")
-    provided("athenaeum:athenaeum:1.12.2:1.17.4")
-    provided("barrels-drums-storage-more:BarrelsDrumsStorageAndMore:0.0.24")
-    provided("better-survival-mod:Better_Survival:1.3.4(1.12.1)")
-    provided("hearth-well:hwell:0.5.2")
-    provided("immersive-engineering:ImmersiveEngineering:0.12:89")
-    provided("matteroverdrive:MatterOverdrive-1.12.2:0.7.1.0:universal")
-    provided("morph:Morph:1.12.2:7.1.3")
-    provided("mrtjp:ProjectRed:1.12.2-4.9.3.116:mechanical") {
-        exclude(module: "jei_1.12.2")
-    }
-    provided("no-tree-punching:notreepunching:2.0.13")
-    provided("p455w0rds-library:p455w0rdslib:1.12.2:2.2.151")
-    provided("primalcore:PrimalCore:1.12.2:0.6.105")
-    provided("primitive-mobs:primitivemobs:1.2.3a")
-    provided("pyrotech:pyrotech:1.12.2:1.3.13")
-    provided("quark:Quark:r1.5:145")
-    provided("reliquary-v1-3:Reliquary:1.12.2:1.3.4.786")
-    provided("ruins-structure-spawning-system:Ruins:1.12.2")
-    provided("simple-storage-network:SimpleStorageNetwork:1.12.2:1.7.8")
-    provided("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
-    provided("topography:Topography:1.12.2:1.5.1")
-    provided("tschipp:carryon:1.12.1")
-    provided("vaultopic-early-inventory-management:vaultopic:2.1")
 }
 
 artifacts {
@@ -145,51 +119,11 @@ compileJava {
 jar {
     manifest {
         attributes(
-                "FMLCorePlugin": "io.github.lxgaming.sledgehammer.launch.SledgehammerLoadingPlugin",
-                "FMLCorePluginContainsFMLMod": true,
-                "ForceLoadAsMod": true,
                 "MixinConfigs": ""
-                        + "mixins.sledgehammer.actuallyadditions.json,"
-                        + "mixins.sledgehammer.bdsandm.json,"
-                        + "mixins.sledgehammer.bettersurvival.json,"
-                        + "mixins.sledgehammer.carryon.json,"
                         + "mixins.sledgehammer.core.json,"
-                        + "mixins.sledgehammer.forge.json,"
-                        + "mixins.sledgehammer.immersiveengineering.json,"
-                        + "mixins.sledgehammer.matteroverdrive.json,"
-                        + "mixins.sledgehammer.morph.json,"
-                        + "mixins.sledgehammer.notreepunching.json,"
-                        + "mixins.sledgehammer.p455w0rdslib.json,"
-                        + "mixins.sledgehammer.platform.json,"
-                        + "mixins.sledgehammer.primitivemobs.json,"
-                        + "mixins.sledgehammer.projectred.json,"
-                        + "mixins.sledgehammer.pyrotech.json,"
-                        + "mixins.sledgehammer.quark.json,"
-                        + "mixins.sledgehammer.ruins.json,"
-                        + "mixins.sledgehammer.sponge.json,"
-                        + "mixins.sledgehammer.storagenetwork.json,"
-                        + "mixins.sledgehammer.tombmanygraves.json,"
-                        + "mixins.sledgehammer.topography.json,"
-                        + "mixins.sledgehammer.vaultopic.json,"
-                        + "mixins.sledgehammer.wolforce.json,"
-                        + "mixins.sledgehammer.xreliquary.json",
-                "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-                "TweakOrder": 0
+                        + "mixins.sledgehammer.platform.json"
         )
     }
-
-    from {
-        (configurations.compile - configurations.provided).findAll({
-            it.isDirectory() || it.name.endsWith(".jar")
-        }).collect({
-            it.isDirectory() ? it : zipTree(it)
-        })
-    }
-
-    exclude("META-INF/*.DSA")
-    exclude("META-INF/*.RSA")
-    exclude("dummyThing")
-    exclude("LICENSE.txt")
 }
 
 processResources {
@@ -197,26 +131,22 @@ processResources {
     rename("LICENSE", "LICENSE-${archivesBaseName}")
 
     from (sourceSets.main.resources.srcDirs) {
-        include("mcmod.info")
-        expand("version": version, "mcversion": minecraft.version)
+        include("META-INF/mods.toml")
+        filter(ReplaceTokens, tokens: [version: version])
     }
 
-    exclude("sledgehammer_at.cfg")
+    exclude("accesstransformer.cfg")
 }
 
 reobf {
-    jar {
-        mappingType = "SEARGE"
-    }
-
     shadowJar {
-        mappingType = "SEARGE"
     }
 }
 
 shadowJar {
-    classifier = null
+    archiveClassifier.set(null)
     configurations = [project.configurations.shadow]
+    exclude("module-info.class")
     relocate("com.typesafe.config", "io.github.lxgaming.sledgehammer.lib.config")
     relocate("ninja.leaping.configurate", "io.github.lxgaming.sledgehammer.lib.configurate")
     relocate("org.checkerframework", "io.github.lxgaming.sledgehammer.lib.checkerframework")

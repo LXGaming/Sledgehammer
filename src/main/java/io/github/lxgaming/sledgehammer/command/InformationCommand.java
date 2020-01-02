@@ -16,12 +16,11 @@
 
 package io.github.lxgaming.sledgehammer.command;
 
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.util.Locale;
 import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
-import net.minecraft.command.ICommandSender;
-
-import java.util.List;
+import net.minecraft.command.CommandSource;
 
 public class InformationCommand extends Command {
     
@@ -34,9 +33,18 @@ public class InformationCommand extends Command {
     }
     
     @Override
-    public void execute(ICommandSender commandSender, List<String> arguments) throws Exception {
-        LocaleAdapter.sendFeedback(commandSender, Locale.GENERAL_INFORMATION,
+    public void register(LiteralArgumentBuilder<CommandSource> argumentBuilder) {
+        argumentBuilder
+                .executes(context -> {
+                    return execute(context.getSource());
+                });
+    }
+    
+    private int execute(CommandSource commandSource) {
+        LocaleAdapter.sendFeedback(commandSource, Locale.GENERAL_INFORMATION,
                 Sledgehammer.VERSION, Sledgehammer.AUTHORS, Sledgehammer.SOURCE, Sledgehammer.WEBSITE
         );
+        
+        return 1;
     }
 }

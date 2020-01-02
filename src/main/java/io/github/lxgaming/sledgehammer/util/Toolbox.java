@@ -16,71 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.util;
 
-import io.github.lxgaming.sledgehammer.Sledgehammer;
-import net.minecraft.block.Block;
-import net.minecraft.crash.CrashReport;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Optional;
-
 public class Toolbox {
-    
-    public static String formatUnit(long unit, String singular, String plural) {
-        if (unit == 1) {
-            return singular;
-        }
-        
-        return plural;
-    }
-    
-    public static boolean saveCrashReport(CrashReport crashReport) {
-        Path crashPath = Paths.get("crash-reports")
-                .resolve("crash-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.txt");
-        
-        if (crashReport.saveToFile(crashPath.toFile())) {
-            Sledgehammer.getInstance().getLogger().info("This crash report has been saved to: {}", crashPath);
-            return true;
-        } else {
-            Sledgehammer.getInstance().getLogger().error("We were unable to save this crash report to disk.");
-            return false;
-        }
-    }
-    
-    public static String getRootId(Entity entity) {
-        if (entity instanceof EntityItem) {
-            ItemStack itemStack = ((EntityItem) entity).getItem();
-            if (!itemStack.isEmpty()) {
-                return getResourceLocation(itemStack.getItem()).map(ResourceLocation::toString).orElse("Unknown");
-            }
-        }
-        
-        return getResourceLocation(entity).map(ResourceLocation::toString).orElse("Unknown");
-    }
-    
-    public static Optional<ResourceLocation> getResourceLocation(Object object) {
-        if (object instanceof Block) {
-            return Optional.of(Block.REGISTRY.getNameForObject((Block) object));
-        }
-        
-        if (object instanceof Entity) {
-            return Optional.ofNullable(EntityList.getKey((Entity) object));
-        }
-        
-        if (object instanceof Item) {
-            return Optional.ofNullable(Item.REGISTRY.getNameForObject((Item) object));
-        }
-        
-        return Optional.empty();
-    }
     
     public static String getClassSimpleName(Class<?> type) {
         if (type.getEnclosingClass() != null) {

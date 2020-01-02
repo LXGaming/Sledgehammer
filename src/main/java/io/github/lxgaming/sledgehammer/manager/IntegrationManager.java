@@ -21,14 +21,8 @@ import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
-import io.github.lxgaming.sledgehammer.integration.BotaniaIntegration;
 import io.github.lxgaming.sledgehammer.integration.CommandIntegration;
-import io.github.lxgaming.sledgehammer.integration.ForgeIntegration;
 import io.github.lxgaming.sledgehammer.integration.Integration;
-import io.github.lxgaming.sledgehammer.integration.MistIntegration;
-import io.github.lxgaming.sledgehammer.integration.PrimalIntegration;
-import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Border;
-import io.github.lxgaming.sledgehammer.integration.SpongeIntegration_Death;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 
 import java.util.Set;
@@ -42,13 +36,6 @@ public final class IntegrationManager {
     public static void prepare() {
         // Internal Integration
         registerIntegration(CommandIntegration.class, category -> true);
-        
-        registerIntegration(BotaniaIntegration.class, IntegrationCategory::isBotania);
-        registerIntegration(ForgeIntegration.class, IntegrationCategory::isForge);
-        registerIntegration(MistIntegration.class, IntegrationCategory::isMist);
-        registerIntegration(PrimalIntegration.class, IntegrationCategory::isPrimal);
-        registerIntegration(SpongeIntegration_Border.class, IntegrationCategory::isSpongeBorder);
-        registerIntegration(SpongeIntegration_Death.class, IntegrationCategory::isSpongeDeath);
     }
     
     public static void execute() {

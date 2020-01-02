@@ -17,29 +17,40 @@
 package io.github.lxgaming.sledgehammer.mixin.core.client;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import net.minecraft.client.Minecraft;
-import org.apache.logging.log4j.Logger;
-import org.spongepowered.asm.mixin.Final;
+import io.github.lxgaming.sledgehammer.configuration.Config;
+import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
+import net.minecraft.client.GameSettings;
+import net.minecraft.client.tutorial.TutorialSteps;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = Minecraft.class)
-public abstract class MinecraftMixin {
+@Mixin(value = GameSettings.class)
+public abstract class GameSettingsMixin {
     
     @Shadow
-    @Final
-    private static Logger LOGGER;
+    public TutorialSteps tutorialStep;
     
     @Inject(
-            method = "init",
+            method = "loadOptions",
             at = @At(
                     value = "RETURN"
             )
     )
-    private void onInit(CallbackInfo callbackInfo) {
-        LOGGER.info("{} v{} was successfully applied!", Sledgehammer.NAME, Sledgehammer.VERSION);
+    private void onLoadOptions(CallbackInfo callbackInfo) {
+        CoreMixinCategory coreMixinCategory = Sledgehammer.getInstance().getConfig()
+                .map(Config::getMixinCategory)
+                .map(MixinCategory::getCoreMixinCategory)
+                .orElse(null);
+        if (coreMixinCategory == null) {
+            return;
+        }
+        
+        if (coreMixinCategory.isTutorial()) {
+            this.tutorialStep = TutorialSteps.NONE;
+        }
     }
 }

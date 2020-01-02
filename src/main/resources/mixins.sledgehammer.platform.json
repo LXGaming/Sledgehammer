@@ -1,16 +1,18 @@
 {
   "required": true,
-  "minVersion": "0.7.10",
+  "minVersion": "0.8",
   "package": "io.github.lxgaming.sledgehammer.mixin.platform",
   "refmap": "mixins.sledgehammer.refmap.json",
   "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "SledgehammerPlatformMixin_Mod",
-    "SledgehammerPlatformMixin_Plugin"
+    "SledgehammerPlatformMixin_Mod"
   ],
   "injectors": {
     "defaultRequire": 1
+  },
+  "overwrites": {
+    "conformVisibility": true
   }
 }

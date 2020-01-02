@@ -19,14 +19,13 @@ package io.github.lxgaming.sledgehammer.util.text.adapter;
 import io.github.lxgaming.sledgehammer.bridge.util.text.TextFormattingBridge;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import io.github.lxgaming.sledgehammer.util.text.EmptyTextComponent;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.play.server.SPacketChat;
+import net.minecraft.command.CommandSource;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 
@@ -42,29 +41,32 @@ public class TextAdapter {
     // - Supports domains consisting of single characters for example https://1.1.1.1/
     private static final Pattern URL_PATTERN = Pattern.compile("(?:(https?)://)([-\\w_.]+\\.\\w+)(/\\S*)?");
     
-    public static void sendErrorMessage(ICommandSender commandSender, ITextComponent component) {
-        component.getStyle().setColor(TextFormatting.RED);
-        commandSender.sendMessage(component);
+    public static void sendErrorMessage(CommandSource commandSource, ITextComponent component) {
+        commandSource.sendErrorMessage(component);
     }
     
-    public static void sendFeedback(ICommandSender commandSender, ITextComponent component) {
-        commandSender.sendMessage(component);
+    public static void sendFeedback(CommandSource commandSource, ITextComponent component) {
+        sendFeedback(commandSource, false, component);
     }
     
-    public static void sendMessage(EntityPlayer player, ITextComponent component) {
+    public static void sendFeedback(CommandSource commandSource, boolean allowLogging, ITextComponent component) {
+        commandSource.sendFeedback(component, allowLogging);
+    }
+    
+    public static void sendMessage(PlayerEntity player, ITextComponent component) {
         player.sendMessage(component);
     }
     
-    public static void sendStatusMessage(EntityPlayer player, ITextComponent component) {
+    public static void sendStatusMessage(PlayerEntity player, ITextComponent component) {
         player.sendStatusMessage(component, true);
     }
     
-    public static void disconnect(EntityPlayerMP player, ITextComponent component) {
+    public static void disconnect(ServerPlayerEntity player, ITextComponent component) {
         player.connection.disconnect(component);
     }
     
-    public static void sendMessage(EntityPlayerMP player, ChatType chatType, ITextComponent component) {
-        player.connection.sendPacket(new SPacketChat(component, chatType));
+    public static void sendMessage(ServerPlayerEntity player, ChatType chatType, ITextComponent component) {
+        player.sendMessage(component, chatType);
     }
     
     public static ITextComponent serializeLegacyWithLinks(String string) {
@@ -92,7 +94,7 @@ public class TextAdapter {
                 rootTextComponent.appendSibling(serializeLegacy(text, character));
             }
             
-            ITextComponent textComponent = new TextComponentString(url);
+            ITextComponent textComponent = new StringTextComponent(url);
             textComponent.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url));
             for (TextFormatting textFormatting : textFormattings) {
                 applyStyle(textComponent.getStyle(), textFormatting);
@@ -153,7 +155,7 @@ public class TextAdapter {
             currentIndex = index;
             
             if (!text.isEmpty()) {
-                ITextComponent textComponent = new TextComponentString(text);
+                ITextComponent textComponent = new StringTextComponent(text);
                 
                 // Set the style to a shallow copy, this preserves unset formatting
                 textComponent.setStyle(currentStyle.createShallowCopy());
@@ -186,7 +188,7 @@ public class TextAdapter {
         // The remaining text
         String text = string.substring(currentIndex);
         if (!text.isEmpty()) {
-            ITextComponent textComponent = new TextComponentString(text);
+            ITextComponent textComponent = new StringTextComponent(text);
             
             // Set the style, shallow copy isn't required as no further changes will be made
             textComponent.setStyle(currentStyle);

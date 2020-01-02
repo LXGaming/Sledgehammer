@@ -16,58 +16,36 @@
 
 package io.github.lxgaming.sledgehammer.command;
 
-import com.google.common.collect.Lists;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.manager.CommandManager;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
+import io.github.lxgaming.sledgehammer.util.Locale;
+import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
+import net.minecraft.command.CommandSource;
 
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Objects;
-
-public class SledgehammerCommand implements ICommand {
+public class SledgehammerCommand extends Command {
     
     @Override
-    public String getName() {
-        return Sledgehammer.ID;
-    }
-    
-    @Override
-    public String getUsage(ICommandSender sender) {
-        return "";
-    }
-    
-    @Override
-    public List<String> getAliases() {
-        return Lists.newArrayList();
-    }
-    
-    @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        CommandManager.execute(sender, Lists.newArrayList(args));
-    }
-    
-    @Override
-    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
+    public boolean prepare() {
+        addAlias("sledgehammer");
+        addChild(DebugCommand.class);
+        addChild(InformationCommand.class);
+        addChild(ReloadCommand.class);
         return true;
     }
     
     @Override
-    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        return Lists.newArrayList();
+    public void register(LiteralArgumentBuilder<CommandSource> argumentBuilder) {
+        argumentBuilder
+                .executes(context -> {
+                    return execute(context.getSource());
+                });
     }
     
-    @Override
-    public boolean isUsernameIndex(String[] args, int index) {
-        return false;
-    }
-    
-    @Override
-    public int compareTo(ICommand o) {
-        return Objects.compare(getName(), o.getName(), String::compareTo);
+    private int execute(CommandSource commandSource) {
+        LocaleAdapter.sendFeedback(commandSource, Locale.COMMAND_BASE,
+                Sledgehammer.ID
+        );
+        
+        return 1;
     }
 }

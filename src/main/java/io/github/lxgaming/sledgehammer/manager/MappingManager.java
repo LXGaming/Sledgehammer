@@ -22,11 +22,10 @@ import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.annotation.Mapping;
-import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
-import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -35,12 +34,9 @@ import java.util.Optional;
 public final class MappingManager {
     
     public static final Map<String, Boolean> MIXIN_MAPPINGS = Maps.newHashMap();
-    public static final Map<String, Boolean> MOD_MAPPINGS = Maps.newHashMap();
     public static final Map<Class<?>, SledgehammerPlatform.State> STATE_MAPPINGS = Maps.newHashMap();
     
     public static void prepare() {
-        Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).map(GeneralCategory::getModMappings).ifPresent(MOD_MAPPINGS::putAll);
-        
         MixinCategory mixinCategory = Sledgehammer.getInstance().getConfig().map(Config::getMixinCategory).orElseThrow(NullPointerException::new);
         for (Field field : mixinCategory.getClass().getDeclaredFields()) {
             try {
@@ -53,13 +49,9 @@ public final class MappingManager {
         
         // Internal Mixins
         MIXIN_MAPPINGS.put("core.client.MinecraftMixin", true);
-        MIXIN_MAPPINGS.put("core.crash.CrashReportMixin", true);
         MIXIN_MAPPINGS.put("core.server.DedicatedServerMixin", true);
         MIXIN_MAPPINGS.put("core.util.text.TextFormattingMixin", true);
-        MIXIN_MAPPINGS.put("forge.fml.common.LoaderMixin", SledgehammerLaunch.isForgeRegistered() && !MOD_MAPPINGS.isEmpty());
-        MIXIN_MAPPINGS.put("forge.fml.common.MetadataCollectionAccessor", SledgehammerLaunch.isForgeRegistered() && !MOD_MAPPINGS.isEmpty());
-        MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Mod", SledgehammerLaunch.isForgeRegistered() && !SledgehammerLaunch.isSpongeRegistered());
-        MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Plugin", SledgehammerLaunch.isSpongeRegistered());
+        MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Mod", SledgehammerLaunch.isForgeInitialized());
     }
     
     private static void registerMixinMappings(Object object) throws Exception {
@@ -74,10 +66,6 @@ public final class MappingManager {
             boolean value = field.getBoolean(object);
             
             for (Mapping mapping : mappings) {
-                if (value) {
-                    registerModMappings(mapping.dependencies());
-                }
-                
                 // Don't overwrite the mapping value if it's already true
                 if (!MIXIN_MAPPINGS.getOrDefault(mapping.value(), false)) {
                     MIXIN_MAPPINGS.put(mapping.value(), value);
@@ -86,28 +74,11 @@ public final class MappingManager {
         }
     }
     
-    private static void registerModMappings(String... dependencies) {
-        Preconditions.checkNotNull(dependencies);
-        for (String dependency : dependencies) {
-            MOD_MAPPINGS.putIfAbsent(dependency, true);
-        }
-    }
-    
     public static Optional<Boolean> getMixinMapping(String mixin) {
         return Optional.ofNullable(MIXIN_MAPPINGS.get(StringUtils.removeStart(mixin, "io.github.lxgaming.sledgehammer.mixin.")));
     }
     
-    public static Optional<Boolean> getModMapping(String mod) {
-        return Optional.ofNullable(MOD_MAPPINGS.get(mod));
-    }
-    
     public static Optional<SledgehammerPlatform.State> getStateMapping(Class<?> stateClass) {
-        for (Map.Entry<Class<?>, SledgehammerPlatform.State> entry : STATE_MAPPINGS.entrySet()) {
-            if (entry.getKey().isAssignableFrom(stateClass)) {
-                return Optional.ofNullable(entry.getValue());
-            }
-        }
-        
-        return Optional.empty();
+        return Optional.ofNullable(STATE_MAPPINGS.get(stateClass));
     }
 }

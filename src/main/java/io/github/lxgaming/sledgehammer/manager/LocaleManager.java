@@ -17,7 +17,6 @@
 package io.github.lxgaming.sledgehammer.manager;
 
 import com.google.common.collect.Maps;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -27,10 +26,9 @@ import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
 import io.github.lxgaming.sledgehammer.util.Locale;
 import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.text.adapter.TextAdapter;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 import java.io.BufferedReader;
@@ -74,7 +72,7 @@ public final class LocaleManager {
     public static ITextComponent serialize(String key, Object... arguments) {
         String translation = getTranslation(key);
         if (translation == null) {
-            return new TextComponentString("Failed to translate message").setStyle(new Style().setColor(TextFormatting.RED));
+            return new StringTextComponent("Failed to translate message").applyTextStyle(TextFormatting.RED);
         }
         
         int matches = StringUtils.countMatches(translation, PLACEHOLDER_START + PLACEHOLDER_END);
@@ -84,7 +82,7 @@ public final class LocaleManager {
         
         String format = format(translation, arguments);
         if (StringUtils.isEmpty(format)) {
-            return new TextComponentString("Failed to format message").setStyle(new Style().setColor(TextFormatting.RED));
+            return new StringTextComponent("Failed to format message").applyTextStyle(TextFormatting.RED);
         }
         
         return TextAdapter.serializeLegacyWithLinks(format);
@@ -143,7 +141,7 @@ public final class LocaleManager {
         }
         
         try (Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            JsonObject jsonObject = JsonUtils.fromJson(new GsonBuilder().create(), reader, JsonObject.class);
+            JsonObject jsonObject = JSONUtils.fromJson(reader);
             
             // noinspection ConstantConditions
             if (jsonObject == null) {

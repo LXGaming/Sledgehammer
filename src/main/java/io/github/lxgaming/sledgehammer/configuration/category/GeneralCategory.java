@@ -37,11 +37,6 @@ public class GeneralCategory {
     @Setting(value = "locale-override")
     private Map<String, List<String>> localeOverrides = Maps.newHashMap();
     
-    @Setting(value = "mod", comment = ""
-            + "False: Mod will not be loaded.\n"
-            + "True: Mod will be added to the classloader.")
-    private Map<String, Boolean> modMappings = Maps.newHashMap();
-    
     public boolean isDebug() {
         return debug;
     }
@@ -56,9 +51,5 @@ public class GeneralCategory {
     
     public Map<String, List<String>> getLocaleOverrides() {
         return localeOverrides;
-    }
-    
-    public Map<String, Boolean> getModMappings() {
-        return modMappings;
     }
 }

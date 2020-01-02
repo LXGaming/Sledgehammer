@@ -16,32 +16,38 @@
 
 package io.github.lxgaming.sledgehammer.command;
 
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.manager.LocaleManager;
 import io.github.lxgaming.sledgehammer.util.Locale;
 import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
-import net.minecraft.command.ICommandSender;
-
-import java.util.List;
+import net.minecraft.command.CommandSource;
 
 public class ReloadCommand extends Command {
     
     @Override
     public boolean prepare() {
         addAlias("Reload");
-        description("Reloads locale system");
-        permission("sledgehammer.reload.base");
         return true;
     }
     
     @Override
-    public void execute(ICommandSender commandSender, List<String> arguments) throws Exception {
+    public void register(LiteralArgumentBuilder<CommandSource> argumentBuilder) {
+        argumentBuilder
+                .requires(commandSource -> commandSource.hasPermissionLevel(4))
+                .executes(context -> {
+                    return execute(context.getSource());
+                });
+    }
+    
+    private int execute(CommandSource commandSource) {
         if (Sledgehammer.getInstance().reload()) {
             LocaleManager.prepare();
-            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_RELOAD_SUCCESS);
-            return;
+            LocaleAdapter.sendFeedback(commandSource, Locale.COMMAND_RELOAD_SUCCESS);
+            return 1;
         }
         
-        LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_RELOAD_FAILURE);
+        LocaleAdapter.sendFeedback(commandSource, Locale.COMMAND_RELOAD_FAILURE);
+        return 0;
     }
 }

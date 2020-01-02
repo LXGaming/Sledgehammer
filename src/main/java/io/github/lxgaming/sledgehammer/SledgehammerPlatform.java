@@ -19,27 +19,11 @@ package io.github.lxgaming.sledgehammer;
 import com.google.common.base.Preconditions;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
-import org.spongepowered.api.plugin.Plugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-@Mod(
-        modid = Sledgehammer.ID,
-        name = Sledgehammer.NAME,
-        version = Sledgehammer.VERSION,
-        acceptedMinecraftVersions = Sledgehammer.ACCEPTED_VERSIONS,
-        acceptableRemoteVersions = Sledgehammer.ACCEPTABLE_REMOTE_VERSIONS,
-        certificateFingerprint = Sledgehammer.CERTIFICATE_FINGERPRINT
-)
-@Plugin(
-        id = Sledgehammer.ID,
-        name = Sledgehammer.NAME,
-        version = Sledgehammer.VERSION,
-        description = Sledgehammer.DESCRIPTION,
-        authors = {Sledgehammer.AUTHORS},
-        url = Sledgehammer.WEBSITE
-)
+@Mod(value = Sledgehammer.ID)
 public class SledgehammerPlatform {
     
     private static SledgehammerPlatform instance;
@@ -81,11 +65,11 @@ public class SledgehammerPlatform {
         
         CONSTRUCTION("Construction"),
         
-        PRE_INITIALIZATION("Pre Initialization"),
+        COMMON_SETUP("Common Setup"),
         
-        INITIALIZATION("Initialization"),
+        CLIENT_SETUP("Client Setup"),
         
-        POST_INITIALIZATION("Post Initialization"),
+        DEDICATED_SERVER_SETUP("Dedicated Server Setup"),
         
         LOAD_COMPLETE("Load Complete"),
         

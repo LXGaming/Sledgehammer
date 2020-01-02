@@ -21,17 +21,16 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(value = LazyLoadBase.class, priority = 1337)
+import java.util.function.Supplier;
+
+@Mixin(value = LazyLoadBase.class)
 public abstract class LazyLoadBaseMixin<T> {
     
     @Shadow
+    private Supplier<T> supplier;
+    
+    @Shadow
     private T value;
-    
-    @Shadow
-    private boolean isLoaded;
-    
-    @Shadow
-    protected abstract T load();
     
     /**
      * @author LX_Gaming
@@ -40,9 +39,10 @@ public abstract class LazyLoadBaseMixin<T> {
     @Overwrite
     public T getValue() {
         synchronized (this) {
-            if (!this.isLoaded) {
-                this.isLoaded = true;
-                this.value = this.load();
+            Supplier<T> supplier = this.supplier;
+            if (supplier != null) {
+                this.value = supplier.get();
+                this.supplier = null;
             }
             
             return this.value;
