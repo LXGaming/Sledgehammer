@@ -23,7 +23,6 @@ import io.github.lxgaming.sledgehammer.command.DebugCommand;
 import io.github.lxgaming.sledgehammer.command.HelpCommand;
 import io.github.lxgaming.sledgehammer.command.InformationCommand;
 import io.github.lxgaming.sledgehammer.command.ReloadCommand;
-import io.github.lxgaming.sledgehammer.exception.CommandException;
 import io.github.lxgaming.sledgehammer.util.Locale;
 import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
@@ -68,9 +67,6 @@ public final class CommandManager {
         try {
             command.execute(commandSender, arguments);
             return true;
-        } catch (CommandException ex) {
-            LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_ERROR, ex.getMessage());
-            return false;
         } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while executing {}", Toolbox.getClassSimpleName(command.getClass()), ex);
             LocaleAdapter.sendFeedback(commandSender, Locale.COMMAND_EXCEPTION);

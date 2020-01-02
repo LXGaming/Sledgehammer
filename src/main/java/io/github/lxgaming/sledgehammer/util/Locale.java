@@ -19,7 +19,6 @@ package io.github.lxgaming.sledgehammer.util;
 public enum Locale {
     
     COMMAND_BASE("command.base"),
-    COMMAND_ERROR("command.error"),
     COMMAND_EXCEPTION("command.exception"),
     COMMAND_INVALID_ARGUMENTS("command.invalid_arguments"),
     COMMAND_NO_PERMISSION("command.no_permission"),

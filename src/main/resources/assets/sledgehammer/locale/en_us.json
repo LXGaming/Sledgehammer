@@ -1,6 +1,5 @@
 {
   "command.base": "{general.prefix} &9Use &a/{} help &9to view available commands.",
-  "command.error": "{general.prefix} &cAn error has occurred: &f{}",
   "command.exception": "{general.prefix} &cAn error has occurred. Details are available in console.",
   "command.invalid_arguments": "Invalid arguments: {}",
   "command.no_permission": "&cYou do not have permission to execute this command!",
