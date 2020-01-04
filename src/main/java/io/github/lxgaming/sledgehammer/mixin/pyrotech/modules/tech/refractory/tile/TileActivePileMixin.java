@@ -79,7 +79,7 @@ public abstract class TileActivePileMixin extends TileBurnableBase {
         
         // Sledgehammer Start
         MinecraftServer server = this.world.getMinecraftServer();
-        if (server != null && SledgehammerLaunch.isSpongeRegistered()) {
+        if (server != null && SledgehammerLaunch.isSpongeInitialized()) {
             // Runs the logic at the start of the next tick.
             // addScheduledTask won't work as it executes the task immediately if it's scheduled while on the Main Thread.
             server.futureTaskQueue.add(ListenableFutureTask.create(() -> sledgehammer$applyItemStacks(this.pos, itemStacks), null));

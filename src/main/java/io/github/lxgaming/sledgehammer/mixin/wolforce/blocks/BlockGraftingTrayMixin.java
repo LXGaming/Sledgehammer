@@ -57,7 +57,7 @@ public abstract class BlockGraftingTrayMixin {
         world.setBlockState(blockPos, Main.grafting_tray.getDefaultState().withProperty(FILLED, filled));
         
         MinecraftServer server = world.getMinecraftServer();
-        if (server != null && SledgehammerLaunch.isSpongeRegistered()) {
+        if (server != null && SledgehammerLaunch.isSpongeInitialized()) {
             // Runs the logic at the start of the next tick.
             // addScheduledTask won't work as it executes the task immediately if it's scheduled while on the Main Thread.
             server.futureTaskQueue.add(ListenableFutureTask.create(() -> sledgehammer$applyInventory(world, blockPos, inventory), null));

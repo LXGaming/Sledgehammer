@@ -51,18 +51,18 @@ public class SledgehammerLaunch {
     }
     
     public static void configureEnvironment() {
-        if (!isForgeRegistered() && isClassPresent(FORGE_CLASS)) {
-            registerForge();
+        if (!isForgeInitialized() && isClassPresent(FORGE_CLASS)) {
+            GlobalProperties.put(FORGE_INITIALIZED, Boolean.TRUE);
             SledgehammerLaunch.getLogger().debug("Detected Forge");
         }
         
-        if (!isSpongeRegistered() && isClassPresent(SPONGE_CLASS)) {
-            registerSponge();
+        if (!isSpongeInitialized() && isClassPresent(SPONGE_CLASS)) {
+            GlobalProperties.put(SPONGE_INITIALIZED, Boolean.TRUE);
             SledgehammerLaunch.getLogger().debug("Detected Sponge");
         }
         
-        if (!isSledgehammerRegistered() && isMixinRegistered() && isTweakerQueued(SledgehammerTweaker.class)) {
-            registerSledgehammer();
+        if (!isSpongeInitialized() && isMixinInitialized() && isTweakerQueued(SledgehammerTweaker.class)) {
+            GlobalProperties.put(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
             
             // Triggers IMixinConfigPlugin::onLoad
             // ConcurrentModificationException - SpongeVanilla
@@ -118,39 +118,27 @@ public class SledgehammerLaunch {
         return GlobalProperties.get(TWEAKS);
     }
     
-    public static boolean isDeobfuscatedEnvironment() {
-        return GlobalProperties.get(DEOBFUSCATED_ENVIRONMENT, false);
-    }
-    
-    public static boolean isForgeRegistered() {
-        return GlobalProperties.get(FORGE_INITIALIZED) == Boolean.TRUE;
-    }
-    
-    private static void registerForge() {
-        GlobalProperties.put(FORGE_INITIALIZED, Boolean.TRUE);
-    }
-    
-    public static boolean isMixinRegistered() {
-        return getMixinVersion() != null;
-    }
-    
     public static String getMixinVersion() {
         return GlobalProperties.get(GlobalProperties.Keys.INIT);
     }
     
-    public static boolean isSledgehammerRegistered() {
+    public static boolean isDeobfuscatedEnvironment() {
+        return GlobalProperties.get(DEOBFUSCATED_ENVIRONMENT, false);
+    }
+    
+    public static boolean isForgeInitialized() {
+        return GlobalProperties.get(FORGE_INITIALIZED) == Boolean.TRUE;
+    }
+    
+    public static boolean isMixinInitialized() {
+        return getMixinVersion() != null;
+    }
+    
+    public static boolean isSledgehammerInitialized() {
         return GlobalProperties.get(SLEDGEHAMMER_INITIALIZED) != null;
     }
     
-    private static void registerSledgehammer() {
-        GlobalProperties.put(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
-    }
-    
-    public static boolean isSpongeRegistered() {
+    public static boolean isSpongeInitialized() {
         return GlobalProperties.get(SPONGE_INITIALIZED) == Boolean.TRUE;
-    }
-    
-    private static void registerSponge() {
-        GlobalProperties.put(SPONGE_INITIALIZED, Boolean.TRUE);
     }
 }

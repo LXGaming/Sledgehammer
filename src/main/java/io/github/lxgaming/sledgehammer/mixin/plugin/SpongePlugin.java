@@ -23,7 +23,7 @@ public class SpongePlugin extends CorePlugin {
     
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (!SledgehammerLaunch.isForgeRegistered() && StringUtils.startsWith(mixinClassName, "io.github.lxgaming.sledgehammer.mixin.sponge.mod.")) {
+        if (!SledgehammerLaunch.isForgeInitialized() && StringUtils.startsWith(mixinClassName, "io.github.lxgaming.sledgehammer.mixin.sponge.mod.")) {
             return false;
         }
         

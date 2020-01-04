@@ -45,7 +45,7 @@ public class SledgehammerTweaker implements ITweaker {
     
     @Override
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
-        if (!SledgehammerLaunch.isMixinRegistered()) {
+        if (!SledgehammerLaunch.isMixinInitialized()) {
             if (!SledgehammerLaunch.isEarly()) {
                 SledgehammerLaunch.getLogger().warn("------------------------- WARNING -------------------------");
                 SledgehammerLaunch.getLogger().warn("{} has detected that it hasn't loaded early enough", Sledgehammer.NAME);

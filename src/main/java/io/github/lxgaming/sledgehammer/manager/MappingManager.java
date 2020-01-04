@@ -56,10 +56,10 @@ public final class MappingManager {
         MIXIN_MAPPINGS.put("core.crash.CrashReportMixin", true);
         MIXIN_MAPPINGS.put("core.server.DedicatedServerMixin", true);
         MIXIN_MAPPINGS.put("core.util.text.TextFormattingMixin", true);
-        MIXIN_MAPPINGS.put("forge.fml.common.LoaderMixin", SledgehammerLaunch.isForgeRegistered() && !MOD_MAPPINGS.isEmpty());
-        MIXIN_MAPPINGS.put("forge.fml.common.MetadataCollectionAccessor", SledgehammerLaunch.isForgeRegistered() && !MOD_MAPPINGS.isEmpty());
-        MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Mod", SledgehammerLaunch.isForgeRegistered() && !SledgehammerLaunch.isSpongeRegistered());
-        MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Plugin", SledgehammerLaunch.isSpongeRegistered());
+        MIXIN_MAPPINGS.put("forge.fml.common.LoaderMixin", SledgehammerLaunch.isForgeInitialized() && !MOD_MAPPINGS.isEmpty());
+        MIXIN_MAPPINGS.put("forge.fml.common.MetadataCollectionAccessor", SledgehammerLaunch.isForgeInitialized() && !MOD_MAPPINGS.isEmpty());
+        MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Mod", SledgehammerLaunch.isForgeInitialized() && !SledgehammerLaunch.isSpongeInitialized());
+        MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Plugin", SledgehammerLaunch.isSpongeInitialized());
     }
     
     private static void registerMixinMappings(Object object) throws Exception {
