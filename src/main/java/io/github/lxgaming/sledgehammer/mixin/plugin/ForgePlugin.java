@@ -40,7 +40,7 @@ import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
-public class ForgePlugin extends AbstractPlugin {
+public class ForgePlugin extends CorePlugin {
     
     private static boolean INITIALIZED;
     

@@ -19,7 +19,7 @@ package io.github.lxgaming.sledgehammer.mixin.plugin;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import io.github.lxgaming.sledgehammer.util.StringUtils;
 
-public class SpongePlugin extends AbstractPlugin {
+public class SpongePlugin extends CorePlugin {
     
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {

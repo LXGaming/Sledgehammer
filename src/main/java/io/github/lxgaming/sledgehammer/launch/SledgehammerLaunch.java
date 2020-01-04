@@ -29,13 +29,16 @@ import java.util.List;
 
 public class SledgehammerLaunch {
     
-    private static final Logger LOGGER = LogManager.getLogger(Sledgehammer.NAME + " Launch");
-    private static final String FORGE_INITIALIZED = "forge.initialized";
+    private static final Logger LOGGER = LogManager.getLogger("Sledgehammer Launch");
+    private static final GlobalProperties.Keys DEOBFUSCATED_ENVIRONMENT = GlobalProperties.Keys.of("fml.deobfuscatedEnvironment");
+    private static final GlobalProperties.Keys FORGE_INITIALIZED = GlobalProperties.Keys.of("forge.initialized");
+    private static final GlobalProperties.Keys SLEDGEHAMMER_INITIALIZED = GlobalProperties.Keys.of("sledgehammer.initialized");
+    private static final GlobalProperties.Keys SPONGE_INITIALIZED = GlobalProperties.Keys.of("sponge.initialized");
+    private static final GlobalProperties.Keys TWEAK_CLASSES = GlobalProperties.Keys.of("TweakClasses");
+    private static final GlobalProperties.Keys TWEAKS = GlobalProperties.Keys.of("Tweaks");
     private static final String FORGE_CLASS = "net.minecraftforge.fml.relauncher.CoreModManager";
     private static final String FORGE_DEOBF_TWEAKER_CLASS = "net.minecraftforge.fml.common.launcher.FMLDeobfTweaker";
     private static final String MIXIN_STATE_TWEAKER_CLASS = "org.spongepowered.asm.mixin.EnvironmentStateTweaker";
-    private static final String SLEDGEHAMMER_INITIALIZED = Sledgehammer.ID + ".initialized";
-    private static final String SPONGE_INITIALIZED = "sponge.initialized";
     private static final String SPONGE_CLASS = "org.spongepowered.common.launch.SpongeLaunch";
     
     private SledgehammerLaunch() {
@@ -108,15 +111,15 @@ public class SledgehammerLaunch {
     }
     
     public static List<String> getTweakerClasses() {
-        return GlobalProperties.get("TweakClasses");
+        return GlobalProperties.get(TWEAK_CLASSES);
     }
     
     public static List<ITweaker> getTweakers() {
-        return GlobalProperties.get("Tweaks");
+        return GlobalProperties.get(TWEAKS);
     }
     
     public static boolean isDeobfuscatedEnvironment() {
-        return GlobalProperties.get("fml.deobfuscatedEnvironment", false);
+        return GlobalProperties.get(DEOBFUSCATED_ENVIRONMENT, false);
     }
     
     public static boolean isForgeRegistered() {
