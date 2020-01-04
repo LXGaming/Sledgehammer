@@ -49,7 +49,7 @@ public final class MappingManager {
         
         // Internal Mixins
         MIXIN_MAPPINGS.put("core.client.MinecraftMixin", true);
-        MIXIN_MAPPINGS.put("core.server.DedicatedServerMixin", true);
+        MIXIN_MAPPINGS.put("core.server.dedicated.DedicatedServerMixin", true);
         MIXIN_MAPPINGS.put("core.util.text.TextFormattingMixin", true);
         MIXIN_MAPPINGS.put("platform.SledgehammerPlatformMixin_Mod", SledgehammerLaunch.isForgeInitialized());
     }

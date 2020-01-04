@@ -35,7 +35,7 @@ public class CoreMixinCategory {
     @Setting(value = "lazy-load-base-thread-safe", comment = "If 'true', makes LazyLoadBase Thread-safe.")
     private boolean lazyLoadBaseThreadSafe = false;
     
-    @Mapping(value = "core.network.NetHandlerPlayServerMixin_Sleep")
+    @Mapping(value = "core.network.play.ServerPlayNetHandlerMixin_Sleep")
     @Setting(value = "leave-sleep", comment = "If 'true', allows players to exit the sleep screen.")
     private boolean leaveSleep = false;
     
