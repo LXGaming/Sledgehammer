@@ -23,6 +23,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixin
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ImmersiveEngineeringMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.LogisticsPipesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MatterOverdriveMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MorphMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.NoTreePunchingMixinCategory;
@@ -66,6 +67,9 @@ public class MixinCategory {
     
     @Setting(value = "immersive-engineering", comment = "Immersive Engineering")
     private ImmersiveEngineeringMixinCategory immersiveEngineeringMixinCategory = new ImmersiveEngineeringMixinCategory();
+    
+    @Setting(value = "logistics-pipes", comment = "Logistics Pipes")
+    private LogisticsPipesMixinCategory logisticsPipesMixinCategory = new LogisticsPipesMixinCategory();
     
     @Setting(value = "matter-overdrive", comment = "Matter Overdrive")
     private MatterOverdriveMixinCategory matterOverdriveMixinCategory = new MatterOverdriveMixinCategory();
@@ -144,6 +148,10 @@ public class MixinCategory {
     
     public ImmersiveEngineeringMixinCategory getImmersiveEngineeringMixinCategory() {
         return immersiveEngineeringMixinCategory;
+    }
+    
+    public LogisticsPipesMixinCategory getLogisticsPipesMixinCategory() {
+        return logisticsPipesMixinCategory;
     }
     
     public MatterOverdriveMixinCategory getMatterOverdriveMixinCategory() {

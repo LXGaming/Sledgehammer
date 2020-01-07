@@ -112,6 +112,7 @@ dependencies {
     provided("better-survival-mod:Better_Survival:1.3.4(1.12.1)")
     provided("hearth-well:hwell:0.5.2")
     provided("immersive-engineering:ImmersiveEngineering:0.12:89")
+    provided("logistics-pipes:logisticspipes:0.10.2.216")
     provided("matteroverdrive:MatterOverdrive-1.12.2:0.7.1.0:universal")
     provided("morph:Morph:1.12.2:7.1.3")
     provided("mrtjp:ProjectRed:1.12.2-4.9.3.116:mechanical") {
@@ -156,6 +157,7 @@ jar {
                         + "mixins.sledgehammer.core.json,"
                         + "mixins.sledgehammer.forge.json,"
                         + "mixins.sledgehammer.immersiveengineering.json,"
+                        + "mixins.sledgehammer.logisticspipes.json,"
                         + "mixins.sledgehammer.matteroverdrive.json,"
                         + "mixins.sledgehammer.morph.json,"
                         + "mixins.sledgehammer.notreepunching.json,"
