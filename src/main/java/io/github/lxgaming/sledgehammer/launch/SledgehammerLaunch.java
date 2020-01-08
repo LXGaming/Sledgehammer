@@ -61,7 +61,7 @@ public class SledgehammerLaunch {
             SledgehammerLaunch.getLogger().debug("Detected Sponge");
         }
         
-        if (!isSpongeInitialized() && isMixinInitialized() && isTweakerQueued(SledgehammerTweaker.class)) {
+        if (!isSledgehammerInitialized() && isMixinInitialized() && isTweakerQueued(SledgehammerTweaker.class)) {
             GlobalProperties.put(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
             
             // Triggers IMixinConfigPlugin::onLoad
