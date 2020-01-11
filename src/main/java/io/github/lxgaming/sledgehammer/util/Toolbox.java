@@ -25,6 +25,11 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.ChunkProviderServer;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -53,6 +58,15 @@ public class Toolbox {
             Sledgehammer.getInstance().getLogger().error("We were unable to save this crash report to disk.");
             return false;
         }
+    }
+    
+    public static Chunk getLoadedChunkWithoutMarkingActive(World world, int chunkX, int chunkZ) {
+        IChunkProvider chunkProvider = world.getChunkProvider();
+        if (chunkProvider instanceof ChunkProviderServer) {
+            return ((ChunkProviderServer) chunkProvider).loadedChunks.get(ChunkPos.asLong(chunkX, chunkZ));
+        }
+        
+        return chunkProvider.getLoadedChunk(chunkX, chunkZ);
     }
     
     public static String getRootId(Entity entity) {

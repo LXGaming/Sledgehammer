@@ -16,13 +16,11 @@
 
 package io.github.lxgaming.sledgehammer.mixin.logisticspipes.world;
 
+import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.ChunkProviderServer;
 import network.rs485.logisticspipes.world.DoubleCoordinates;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -44,14 +42,7 @@ public abstract class DoubleCoordinatesMixin {
         int chunkX = blockPos.getX() >> 4;
         int chunkZ = blockPos.getZ() >> 4;
         
-        Chunk chunk;
-        IChunkProvider chunkProvider = world.getChunkProvider();
-        if (chunkProvider instanceof ChunkProviderServer) {
-            chunk = ((ChunkProviderServer) chunkProvider).loadedChunks.get(ChunkPos.asLong(chunkX, chunkZ));
-        } else {
-            chunk = chunkProvider.getLoadedChunk(chunkX, chunkZ);
-        }
-        
+        Chunk chunk = Toolbox.getLoadedChunkWithoutMarkingActive(world, chunkX, chunkZ);
         if (chunk == null || !chunk.isLoaded() || chunk.unloadQueued) {
             return false;
         }
