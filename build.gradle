@@ -85,7 +85,7 @@ dependencies {
     shadow("org.spongepowered:configurate-hocon:3.6.1") {
         exclude(module: "guava")
     }
-    shadow("org.spongepowered:mixin:0.8-SNAPSHOT") {
+    shadow("org.spongepowered:mixin:0.8") {
         transitive = false
     }
     annotationProcessor("org.spongepowered:spongecommon:1.12.2-7.1.9-SNAPSHOT:dev")
