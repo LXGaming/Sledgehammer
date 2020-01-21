@@ -95,6 +95,9 @@ dependencies {
         exclude(module: "guava")
     }
     annotationProcessor("org.spongepowered:mixin:0.8-SNAPSHOT")
+    annotationProcessor("com.google.code.gson:gson:2.8.6") // Required by Mixin
+    annotationProcessor("com.google.guava:guava:28.2-jre") // Required by Mixin
+    annotationProcessor("org.ow2.asm:asm-commons:7.3.1") // Required by Mixin
     provided("org.spongepowered:mixin:0.8-SNAPSHOT") {
         transitive = false
     }
