@@ -23,6 +23,7 @@
     "network.NetHandlerPlayServerMixin_Sleep",
     "network.NetworkManagerMixin",
     "network.NetworkSystemMixin",
+    "tileentity.TileEntityMixin_ForgeData",
     "tileentity.TileEntityMixin_StackOverflow",
     "util.text.TextComponentTranslationMixin",
     "util.text.TextFormattingMixin",

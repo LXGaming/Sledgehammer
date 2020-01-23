@@ -38,6 +38,10 @@ public class ForgeMixinCategory {
     @Setting(value = "packet-spam", comment = "If 'true', cancels packets sent by LootBags due to poorly written networking.")
     private boolean packetSpam = false;
     
+    @Mapping(value = "core.tileentity.TileEntityMixin_ForgeData")
+    @Setting(value = "tile-entity-forge-data", comment = "If 'true', prevents mods from writing CustomTileData, This isn't allowed.")
+    private boolean tileEntityForgeData = false;
+    
     public boolean isFlushNetworkOnTick() {
         return flushNetworkOnTick;
     }
@@ -48,5 +52,9 @@ public class ForgeMixinCategory {
     
     public boolean isPacketSpam() {
         return packetSpam;
+    }
+    
+    public boolean isTileEntityForgeData() {
+        return tileEntityForgeData;
     }
 }
