@@ -51,7 +51,7 @@ public class SpongeMixinCategory {
     @Setting(value = "item-teleport-whitelist", comment = "Don't prevent these items from teleporting.")
     private List<String> itemTeleportWhitelist = Lists.newArrayList("draconicevolution:ender_energy_manipulator");
     
-    @Mapping(value = "core.tileentity.TileEntityMixin")
+    @Mapping(value = "core.tileentity.TileEntityMixin_StackOverflow")
     @Setting(value = "tile-entity-stack-overflow", comment = "If 'true', prevents StackOverflow on writeToNBT.")
     private boolean tileEntityStackOverflow = false;
     

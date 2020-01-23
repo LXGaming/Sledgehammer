@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = TileEntity.class, priority = 137)
-public abstract class TileEntityMixin {
+public abstract class TileEntityMixin_StackOverflow {
     
     private boolean sledgehammer$writing = false;
     
