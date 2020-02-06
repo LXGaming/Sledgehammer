@@ -16,14 +16,24 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category.integration;
 
+import com.google.common.collect.Lists;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+
+import java.util.List;
 
 @ConfigSerializable
 public class ForgeIntegrationCategory {
     
+    @Setting(value = "blacklisted-recipe-items", comment = "Removes recipes which output blacklisted items")
+    private List<String> blacklistedRecipeItems = Lists.newArrayList();
+    
     @Setting(value = "check-permissions", comment = "If 'true', forces permission check for OP based commands")
     private boolean checkPermissions = false;
+    
+    public List<String> getBlacklistedRecipeItems() {
+        return blacklistedRecipeItems;
+    }
     
     public boolean isCheckPermissions() {
         return checkPermissions;

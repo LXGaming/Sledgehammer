@@ -24,6 +24,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategor
 import io.github.lxgaming.sledgehammer.integration.Integration;
 import io.github.lxgaming.sledgehammer.integration.botania.BotaniaIntegration;
 import io.github.lxgaming.sledgehammer.integration.forge.ForgeIntegration_Permission;
+import io.github.lxgaming.sledgehammer.integration.forge.ForgeIntegration_Recipe;
 import io.github.lxgaming.sledgehammer.integration.mist.MistIntegration;
 import io.github.lxgaming.sledgehammer.integration.primal.PrimalIntegration;
 import io.github.lxgaming.sledgehammer.integration.sledgehammer.CommandIntegration;
@@ -45,6 +46,7 @@ public final class IntegrationManager {
         
         registerIntegration(BotaniaIntegration.class, category -> category.getBotaniaIntegrationCategory().isIslandCreation());
         registerIntegration(ForgeIntegration_Permission.class, category -> category.getForgeIntegrationCategory().isCheckPermissions());
+        registerIntegration(ForgeIntegration_Recipe.class, category -> !category.getForgeIntegrationCategory().getBlacklistedRecipeItems().isEmpty());
         registerIntegration(MistIntegration.class, category -> category.getMistIntegrationCategory().isPortal());
         registerIntegration(PrimalIntegration.class, category -> category.getPrimalIntegrationCategory().isFlake());
         registerIntegration(SpongeIntegration_Border.class, category -> category.getSpongeIntegrationCategory().isBorder());
