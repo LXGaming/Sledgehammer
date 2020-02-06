@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.integration;
+package io.github.lxgaming.sledgehammer.integration.sledgehammer;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.command.SledgehammerCommand;
+import io.github.lxgaming.sledgehammer.integration.Integration;
 import net.minecraft.command.CommandHandler;
 import net.minecraft.server.MinecraftServer;
 

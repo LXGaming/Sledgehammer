@@ -16,51 +16,49 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category;
 
+import io.github.lxgaming.sledgehammer.configuration.category.integration.BotaniaIntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.integration.ForgeIntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.integration.MistIntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.integration.PrimalIntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.integration.SpongeIntegrationCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
 public class IntegrationCategory {
     
-    @Setting(value = "botania", comment = "If 'true', prevents Botania from creating islands")
-    private boolean botania = false;
+    @Setting(value = "botania", comment = "Botania")
+    private BotaniaIntegrationCategory botaniaIntegrationCategory = new BotaniaIntegrationCategory();
     
-    @Setting(value = "forge", comment = "If 'true', forces permission check for OP based commands")
-    private boolean forge = false;
+    @Setting(value = "forge", comment = "Forge")
+    private ForgeIntegrationCategory forgeIntegrationCategory = new ForgeIntegrationCategory();
     
-    @Setting(value = "mist", comment = "If 'true', fixes Misty World portal issues")
-    private boolean mist = false;
+    @Setting(value = "mist", comment = "Mist")
+    private MistIntegrationCategory mistIntegrationCategory = new MistIntegrationCategory();
     
-    @Setting(value = "primal", comment = "If 'true', fixes https://github.com/An-Sar/PrimalCore/issues/210 (Fixed in 0.6.56 according to Dev)")
-    private boolean primal = false;
+    @Setting(value = "primal", comment = "Primal")
+    private PrimalIntegrationCategory primalIntegrationCategory = new PrimalIntegrationCategory();
     
-    @Setting(value = "sponge-border", comment = "If 'true', prevents movement outside of the world border")
-    private boolean spongeBorder = false;
+    @Setting(value = "sponge", comment = "SpongeForge / SpongeVanilla")
+    private SpongeIntegrationCategory spongeIntegrationCategory = new SpongeIntegrationCategory();
     
-    @Setting(value = "sponge-death", comment = "If 'true', prevents sending blank death messages")
-    private boolean spongeDeath = false;
-    
-    public boolean isBotania() {
-        return botania;
+    public BotaniaIntegrationCategory getBotaniaIntegrationCategory() {
+        return botaniaIntegrationCategory;
     }
     
-    public boolean isForge() {
-        return forge;
+    public ForgeIntegrationCategory getForgeIntegrationCategory() {
+        return forgeIntegrationCategory;
     }
     
-    public boolean isMist() {
-        return mist;
+    public MistIntegrationCategory getMistIntegrationCategory() {
+        return mistIntegrationCategory;
     }
     
-    public boolean isPrimal() {
-        return primal;
+    public PrimalIntegrationCategory getPrimalIntegrationCategory() {
+        return primalIntegrationCategory;
     }
     
-    public boolean isSpongeBorder() {
-        return spongeBorder;
-    }
-    
-    public boolean isSpongeDeath() {
-        return spongeDeath;
+    public SpongeIntegrationCategory getSpongeIntegrationCategory() {
+        return spongeIntegrationCategory;
     }
 }
