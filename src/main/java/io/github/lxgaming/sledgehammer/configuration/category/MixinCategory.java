@@ -21,7 +21,6 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCat
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ImmersiveEngineeringMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.KubeJSMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.LogisticsPipesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MatterOverdriveMixinCategory;
@@ -61,9 +60,6 @@ public class MixinCategory {
     
     @Setting(value = "forge", comment = "Forge")
     private ForgeMixinCategory forgeMixinCategory = new ForgeMixinCategory();
-    
-    @Setting(value = "immersive-engineering", comment = "Immersive Engineering")
-    private ImmersiveEngineeringMixinCategory immersiveEngineeringMixinCategory = new ImmersiveEngineeringMixinCategory();
     
     @Setting(value = "kubejs", comment = "KubeJS")
     private KubeJSMixinCategory kubeJSMixinCategory = new KubeJSMixinCategory();
@@ -140,10 +136,6 @@ public class MixinCategory {
     
     public ForgeMixinCategory getForgeMixinCategory() {
         return forgeMixinCategory;
-    }
-    
-    public ImmersiveEngineeringMixinCategory getImmersiveEngineeringMixinCategory() {
-        return immersiveEngineeringMixinCategory;
     }
     
     public KubeJSMixinCategory getKubeJSMixinCategory() {
