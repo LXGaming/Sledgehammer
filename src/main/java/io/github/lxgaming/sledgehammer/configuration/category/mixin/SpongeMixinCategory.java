@@ -30,10 +30,6 @@ public class SpongeMixinCategory {
     @Setting(value = "advancement-initialized", comment = "If 'true', catches an IllegalStateException thrown by Sponge.")
     private boolean advancementInitialized = false;
     
-    @Mapping(value = "sponge.common.command.WrapperCommandSourceMixin")
-    @Setting(value = "command-source", comment = "If 'true', fixes ClassCastException in WrapperCommandSource.")
-    private boolean commandSource = false;
-    
     @Mapping(value = "core.network.NetHandlerPlayServerMixin_Event")
     @Setting(value = "interact-events", comment = "If 'true', fixes https://github.com/SpongePowered/SpongeCommon/issues/2013.")
     private boolean interactEvents = false;
@@ -57,10 +53,6 @@ public class SpongeMixinCategory {
     
     public boolean isAdvancementInitialized() {
         return advancementInitialized;
-    }
-    
-    public boolean isCommandSource() {
-        return commandSource;
     }
     
     public boolean isInteractEvents() {
