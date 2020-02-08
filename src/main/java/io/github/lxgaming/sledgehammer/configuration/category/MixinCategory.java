@@ -29,7 +29,6 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveMob
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ProjectRedMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.PyrotechMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.QuarkMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ReliquaryMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.RuinsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.SpongeMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.StorageNetworkMixinCategory;
@@ -82,9 +81,6 @@ public class MixinCategory {
     
     @Setting(value = "quark", comment = "Quark")
     private QuarkMixinCategory quarkMixinCategory = new QuarkMixinCategory();
-    
-    @Setting(value = "reliquary", comment = "Reliquary")
-    private ReliquaryMixinCategory reliquaryMixinCategory = new ReliquaryMixinCategory();
     
     @Setting(value = "ruins", comment = "Ruins (Structure Spawning System)")
     private RuinsMixinCategory ruinsMixinCategory = new RuinsMixinCategory();
@@ -160,10 +156,6 @@ public class MixinCategory {
     
     public QuarkMixinCategory getQuarkMixinCategory() {
         return quarkMixinCategory;
-    }
-    
-    public ReliquaryMixinCategory getReliquaryMixinCategory() {
-        return reliquaryMixinCategory;
     }
     
     public RuinsMixinCategory getRuinsMixinCategory() {
