@@ -35,7 +35,7 @@ version = "1.14.4-2.0.0"
 
 minecraft {
     accessTransformer(file("src/main/resources/accesstransformer.cfg"))
-    mappings(channel: "snapshot", version: "20191122-1.14.3")
+    mappings(channel: "stable", version: "58-1.14.4")
     runs {
         client = {
             properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
@@ -85,7 +85,7 @@ repositories {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.14.4-28.1.96")
+    minecraft("net.minecraftforge:forge:1.14.4-28.2.0")
     shadow("org.checkerframework:checker-qual:2.11.1")
     testCompile("org.junit.jupiter:junit-jupiter-engine:5.5.2")
     runtime("org.ow2.asm:asm-analysis:6.2")
