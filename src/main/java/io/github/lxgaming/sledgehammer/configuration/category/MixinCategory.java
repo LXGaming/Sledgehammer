@@ -19,6 +19,7 @@ package io.github.lxgaming.sledgehammer.configuration.category;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ActuallyAdditionsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChampionsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.KubeJSMixinCategory;
@@ -51,6 +52,9 @@ public class MixinCategory {
     
     @Setting(value = "carry-on", comment = "Carry On")
     private CarryOnMixinCategory carryOnMixinCategory = new CarryOnMixinCategory();
+    
+    @Setting(value = "champions", comment = "Champions")
+    private ChampionsMixinCategory championsMixinCategory = new ChampionsMixinCategory();
     
     @Setting(value = "core", comment = "Minecraft")
     private CoreMixinCategory coreMixinCategory = new CoreMixinCategory();
@@ -116,6 +120,10 @@ public class MixinCategory {
     
     public CarryOnMixinCategory getCarryOnMixinCategory() {
         return carryOnMixinCategory;
+    }
+    
+    public ChampionsMixinCategory getChampionsMixinCategory() {
+        return championsMixinCategory;
     }
     
     public CoreMixinCategory getCoreMixinCategory() {
