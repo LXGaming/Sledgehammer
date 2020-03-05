@@ -77,7 +77,7 @@ public abstract class TileActivePileMixin extends TileBurnableBase {
         IBlockState blockState = ModuleTechRefractory.Blocks.PIT_ASH_BLOCK.getDefaultState();
         this.world.setBlockState(this.pos, blockState);
         
-        // Sledgehammer Start
+        // Sledgehammer start
         MinecraftServer server = this.world.getMinecraftServer();
         if (server != null && SledgehammerLaunch.isSpongeInitialized()) {
             // Runs the logic at the start of the next tick.
@@ -87,7 +87,7 @@ public abstract class TileActivePileMixin extends TileBurnableBase {
             sledgehammer$applyItemStacks(this.pos, itemStacks);
         }
         
-        // Sledgehammer End
+        // Sledgehammer end
     }
     
     private void sledgehammer$applyItemStacks(BlockPos blockPos, List<ItemStack> itemStacks) {
