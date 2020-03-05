@@ -21,6 +21,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCat
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChampionsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderStorageMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.KubeJSMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.LogisticsPipesMixinCategory;
@@ -58,6 +59,9 @@ public class MixinCategory {
     
     @Setting(value = "core", comment = "Minecraft")
     private CoreMixinCategory coreMixinCategory = new CoreMixinCategory();
+    
+    @Setting(value = "enderstorage", comment = "Ender Storage")
+    private EnderStorageMixinCategory enderStorageMixinCategory = new EnderStorageMixinCategory();
     
     @Setting(value = "forge", comment = "Forge")
     private ForgeMixinCategory forgeMixinCategory = new ForgeMixinCategory();
@@ -128,6 +132,10 @@ public class MixinCategory {
     
     public CoreMixinCategory getCoreMixinCategory() {
         return coreMixinCategory;
+    }
+    
+    public EnderStorageMixinCategory getEnderStorageMixinCategory() {
+        return enderStorageMixinCategory;
     }
     
     public ForgeMixinCategory getForgeMixinCategory() {
