@@ -16,15 +16,15 @@
 
 package io.github.lxgaming.sledgehammer.mixin.core.util;
 
-import net.minecraft.util.LazyLoadBase;
+import net.minecraft.util.LazyValue;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.function.Supplier;
 
-@Mixin(value = LazyLoadBase.class)
-public abstract class LazyLoadBaseMixin<T> {
+@Mixin(value = LazyValue.class)
+public abstract class LazyValueMixin<T> {
     
     @Shadow
     private Supplier<T> supplier;

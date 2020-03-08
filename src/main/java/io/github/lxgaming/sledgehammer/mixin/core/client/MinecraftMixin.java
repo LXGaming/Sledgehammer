@@ -34,7 +34,7 @@ public abstract class MinecraftMixin {
     private static Logger LOGGER;
     
     @Inject(
-            method = "init",
+            method = "<init>",
             at = @At(
                     value = "RETURN"
             )

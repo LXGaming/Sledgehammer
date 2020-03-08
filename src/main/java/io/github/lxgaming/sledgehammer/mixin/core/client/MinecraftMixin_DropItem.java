@@ -18,7 +18,6 @@ package io.github.lxgaming.sledgehammer.mixin.core.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.item.ItemEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -30,14 +29,14 @@ public abstract class MinecraftMixin_DropItem {
             method = "processKeyBinds",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/entity/player/ClientPlayerEntity;dropItem(Z)Lnet/minecraft/entity/item/ItemEntity;"
+                    target = "Lnet/minecraft/client/entity/player/ClientPlayerEntity;func_225609_n_(Z)Z"
             )
     )
-    private ItemEntity onDropItem(ClientPlayerEntity player, boolean dropAll) {
+    private boolean onDropItem(ClientPlayerEntity player, boolean dropAll) {
         if (player.openContainer == null) {
-            return player.dropItem(dropAll);
+            return player.func_225609_n_(dropAll);
         }
         
-        return null;
+        return false;
     }
 }

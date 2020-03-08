@@ -11,7 +11,7 @@
     "network.play.ServerPlayNetHandlerMixin_Sleep",
     "util.text.TextFormattingMixin",
     "util.text.TranslationTextComponentMixin",
-    "util.LazyLoadBaseMixin"
+    "util.LazyValueMixin"
   ],
   "client": [
     "client.GameSettingsMixin",

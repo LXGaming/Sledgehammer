@@ -31,9 +31,9 @@ public class CoreMixinCategory {
     @Setting(value = "invalid-translation", comment = "If 'true', prevents crashes caused by invalid translations.")
     private boolean invalidTranslation = false;
     
-    @Mapping(value = "core.util.LazyLoadBaseMixin")
-    @Setting(value = "lazy-load-base-thread-safe", comment = "If 'true', makes LazyLoadBase Thread-safe.")
-    private boolean lazyLoadBaseThreadSafe = false;
+    @Mapping(value = "core.util.LazyValueMixin")
+    @Setting(value = "lazy-value-thread-safe", comment = "If 'true', makes LazyValue Thread-safe.")
+    private boolean lazyValueThreadSafe = false;
     
     @Mapping(value = "core.network.play.ServerPlayNetHandlerMixin_Sleep")
     @Setting(value = "leave-sleep", comment = "If 'true', allows players to exit the sleep screen.")
@@ -55,8 +55,8 @@ public class CoreMixinCategory {
         return invalidTranslation;
     }
     
-    public boolean isLazyLoadBaseThreadSafe() {
-        return lazyLoadBaseThreadSafe;
+    public boolean isLazyValueThreadSafe() {
+        return lazyValueThreadSafe;
     }
     
     public boolean isLeaveSleep() {
