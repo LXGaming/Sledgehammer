@@ -16,12 +16,14 @@
 
 package io.github.lxgaming.sledgehammer.mixin.platform;
 
+import com.google.common.eventbus.Subscribe;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import io.github.lxgaming.sledgehammer.manager.IntegrationManager;
 import io.github.lxgaming.sledgehammer.manager.LocaleManager;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
+import io.github.lxgaming.sledgehammer.mixin.forge.fml.common.FMLModContainerAccessor;
 import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraft.server.MinecraftServer;
@@ -63,11 +65,13 @@ public abstract class SledgehammerPlatformMixin_Mod {
         Sledgehammer.getInstance().getLogger().warn("Certificate Fingerprint Violation Detected!");
     }
     
-    @Mod.EventHandler
+    @SuppressWarnings("UnstableApiUsage")
+    @Subscribe
     public void onState(FMLStateEvent event) {
         MappingManager.getStateMapping(event.getClass()).ifPresent(this::platform$setState);
     }
     
+    @SuppressWarnings("UnstableApiUsage")
     @Inject(
             method = "<init>",
             at = @At(
@@ -98,6 +102,10 @@ public abstract class SledgehammerPlatformMixin_Mod {
         ModContainer modContainer = Loader.instance().activeModContainer();
         if (modContainer != null && StringUtils.equals(modContainer.getModId(), Sledgehammer.ID)) {
             modContainer.getMetadata().logoFile = Sledgehammer.ID + ".png";
+            
+            if (modContainer instanceof FMLModContainerAccessor) {
+                ((FMLModContainerAccessor) modContainer).accessor$getEventBus().register(this);
+            }
         }
     }
     
