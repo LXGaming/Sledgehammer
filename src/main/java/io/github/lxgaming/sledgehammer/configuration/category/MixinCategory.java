@@ -24,6 +24,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCat
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderIOMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderStorageMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.JourneyMapMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.KubeJSMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.LogisticsPipesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MatterOverdriveMixinCategory;
@@ -69,6 +70,9 @@ public class MixinCategory {
     
     @Setting(value = "forge", comment = "Forge")
     private ForgeMixinCategory forgeMixinCategory = new ForgeMixinCategory();
+    
+    @Setting(value = "journeymap", comment = "JourneyMap")
+    private JourneyMapMixinCategory journeyMapMixinCategory = new JourneyMapMixinCategory();
     
     @Setting(value = "kubejs", comment = "KubeJS")
     private KubeJSMixinCategory kubeJSMixinCategory = new KubeJSMixinCategory();
@@ -148,6 +152,10 @@ public class MixinCategory {
     
     public ForgeMixinCategory getForgeMixinCategory() {
         return forgeMixinCategory;
+    }
+    
+    public JourneyMapMixinCategory getJourneyMapMixinCategory() {
+        return journeyMapMixinCategory;
     }
     
     public KubeJSMixinCategory getKubeJSMixinCategory() {
