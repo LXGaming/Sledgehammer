@@ -21,6 +21,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCat
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChampionsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.DankNullMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderIOMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderStorageMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
@@ -61,6 +62,9 @@ public class MixinCategory {
     
     @Setting(value = "core", comment = "Minecraft")
     private CoreMixinCategory coreMixinCategory = new CoreMixinCategory();
+    
+    @Setting(value = "dank-null", comment = "DankNull")
+    private DankNullMixinCategory dankNullMixinCategory = new DankNullMixinCategory();
     
     @Setting(value = "enderio", comment = "Ender IO")
     private EnderIOMixinCategory enderIOMixinCategory = new EnderIOMixinCategory();
@@ -140,6 +144,10 @@ public class MixinCategory {
     
     public CoreMixinCategory getCoreMixinCategory() {
         return coreMixinCategory;
+    }
+    
+    public DankNullMixinCategory getDankNullMixinCategory() {
+        return dankNullMixinCategory;
     }
     
     public EnderIOMixinCategory getEnderIOMixinCategory() {
