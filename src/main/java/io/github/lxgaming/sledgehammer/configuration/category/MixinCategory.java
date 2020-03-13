@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.configuration.category;
 
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ActuallyAdditionsMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.AstralSorceryMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChampionsMixinCategory;
@@ -50,6 +51,9 @@ public class MixinCategory {
     
     @Setting(value = "actually-additions", comment = "Actually Additions")
     private ActuallyAdditionsMixinCategory actuallyAdditionsMixinCategory = new ActuallyAdditionsMixinCategory();
+    
+    @Setting(value = "astral-sorcery", comment = "Astral Sorcery")
+    private AstralSorceryMixinCategory astralSorceryMixinCategory = new AstralSorceryMixinCategory();
     
     @Setting(value = "bdsm", comment = "Barrels, Drums, Storage & More")
     private BDSMMixinCategory bdsmMixinCategory = new BDSMMixinCategory();
@@ -128,6 +132,10 @@ public class MixinCategory {
     
     public ActuallyAdditionsMixinCategory getActuallyAdditionsMixinCategory() {
         return actuallyAdditionsMixinCategory;
+    }
+    
+    public AstralSorceryMixinCategory getAstralSorceryMixinCategory() {
+        return astralSorceryMixinCategory;
     }
     
     public BDSMMixinCategory getBdsmMixinCategory() {

@@ -21,7 +21,10 @@ import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.AstralSorceryMixinCategory;
 import io.github.lxgaming.sledgehammer.integration.Integration;
+import io.github.lxgaming.sledgehammer.integration.astralsorcery.AstralSorceryIntegration;
 import io.github.lxgaming.sledgehammer.integration.botania.BotaniaIntegration;
 import io.github.lxgaming.sledgehammer.integration.forge.ForgeIntegration_Permission;
 import io.github.lxgaming.sledgehammer.integration.forge.ForgeIntegration_Recipe;
@@ -44,6 +47,12 @@ public final class IntegrationManager {
         // Internal Integration
         registerIntegration(CommandIntegration.class, category -> true);
         
+        registerIntegration(AstralSorceryIntegration.class, category -> Sledgehammer.getInstance().getConfig()
+                .map(Config::getMixinCategory)
+                .map(MixinCategory::getAstralSorceryMixinCategory)
+                .map(AstralSorceryMixinCategory::isDataSerializers)
+                .orElse(false)
+        );
         registerIntegration(BotaniaIntegration.class, category -> category.getBotaniaIntegrationCategory().isIslandCreation());
         registerIntegration(ForgeIntegration_Permission.class, category -> category.getForgeIntegrationCategory().isCheckPermissions());
         registerIntegration(ForgeIntegration_Recipe.class, category -> !category.getForgeIntegrationCategory().getBlacklistedRecipeItems().isEmpty());
