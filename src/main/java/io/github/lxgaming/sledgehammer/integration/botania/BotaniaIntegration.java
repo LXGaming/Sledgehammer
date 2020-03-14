@@ -32,9 +32,9 @@ public class BotaniaIntegration extends Integration {
     
     @Override
     public boolean prepare() {
-        addDependency("botania");
         addDependency("forge");
         addDependency("sponge");
+        addDependency("botania");
         state(SledgehammerPlatform.State.INITIALIZATION);
         return true;
     }

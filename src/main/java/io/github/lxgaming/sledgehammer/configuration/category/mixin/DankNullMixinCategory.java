@@ -23,7 +23,7 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class DankNullMixinCategory {
     
-    @Mapping(value = "danknull.network.PacketConfigSyncHandlerMixin", dependencies = {"danknull", "mousetweaks"})
+    @Mapping(value = "danknull.network.PacketConfigSyncHandlerMixin", dependencies = {"mousetweaks", "danknull"})
     @Setting(value = "packet-config-sync", comment = "If 'true', fixes NullPointerException caused by PacketConfigSyncHandler")
     private boolean packetConfigSync = false;
     

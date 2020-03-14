@@ -38,8 +38,8 @@ public class PrimalIntegration extends Integration {
     @Override
     public boolean prepare() {
         addDependency("forge");
-        addDependency("primal");
         addDependency("sponge");
+        addDependency("primal");
         state(SledgehammerPlatform.State.INITIALIZATION);
         return true;
     }

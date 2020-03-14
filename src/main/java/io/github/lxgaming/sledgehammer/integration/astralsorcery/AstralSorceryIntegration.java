@@ -29,8 +29,8 @@ public class AstralSorceryIntegration extends Integration {
     
     @Override
     public boolean prepare() {
-        addDependency("astralsorcery");
         addDependency("forge");
+        addDependency("astralsorcery");
         state(SledgehammerPlatform.State.PRE_INITIALIZATION);
         return true;
     }

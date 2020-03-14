@@ -40,8 +40,8 @@ public class MistIntegration extends Integration {
     @Override
     public boolean prepare() {
         addDependency("forge");
-        addDependency("mist");
         addDependency("sponge");
+        addDependency("mist");
         state(SledgehammerPlatform.State.INITIALIZATION);
         return true;
     }
