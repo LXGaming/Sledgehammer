@@ -24,13 +24,13 @@ import java.util.Collection;
 
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
     
-    public static boolean containsIgnoreCase(Collection<String> list, String targetString) {
-        if (list == null || list.isEmpty()) {
+    public static boolean containsIgnoreCase(Collection<String> collection, String targetString) {
+        if (collection == null || collection.isEmpty()) {
             return false;
         }
         
-        for (String string : list) {
-            if (StringUtils.equalsIgnoreCase(string, targetString)) {
+        for (String string : collection) {
+            if (equalsIgnoreCase(string, targetString)) {
                 return true;
             }
         }
