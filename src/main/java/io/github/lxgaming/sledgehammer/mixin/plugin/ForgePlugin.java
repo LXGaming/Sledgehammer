@@ -22,6 +22,7 @@ import io.github.lxgaming.sledgehammer.bridge.fml.common.LoaderBridge;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
 import io.github.lxgaming.sledgehammer.mixin.forge.fml.common.MetadataCollectionAccessor;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.MetadataCollection;
@@ -101,29 +102,27 @@ public class ForgePlugin extends CorePlugin {
         int size = loaderBridge.bridge$getMappings().size();
         Sledgehammer.getInstance().getLogger().info("Identified {} {}", size, Toolbox.formatUnit(size, "mod", "mods"));
         
-        for (Map.Entry<File, Set<String>> entry : loaderBridge.bridge$getMappings().entrySet()) {
-            for (String id : entry.getValue()) {
-                Boolean modMapping = MappingManager.getModMapping(id).orElse(null);
-                if (modMapping == null) {
+        for (Map.Entry<String, Boolean> entry : MappingManager.MOD_MAPPINGS.entrySet()) {
+            File file = getFile(entry.getKey());
+            if (file == null) {
+                continue;
+            }
+            
+            if (entry.getValue()) {
+                // Add Mods
+                if (CoreModManager.getIgnoredMods().removeIf(file.getName()::equals)) {
+                    Sledgehammer.getInstance().getLogger().info("Acknowledged {}", file.getName());
+                }
+                
+                loaderBridge.bridge$addFile(file);
+            } else {
+                // Remove Mods
+                if (CoreModManager.getIgnoredMods().contains(file.getName())) {
                     continue;
                 }
                 
-                if (modMapping) {
-                    // Add Mods
-                    if (CoreModManager.getIgnoredMods().removeIf(entry.getKey().getName()::equals)) {
-                        Sledgehammer.getInstance().getLogger().info("Acknowledged {}", entry.getKey().getName());
-                    }
-                    
-                    loaderBridge.bridge$addFile(entry.getKey());
-                } else {
-                    // Remove Mods
-                    if (CoreModManager.getIgnoredMods().contains(entry.getKey().getName())) {
-                        continue;
-                    }
-                    
-                    CoreModManager.getIgnoredMods().add(entry.getKey().getName());
-                    Sledgehammer.getInstance().getLogger().info("Ignored {}", entry.getKey().getName());
-                }
+                CoreModManager.getIgnoredMods().add(file.getName());
+                Sledgehammer.getInstance().getLogger().info("Ignored {}", file.getName());
             }
         }
     }
@@ -135,6 +134,17 @@ public class ForgePlugin extends CorePlugin {
         }
         
         return super.shouldApplyMixin(targetClassName, mixinClassName);
+    }
+    
+    private File getFile(String id) {
+        LoaderBridge loaderBridge = (LoaderBridge) Loader.instance();
+        for (Map.Entry<File, Set<String>> entry : loaderBridge.bridge$getMappings().entrySet()) {
+            if (StringUtils.containsIgnoreCase(entry.getValue(), id)) {
+                return entry.getKey();
+            }
+        }
+        
+        return null;
     }
     
     private MetadataCollectionAccessor getMetadataCollection(File file) {

@@ -34,8 +34,8 @@ import java.util.Optional;
 
 public final class MappingManager {
     
-    public static final Map<String, Boolean> MIXIN_MAPPINGS = Maps.newHashMap();
-    public static final Map<String, Boolean> MOD_MAPPINGS = Maps.newHashMap();
+    public static final Map<String, Boolean> MIXIN_MAPPINGS = Maps.newLinkedHashMap();
+    public static final Map<String, Boolean> MOD_MAPPINGS = Maps.newLinkedHashMap();
     public static final Map<Class<?>, SledgehammerPlatform.State> STATE_MAPPINGS = Maps.newHashMap();
     
     public static void prepare() {
