@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.mixin.forge.fml.common;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.bridge.fml.common.LoaderBridge;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
@@ -47,6 +48,7 @@ public abstract class LoaderMixin implements LoaderBridge {
     @Shadow
     private static File minecraftDir;
     
+    private final Set<File> sledgehammer$files = Sets.newHashSet();
     private final Map<File, Set<String>> sledgehammer$mappings = Maps.newHashMap();
     
     @Inject(
@@ -73,16 +75,18 @@ public abstract class LoaderMixin implements LoaderBridge {
             }
         }
         
+        sledgehammer$files.clear();
         sledgehammer$mappings.clear();
     }
     
     public void bridge$addFile(File file) {
         try {
-            if (modClassLoader.containsSource(file)) {
+            if (modClassLoader.containsSource(file) || sledgehammer$files.contains(file)) {
                 return;
             }
             
             modClassLoader.addFile(file);
+            sledgehammer$files.add(file);
             Sledgehammer.getInstance().getLogger().info("Loaded {}", file.getName());
         } catch (MalformedURLException ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while adding {} to the classloader", file, ex);
