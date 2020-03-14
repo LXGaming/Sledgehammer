@@ -7,7 +7,8 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "base.config.recipes.RecipeFactoryMixin"
+    "base.config.recipes.RecipeFactoryMixin",
+    "conduits.conduit.redstone.RedstoneConduitNetworkMixin"
   ],
   "injectors": {
     "defaultRequire": 1

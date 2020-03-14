@@ -27,7 +27,15 @@ public class EnderIOMixinCategory {
     @Setting(value = "recipe-factory-stacktrace", comment = "If 'true', fixes EnderIO RecipeFactory logging")
     private boolean recipeFactoryStacktrace = false;
     
+    @Mapping(value = "enderio.conduits.conduit.redstone.RedstoneConduitNetworkMixin", dependencies = {"appliedenergistics2", "enderio", "enderiobase", "enderioconduits", "enderioconduitsappliedenergistics", "enderioconduitsopencomputers", "enderioconduitsrefinedstorage", "opencomputers"})
+    @Setting(value = "redstone-conduit-chunk-unload", comment = "If 'true', prevents Redstone Conduits from keeping chunks loaded")
+    private boolean redstoneConduitChunkUnload = false;
+    
     public boolean isRecipeFactoryStacktrace() {
         return recipeFactoryStacktrace;
+    }
+    
+    public boolean isRedstoneConduitChunkUnload() {
+        return redstoneConduitChunkUnload;
     }
 }
