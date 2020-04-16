@@ -1,0 +1,19 @@
+{
+  "required": false,
+  "minVersion": "0.7.10",
+  "package": "io.github.lxgaming.sledgehammer.mixin.realfilingcabinet",
+  "refmap": "mixins.sledgehammer.refmap.json",
+  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "helpers.enums.FolderType_1Mixin",
+    "helpers.enums.FolderType_2Mixin",
+    "helpers.enums.FolderType_6Mixin",
+    "items.ItemAutoFolderMixin",
+    "items.ItemDyedFolderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
