@@ -88,8 +88,8 @@ dependencies {
     shadow("org.spongepowered:mixin:0.8") {
         transitive = false
     }
-    annotationProcessor("org.spongepowered:spongecommon:1.12.2-7.1.9-SNAPSHOT:dev")
-    provided("org.spongepowered:spongecommon:1.12.2-7.1.9-SNAPSHOT:dev") {
+    annotationProcessor("org.spongepowered:spongecommon:1.12.2-7.2.2-SNAPSHOT:dev")
+    provided("org.spongepowered:spongecommon:1.12.2-7.2.2-SNAPSHOT:dev") {
         exclude(module: "configurate-core")
         exclude(module: "configurate-hocon")
         exclude(module: "commons-io")
@@ -98,10 +98,10 @@ dependencies {
         exclude(module: "launchwrapper")
         exclude(module: "mixin")
     }
-    provided("org.spongepowered:spongeforge:1.12.2-2838-7.1.9-RC3977:dev") {
+    provided("org.spongepowered:spongeforge:1.12.2-2838-7.2.2-RC4024:dev") {
         transitive = false
     }
-    provided("org.spongepowered:spongevanilla:1.12.2-7.1.9-RC325:dev") {
+    provided("org.spongepowered:spongevanilla:1.12.2-7.2.2-RC355:dev") {
         transitive = false
     }
 

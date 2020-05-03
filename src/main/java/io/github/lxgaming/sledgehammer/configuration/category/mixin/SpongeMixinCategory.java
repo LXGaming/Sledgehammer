@@ -30,10 +30,6 @@ public class SpongeMixinCategory {
     @Setting(value = "advancement-initialized", comment = "If 'true', catches an IllegalStateException thrown by Sponge.")
     private boolean advancementInitialized = false;
     
-    @Mapping(value = "core.network.NetHandlerPlayServerMixin_Event")
-    @Setting(value = "interact-events", comment = "If 'true', fixes https://github.com/SpongePowered/SpongeCommon/issues/2013.")
-    private boolean interactEvents = false;
-    
     @Mapping(value = "sponge.common.event.tracking.phase.packet.inventory.BasicInventoryPacketStateMixin")
     @Mapping(value = "sponge.common.event.SpongeCommonEventFactoryMixin")
     @Setting(value = "inventory-debug", comment = "If 'true', disables inventory debugging messages.")
@@ -53,10 +49,6 @@ public class SpongeMixinCategory {
     
     public boolean isAdvancementInitialized() {
         return advancementInitialized;
-    }
-    
-    public boolean isInteractEvents() {
-        return interactEvents;
     }
     
     public boolean isInventoryDebug() {
