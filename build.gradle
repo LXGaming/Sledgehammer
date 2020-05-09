@@ -115,6 +115,7 @@ dependencies {
     provided("ender-io:EnderIO:1.12.2:5.1.55")
     provided("ender-storage-1-8:EnderStorage-1.12.2:2.4.6.137:deobf")
     provided("hearth-well:hwell:0.5.2")
+    provided("immersive-engineering:ImmersiveEngineering:0.12:92")
     provided("journeymap:journeymap:1.12.2:5.7.0")
     provided("kubejs:KubeJS-forge:1.12.2:1.1.0.63")
     provided("logistics-pipes:logisticspipes:0.10.2.216")
@@ -164,6 +165,7 @@ jar {
                         + "mixins.sledgehammer.enderio.json,"
                         + "mixins.sledgehammer.enderstorage.json,"
                         + "mixins.sledgehammer.forge.json,"
+                        + "mixins.sledgehammer.immersiveengineering.json,"
                         + "mixins.sledgehammer.journeymap.json,"
                         + "mixins.sledgehammer.kubejs.json,"
                         + "mixins.sledgehammer.logisticspipes.json,"
