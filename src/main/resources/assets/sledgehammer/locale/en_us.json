@@ -18,6 +18,7 @@
   ],
   "general.prefix": "&9&l[Sledgehammer]",
   "message.chunk_save": "&fChunk ({}, {}) &cfailed to save",
+  "message.disabled": "&f{} &chas been disabled",
   "message.item_teleport": "&f{} &cwas lost in time and space",
   "message.move_outside_border": "&cCannot move outside of the world border",
   "message.project_red_exploit": "&cInvalid Item: &f{}",

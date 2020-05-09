@@ -35,6 +35,7 @@ public enum Locale {
     GENERAL_INFORMATION("general.information"),
     GENERAL_PREFIX("general.prefix"),
     
+    MESSAGE_DISABLED("message.disabled"),
     MESSAGE_CHUNK_SAVE("message.chunk_save"),
     MESSAGE_ITEM_TELEPORT("message.item_teleport"),
     MESSAGE_MOVE_OUTSIDE_BORDER("message.move_outside_border"),

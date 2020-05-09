@@ -19,6 +19,7 @@ package io.github.lxgaming.sledgehammer.configuration.category;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ActuallyAdditionsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.AstralSorceryMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.BewitchmentMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChampionsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
@@ -60,6 +61,9 @@ public class MixinCategory {
     
     @Setting(value = "bdsm", comment = "Barrels, Drums, Storage & More")
     private BDSMMixinCategory bdsmMixinCategory = new BDSMMixinCategory();
+    
+    @Setting(value = "bewitchment", comment = "Bewitchment")
+    private BewitchmentMixinCategory bewitchmentMixinCategory = new BewitchmentMixinCategory();
     
     @Setting(value = "carry-on", comment = "Carry On")
     private CarryOnMixinCategory carryOnMixinCategory = new CarryOnMixinCategory();
@@ -152,6 +156,10 @@ public class MixinCategory {
     
     public BDSMMixinCategory getBdsmMixinCategory() {
         return bdsmMixinCategory;
+    }
+    
+    public BewitchmentMixinCategory getBewitchmentMixinCategory() {
+        return bewitchmentMixinCategory;
     }
     
     public CarryOnMixinCategory getCarryOnMixinCategory() {
