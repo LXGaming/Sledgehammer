@@ -130,6 +130,7 @@ dependencies {
     provided("primitive-mobs:primitivemobs:1.2.3a")
     provided("pyrotech:pyrotech:1.12.2:1.3.13")
     provided("quark:Quark:r1.5:145")
+    provided("random-things:RandomThings:MC1.12.2:4.2.7.4")
     provided("real-filing-cabinet:realfilingcabinet:1.12:0.2.0.20")
     provided("ruins-structure-spawning-system:Ruins:1.12.2")
     provided("simple-storage-network:SimpleStorageNetwork:1.12.2:1.7.8")
@@ -179,6 +180,7 @@ jar {
                         + "mixins.sledgehammer.projectred.json,"
                         + "mixins.sledgehammer.pyrotech.json,"
                         + "mixins.sledgehammer.quark.json,"
+                        + "mixins.sledgehammer.randomthings.json,"
                         + "mixins.sledgehammer.realfilingcabinet.json,"
                         + "mixins.sledgehammer.ruins.json,"
                         + "mixins.sledgehammer.sponge.json,"

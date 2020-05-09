@@ -38,6 +38,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveMob
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ProjectRedMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.PyrotechMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.QuarkMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.RandomThingsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.RealFilingCabinetMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.RuinsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.SpongeMixinCategory;
@@ -118,6 +119,9 @@ public class MixinCategory {
     
     @Setting(value = "quark", comment = "Quark")
     private QuarkMixinCategory quarkMixinCategory = new QuarkMixinCategory();
+    
+    @Setting(value = "randomthings", comment = "Random Things")
+    private RandomThingsMixinCategory randomThingsMixinCategory = new RandomThingsMixinCategory();
     
     @Setting(value = "realfilingcabinet", comment = "Real Filing Cabinet")
     private RealFilingCabinetMixinCategory realFilingCabinetMixinCategory = new RealFilingCabinetMixinCategory();
@@ -232,6 +236,10 @@ public class MixinCategory {
     
     public QuarkMixinCategory getQuarkMixinCategory() {
         return quarkMixinCategory;
+    }
+    
+    public RandomThingsMixinCategory getRandomThingsMixinCategory() {
+        return randomThingsMixinCategory;
     }
     
     public RealFilingCabinetMixinCategory getRealFilingCabinetMixinCategory() {
