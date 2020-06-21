@@ -99,6 +99,11 @@ public class CoreMixinCategory {
     @Setting(value = "network-system", comment = "If 'true', fixes potential deadlock on shutdown.")
     private boolean networkSystem = false;
     
+    @Mapping(value = "core.block.BlockDynamicLiquidMixin")
+    @Mapping(value = "core.block.BlockLiquidAccessor")
+    @Setting(value = "optimize-liquid-drain", comment = "If 'true', fixes depth calculation that causes unnecessary block updates.")
+    private boolean optimizeLiquidDrain = false;
+    
     @Mapping(value = "core.server.management.PlayerChunkMapMixin")
     @Setting(value = "player-chunk-map", comment = "If 'true', prevents ConcurrentModificationException in PlayerChunkMap.")
     private boolean playerChunkMap = false;
@@ -173,6 +178,10 @@ public class CoreMixinCategory {
     
     public boolean isNetworkSystem() {
         return networkSystem;
+    }
+    
+    public boolean isOptimizeLiquidDrain() {
+        return optimizeLiquidDrain;
     }
     
     public boolean isPlayerChunkMap() {
