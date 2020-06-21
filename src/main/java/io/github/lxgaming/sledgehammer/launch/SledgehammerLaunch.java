@@ -22,10 +22,8 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.spongepowered.asm.launch.GlobalProperties;
 import org.spongepowered.asm.mixin.Mixins;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 public class SledgehammerLaunch {
@@ -55,17 +53,17 @@ public class SledgehammerLaunch {
     
     public static void configureEnvironment() {
         if (!isForgeInitialized() && isClassPresent(FORGE_CLASS)) {
-            putProperty(FORGE_INITIALIZED, Boolean.TRUE);
+            GlobalPropertiesProxy.put(FORGE_INITIALIZED, Boolean.TRUE);
             SledgehammerLaunch.getLogger().debug("Detected Forge");
         }
         
         if (!isSpongeInitialized() && isClassPresent(SPONGE_CLASS)) {
-            putProperty(SPONGE_INITIALIZED, Boolean.TRUE);
+            GlobalPropertiesProxy.put(SPONGE_INITIALIZED, Boolean.TRUE);
             SledgehammerLaunch.getLogger().debug("Detected Sponge");
         }
         
         if (!isSledgehammerInitialized() && isMixinInitialized() && isTweakerQueued(SledgehammerTweaker.class)) {
-            putProperty(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
+            GlobalPropertiesProxy.put(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
             
             // Triggers IMixinConfigPlugin::onLoad
             // ConcurrentModificationException - SpongeVanilla
@@ -114,23 +112,23 @@ public class SledgehammerLaunch {
     }
     
     public static List<String> getTweakerClasses() {
-        return getProperty(TWEAK_CLASSES);
+        return GlobalPropertiesProxy.get(TWEAK_CLASSES);
     }
     
     public static List<ITweaker> getTweakers() {
-        return getProperty(TWEAKS);
+        return GlobalPropertiesProxy.get(TWEAKS);
     }
     
     public static String getMixinVersion() {
-        return getProperty(MIXIN_INITIALIZED);
+        return GlobalPropertiesProxy.get(MIXIN_INITIALIZED);
     }
     
     public static boolean isDeobfuscatedEnvironment() {
-        return getProperty(DEOBFUSCATED_ENVIRONMENT, false);
+        return GlobalPropertiesProxy.get(DEOBFUSCATED_ENVIRONMENT, false);
     }
     
     public static boolean isForgeInitialized() {
-        return getProperty(FORGE_INITIALIZED) == Boolean.TRUE;
+        return GlobalPropertiesProxy.get(FORGE_INITIALIZED) == Boolean.TRUE;
     }
     
     public static boolean isMixinInitialized() {
@@ -138,53 +136,10 @@ public class SledgehammerLaunch {
     }
     
     public static boolean isSledgehammerInitialized() {
-        return getProperty(SLEDGEHAMMER_INITIALIZED) != null;
+        return GlobalPropertiesProxy.get(SLEDGEHAMMER_INITIALIZED) != null;
     }
     
     public static boolean isSpongeInitialized() {
-        return getProperty(SPONGE_INITIALIZED) == Boolean.TRUE;
-    }
-    
-    private static <T> T getProperty(String key) {
-        return getProperty(key, null);
-    }
-    
-    @SuppressWarnings("unchecked")
-    private static <T> T getProperty(String key, T defaultValue) {
-        try {
-            Object propertyKey = getPropertyKey(key);
-            Method getMethod = GlobalProperties.class.getMethod("get", propertyKey.getClass(), Object.class);
-            Object object = getMethod.invoke(null, propertyKey, defaultValue);
-            if (object != null) {
-                return (T) object;
-            }
-            
-            return defaultValue;
-        } catch (Throwable ex) {
-            LOGGER.error("Encountered an error while getting {}: {}", key, ex);
-            return defaultValue;
-        }
-    }
-    
-    private static void putProperty(String key, Object value) {
-        try {
-            Object propertyKey = getPropertyKey(key);
-            Method setMethod = GlobalProperties.class.getMethod("put", propertyKey.getClass(), Object.class);
-            setMethod.invoke(null, propertyKey, value);
-        } catch (Throwable ex) {
-            LOGGER.error("Encountered an error while setting {}: {}", key, ex);
-        }
-    }
-    
-    private static Object getPropertyKey(String name) {
-        try {
-            Method ofMethod = GlobalProperties.Keys.class.getMethod("of", String.class);
-            
-            // Mixin 0.8
-            return ofMethod.invoke(null, name);
-        } catch (Throwable ex) {
-            // Mixin 0.7
-            return name;
-        }
+        return GlobalPropertiesProxy.get(SPONGE_INITIALIZED) == Boolean.TRUE;
     }
 }
