@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {
@@ -35,7 +36,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-2.0.4"
+version = "1.12.2-2.0.5"
 
 minecraft {
     version = "1.12.2-14.23.5.2838"
@@ -228,14 +229,38 @@ reobf {
     shadowJar {
         mappingType = "SEARGE"
     }
+
+    thinShadowJar {
+        mappingType = "SEARGE"
+    }
 }
 
 shadowJar {
-    classifier = null
+    archiveClassifier.set(null)
     configurations = [project.configurations.shadow]
     relocate("com.typesafe.config", "io.github.lxgaming.sledgehammer.lib.config")
     relocate("ninja.leaping.configurate", "io.github.lxgaming.sledgehammer.lib.configurate")
     relocate("org.checkerframework", "io.github.lxgaming.sledgehammer.lib.checkerframework")
+}
+
+task thinShadowJar(type: ShadowJar) {
+    archiveClassifier.set("thin")
+    configurations = [project.configurations.shadow]
+    relocators = shadowJar.relocators
+
+    dependencies {
+        exclude(dependency("org.spongepowered:mixin:0.8"))
+    }
+
+    manifest {
+        inheritFrom jar.manifest
+    }
+
+    from sourceSets.main.output
+}
+
+artifacts {
+    archives thinShadowJar
 }
 
 test {
