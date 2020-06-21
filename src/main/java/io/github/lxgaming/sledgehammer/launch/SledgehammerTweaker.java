@@ -41,6 +41,7 @@ public class SledgehammerTweaker implements ITweaker {
     
     @Override
     public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile) {
+        // no-op
     }
     
     @Override

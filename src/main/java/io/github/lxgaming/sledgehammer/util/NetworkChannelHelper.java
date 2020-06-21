@@ -51,6 +51,7 @@ public class NetworkChannelHelper implements Runnable {
                 Thread.sleep(flushDelay);
             }
         } catch (InterruptedException ex) {
+            // no-op
         }
     }
     

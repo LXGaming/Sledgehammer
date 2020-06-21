@@ -50,6 +50,7 @@ public class CorePlugin implements IMixinConfigPlugin {
     
     @Override
     public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+        // no-op
     }
     
     @Override
@@ -59,9 +60,11 @@ public class CorePlugin implements IMixinConfigPlugin {
     
     @Override
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+        // no-op
     }
     
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+        // no-op
     }
 }
