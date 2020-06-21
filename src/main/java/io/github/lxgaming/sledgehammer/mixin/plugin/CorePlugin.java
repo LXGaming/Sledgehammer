@@ -33,7 +33,7 @@ public class CorePlugin implements IMixinConfigPlugin {
     }
     
     @Override
-    public String getRefMapperConfig() {
+    public final String getRefMapperConfig() {
         return null;
     }
     
@@ -49,22 +49,22 @@ public class CorePlugin implements IMixinConfigPlugin {
     }
     
     @Override
-    public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
+    public final void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
         // no-op
     }
     
     @Override
-    public List<String> getMixins() {
+    public final List<String> getMixins() {
         return null;
     }
     
     @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    public final void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
         // no-op
     }
     
     @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    public final void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
         // no-op
     }
 }
