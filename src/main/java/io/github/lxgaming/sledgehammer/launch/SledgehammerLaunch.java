@@ -25,17 +25,19 @@ import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.launch.GlobalProperties;
 import org.spongepowered.asm.mixin.Mixins;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class SledgehammerLaunch {
     
     private static final Logger LOGGER = LogManager.getLogger("Sledgehammer Launch");
-    private static final GlobalProperties.Keys DEOBFUSCATED_ENVIRONMENT = GlobalProperties.Keys.of("fml.deobfuscatedEnvironment");
-    private static final GlobalProperties.Keys FORGE_INITIALIZED = GlobalProperties.Keys.of("forge.initialized");
-    private static final GlobalProperties.Keys SLEDGEHAMMER_INITIALIZED = GlobalProperties.Keys.of("sledgehammer.initialized");
-    private static final GlobalProperties.Keys SPONGE_INITIALIZED = GlobalProperties.Keys.of("sponge.initialized");
-    private static final GlobalProperties.Keys TWEAK_CLASSES = GlobalProperties.Keys.of("TweakClasses");
-    private static final GlobalProperties.Keys TWEAKS = GlobalProperties.Keys.of("Tweaks");
+    private static final String DEOBFUSCATED_ENVIRONMENT = "fml.deobfuscatedEnvironment";
+    private static final String FORGE_INITIALIZED = "forge.initialized";
+    private static final String MIXIN_INITIALIZED = "mixin.initialised";
+    private static final String SLEDGEHAMMER_INITIALIZED = "sledgehammer.initialized";
+    private static final String SPONGE_INITIALIZED = "sponge.initialized";
+    private static final String TWEAK_CLASSES = "TweakClasses";
+    private static final String TWEAKS = "Tweaks";
     private static final String FORGE_CLASS = "net.minecraftforge.fml.relauncher.CoreModManager";
     private static final String FORGE_DEOBF_TWEAKER_CLASS = "net.minecraftforge.fml.common.launcher.FMLDeobfTweaker";
     private static final String GRADLE_START_COMMON_CLASS = "net.minecraftforge.gradle.GradleStartCommon";
@@ -53,17 +55,17 @@ public class SledgehammerLaunch {
     
     public static void configureEnvironment() {
         if (!isForgeInitialized() && isClassPresent(FORGE_CLASS)) {
-            GlobalProperties.put(FORGE_INITIALIZED, Boolean.TRUE);
+            putProperty(FORGE_INITIALIZED, Boolean.TRUE);
             SledgehammerLaunch.getLogger().debug("Detected Forge");
         }
         
         if (!isSpongeInitialized() && isClassPresent(SPONGE_CLASS)) {
-            GlobalProperties.put(SPONGE_INITIALIZED, Boolean.TRUE);
+            putProperty(SPONGE_INITIALIZED, Boolean.TRUE);
             SledgehammerLaunch.getLogger().debug("Detected Sponge");
         }
         
         if (!isSledgehammerInitialized() && isMixinInitialized() && isTweakerQueued(SledgehammerTweaker.class)) {
-            GlobalProperties.put(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
+            putProperty(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
             
             // Triggers IMixinConfigPlugin::onLoad
             // ConcurrentModificationException - SpongeVanilla
@@ -112,23 +114,23 @@ public class SledgehammerLaunch {
     }
     
     public static List<String> getTweakerClasses() {
-        return GlobalProperties.get(TWEAK_CLASSES);
+        return getProperty(TWEAK_CLASSES);
     }
     
     public static List<ITweaker> getTweakers() {
-        return GlobalProperties.get(TWEAKS);
+        return getProperty(TWEAKS);
     }
     
     public static String getMixinVersion() {
-        return GlobalProperties.get(GlobalProperties.Keys.INIT);
+        return getProperty(MIXIN_INITIALIZED);
     }
     
     public static boolean isDeobfuscatedEnvironment() {
-        return GlobalProperties.get(DEOBFUSCATED_ENVIRONMENT, false);
+        return getProperty(DEOBFUSCATED_ENVIRONMENT, false);
     }
     
     public static boolean isForgeInitialized() {
-        return GlobalProperties.get(FORGE_INITIALIZED) == Boolean.TRUE;
+        return getProperty(FORGE_INITIALIZED) == Boolean.TRUE;
     }
     
     public static boolean isMixinInitialized() {
@@ -136,10 +138,53 @@ public class SledgehammerLaunch {
     }
     
     public static boolean isSledgehammerInitialized() {
-        return GlobalProperties.get(SLEDGEHAMMER_INITIALIZED) != null;
+        return getProperty(SLEDGEHAMMER_INITIALIZED) != null;
     }
     
     public static boolean isSpongeInitialized() {
-        return GlobalProperties.get(SPONGE_INITIALIZED) == Boolean.TRUE;
+        return getProperty(SPONGE_INITIALIZED) == Boolean.TRUE;
+    }
+    
+    private static <T> T getProperty(String key) {
+        return getProperty(key, null);
+    }
+    
+    @SuppressWarnings("unchecked")
+    private static <T> T getProperty(String key, T defaultValue) {
+        try {
+            Object propertyKey = getPropertyKey(key);
+            Method getMethod = GlobalProperties.class.getMethod("get", propertyKey.getClass(), Object.class);
+            Object object = getMethod.invoke(null, propertyKey, defaultValue);
+            if (object != null) {
+                return (T) object;
+            }
+            
+            return defaultValue;
+        } catch (Throwable ex) {
+            LOGGER.error("Encountered an error while getting {}: {}", key, ex);
+            return defaultValue;
+        }
+    }
+    
+    private static void putProperty(String key, Object value) {
+        try {
+            Object propertyKey = getPropertyKey(key);
+            Method setMethod = GlobalProperties.class.getMethod("put", propertyKey.getClass(), Object.class);
+            setMethod.invoke(null, propertyKey, value);
+        } catch (Throwable ex) {
+            LOGGER.error("Encountered an error while setting {}: {}", key, ex);
+        }
+    }
+    
+    private static Object getPropertyKey(String name) {
+        try {
+            Method ofMethod = GlobalProperties.Keys.class.getMethod("of", String.class);
+            
+            // Mixin 0.8
+            return ofMethod.invoke(null, name);
+        } catch (Throwable ex) {
+            // Mixin 0.7
+            return name;
+        }
     }
 }

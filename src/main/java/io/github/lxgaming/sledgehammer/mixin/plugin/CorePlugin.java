@@ -63,8 +63,18 @@ public class CorePlugin implements IMixinConfigPlugin {
         // no-op
     }
     
+    // Mixin 0.7 Compatibility
+    public final void preApply(String targetClassName, org.spongepowered.asm.lib.tree.ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+        // no-op
+    }
+    
     @Override
     public final void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+        // no-op
+    }
+    
+    // Mixin 0.7 Compatibility
+    public final void postApply(String targetClassName, org.spongepowered.asm.lib.tree.ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
         // no-op
     }
 }
