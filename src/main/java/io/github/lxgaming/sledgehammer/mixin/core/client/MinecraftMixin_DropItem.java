@@ -29,12 +29,12 @@ public abstract class MinecraftMixin_DropItem {
             method = "processKeyBinds",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/entity/player/ClientPlayerEntity;func_225609_n_(Z)Z"
+                    target = "Lnet/minecraft/client/entity/player/ClientPlayerEntity;drop(Z)Z"
             )
     )
-    private boolean onDropItem(ClientPlayerEntity player, boolean dropAll) {
+    private boolean onDrop(ClientPlayerEntity player, boolean dropAll) {
         if (player.openContainer == null) {
-            return player.func_225609_n_(dropAll);
+            return player.drop(dropAll);
         }
         
         return false;
