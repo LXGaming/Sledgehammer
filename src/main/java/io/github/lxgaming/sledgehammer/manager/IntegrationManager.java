@@ -30,7 +30,7 @@ import io.github.lxgaming.sledgehammer.integration.forge.ForgeIntegration_Permis
 import io.github.lxgaming.sledgehammer.integration.forge.ForgeIntegration_Recipe;
 import io.github.lxgaming.sledgehammer.integration.mist.MistIntegration;
 import io.github.lxgaming.sledgehammer.integration.primal.PrimalIntegration;
-import io.github.lxgaming.sledgehammer.integration.sledgehammer.CommandIntegration;
+import io.github.lxgaming.sledgehammer.integration.sledgehammer.CommandIntegration_Server;
 import io.github.lxgaming.sledgehammer.integration.sponge.SpongeIntegration_Border;
 import io.github.lxgaming.sledgehammer.integration.sponge.SpongeIntegration_Death;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
@@ -45,7 +45,8 @@ public final class IntegrationManager {
     
     public static void prepare() {
         // Internal Integration
-        registerIntegration(CommandIntegration.class, category -> true);
+        // registerIntegration(CommandIntegration_Client.class, category -> true);
+        registerIntegration(CommandIntegration_Server.class, category -> true);
         
         registerIntegration(AstralSorceryIntegration.class, category -> Sledgehammer.getInstance().getConfig()
                 .map(Config::getMixinCategory)

@@ -23,7 +23,7 @@ import io.github.lxgaming.sledgehammer.integration.Integration;
 import net.minecraft.command.CommandHandler;
 import net.minecraft.server.MinecraftServer;
 
-public class CommandIntegration extends Integration {
+public class CommandIntegration_Server extends Integration {
     
     @Override
     public boolean prepare() {
