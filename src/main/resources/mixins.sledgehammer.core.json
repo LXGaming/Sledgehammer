@@ -31,7 +31,8 @@
     "util.LazyLoadBaseMixin",
     "world.biome.BiomeProviderMixin",
     "world.chunk.storage.AnvilChunkLoaderMixin",
-    "world.chunk.storage.RegionFileChunkBufferMixin"
+    "world.chunk.storage.RegionFileChunkBufferMixin",
+    "world.WorldMixin_ChunkUnload"
   ],
   "client": [
     "client.MinecraftMixin"

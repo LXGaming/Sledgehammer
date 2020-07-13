@@ -108,6 +108,10 @@ public class CoreMixinCategory {
     @Setting(value = "player-chunk-map", comment = "If 'true', prevents ConcurrentModificationException in PlayerChunkMap.")
     private boolean playerChunkMap = false;
     
+    @Mapping(value = "core.world.WorldMixin_ChunkUnload")
+    @Setting(value = "tile-entity-chunk-unload", comment = "If 'true', prevents unloading TileEntities from loading chunks")
+    private boolean tileEntityChunkUnload = false;
+    
     @Mapping(value = "core.network.play.server.SPacketJoinGameMixin")
     @Setting(value = "world-type-length", comment = "If 'true', increases the maximum length for a WorldType name in SPacketJoinGame packet.")
     private boolean worldTypeLength = false;
@@ -186,6 +190,10 @@ public class CoreMixinCategory {
     
     public boolean isPlayerChunkMap() {
         return playerChunkMap;
+    }
+    
+    public boolean isTileEntityChunkUnload() {
+        return tileEntityChunkUnload;
     }
     
     public boolean isWorldTypeLength() {
