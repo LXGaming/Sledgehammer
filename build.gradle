@@ -36,7 +36,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-2.0.6"
+version = "1.12.2-2.0.7"
 
 minecraft {
     version = "1.12.2-14.23.5.2838"
@@ -116,6 +116,7 @@ dependencies {
     provided("dank-null:DankNull:1.12.2:1.7.89")
     provided("ender-io:EnderIO:1.12.2:5.1.55")
     provided("ender-storage-1-8:EnderStorage-1.12.2:2.4.6.137:deobf")
+    provided("flux-networks:fluxnetworks-1.12.2:3.0.19:21")
     provided("hearth-well:hwell:0.5.2")
     provided("immersive-engineering:ImmersiveEngineering:0.12:92")
     provided("journeymap:journeymap:1.12.2:5.7.0")
@@ -136,6 +137,7 @@ dependencies {
     provided("real-filing-cabinet:realfilingcabinet:1.12:0.2.0.20")
     provided("ruins-structure-spawning-system:Ruins:1.12.2")
     provided("simple-storage-network:SimpleStorageNetwork:1.12.2:1.7.8")
+    provided("sonar-core:sonarcore-1.12.2:5.0.19:20")
     provided("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
     provided("topography:Topography:1.12.2:1.5.1")
     provided("tschipp:carryon:1.12.1")
@@ -169,6 +171,7 @@ jar {
                         + "mixins.sledgehammer.danknull.json,"
                         + "mixins.sledgehammer.enderio.json,"
                         + "mixins.sledgehammer.enderstorage.json,"
+                        + "mixins.sledgehammer.fluxnetworks.json,"
                         + "mixins.sledgehammer.forge.json,"
                         + "mixins.sledgehammer.immersiveengineering.json,"
                         + "mixins.sledgehammer.journeymap.json,"

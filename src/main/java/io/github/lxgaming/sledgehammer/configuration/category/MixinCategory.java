@@ -26,6 +26,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCat
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.DankNullMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderIOMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderStorageMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.FluxNetworksMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ImmersiveEngineeringMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.JourneyMapMixinCategory;
@@ -84,6 +85,9 @@ public class MixinCategory {
     
     @Setting(value = "enderstorage", comment = "Ender Storage")
     private EnderStorageMixinCategory enderStorageMixinCategory = new EnderStorageMixinCategory();
+    
+    @Setting(value = "flux-networks", comment = "Flux Networks")
+    private FluxNetworksMixinCategory fluxNetworksMixinCategory = new FluxNetworksMixinCategory();
     
     @Setting(value = "forge", comment = "Forge")
     private ForgeMixinCategory forgeMixinCategory = new ForgeMixinCategory();
@@ -192,6 +196,10 @@ public class MixinCategory {
     
     public EnderStorageMixinCategory getEnderStorageMixinCategory() {
         return enderStorageMixinCategory;
+    }
+    
+    public FluxNetworksMixinCategory getFluxNetworksMixinCategory() {
+        return fluxNetworksMixinCategory;
     }
     
     public ForgeMixinCategory getForgeMixinCategory() {
