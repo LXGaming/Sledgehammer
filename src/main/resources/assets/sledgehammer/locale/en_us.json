@@ -20,6 +20,7 @@
   "message.chunk_save": "&fChunk ({}, {}) &cfailed to save",
   "message.disabled": "{general.prefix} &f{} &chas been disabled",
   "message.flux_networks_exploit": "&cInvalid Item: &f{}",
+  "message.integrated_dynamics_compact_exploit": "&cInvalid Item: &f{}",
   "message.item_teleport": "&f{} &cwas lost in time and space",
   "message.move_outside_border": "&cCannot move outside of the world border",
   "message.project_red_exploit": "&cInvalid Item: &f{}",

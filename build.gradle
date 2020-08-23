@@ -113,12 +113,14 @@ dependencies {
     provided("barrels-drums-storage-more:BarrelsDrumsStorageAndMore:0.0.24")
     provided("com.bewitchment:bewitchment:1.12.2-0.0.21.12")
     provided("champions:champions:1.12.2:1.0.11.3")
+    provided("cyclops-core:CyclopsCore:1.12.2:1.6.6")
     provided("dank-null:DankNull:1.12.2:1.7.89")
     provided("ender-io:EnderIO:1.12.2:5.1.55")
     provided("ender-storage-1-8:EnderStorage-1.12.2:2.4.6.137:deobf")
     provided("flux-networks:fluxnetworks-1.12.2:3.0.19:21")
     provided("hearth-well:hwell:0.5.2")
     provided("immersive-engineering:ImmersiveEngineering:0.12:92")
+    provided("integrated-dynamics:IntegratedDynamics:1.12.2:1.1.7")
     provided("journeymap:journeymap:1.12.2:5.7.0")
     provided("kubejs:KubeJS-forge:1.12.2:1.1.0.63")
     provided("logistics-pipes:logisticspipes:0.10.2.216")
@@ -174,6 +176,7 @@ jar {
                         + "mixins.sledgehammer.fluxnetworks.json,"
                         + "mixins.sledgehammer.forge.json,"
                         + "mixins.sledgehammer.immersiveengineering.json,"
+                        + "mixins.sledgehammer.integrateddynamicscompat.json,"
                         + "mixins.sledgehammer.journeymap.json,"
                         + "mixins.sledgehammer.kubejs.json,"
                         + "mixins.sledgehammer.logisticspipes.json,"
