@@ -20,9 +20,11 @@ import io.github.lxgaming.sledgehammer.util.Locale;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.cyclops.cyclopscore.inventory.SimpleInventory;
 import org.cyclops.integrateddynamics.inventory.container.ContainerLogicProgrammerBase;
 import org.cyclops.integrateddynamicscompat.network.packet.CPacketSetSlot;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,6 +35,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = CPacketSetSlot.class, remap = false)
 public abstract class CPacketSetSlotMixin {
+    
+    @Shadow
+    private int slot;
     
     @Shadow
     private ItemStack itemStack;
@@ -47,7 +52,13 @@ public abstract class CPacketSetSlotMixin {
     private void onActionServer(World world, EntityPlayerMP player, CallbackInfo callbackInfo) {
         if (!(player.openContainer instanceof ContainerLogicProgrammerBase)) {
             callbackInfo.cancel();
-            LocaleAdapter.disconnect(player, Locale.MESSAGE_INTEGRATED_DYNAMICS_COMPACT_EXPLOIT, Toolbox.getResourceLocation(itemStack.getItem()).map(ResourceLocation::toString).orElse("Unknown"));
+            LocaleAdapter.disconnect(player, Locale.MESSAGE_INTEGRATED_DYNAMICS_COMPACT_EXPLOIT, Toolbox.getResourceLocation(this.itemStack.getItem()).map(ResourceLocation::toString).orElse("Unknown"));
+        }
+        
+        Slot slot = player.openContainer.getSlot(this.slot);
+        if (!(slot.inventory instanceof SimpleInventory)) {
+            callbackInfo.cancel();
+            LocaleAdapter.disconnect(player, Locale.MESSAGE_INTEGRATED_DYNAMICS_COMPACT_EXPLOIT, Toolbox.getResourceLocation(this.itemStack.getItem()).map(ResourceLocation::toString).orElse("Unknown"));
         }
     }
 }
