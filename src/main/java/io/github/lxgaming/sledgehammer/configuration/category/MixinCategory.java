@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.configuration.category;
 
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ActuallyAdditionsMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.ArmorUnderMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.AstralSorceryMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BewitchmentMixinCategory;
@@ -60,6 +61,9 @@ public class MixinCategory {
     
     @Setting(value = "actually-additions", comment = "Actually Additions")
     private ActuallyAdditionsMixinCategory actuallyAdditionsMixinCategory = new ActuallyAdditionsMixinCategory();
+    
+    @Setting(value = "armor-under", comment = "Armor Underwear")
+    private ArmorUnderMixinCategory armorUnderMixinCategory = new ArmorUnderMixinCategory();
     
     @Setting(value = "astral-sorcery", comment = "Astral Sorcery")
     private AstralSorceryMixinCategory astralSorceryMixinCategory = new AstralSorceryMixinCategory();
@@ -168,6 +172,10 @@ public class MixinCategory {
     
     public ActuallyAdditionsMixinCategory getActuallyAdditionsMixinCategory() {
         return actuallyAdditionsMixinCategory;
+    }
+    
+    public ArmorUnderMixinCategory getArmorUnderMixinCategory() {
+        return armorUnderMixinCategory;
     }
     
     public AstralSorceryMixinCategory getAstralSorceryMixinCategory() {
