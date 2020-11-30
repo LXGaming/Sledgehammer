@@ -111,6 +111,7 @@ dependencies {
     provided("athenaeum:athenaeum:1.12.2:1.17.4")
     provided("astral-sorcery:astralsorcery:1.12.2:1.10.22")
     provided("barrels-drums-storage-more:BarrelsDrumsStorageAndMore:0.0.24")
+    provided("biomes-o-plenty:BiomesOPlenty-1.12.2:7.0.1.2441:universal")
     provided("com.bewitchment:bewitchment:1.12.2-0.0.21.12")
     provided("champions:champions:1.12.2:1.0.11.3")
     provided("cyclops-core:CyclopsCore:1.12.2:1.6.6")
@@ -167,6 +168,7 @@ jar {
                         + "mixins.sledgehammer.astralsorcery.json,"
                         + "mixins.sledgehammer.bdsandm.json,"
                         + "mixins.sledgehammer.bewitchment.json,"
+                        + "mixins.sledgehammer.biomesoplenty.json,"
                         + "mixins.sledgehammer.carryon.json,"
                         + "mixins.sledgehammer.champions.json,"
                         + "mixins.sledgehammer.core.json,"

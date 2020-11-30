@@ -25,6 +25,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.AstralSorceryMixinCategory;
 import io.github.lxgaming.sledgehammer.integration.Integration;
 import io.github.lxgaming.sledgehammer.integration.astralsorcery.AstralSorceryIntegration;
+import io.github.lxgaming.sledgehammer.integration.biomesoplenty.BiomesOPlentyIntegration;
 import io.github.lxgaming.sledgehammer.integration.botania.BotaniaIntegration;
 import io.github.lxgaming.sledgehammer.integration.forge.ForgeIntegration_Permission;
 import io.github.lxgaming.sledgehammer.integration.forge.ForgeIntegration_Recipe;
@@ -54,6 +55,7 @@ public final class IntegrationManager {
                 .map(AstralSorceryMixinCategory::isDataSerializers)
                 .orElse(false)
         );
+        registerIntegration(BiomesOPlentyIntegration.class, category -> category.getBiomesOPlentyIntegrationCategory().isBoatPurge());
         registerIntegration(BotaniaIntegration.class, category -> category.getBotaniaIntegrationCategory().isIslandCreation());
         registerIntegration(ForgeIntegration_Permission.class, category -> category.getForgeIntegrationCategory().isCheckPermissions());
         registerIntegration(ForgeIntegration_Recipe.class, category -> !category.getForgeIntegrationCategory().getBlacklistedRecipeItems().isEmpty());

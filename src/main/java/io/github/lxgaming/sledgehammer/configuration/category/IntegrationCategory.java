@@ -16,6 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category;
 
+import io.github.lxgaming.sledgehammer.configuration.category.integration.BiomesOPlentyIntegrationCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.integration.BotaniaIntegrationCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.integration.ForgeIntegrationCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.integration.MistIntegrationCategory;
@@ -26,6 +27,9 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
 public class IntegrationCategory {
+    
+    @Setting(value = "biomesoplenty", comment = "Biomes O' Plenty")
+    private BiomesOPlentyIntegrationCategory biomesOPlentyIntegrationCategory = new BiomesOPlentyIntegrationCategory();
     
     @Setting(value = "botania", comment = "Botania")
     private BotaniaIntegrationCategory botaniaIntegrationCategory = new BotaniaIntegrationCategory();
@@ -41,6 +45,10 @@ public class IntegrationCategory {
     
     @Setting(value = "sponge", comment = "SpongeForge / SpongeVanilla")
     private SpongeIntegrationCategory spongeIntegrationCategory = new SpongeIntegrationCategory();
+    
+    public BiomesOPlentyIntegrationCategory getBiomesOPlentyIntegrationCategory() {
+        return biomesOPlentyIntegrationCategory;
+    }
     
     public BotaniaIntegrationCategory getBotaniaIntegrationCategory() {
         return botaniaIntegrationCategory;
