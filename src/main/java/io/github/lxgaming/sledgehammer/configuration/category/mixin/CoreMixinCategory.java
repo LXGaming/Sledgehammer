@@ -70,6 +70,10 @@ public class CoreMixinCategory {
     @Setting(value = "chunk-save-shutdown", comment = "If 'true', generates a crash report and safely stops the server if a chunk fails to save.")
     private boolean chunkSaveShutdown = false;
     
+    @Mapping(value = "core.entity.EntityTrackerMixin")
+    @Setting(value = "entity-tracker", comment = "If 'true', prevents ConcurrentModificationException in EntityTracker.")
+    private boolean entityTracker = false;
+    
     @Mapping(value = "core.network.play.server.SPacketChunkDataMixin")
     @Setting(value = "get-update-tag-crash", comment = "If 'true', adds TileEntity data to the crash report from calls to 'getUpdateTag' that fail.")
     private boolean getUpdateTagCrash = false;
@@ -154,6 +158,10 @@ public class CoreMixinCategory {
     
     public boolean isChunkSaveShutdown() {
         return chunkSaveShutdown;
+    }
+    
+    public boolean isEntityTracker() {
+        return entityTracker;
     }
     
     public boolean isGetUpdateTagCrash() {

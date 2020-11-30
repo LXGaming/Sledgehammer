@@ -16,6 +16,7 @@
     "block.BlockLiquidAccessor",
     "crash.CrashReportMixin",
     "entity.EntityMixin_Teleport",
+    "entity.EntityTrackerMixin",
     "item.ItemStackMixin_Exploit",
     "item.ItemWritableBookMixin",
     "network.play.server.SPacketChunkDataMixin",
