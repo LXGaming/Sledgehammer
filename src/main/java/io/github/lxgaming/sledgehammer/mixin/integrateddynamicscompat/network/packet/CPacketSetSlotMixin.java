@@ -25,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.cyclops.cyclopscore.inventory.SimpleInventory;
+import org.cyclops.cyclopscore.inventory.slot.SlotExtended;
 import org.cyclops.integrateddynamics.inventory.container.ContainerLogicProgrammerBase;
 import org.cyclops.integrateddynamicscompat.network.packet.CPacketSetSlot;
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,8 +56,13 @@ public abstract class CPacketSetSlotMixin {
             LocaleAdapter.disconnect(player, Locale.MESSAGE_INTEGRATED_DYNAMICS_COMPACT_EXPLOIT, Toolbox.getResourceLocation(this.itemStack.getItem()).map(ResourceLocation::toString).orElse("Unknown"));
         }
         
+        if (player.openContainer.inventorySlots.size() <= this.slot) {
+            callbackInfo.cancel();
+            return;
+        }
+        
         Slot slot = player.openContainer.getSlot(this.slot);
-        if (!(slot.inventory instanceof SimpleInventory)) {
+        if (!(slot instanceof SlotExtended) || !((SlotExtended) slot).isPhantom() || !(slot.inventory instanceof SimpleInventory)) {
             callbackInfo.cancel();
             LocaleAdapter.disconnect(player, Locale.MESSAGE_INTEGRATED_DYNAMICS_COMPACT_EXPLOIT, Toolbox.getResourceLocation(this.itemStack.getItem()).map(ResourceLocation::toString).orElse("Unknown"));
         }
