@@ -43,6 +43,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveCra
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveMobsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ProjectRedMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.PyrotechMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.QMDMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.QuarkMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.RandomThingsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.RealFilingCabinetMixinCategory;
@@ -140,6 +141,9 @@ public class MixinCategory {
     
     @Setting(value = "pyrotech", comment = "Pyrotech")
     private PyrotechMixinCategory pyrotechMixinCategory = new PyrotechMixinCategory();
+    
+    @Setting(value = "qmd", comment = "Quantum Minecraft Dynamics")
+    private QMDMixinCategory qmdMixinCategory = new QMDMixinCategory();
     
     @Setting(value = "quark", comment = "Quark")
     private QuarkMixinCategory quarkMixinCategory = new QuarkMixinCategory();
@@ -280,6 +284,10 @@ public class MixinCategory {
     
     public PyrotechMixinCategory getPyrotechMixinCategory() {
         return pyrotechMixinCategory;
+    }
+    
+    public QMDMixinCategory getQmdMixinCategory() {
+        return qmdMixinCategory;
     }
     
     public QuarkMixinCategory getQuarkMixinCategory() {
