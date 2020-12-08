@@ -76,9 +76,13 @@ public class Sledgehammer {
     }
     
     public void debug(String format, Object... arguments) {
-        if (getConfig().map(Config::getGeneralCategory).map(GeneralCategory::isDebug).orElse(false)) {
+        if (isDebug()) {
             getLogger().info(format, arguments);
         }
+    }
+    
+    public boolean isDebug() {
+        return getConfig().map(Config::getGeneralCategory).map(GeneralCategory::isDebug).orElse(false);
     }
     
     public static Sledgehammer getInstance() {
