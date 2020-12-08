@@ -16,9 +16,12 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category.mixin;
 
+import com.google.common.collect.Lists;
 import io.github.lxgaming.sledgehammer.configuration.annotation.Mapping;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+
+import java.util.List;
 
 @ConfigSerializable
 public class BewitchmentMixinCategory {
@@ -28,8 +31,16 @@ public class BewitchmentMixinCategory {
     private boolean disableRitualDeluge = false;
     
     @Mapping(value = "bewitchment.common.block.tile.entity.TileEntityGlyphMixin", dependencies = {"bewitchment"})
+    @Setting(value = "disable-ritual-drought", comment = "If 'true', disables Ritual of the Parched Sands")
+    private boolean disableRitualDrought = false;
+    
+    @Mapping(value = "bewitchment.common.block.tile.entity.TileEntityGlyphMixin", dependencies = {"bewitchment"})
     @Setting(value = "disable-ritual-high-moon", comment = "If 'true', disables Ritual of the High Moon")
     private boolean disableRitualHighMoon = false;
+    
+    @Mapping(value = "bewitchment.common.block.tile.entity.TileEntityGlyphMixin", dependencies = {"bewitchment"})
+    @Setting(value = "disable-ritual-rising-twigs", comment = "If 'true', disables Rite of the Rising Twigs")
+    private boolean disableRitualRisingTwigs = false;
     
     @Mapping(value = "bewitchment.common.block.tile.entity.TileEntityGlyphMixin", dependencies = {"bewitchment"})
     @Setting(value = "disable-ritual-sands-of-time", comment = "If 'true', disables Ritual of the Sands of Time")
@@ -39,12 +50,33 @@ public class BewitchmentMixinCategory {
     @Setting(value = "disable-ritual-solar-glory", comment = "If 'true', disables Ritual of Solar Glory")
     private boolean disableRitualSolarGlory = false;
     
+    @Mapping(value = "bewitchment.common.item.ItemThyrsusMixin", dependencies = {"bewitchment"})
+    @Mapping(value = "bewitchment.common.potion.PotionFriendshipMixin", dependencies = {"bewitchment"})
+    @Setting(value = "prevent-tame-stealing", comment = "If 'true', prevents Friendship Potion & Thyrsus from taming already tamed mobs")
+    private boolean preventTameStealing = false;
+    
+    @Mapping(value = "bewitchment.common.item.ItemThyrsusMixin", dependencies = {"bewitchment"})
+    @Mapping(value = "bewitchment.common.potion.PotionFriendshipMixin", dependencies = {"bewitchment"})
+    @Setting(value = "tame-deny", comment = "If 'true', prevents Friendship Potion & Thyrsus from taming mobs listed in tame-deny-list.")
+    private boolean tameDeny = false;
+    
+    @Setting(value = "tame-deny-list", comment = "Mobs that are not allowed to be tamed")
+    private List<String> tameDenyList = Lists.newArrayList("minecraft:ender_dragon");
+    
     public boolean isDisableRitualDeluge() {
         return disableRitualDeluge;
     }
     
+    public boolean isDisableRitualDrought() {
+        return disableRitualDrought;
+    }
+    
     public boolean isDisableRitualHighMoon() {
         return disableRitualHighMoon;
+    }
+    
+    public boolean isDisableRitualRisingTwigs() {
+        return disableRitualRisingTwigs;
     }
     
     public boolean isDisableRitualSandsOfTime() {
@@ -53,5 +85,17 @@ public class BewitchmentMixinCategory {
     
     public boolean isDisableRitualSolarGlory() {
         return disableRitualSolarGlory;
+    }
+    
+    public boolean isPreventTameStealing() {
+        return preventTameStealing;
+    }
+    
+    public boolean isTameDeny() {
+        return tameDeny;
+    }
+    
+    public List<String> getTameDenyList() {
+        return tameDenyList;
     }
 }

@@ -19,6 +19,7 @@ package io.github.lxgaming.sledgehammer.mixin.bewitchment.common.block.tile.enti
 import com.bewitchment.api.registry.Ritual;
 import com.bewitchment.common.block.tile.entity.TileEntityGlyph;
 import com.bewitchment.common.ritual.RitualDeluge;
+import com.bewitchment.common.ritual.RitualDrought;
 import com.bewitchment.common.ritual.RitualHighMoon;
 import com.bewitchment.common.ritual.RitualSandsOfTime;
 import com.bewitchment.common.ritual.RitualSolarGlory;
@@ -27,8 +28,10 @@ import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.MixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BewitchmentMixinCategory;
 import io.github.lxgaming.sledgehammer.util.Locale;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
 import io.github.lxgaming.sledgehammer.util.text.adapter.LocaleAdapter;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -54,10 +57,28 @@ public abstract class TileEntityGlyphMixin {
             return;
         }
         
+        if (sledgehammer$isBroomRitual(rit)) {
+            if (mixinCategory.isDisableRitualRisingTwigs()) {
+                callbackInfo.cancel();
+                LocaleAdapter.sendMessage(player, Locale.MESSAGE_DISABLED, "Rite of the Rising Twigs");
+            }
+            
+            return;
+        }
+        
         if (rit instanceof RitualDeluge) {
             if (mixinCategory.isDisableRitualDeluge()) {
                 callbackInfo.cancel();
                 LocaleAdapter.sendMessage(player, Locale.MESSAGE_DISABLED, "Ritual of the Deluge");
+            }
+            
+            return;
+        }
+        
+        if (rit instanceof RitualDrought) {
+            if (mixinCategory.isDisableRitualDrought()) {
+                callbackInfo.cancel();
+                LocaleAdapter.sendMessage(player, Locale.MESSAGE_DISABLED, "Ritual of the Parched Sands");
             }
             
             return;
@@ -89,5 +110,17 @@ public abstract class TileEntityGlyphMixin {
             
             return;
         }
+    }
+    
+    private boolean sledgehammer$isBroomRitual(Ritual ritual) {
+        if (!ritual.getClass().equals(Ritual.class)) {
+            return false;
+        }
+        
+        ResourceLocation resourceLocation = ritual.getRegistryName();
+        return resourceLocation != null && StringUtils.equalsAny(
+                resourceLocation.getPath(),
+                "cypress_broom", "dragons_blood_broom", "elder_broom", "juniper_broom"
+        );
     }
 }

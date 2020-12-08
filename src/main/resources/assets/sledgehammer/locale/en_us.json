@@ -17,6 +17,7 @@
     "    &8Website: &9{}"
   ],
   "general.prefix": "&9&l[Sledgehammer]",
+  "message.bewitchment.tame": "{general.prefix} &f{} &ccannot be tamed",
   "message.chunk_save": "&fChunk ({}, {}) &cfailed to save",
   "message.disabled": "{general.prefix} &f{} &chas been disabled",
   "message.flux_networks_exploit": "&cInvalid Item: &f{}",

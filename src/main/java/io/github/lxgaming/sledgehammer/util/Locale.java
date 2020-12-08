@@ -35,6 +35,7 @@ public enum Locale {
     GENERAL_INFORMATION("general.information"),
     GENERAL_PREFIX("general.prefix"),
     
+    MESSAGE_BEWITCHMENT_TAME("message.bewitchment.tame"),
     MESSAGE_CHUNK_SAVE("message.chunk_save"),
     MESSAGE_DISABLED("message.disabled"),
     MESSAGE_FLUX_NETWORKS_EXPLOIT("message.flux_networks_exploit"),

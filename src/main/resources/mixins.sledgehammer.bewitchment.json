@@ -7,7 +7,9 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "common.block.tile.entity.TileEntityGlyphMixin"
+    "common.block.tile.entity.TileEntityGlyphMixin",
+    "common.item.ItemThyrsusMixin",
+    "common.potion.PotionFriendshipMixin"
   ],
   "injectors": {
     "defaultRequire": 1
