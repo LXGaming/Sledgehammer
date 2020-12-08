@@ -30,7 +30,8 @@ public abstract class CommonEventsMixin {
             method = "onPlayerDeath",
             at = @At(
                     value = "INVOKE"
-            )
+            ),
+            cancellable = true
     )
     private void onPlayerDeath(CallbackInfo callbackInfo) {
         callbackInfo.cancel();
