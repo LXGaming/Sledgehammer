@@ -37,6 +37,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.KubeJSMixinC
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.LogisticsPipesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MatterOverdriveMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MorphMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.MowziesMobsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.NaturesAuraMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveCraftingMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveMobsMixinCategory;
@@ -121,6 +122,9 @@ public class MixinCategory {
     
     @Setting(value = "morph", comment = "Morph")
     private MorphMixinCategory morphMixinCategory = new MorphMixinCategory();
+    
+    @Setting(value = "mowziesmobs", comment = "Mowzie's Mobs")
+    private MowziesMobsMixinCategory mowziesMobsMixinCategory = new MowziesMobsMixinCategory();
     
     @Setting(value = "naturesaura", comment = "Nature's Aura")
     private NaturesAuraMixinCategory naturesAuraMixinCategory = new NaturesAuraMixinCategory();
@@ -252,6 +256,10 @@ public class MixinCategory {
     
     public MorphMixinCategory getMorphMixinCategory() {
         return morphMixinCategory;
+    }
+    
+    public MowziesMobsMixinCategory getMowziesMobsMixinCategory() {
+        return mowziesMobsMixinCategory;
     }
     
     public NaturesAuraMixinCategory getNaturesAuraMixinCategory() {
