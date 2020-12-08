@@ -30,9 +30,13 @@ public class ForgeMixinCategory {
     @Setting(value = "flush-network-on-tick", comment = "If 'true', reduces network usage by postponing flush.")
     private boolean flushNetworkOnTick = false;
     
-    @Mapping(value = "forge.common.ForgeModContainerMixin")
+    @Mapping(value = "forge.fml.client.FMLClientHandlerMixin")
     @Setting(value = "nuke-search-tree", comment = "If 'true', disables SearchTree reloading (Speeds up server connection process).")
     private boolean nukeSearchTree = false;
+    
+    @Mapping(value = "forge.fml.client.FMLClientHandlerMixin")
+    @Setting(value = "nuke-search-tree-shutdown", comment = "If 'true', disables SearchTree reloading on shutdown.")
+    private boolean nukeSearchTreeShutdown = false;
     
     @Mapping(value = "forge.fml.common.network.simpleimpl.SimpleNetworkWrapperMixin")
     @Setting(value = "packet-spam", comment = "If 'true', cancels packets sent by LootBags due to poorly written networking.")
@@ -48,6 +52,10 @@ public class ForgeMixinCategory {
     
     public boolean isNukeSearchTree() {
         return nukeSearchTree;
+    }
+    
+    public boolean isNukeSearchTreeShutdown() {
+        return nukeSearchTreeShutdown;
     }
     
     public boolean isPacketSpam() {

@@ -36,6 +36,7 @@
     "world.WorldMixin_ChunkUnload"
   ],
   "client": [
+    "client.MinecraftAccessor",
     "client.MinecraftMixin"
   ],
   "server": [

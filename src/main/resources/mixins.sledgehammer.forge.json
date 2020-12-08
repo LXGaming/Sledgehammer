@@ -17,7 +17,7 @@
     "world.storage.WorldInfoMixin"
   ],
   "client": [
-    "common.ForgeModContainerMixin"
+    "fml.client.FMLClientHandlerMixin"
   ],
   "server": [
   ],

@@ -52,6 +52,7 @@ public final class MappingManager {
         }
         
         // Internal Mixins
+        MIXIN_MAPPINGS.put("core.client.MinecraftAccessor", true);
         MIXIN_MAPPINGS.put("core.client.MinecraftMixin", true);
         MIXIN_MAPPINGS.put("core.crash.CrashReportMixin", true);
         MIXIN_MAPPINGS.put("core.server.DedicatedServerMixin", true);
