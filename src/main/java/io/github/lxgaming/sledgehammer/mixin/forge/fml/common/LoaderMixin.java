@@ -99,7 +99,7 @@ public abstract class LoaderMixin implements LoaderBridge {
     )
     private void onIdentifyModsPost(List<String> additionalContainers, CallbackInfoReturnable<ModDiscoverer> callbackInfoReturnable) {
         if (Sledgehammer.getInstance().isDebug()) {
-            Sledgehammer.getInstance().getLogger().info("Mods Order Pre:");
+            Sledgehammer.getInstance().getLogger().debug("Mods Order Pre:");
             sledgehammer$printModsOrder();
         }
         
@@ -114,7 +114,7 @@ public abstract class LoaderMixin implements LoaderBridge {
         sledgehammer$candidates.clear();
         
         if (Sledgehammer.getInstance().isDebug()) {
-            Sledgehammer.getInstance().getLogger().info("Mods Order Post:");
+            Sledgehammer.getInstance().getLogger().debug("Mods Order Post:");
             sledgehammer$printModsOrder();
         }
     }
