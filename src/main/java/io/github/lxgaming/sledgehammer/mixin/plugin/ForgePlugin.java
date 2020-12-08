@@ -92,9 +92,9 @@ public class ForgePlugin extends CorePlugin {
             Sledgehammer.getInstance().getLogger().debug("{}:", file.getName());
             for (String id : metadatas.keySet()) {
                 if (loaderBridge.bridge$getMappings().get(file).add(id)) {
-                    Sledgehammer.getInstance().getLogger().debug("   {}", id);
+                    Sledgehammer.getInstance().getLogger().debug("- {}", id);
                 } else {
-                    Sledgehammer.getInstance().getLogger().debug("   {} (Duplicate)", id);
+                    Sledgehammer.getInstance().getLogger().debug("- {} (Duplicate)", id);
                 }
             }
         }

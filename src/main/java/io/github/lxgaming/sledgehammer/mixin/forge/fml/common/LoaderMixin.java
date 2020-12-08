@@ -16,13 +16,16 @@
 
 package io.github.lxgaming.sledgehammer.mixin.forge.fml.common;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.bridge.fml.common.LoaderBridge;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
+import net.minecraftforge.fml.common.FMLModContainer;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModClassLoader;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.discovery.ModDiscoverer;
 import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.libraries.Artifact;
@@ -35,6 +38,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,8 +51,12 @@ public abstract class LoaderMixin implements LoaderBridge {
     private ModClassLoader modClassLoader;
     
     @Shadow
+    private List<ModContainer> mods;
+    
+    @Shadow
     private static File minecraftDir;
     
+    private final List<Path> sledgehammer$candidates = Lists.newArrayList();
     private final Set<File> sledgehammer$files = Sets.newHashSet();
     private final Map<File, Set<String>> sledgehammer$mappings = Maps.newHashMap();
     
@@ -61,6 +70,9 @@ public abstract class LoaderMixin implements LoaderBridge {
     )
     private void onGatherLegacyCanidates(List<String> additionalContainers, CallbackInfoReturnable<ModDiscoverer> callbackInfoReturnable,
                                          ModDiscoverer discoverer, List<Artifact> maven_canidates, List<File> file_canidates) {
+        file_canidates.forEach(file -> sledgehammer$candidates.add(sledgehammer$toPath(file)));
+        maven_canidates.forEach(artifact -> sledgehammer$candidates.add(sledgehammer$toPath(artifact.getFile())));
+        
         for (Map.Entry<File, Set<String>> entry : sledgehammer$mappings.entrySet()) {
             if (CoreModManager.getReparseableCoremods().contains(entry.getKey().getName())) {
                 continue;
@@ -77,6 +89,34 @@ public abstract class LoaderMixin implements LoaderBridge {
         
         sledgehammer$files.clear();
         sledgehammer$mappings.clear();
+    }
+    
+    @Inject(
+            method = "identifyMods",
+            at = @At(
+                    value = "RETURN"
+            )
+    )
+    private void onIdentifyModsPost(List<String> additionalContainers, CallbackInfoReturnable<ModDiscoverer> callbackInfoReturnable) {
+        if (Sledgehammer.getInstance().isDebug()) {
+            Sledgehammer.getInstance().getLogger().info("Mods Order Pre:");
+            sledgehammer$printModsOrder();
+        }
+        
+        mods.sort(Comparator.comparingInt(modContainer -> {
+            if (!(modContainer instanceof FMLModContainer) || modContainer.getSource() == null) {
+                return 0;
+            }
+            
+            return sledgehammer$candidates.indexOf(sledgehammer$toPath(modContainer.getSource()));
+        }));
+        
+        sledgehammer$candidates.clear();
+        
+        if (Sledgehammer.getInstance().isDebug()) {
+            Sledgehammer.getInstance().getLogger().info("Mods Order Post:");
+            sledgehammer$printModsOrder();
+        }
     }
     
     public void bridge$addFile(File file) {
@@ -99,5 +139,20 @@ public abstract class LoaderMixin implements LoaderBridge {
     
     public Map<File, Set<String>> bridge$getMappings() {
         return sledgehammer$mappings;
+    }
+    
+    private void sledgehammer$printModsOrder() {
+        for (int index = 0; index < mods.size(); index++) {
+            ModContainer modContainer = mods.get(index);
+            if (modContainer.getSource() == null) {
+                continue;
+            }
+            
+            Sledgehammer.getInstance().getLogger().debug("{}: {}", index, modContainer.getSource().getName());
+        }
+    }
+    
+    private Path sledgehammer$toPath(File file) {
+        return file.toPath().toAbsolutePath().normalize();
     }
 }
