@@ -82,7 +82,8 @@ public class SledgehammerLaunch {
     
     public static boolean isClassPresent(String name) {
         try {
-            return Class.forName(name, false, Launch.classLoader) != null;
+            Class.forName(name, false, Launch.classLoader);
+            return true;
         } catch (Throwable ex) {
             return false;
         }
