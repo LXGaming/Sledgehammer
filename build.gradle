@@ -123,13 +123,13 @@ jar {
     manifest {
         attributes(
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "Implementation-Title": "NorthernCompass",
+                "Implementation-Title": "Sledgehammer",
                 "Implementation-Vendor": "LX_Gaming",
                 "Implementation-Version": "${project.version}",
                 "MixinConfigs": ""
                         + "mixins.sledgehammer.core.json,"
                         + "mixins.sledgehammer.platform.json",
-                "Specification-Title": "northerncompass",
+                "Specification-Title": "sledgehammer",
                 "Specification-Vendor": "LX_Gaming",
                 "Specification-Version": "1"
         )
