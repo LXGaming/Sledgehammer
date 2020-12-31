@@ -92,23 +92,18 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor("net.minecraftforge:forge:1.16.4-35.1.28")
     minecraft("net.minecraftforge:forge:1.16.4-35.1.28")
     shadow("org.checkerframework:checker-qual:3.8.0")
     testCompile("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-    runtime("org.ow2.asm:asm-analysis:7.2")
-    runtime("org.ow2.asm:asm-util:7.2")
     shadow("org.spongepowered:configurate-hocon:3.6.1") {
         exclude(module: "checker-qual")
         exclude(module: "guava")
     }
-//    annotationProcessor("org.spongepowered:mixin:0.8.2")
-//    annotationProcessor("com.google.code.gson:gson:2.8.6") // Required by Mixin
-//    annotationProcessor("com.google.guava:guava:30.1-jre") // Required by Mixin
-//    annotationProcessor("org.ow2.asm:asm-commons:7.2") // Required by Mixin
-//    provided("org.spongepowered:mixin:0.8.2") {
-//        transitive = false
-//    }
+    annotationProcessor("org.spongepowered:mixin:0.8.2")
+    annotationProcessor("com.google.code.gson:gson:2.8.6") // Required by Mixin
+    annotationProcessor("com.google.guava:guava:30.1-jre") // Required by Mixin
+    annotationProcessor("org.apache.logging.log4j:log4j-core:2.14.0") // Required by Mixin
+    annotationProcessor("org.ow2.asm:asm-commons:7.2") // Required by Mixin
 
     // First Party Mods
     // provided("northerncompass:NorthernCompass:1.14.4:1.0.0")
