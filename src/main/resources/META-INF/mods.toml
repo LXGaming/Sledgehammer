@@ -4,7 +4,7 @@ issueTrackerURL="https://github.com/LXGaming/Sledgehammer/issues"
 
 [[mods]]
 modId="sledgehammer"
-version="@version@"
+version="${version}"
 displayName="Sledgehammer"
 displayURL="https://lxgaming.github.io/"
 logoFile="sledgehammer.png"

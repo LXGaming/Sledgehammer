@@ -1,8 +1,10 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 buildscript {
     repositories {
         jcenter()
+        maven {
+            name = "gradle"
+            url = "https://plugins.gradle.org/m2"
+        }
         maven {
             name = "minecraftforge"
             url = "https://files.minecraftforge.net/maven"
@@ -15,6 +17,7 @@ buildscript {
 
     dependencies {
         classpath("com.github.jengelman.gradle.plugins:shadow:5.2.0")
+        classpath("gradle.plugin.net.kyori:blossom:1.1.0")
         classpath("net.minecraftforge.gradle:ForgeGradle:3.+")
         classpath("org.spongepowered:mixingradle:0.7-SNAPSHOT")
     }
@@ -22,6 +25,7 @@ buildscript {
 
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "java"
+apply plugin: "net.kyori.blossom"
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "org.spongepowered.mixin"
 apply plugin: "signing"
@@ -32,6 +36,10 @@ targetCompatibility = 1.8
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
 version = "1.15.2-2.0.0"
+
+blossom {
+    replaceToken("@version@", version)
+}
 
 minecraft {
     accessTransformer(file("src/main/resources/accesstransformer.cfg"))
@@ -68,7 +76,6 @@ configurations {
     }
 
     build.dependsOn("signJar")
-    compileJava.dependsOn("filterJava")
     jar.classifier = "sponge"
 }
 
@@ -113,12 +120,6 @@ artifacts {
     archives shadowJar
 }
 
-compileJava {
-    doFirst {
-        source = filterJava.outputs
-    }
-}
-
 jar {
     manifest {
         attributes(
@@ -142,7 +143,7 @@ processResources {
 
     from (sourceSets.main.resources.srcDirs) {
         include("META-INF/mods.toml")
-        filter(ReplaceTokens, tokens: [version: version])
+        expand("version": version)
     }
 
     exclude("accesstransformer.cfg")
@@ -168,13 +169,6 @@ test {
     }
 
     useJUnitPlatform()
-}
-
-task filterJava(type: Sync) {
-    from(sourceSets.main.java)
-    into("$buildDir/tmp/$name")
-
-    filter(ReplaceTokens, tokens: [version: version])
 }
 
 task signJar {
