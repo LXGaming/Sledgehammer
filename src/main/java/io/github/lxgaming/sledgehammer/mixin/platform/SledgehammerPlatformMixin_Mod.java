@@ -59,17 +59,10 @@ public abstract class SledgehammerPlatformMixin_Mod {
     
     private SledgehammerPlatform.State platform$state;
     
-    @SubscribeEvent
-    public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
-        Sledgehammer.getInstance().getLogger().warn("Certificate Fingerprint Violation Detected!");
-    }
-    
-    @SubscribeEvent
     public void onModLifecycle(ModLifecycleEvent event) {
         MappingManager.getStateMapping(event.getClass()).ifPresent(this::platform$setState);
     }
     
-    @SubscribeEvent
     public void onServerLifecycle(ServerLifecycleEvent event) {
         MappingManager.getStateMapping(event.getClass()).ifPresent(this::platform$setState);
     }
@@ -101,8 +94,8 @@ public abstract class SledgehammerPlatformMixin_Mod {
         
         IntegrationManager.execute();
         
-        FMLJavaModLoadingContext.get().getModEventBus().register(instance);
-        MinecraftForge.EVENT_BUS.register(instance);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onModLifecycle);
+        MinecraftForge.EVENT_BUS.addListener(this::onServerLifecycle);
     }
     
     /**
