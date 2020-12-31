@@ -36,9 +36,6 @@ public class Sledgehammer {
     public static final String AUTHORS = "LX_Gaming";
     public static final String SOURCE = "https://github.io/LXGaming/Sledgehammer";
     public static final String WEBSITE = "https://lxgaming.github.io/";
-    public static final String ACCEPTED_VERSIONS = "[1.12.2]";
-    public static final String ACCEPTABLE_REMOTE_VERSIONS = "*";
-    public static final String CERTIFICATE_FINGERPRINT = "565fa4dbf20e7c3c4423950ca8e0bdabf7568796";
     
     private static Sledgehammer instance;
     private final Logger logger;
