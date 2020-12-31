@@ -27,10 +27,6 @@ public class CoreMixinCategory {
     @Setting(value = "drop-item", comment = "If 'true', prevents items getting dropped from the hotbar when the drop key is pressed while the mouse cursor is over an empty slot.")
     private boolean dropItem = false;
     
-    @Mapping(value = "core.util.text.TranslationTextComponentMixin")
-    @Setting(value = "invalid-translation", comment = "If 'true', prevents crashes caused by invalid translations.")
-    private boolean invalidTranslation = false;
-    
     @Mapping(value = "core.util.LazyValueMixin")
     @Setting(value = "lazy-value-thread-safe", comment = "If 'true', makes LazyValue Thread-safe.")
     private boolean lazyValueThreadSafe = false;
@@ -49,10 +45,6 @@ public class CoreMixinCategory {
     
     public boolean isDropItem() {
         return dropItem;
-    }
-    
-    public boolean isInvalidTranslation() {
-        return invalidTranslation;
     }
     
     public boolean isLazyValueThreadSafe() {

@@ -10,7 +10,6 @@
     "network.play.server.SJoinGamePacketMixin",
     "network.play.ServerPlayNetHandlerMixin_Sleep",
     "util.text.TextFormattingMixin",
-    "util.text.TranslationTextComponentMixin",
     "util.LazyValueMixin"
   ],
   "client": [
