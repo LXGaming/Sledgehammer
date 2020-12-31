@@ -1,5 +1,6 @@
 modLoader="javafml"
-loaderVersion="[28,)"
+loaderVersion="[35,)"
+license="Apache-2.0"
 issueTrackerURL="https://github.com/LXGaming/Sledgehammer/issues"
 
 [[mods]]

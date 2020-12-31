@@ -22,7 +22,9 @@ import io.github.lxgaming.sledgehammer.util.text.EmptyTextComponent;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ChatType;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
@@ -54,7 +56,7 @@ public class TextAdapter {
     }
     
     public static void sendMessage(PlayerEntity player, ITextComponent component) {
-        player.sendMessage(component);
+        player.sendMessage(component, Util.DUMMY_UUID);
     }
     
     public static void sendStatusMessage(PlayerEntity player, ITextComponent component) {
@@ -66,7 +68,7 @@ public class TextAdapter {
     }
     
     public static void sendMessage(ServerPlayerEntity player, ChatType chatType, ITextComponent component) {
-        player.sendMessage(component, chatType);
+        player.func_241151_a_(component, chatType, Util.DUMMY_UUID);
     }
     
     public static ITextComponent serializeLegacyWithLinks(String string) {
@@ -78,7 +80,7 @@ public class TextAdapter {
     }
     
     public static ITextComponent serializeLegacyWithLinks(String string, char character, TextFormatting... textFormattings) {
-        final ITextComponent rootTextComponent = new EmptyTextComponent();
+        final IFormattableTextComponent rootTextComponent = new EmptyTextComponent();
         
         Matcher matcher = URL_PATTERN.matcher(string);
         int currentIndex = 0;
@@ -91,17 +93,17 @@ public class TextAdapter {
             String text = string.substring(currentIndex, startIndex);
             if (!text.isEmpty()) {
                 // Append the text component to the root text component
-                rootTextComponent.appendSibling(serializeLegacy(text, character));
+                rootTextComponent.append(serializeLegacy(text, character));
             }
             
-            ITextComponent textComponent = new StringTextComponent(url);
-            textComponent.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url));
-            for (TextFormatting textFormatting : textFormattings) {
-                applyStyle(textComponent.getStyle(), textFormatting);
-            }
+            IFormattableTextComponent textComponent = new StringTextComponent(url);
+            
+            // Apply styles
+            textComponent.modifyStyle(modify -> modify.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url)));
+            textComponent.mergeStyle(textFormattings);
             
             // Append the text component to the root text component
-            rootTextComponent.appendSibling(textComponent);
+            rootTextComponent.append(textComponent);
             
             // Mark the current index
             currentIndex = endIndex;
@@ -111,7 +113,7 @@ public class TextAdapter {
         String text = string.substring(currentIndex);
         if (!text.isEmpty()) {
             // Append the text component to the root text component
-            rootTextComponent.appendSibling(serializeLegacy(text, character));
+            rootTextComponent.append(serializeLegacy(text, character));
         }
         
         return rootTextComponent;
@@ -122,10 +124,10 @@ public class TextAdapter {
     }
     
     public static ITextComponent serializeLegacy(String string, char character) {
-        final ITextComponent rootTextComponent = new EmptyTextComponent();
-        final Style currentStyle = new Style();
+        final IFormattableTextComponent rootTextComponent = new EmptyTextComponent();
+        Style currentStyle = Style.EMPTY;
         
-        ITextComponent parentTextComponent = rootTextComponent;
+        IFormattableTextComponent parentTextComponent = rootTextComponent;
         int currentIndex = 0;
         int index = 0;
         while ((index = string.indexOf(character, index)) != -1) {
@@ -155,16 +157,16 @@ public class TextAdapter {
             currentIndex = index;
             
             if (!text.isEmpty()) {
-                ITextComponent textComponent = new StringTextComponent(text);
+                IFormattableTextComponent textComponent = new StringTextComponent(text);
                 
-                // Set the style to a shallow copy, this preserves unset formatting
-                textComponent.setStyle(currentStyle.createShallowCopy());
+                // Apply the style
+                textComponent.setStyle(currentStyle);
                 
                 // Clear the style
-                clearStyle(currentStyle);
+                currentStyle = Style.EMPTY;
                 
                 // Append the text component to the parent text component
-                parentTextComponent.appendSibling(textComponent);
+                parentTextComponent.append(textComponent);
                 
                 if (textFormatting.isFancyStyling()) {
                     // Set the parent text component to the text component
@@ -178,60 +180,26 @@ public class TextAdapter {
                 parentTextComponent = rootTextComponent;
                 
                 // Clear the style
-                clearStyle(currentStyle);
+                currentStyle = Style.EMPTY;
             }
             
             // Apply the text formatting to the current style
-            applyStyle(currentStyle, textFormatting);
+            currentStyle = currentStyle.applyFormatting(textFormatting);
         }
         
         // The remaining text
         String text = string.substring(currentIndex);
         if (!text.isEmpty()) {
-            ITextComponent textComponent = new StringTextComponent(text);
+            IFormattableTextComponent textComponent = new StringTextComponent(text);
             
             // Set the style, shallow copy isn't required as no further changes will be made
             textComponent.setStyle(currentStyle);
             
             // Append the text component to the parent text component
-            parentTextComponent.appendSibling(textComponent);
+            parentTextComponent.append(textComponent);
         }
         
         return rootTextComponent;
-    }
-    
-    @SuppressWarnings("ConstantConditions")
-    private static void clearStyle(Style style) {
-        style.setBold(null);
-        style.setClickEvent(null);
-        style.setColor(null);
-        style.setHoverEvent(null);
-        style.setInsertion(null);
-        style.setItalic(null);
-        style.setObfuscated(null);
-        style.setParentStyle(null);
-        style.setStrikethrough(null);
-        style.setUnderlined(null);
-    }
-    
-    private static void applyStyle(Style style, TextFormatting textFormatting) {
-        if (textFormatting.isColor()) {
-            style.setColor(textFormatting);
-        } else if (textFormatting == TextFormatting.OBFUSCATED) {
-            style.setObfuscated(true);
-        } else if (textFormatting == TextFormatting.BOLD) {
-            style.setBold(true);
-        } else if (textFormatting == TextFormatting.STRIKETHROUGH) {
-            style.setStrikethrough(true);
-        } else if (textFormatting == TextFormatting.UNDERLINE) {
-            style.setUnderlined(true);
-        } else if (textFormatting == TextFormatting.ITALIC) {
-            style.setItalic(true);
-        } else if (textFormatting == TextFormatting.RESET) {
-            // no-op
-        } else {
-            throw new UnsupportedOperationException(String.format("Unsupported style: %s", textFormatting.name()));
-        }
     }
     
     private static TextFormatting getTextFormatting(char character) {

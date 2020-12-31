@@ -35,7 +35,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.15.2-2.0.0"
+version = "1.16.4-2.0.0"
 
 blossom {
     replaceToken("@version@", version)
@@ -43,7 +43,7 @@ blossom {
 
 minecraft {
     accessTransformer(file("src/main/resources/accesstransformer.cfg"))
-    mappings(channel: "snapshot", version: "20200514-1.15.1")
+    mappings(channel: "snapshot", version: "20201028-1.16.3")
     runs {
         client = {
             properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
@@ -92,22 +92,23 @@ repositories {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.15.2-31.2.29")
-    shadow("org.checkerframework:checker-qual:2.11.1")
-    testCompile("org.junit.jupiter:junit-jupiter-engine:5.5.2")
-    runtime("org.ow2.asm:asm-analysis:6.2")
-    runtime("org.ow2.asm:asm-util:6.2")
+    annotationProcessor("net.minecraftforge:forge:1.16.4-35.1.28")
+    minecraft("net.minecraftforge:forge:1.16.4-35.1.28")
+    shadow("org.checkerframework:checker-qual:3.8.0")
+    testCompile("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    runtime("org.ow2.asm:asm-analysis:7.2")
+    runtime("org.ow2.asm:asm-util:7.2")
     shadow("org.spongepowered:configurate-hocon:3.6.1") {
         exclude(module: "checker-qual")
         exclude(module: "guava")
     }
-    annotationProcessor("org.spongepowered:mixin:0.8")
-    annotationProcessor("com.google.code.gson:gson:2.8.6") // Required by Mixin
-    annotationProcessor("com.google.guava:guava:28.2-jre") // Required by Mixin
-    annotationProcessor("org.ow2.asm:asm-commons:7.3.1") // Required by Mixin
-    provided("org.spongepowered:mixin:0.8") {
-        transitive = false
-    }
+//    annotationProcessor("org.spongepowered:mixin:0.8.2")
+//    annotationProcessor("com.google.code.gson:gson:2.8.6") // Required by Mixin
+//    annotationProcessor("com.google.guava:guava:30.1-jre") // Required by Mixin
+//    annotationProcessor("org.ow2.asm:asm-commons:7.2") // Required by Mixin
+//    provided("org.spongepowered:mixin:0.8.2") {
+//        transitive = false
+//    }
 
     // First Party Mods
     // provided("northerncompass:NorthernCompass:1.14.4:1.0.0")
