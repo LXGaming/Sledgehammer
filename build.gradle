@@ -20,7 +20,7 @@ buildscript {
 
     dependencies {
         classpath("com.github.jengelman.gradle.plugins:shadow:5.2.0")
-        classpath("io.github.lxgaming:ForgeGradle:2.3-20210206.023209-1")
+        classpath("io.github.lxgaming:ForgeGradle:2.3-20210206.085929-2")
         classpath("io.github.lxgaming:mixingradle:0.6-20210206.024103-1")
     }
 }
