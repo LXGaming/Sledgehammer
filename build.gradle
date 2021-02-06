@@ -3,14 +3,14 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {
     repositories {
-        jcenter()
-        maven {
-            name = "lxgaming"
-            url = "https://dl.bintray.com/lxgaming/maven"
-        }
+        mavenCentral()
         maven {
             name = "minecraftforge"
             url = "https://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots"
         }
         maven {
             name = "spongepowered"
@@ -20,8 +20,8 @@ buildscript {
 
     dependencies {
         classpath("com.github.jengelman.gradle.plugins:shadow:5.2.0")
-        classpath("net.minecraftforge.gradle:ForgeGradle:2.3-20191227.215244-1")
-        classpath("org.spongepowered:mixingradle:0.6-20191227.220440-1")
+        classpath("io.github.lxgaming:ForgeGradle:2.3-20210206.023209-1")
+        classpath("io.github.lxgaming:mixingradle:0.6-20210206.024103-1")
     }
 }
 
@@ -62,7 +62,7 @@ configurations {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     maven {
         name = "covers1624"
         url = "https://maven.covers1624.net/"
