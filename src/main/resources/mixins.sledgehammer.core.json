@@ -7,7 +7,6 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "network.play.server.SJoinGamePacketMixin",
     "network.play.ServerPlayNetHandlerMixin_Sleep",
     "util.text.TextFormattingMixin",
     "util.LazyValueMixin"

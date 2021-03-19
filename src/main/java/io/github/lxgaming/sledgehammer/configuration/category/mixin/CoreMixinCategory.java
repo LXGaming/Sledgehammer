@@ -39,10 +39,6 @@ public class CoreMixinCategory {
     @Setting(value = "tutorial", comment = "If 'true', disables Tutorial on startup.")
     private boolean tutorial = false;
     
-    @Mapping(value = "core.network.play.server.SJoinGamePacketMixin")
-    @Setting(value = "world-type-length", comment = "If 'true', increases the maximum length for a WorldType name in SJoinGamePacket.")
-    private boolean worldTypeLength = false;
-    
     public boolean isDropItem() {
         return dropItem;
     }
@@ -57,9 +53,5 @@ public class CoreMixinCategory {
     
     public boolean isTutorial() {
         return tutorial;
-    }
-    
-    public boolean isWorldTypeLength() {
-        return worldTypeLength;
     }
 }
