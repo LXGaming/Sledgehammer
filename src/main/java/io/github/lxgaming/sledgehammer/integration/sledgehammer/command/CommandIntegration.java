@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Alex Thomson
+ * Copyright 2021 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,47 +14,26 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.integration;
+package io.github.lxgaming.sledgehammer.integration.sledgehammer.command;
 
 import com.google.common.collect.Lists;
-import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
-import io.github.lxgaming.sledgehammer.Sledgehammer;
-import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
+import com.mojang.brigadier.tree.RootCommandNode;
 import io.github.lxgaming.sledgehammer.command.Command;
+import io.github.lxgaming.sledgehammer.integration.Integration;
 import io.github.lxgaming.sledgehammer.manager.CommandManager;
 import net.minecraft.command.CommandSource;
-import net.minecraft.server.MinecraftServer;
 
 import java.util.List;
 
-public class CommandIntegration extends Integration {
+public abstract class CommandIntegration extends Integration {
     
-    @Override
-    public boolean prepare() {
-        state(SledgehammerPlatform.State.SERVER_STARTING);
-        return true;
-    }
-    
-    @Override
-    public void execute() throws Exception {
-        MinecraftServer server = SledgehammerPlatform.getInstance().getServer();
-        if (server == null) {
-            Sledgehammer.getInstance().getLogger().warn("Server is unavailable");
-            return;
-        }
-        
-        CommandDispatcher<CommandSource> dispatcher = server.getCommandManager().getDispatcher();
-        if (dispatcher.getRoot() == null) {
-            Sledgehammer.getInstance().getLogger().warn("RootCommandNode is unavailable");
-            return;
-        }
-        
+    protected final void register(RootCommandNode<CommandSource> rootCommandNode) {
         for (Command command : CommandManager.COMMANDS) {
             List<CommandNode<CommandSource>> commandNodes = register(command);
             for (CommandNode<CommandSource> commandNode : commandNodes) {
-                dispatcher.getRoot().addChild(commandNode);
+                rootCommandNode.addChild(commandNode);
             }
         }
     }

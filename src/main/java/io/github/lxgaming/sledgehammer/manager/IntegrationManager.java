@@ -21,8 +21,8 @@ import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.configuration.Config;
 import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
-import io.github.lxgaming.sledgehammer.integration.CommandIntegration;
 import io.github.lxgaming.sledgehammer.integration.Integration;
+import io.github.lxgaming.sledgehammer.integration.sledgehammer.command.CommandIntegration_Server;
 import io.github.lxgaming.sledgehammer.util.Toolbox;
 
 import java.util.Set;
@@ -35,7 +35,7 @@ public final class IntegrationManager {
     
     public static void prepare() {
         // Internal Integration
-        registerIntegration(CommandIntegration.class, category -> true);
+        registerIntegration(CommandIntegration_Server.class, category -> true);
     }
     
     public static void execute() {
