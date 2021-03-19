@@ -25,24 +25,24 @@ import net.minecraft.util.text.ChatType;
 
 public class LocaleAdapter {
     
-    public static void sendErrorMessage(CommandSource commandSource, Locale locale, Object... arguments) {
-        TextAdapter.sendErrorMessage(commandSource, LocaleManager.serialize(locale, arguments));
+    public static void sendFailure(CommandSource commandSource, Locale locale, Object... arguments) {
+        TextAdapter.sendFailure(commandSource, LocaleManager.serialize(locale, arguments));
     }
     
-    public static void sendFeedback(CommandSource commandSource, Locale locale, Object... arguments) {
-        TextAdapter.sendFeedback(commandSource, false, LocaleManager.serialize(locale, arguments));
+    public static void sendSuccess(CommandSource commandSource, Locale locale, Object... arguments) {
+        TextAdapter.sendSuccess(commandSource, false, LocaleManager.serialize(locale, arguments));
     }
     
-    public static void sendFeedback(CommandSource commandSource, boolean allowLogging, Locale locale, Object... arguments) {
-        TextAdapter.sendFeedback(commandSource, allowLogging, LocaleManager.serialize(locale, arguments));
+    public static void sendSuccess(CommandSource commandSource, boolean allowLogging, Locale locale, Object... arguments) {
+        TextAdapter.sendSuccess(commandSource, allowLogging, LocaleManager.serialize(locale, arguments));
     }
     
     public static void sendMessage(PlayerEntity player, Locale locale, Object... arguments) {
         TextAdapter.sendMessage(player, LocaleManager.serialize(locale, arguments));
     }
     
-    public static void sendStatusMessage(PlayerEntity player, Locale locale, Object... arguments) {
-        TextAdapter.sendStatusMessage(player, LocaleManager.serialize(locale, arguments));
+    public static void displayClientMessage(PlayerEntity player, Locale locale, Object... arguments) {
+        TextAdapter.displayClientMessage(player, LocaleManager.serialize(locale, arguments));
     }
     
     public static void disconnect(ServerPlayerEntity player, Locale locale, Object... arguments) {

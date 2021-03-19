@@ -27,10 +27,10 @@ public abstract class TextFormattingMixin implements TextFormattingBridge {
     
     @Shadow
     @Final
-    private char formattingCode;
+    private char code;
     
     @Override
-    public char bridge$getFormattingCode() {
-        return this.formattingCode;
+    public char bridge$getCode() {
+        return this.code;
     }
 }

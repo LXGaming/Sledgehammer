@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class ServerPlayNetHandlerMixin_Sleep {
     
     @Redirect(
-            method = "processEntityAction",
+            method = "handlePlayerCommand",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/entity/player/ServerPlayerEntity;isSleeping()Z"
@@ -39,7 +39,7 @@ public abstract class ServerPlayNetHandlerMixin_Sleep {
         }
         
         if (player.connection != null) {
-            player.connection.sendPacket(new SAnimateHandPacket(player, 2));
+            player.connection.send(new SAnimateHandPacket(player, 2));
         }
         
         return false;

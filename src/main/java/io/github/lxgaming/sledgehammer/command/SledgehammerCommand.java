@@ -42,7 +42,7 @@ public class SledgehammerCommand extends Command {
     }
     
     private int execute(CommandSource commandSource) {
-        LocaleAdapter.sendFeedback(commandSource, Locale.COMMAND_BASE,
+        LocaleAdapter.sendSuccess(commandSource, Locale.COMMAND_BASE,
                 Sledgehammer.ID
         );
         

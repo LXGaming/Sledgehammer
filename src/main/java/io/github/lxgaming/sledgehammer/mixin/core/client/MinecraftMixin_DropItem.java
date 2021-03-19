@@ -26,14 +26,14 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class MinecraftMixin_DropItem {
     
     @Redirect(
-            method = "processKeyBinds",
+            method = "handleKeybinds",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/entity/player/ClientPlayerEntity;drop(Z)Z"
             )
     )
     private boolean onDrop(ClientPlayerEntity player, boolean dropAll) {
-        if (player.openContainer == null) {
+        if (player.containerMenu == null) {
             return player.drop(dropAll);
         }
         

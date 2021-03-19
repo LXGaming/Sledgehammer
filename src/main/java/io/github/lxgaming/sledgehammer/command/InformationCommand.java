@@ -41,7 +41,7 @@ public class InformationCommand extends Command {
     }
     
     private int execute(CommandSource commandSource) {
-        LocaleAdapter.sendFeedback(commandSource, Locale.GENERAL_INFORMATION,
+        LocaleAdapter.sendSuccess(commandSource, Locale.GENERAL_INFORMATION,
                 Sledgehammer.VERSION, Sledgehammer.AUTHORS, Sledgehammer.SOURCE, Sledgehammer.WEBSITE
         );
         

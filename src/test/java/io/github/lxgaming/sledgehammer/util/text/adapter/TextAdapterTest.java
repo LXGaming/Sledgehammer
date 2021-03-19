@@ -34,22 +34,22 @@ public class TextAdapterTest {
         ITextComponent legacyTextComponent = TextAdapter.serializeLegacy("&00&11&22&33&44&55&66&77&88&99&aa&bb&cc&dd&ee&ff");
         
         IFormattableTextComponent nativeTextComponent = new EmptyTextComponent();
-        nativeTextComponent.append(new StringTextComponent("0").mergeStyle(TextFormatting.BLACK));
-        nativeTextComponent.append(new StringTextComponent("1").mergeStyle(TextFormatting.DARK_BLUE));
-        nativeTextComponent.append(new StringTextComponent("2").mergeStyle(TextFormatting.DARK_GREEN));
-        nativeTextComponent.append(new StringTextComponent("3").mergeStyle(TextFormatting.DARK_AQUA));
-        nativeTextComponent.append(new StringTextComponent("4").mergeStyle(TextFormatting.DARK_RED));
-        nativeTextComponent.append(new StringTextComponent("5").mergeStyle(TextFormatting.DARK_PURPLE));
-        nativeTextComponent.append(new StringTextComponent("6").mergeStyle(TextFormatting.GOLD));
-        nativeTextComponent.append(new StringTextComponent("7").mergeStyle(TextFormatting.GRAY));
-        nativeTextComponent.append(new StringTextComponent("8").mergeStyle(TextFormatting.DARK_GRAY));
-        nativeTextComponent.append(new StringTextComponent("9").mergeStyle(TextFormatting.BLUE));
-        nativeTextComponent.append(new StringTextComponent("a").mergeStyle(TextFormatting.GREEN));
-        nativeTextComponent.append(new StringTextComponent("b").mergeStyle(TextFormatting.AQUA));
-        nativeTextComponent.append(new StringTextComponent("c").mergeStyle(TextFormatting.RED));
-        nativeTextComponent.append(new StringTextComponent("d").mergeStyle(TextFormatting.LIGHT_PURPLE));
-        nativeTextComponent.append(new StringTextComponent("e").mergeStyle(TextFormatting.YELLOW));
-        nativeTextComponent.append(new StringTextComponent("f").mergeStyle(TextFormatting.WHITE));
+        nativeTextComponent.append(new StringTextComponent("0").withStyle(TextFormatting.BLACK));
+        nativeTextComponent.append(new StringTextComponent("1").withStyle(TextFormatting.DARK_BLUE));
+        nativeTextComponent.append(new StringTextComponent("2").withStyle(TextFormatting.DARK_GREEN));
+        nativeTextComponent.append(new StringTextComponent("3").withStyle(TextFormatting.DARK_AQUA));
+        nativeTextComponent.append(new StringTextComponent("4").withStyle(TextFormatting.DARK_RED));
+        nativeTextComponent.append(new StringTextComponent("5").withStyle(TextFormatting.DARK_PURPLE));
+        nativeTextComponent.append(new StringTextComponent("6").withStyle(TextFormatting.GOLD));
+        nativeTextComponent.append(new StringTextComponent("7").withStyle(TextFormatting.GRAY));
+        nativeTextComponent.append(new StringTextComponent("8").withStyle(TextFormatting.DARK_GRAY));
+        nativeTextComponent.append(new StringTextComponent("9").withStyle(TextFormatting.BLUE));
+        nativeTextComponent.append(new StringTextComponent("a").withStyle(TextFormatting.GREEN));
+        nativeTextComponent.append(new StringTextComponent("b").withStyle(TextFormatting.AQUA));
+        nativeTextComponent.append(new StringTextComponent("c").withStyle(TextFormatting.RED));
+        nativeTextComponent.append(new StringTextComponent("d").withStyle(TextFormatting.LIGHT_PURPLE));
+        nativeTextComponent.append(new StringTextComponent("e").withStyle(TextFormatting.YELLOW));
+        nativeTextComponent.append(new StringTextComponent("f").withStyle(TextFormatting.WHITE));
         
         String legacyText = TextComponent.Serializer.toJson(legacyTextComponent);
         String nativeText = TextComponent.Serializer.toJson(nativeTextComponent);
@@ -64,12 +64,12 @@ public class TextAdapterTest {
         ITextComponent legacyTextComponent = TextAdapter.serializeLegacy("&kk&r&ll&r&mm&r&nn&r&oo&rr");
         
         IFormattableTextComponent nativeTextComponent = new EmptyTextComponent();
-        nativeTextComponent.append(new StringTextComponent("k").mergeStyle(TextFormatting.OBFUSCATED));
-        nativeTextComponent.append(new StringTextComponent("l").mergeStyle(TextFormatting.BOLD));
-        nativeTextComponent.append(new StringTextComponent("m").mergeStyle(TextFormatting.STRIKETHROUGH));
-        nativeTextComponent.append(new StringTextComponent("n").mergeStyle(TextFormatting.UNDERLINE));
-        nativeTextComponent.append(new StringTextComponent("o").mergeStyle(TextFormatting.ITALIC));
-        nativeTextComponent.append(new StringTextComponent("r").mergeStyle(TextFormatting.RESET));
+        nativeTextComponent.append(new StringTextComponent("k").withStyle(TextFormatting.OBFUSCATED));
+        nativeTextComponent.append(new StringTextComponent("l").withStyle(TextFormatting.BOLD));
+        nativeTextComponent.append(new StringTextComponent("m").withStyle(TextFormatting.STRIKETHROUGH));
+        nativeTextComponent.append(new StringTextComponent("n").withStyle(TextFormatting.UNDERLINE));
+        nativeTextComponent.append(new StringTextComponent("o").withStyle(TextFormatting.ITALIC));
+        nativeTextComponent.append(new StringTextComponent("r").withStyle(TextFormatting.RESET));
         
         String legacyText = TextComponent.Serializer.toJson(legacyTextComponent);
         String nativeText = TextComponent.Serializer.toJson(nativeTextComponent);
@@ -85,9 +85,9 @@ public class TextAdapterTest {
         
         IFormattableTextComponent nativeTextComponent = new EmptyTextComponent();
         IFormattableTextComponent textComponent = new StringTextComponent(Sledgehammer.WEBSITE);
-        textComponent.modifyStyle(style -> style
-                .setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, Sledgehammer.WEBSITE))
-                .applyFormatting(TextFormatting.BLUE));
+        textComponent.withStyle(style -> style
+                .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, Sledgehammer.WEBSITE))
+                .applyFormat(TextFormatting.BLUE));
         nativeTextComponent.append(textComponent);
         
         String legacyText = TextComponent.Serializer.toJson(legacyTextComponent);

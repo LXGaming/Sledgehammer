@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 public abstract class LazyValueMixin<T> {
     
     @Shadow
-    private Supplier<T> supplier;
+    private Supplier<T> factory;
     
     @Shadow
     private T value;
@@ -37,12 +37,12 @@ public abstract class LazyValueMixin<T> {
      * @reason Make Thread-safe
      */
     @Overwrite
-    public T getValue() {
+    public T get() {
         synchronized (this) {
-            Supplier<T> supplier = this.supplier;
-            if (supplier != null) {
-                this.value = supplier.get();
-                this.supplier = null;
+            Supplier<T> factory = this.factory;
+            if (factory != null) {
+                this.value = factory.get();
+                this.factory = null;
             }
             
             return this.value;

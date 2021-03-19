@@ -72,7 +72,7 @@ public final class LocaleManager {
     public static ITextComponent serialize(String key, Object... arguments) {
         String translation = getTranslation(key);
         if (translation == null) {
-            return new StringTextComponent("Failed to translate message").mergeStyle(TextFormatting.RED);
+            return new StringTextComponent("Failed to translate message").withStyle(TextFormatting.RED);
         }
         
         int matches = StringUtils.countMatches(translation, PLACEHOLDER_START + PLACEHOLDER_END);
@@ -82,7 +82,7 @@ public final class LocaleManager {
         
         String format = format(translation, arguments);
         if (StringUtils.isEmpty(format)) {
-            return new StringTextComponent("Failed to format message").mergeStyle(TextFormatting.RED);
+            return new StringTextComponent("Failed to format message").withStyle(TextFormatting.RED);
         }
         
         return TextAdapter.serializeLegacyWithLinks(format);
@@ -141,7 +141,7 @@ public final class LocaleManager {
         }
         
         try (Reader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            JsonObject jsonObject = JSONUtils.fromJson(reader);
+            JsonObject jsonObject = JSONUtils.parse(reader);
             
             // noinspection ConstantConditions
             if (jsonObject == null) {

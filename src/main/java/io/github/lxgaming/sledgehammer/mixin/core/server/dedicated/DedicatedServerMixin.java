@@ -34,12 +34,12 @@ public abstract class DedicatedServerMixin {
     private static Logger LOGGER;
     
     @Inject(
-            method = "init",
+            method = "initServer",
             at = @At(
                     value = "RETURN"
             )
     )
-    private void onInit(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+    private void onInitServer(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (callbackInfoReturnable.getReturnValue()) {
             LOGGER.info("{} v{} was successfully applied!", Sledgehammer.NAME, Sledgehammer.VERSION);
         }

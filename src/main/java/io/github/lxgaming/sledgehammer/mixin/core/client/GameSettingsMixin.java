@@ -35,12 +35,12 @@ public abstract class GameSettingsMixin {
     public TutorialSteps tutorialStep;
     
     @Inject(
-            method = "loadOptions",
+            method = "load",
             at = @At(
                     value = "RETURN"
             )
     )
-    private void onLoadOptions(CallbackInfo callbackInfo) {
+    private void onLoad(CallbackInfo callbackInfo) {
         CoreMixinCategory coreMixinCategory = Sledgehammer.getInstance().getConfig()
                 .map(Config::getMixinCategory)
                 .map(MixinCategory::getCoreMixinCategory)

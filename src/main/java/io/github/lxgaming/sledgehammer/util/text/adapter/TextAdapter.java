@@ -43,24 +43,24 @@ public class TextAdapter {
     // - Supports domains consisting of single characters for example https://1.1.1.1/
     private static final Pattern URL_PATTERN = Pattern.compile("(?:(https?)://)([-\\w_.]+\\.\\w+)(/\\S*)?");
     
-    public static void sendErrorMessage(CommandSource commandSource, ITextComponent component) {
-        commandSource.sendErrorMessage(component);
+    public static void sendFailure(CommandSource commandSource, ITextComponent component) {
+        commandSource.sendFailure(component);
     }
     
-    public static void sendFeedback(CommandSource commandSource, ITextComponent component) {
-        sendFeedback(commandSource, false, component);
+    public static void sendSuccess(CommandSource commandSource, ITextComponent component) {
+        sendSuccess(commandSource, false, component);
     }
     
-    public static void sendFeedback(CommandSource commandSource, boolean allowLogging, ITextComponent component) {
-        commandSource.sendFeedback(component, allowLogging);
+    public static void sendSuccess(CommandSource commandSource, boolean allowLogging, ITextComponent component) {
+        commandSource.sendSuccess(component, allowLogging);
     }
     
     public static void sendMessage(PlayerEntity player, ITextComponent component) {
-        player.sendMessage(component, Util.DUMMY_UUID);
+        player.sendMessage(component, Util.NIL_UUID);
     }
     
-    public static void sendStatusMessage(PlayerEntity player, ITextComponent component) {
-        player.sendStatusMessage(component, true);
+    public static void displayClientMessage(PlayerEntity player, ITextComponent component) {
+        player.displayClientMessage(component, true);
     }
     
     public static void disconnect(ServerPlayerEntity player, ITextComponent component) {
@@ -68,7 +68,7 @@ public class TextAdapter {
     }
     
     public static void sendMessage(ServerPlayerEntity player, ChatType chatType, ITextComponent component) {
-        player.func_241151_a_(component, chatType, Util.DUMMY_UUID);
+        player.sendMessage(component, chatType, Util.NIL_UUID);
     }
     
     public static ITextComponent serializeLegacyWithLinks(String string) {
@@ -99,8 +99,8 @@ public class TextAdapter {
             IFormattableTextComponent textComponent = new StringTextComponent(url);
             
             // Apply styles
-            textComponent.modifyStyle(modify -> modify.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url)));
-            textComponent.mergeStyle(textFormattings);
+            textComponent.withStyle(modify -> modify.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url)));
+            textComponent.withStyle(textFormattings);
             
             // Append the text component to the root text component
             rootTextComponent.append(textComponent);
@@ -168,14 +168,14 @@ public class TextAdapter {
                 // Append the text component to the parent text component
                 parentTextComponent.append(textComponent);
                 
-                if (textFormatting.isFancyStyling()) {
+                if (textFormatting.isFormat()) {
                     // Set the parent text component to the text component
                     parentTextComponent = textComponent;
                 } else {
                     // Reset the parent text component back to the root text component
                     parentTextComponent = rootTextComponent;
                 }
-            } else if (!textFormatting.isFancyStyling()) {
+            } else if (!textFormatting.isFormat()) {
                 // Reset the parent text component back to the root text component
                 parentTextComponent = rootTextComponent;
                 
@@ -184,7 +184,7 @@ public class TextAdapter {
             }
             
             // Apply the text formatting to the current style
-            currentStyle = currentStyle.applyFormatting(textFormatting);
+            currentStyle = currentStyle.applyFormat(textFormatting);
         }
         
         // The remaining text
@@ -203,9 +203,9 @@ public class TextAdapter {
     }
     
     private static TextFormatting getTextFormatting(char character) {
-        final char formattingCode = Character.toLowerCase(character);
+        final char code = Character.toLowerCase(character);
         for (TextFormatting textFormatting : TextFormatting.values()) {
-            if (getFormattingCode(textFormatting) == formattingCode) {
+            if (getCode(textFormatting) == code) {
                 return textFormatting;
             }
         }
@@ -213,14 +213,14 @@ public class TextAdapter {
         return null;
     }
     
-    private static char getFormattingCode(TextFormatting textFormatting) {
-        // bridge$getFormattingCode is only valid at runtime
+    private static char getCode(TextFormatting textFormatting) {
+        // bridge$getCode is only valid at runtime
         // noinspection ConstantConditions
         if (TextFormattingBridge.class.isInstance(textFormatting)) {
-            return Toolbox.cast(textFormatting, TextFormattingBridge.class).bridge$getFormattingCode();
+            return Toolbox.cast(textFormatting, TextFormattingBridge.class).bridge$getCode();
         }
         
-        // formattingCode is only valid at build time
-        return textFormatting.formattingCode;
+        // code is only valid at build time
+        return textFormatting.code;
     }
 }

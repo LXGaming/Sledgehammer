@@ -38,7 +38,7 @@ public class DebugCommand extends Command {
     @Override
     public void register(LiteralArgumentBuilder<CommandSource> argumentBuilder) {
         argumentBuilder
-                .requires(commandSource -> commandSource.hasPermissionLevel(4))
+                .requires(commandSource -> commandSource.hasPermission(4))
                 .executes(context -> {
                     return execute(context.getSource());
                 })
@@ -54,7 +54,7 @@ public class DebugCommand extends Command {
     private int execute(CommandSource commandSource, Boolean state) {
         GeneralCategory generalCategory = Sledgehammer.getInstance().getConfig().map(Config::getGeneralCategory).orElse(null);
         if (generalCategory == null) {
-            LocaleAdapter.sendFeedback(commandSource, Locale.CONFIGURATION_ERROR);
+            LocaleAdapter.sendSuccess(commandSource, Locale.CONFIGURATION_ERROR);
             return 0;
         }
         
@@ -65,9 +65,9 @@ public class DebugCommand extends Command {
         }
         
         if (generalCategory.isDebug()) {
-            LocaleAdapter.sendFeedback(commandSource, Locale.COMMAND_DEBUG_ENABLE);
+            LocaleAdapter.sendSuccess(commandSource, Locale.COMMAND_DEBUG_ENABLE);
         } else {
-            LocaleAdapter.sendFeedback(commandSource, Locale.COMMAND_DEBUG_DISABLE);
+            LocaleAdapter.sendSuccess(commandSource, Locale.COMMAND_DEBUG_DISABLE);
         }
         
         return 1;

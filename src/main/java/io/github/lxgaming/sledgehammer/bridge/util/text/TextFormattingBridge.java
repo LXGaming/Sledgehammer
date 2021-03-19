@@ -18,5 +18,5 @@ package io.github.lxgaming.sledgehammer.bridge.util.text;
 
 public interface TextFormattingBridge {
     
-    char bridge$getFormattingCode();
+    char bridge$getCode();
 }

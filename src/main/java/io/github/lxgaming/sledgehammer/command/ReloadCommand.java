@@ -34,7 +34,7 @@ public class ReloadCommand extends Command {
     @Override
     public void register(LiteralArgumentBuilder<CommandSource> argumentBuilder) {
         argumentBuilder
-                .requires(commandSource -> commandSource.hasPermissionLevel(4))
+                .requires(commandSource -> commandSource.hasPermission(4))
                 .executes(context -> {
                     return execute(context.getSource());
                 });
@@ -43,11 +43,11 @@ public class ReloadCommand extends Command {
     private int execute(CommandSource commandSource) {
         if (Sledgehammer.getInstance().reload()) {
             LocaleManager.prepare();
-            LocaleAdapter.sendFeedback(commandSource, Locale.COMMAND_RELOAD_SUCCESS);
+            LocaleAdapter.sendSuccess(commandSource, Locale.COMMAND_RELOAD_SUCCESS);
             return 1;
         }
         
-        LocaleAdapter.sendFeedback(commandSource, Locale.COMMAND_RELOAD_FAILURE);
+        LocaleAdapter.sendSuccess(commandSource, Locale.COMMAND_RELOAD_FAILURE);
         return 0;
     }
 }

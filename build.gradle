@@ -43,7 +43,7 @@ blossom {
 
 minecraft {
     accessTransformer(file("src/main/resources/accesstransformer.cfg"))
-    mappings(channel: "snapshot", version: "20201028-1.16.3")
+    mappings(channel: "official", version: "1.16.5")
     runs {
         client = {
             properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
@@ -92,7 +92,7 @@ repositories {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.16.5-36.0.1")
+    minecraft("net.minecraftforge:forge:1.16.5-36.1.0")
     shadow("org.checkerframework:checker-qual:3.9.1")
     testCompile("org.junit.jupiter:junit-jupiter-engine:5.7.0")
     shadow("org.spongepowered:configurate-hocon:3.6.1") {

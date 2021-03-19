@@ -38,7 +38,7 @@ public class CommandIntegration_Server extends CommandIntegration {
             return;
         }
         
-        CommandDispatcher<CommandSource> dispatcher = server.getCommandManager().getDispatcher();
+        CommandDispatcher<CommandSource> dispatcher = server.getCommands().getDispatcher();
         if (dispatcher.getRoot() == null) {
             Sledgehammer.getInstance().getLogger().warn("RootCommandNode is unavailable");
             return;
