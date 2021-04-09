@@ -17,7 +17,7 @@ buildscript {
 
     dependencies {
         classpath("com.github.jengelman.gradle.plugins:shadow:6.1.0")
-        classpath("gradle.plugin.net.kyori:blossom:1.2.0")
+        classpath("net.kyori:blossom:1.2.0")
         classpath("net.minecraftforge.gradle:ForgeGradle:4.1.+")
         classpath("org.spongepowered:mixingradle:0.7-SNAPSHOT")
     }
