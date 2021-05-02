@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
         maven {
             name = "minecraftforge"
-            url = "https://files.minecraftforge.net/maven"
+            url = "https://maven.minecraftforge.net/"
         }
         maven {
             name = "sonatype"
@@ -14,13 +14,13 @@ buildscript {
         }
         maven {
             name = "spongepowered"
-            url = "https://repo.spongepowered.org/maven"
+            url = "https://repo.spongepowered.org/repository/maven-public"
         }
     }
 
     dependencies {
         classpath("com.github.jengelman.gradle.plugins:shadow:5.2.0")
-        classpath("io.github.lxgaming:ForgeGradle:2.3-20210206.085929-2")
+        classpath("io.github.lxgaming:ForgeGradle:2.3-20210429.045709-3")
         classpath("io.github.lxgaming:mixingradle:0.6-20210206.024103-1")
     }
 }
@@ -77,7 +77,7 @@ repositories {
     }
     maven {
         name = "spongepowered"
-        url = "https://repo.spongepowered.org/maven"
+        url = "https://repo.spongepowered.org/repository/maven-public"
     }
 }
 
@@ -114,7 +114,7 @@ dependencies {
     provided("barrels-drums-storage-more:BarrelsDrumsStorageAndMore:0.0.24")
     provided("biomes-o-plenty:BiomesOPlenty-1.12.2:7.0.1.2441:universal")
     provided("carrots-lib:carrotslib:mc1.12.2:1.0.0b1")
-    provided("bewitchment:bewitchment:1.12.2:0.0.22.49")
+    provided("bewitchment-legacy:bewitchment:1.12.2:0.0.22.49")
     provided("champions:champions:1.12.2:1.0.11.3")
     provided("cyclops-core:CyclopsCore:1.12.2:1.6.6")
     provided("dank-null:DankNull:1.12.2:1.7.89")
@@ -125,7 +125,7 @@ dependencies {
     provided("immersive-engineering:ImmersiveEngineering:0.12:92")
     provided("integrated-dynamics:IntegratedDynamics:1.12.2:1.1.7")
     provided("journeymap:journeymap:1.12.2:5.7.0")
-    provided("kubejs:KubeJS-forge:1.12.2:1.1.0.63")
+    provided("kubejs-forge:KubeJS-forge:1.12.2:1.1.0.63")
     provided("logistics-pipes:logisticspipes:0.10.2.216")
     provided("matteroverdrive-legacy:MatterOverdrive-1.12.2:0.7.1.0:universal")
     provided("morph:Morph:1.12.2:7.1.3")
