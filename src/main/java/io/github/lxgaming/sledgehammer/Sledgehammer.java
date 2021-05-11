@@ -34,7 +34,7 @@ public class Sledgehammer {
     public static final String VERSION = "@version@";
     public static final String DESCRIPTION = "Smashes the stupid out of the client & server.";
     public static final String AUTHORS = "LX_Gaming";
-    public static final String SOURCE = "https://github.io/LXGaming/Sledgehammer";
+    public static final String SOURCE = "https://github.com/LXGaming/Sledgehammer";
     public static final String WEBSITE = "https://lxgaming.github.io/";
     
     private static Sledgehammer instance;
