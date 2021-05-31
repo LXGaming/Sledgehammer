@@ -108,13 +108,13 @@ dependencies {
 
     // Third Party Mods
     provided("actually-additions:ActuallyAdditions:1.12.2:r145")
-    provided("athenaeum:athenaeum:1.12.2:1.17.4")
     provided("armor-underwear-mod:armorunder:mc1.12.2:1.0.0")
     provided("astral-sorcery:astralsorcery:1.12.2:1.10.22")
+    provided("athenaeum:athenaeum:1.12.2:1.17.4")
     provided("barrels-drums-storage-more:BarrelsDrumsStorageAndMore:0.0.24")
+    provided("bewitchment-legacy:bewitchment:1.12.2:0.0.22.49")
     provided("biomes-o-plenty:BiomesOPlenty-1.12.2:7.0.1.2441:universal")
     provided("carrots-lib:carrotslib:mc1.12.2:1.0.0b1")
-    provided("bewitchment-legacy:bewitchment:1.12.2:0.0.22.49")
     provided("champions:champions:1.12.2:1.0.11.3")
     provided("cyclops-core:CyclopsCore:1.12.2:1.6.6")
     provided("dank-null:DankNull:1.12.2:1.7.89")
