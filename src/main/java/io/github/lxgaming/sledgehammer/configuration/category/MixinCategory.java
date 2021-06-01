@@ -22,6 +22,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.AstralSorcer
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BewitchmentMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BiomesOPlentyMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.CareerBeesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChampionsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
@@ -79,6 +80,9 @@ public class MixinCategory {
     
     @Setting(value = "biomesoplenty", comment = "Biomes O' Plenty")
     private BiomesOPlentyMixinCategory biomesOPlentyMixinCategory = new BiomesOPlentyMixinCategory();
+    
+    @Setting(value = "careerbees", comment = "Career Bees")
+    private CareerBeesMixinCategory careerBeesMixinCategory = new CareerBeesMixinCategory();
     
     @Setting(value = "carry-on", comment = "Carry On")
     private CarryOnMixinCategory carryOnMixinCategory = new CarryOnMixinCategory();
@@ -204,6 +208,10 @@ public class MixinCategory {
     
     public BiomesOPlentyMixinCategory getBiomesOPlentyMixinCategory() {
         return biomesOPlentyMixinCategory;
+    }
+    
+    public CareerBeesMixinCategory getCareerBeesMixinCategory() {
+        return careerBeesMixinCategory;
     }
     
     public CarryOnMixinCategory getCarryOnMixinCategory() {
