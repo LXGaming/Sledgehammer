@@ -31,13 +31,19 @@ import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.libraries.Artifact;
 import net.minecraftforge.fml.relauncher.libraries.LibraryManager;
 import net.minecraftforge.fml.relauncher.libraries.ModList;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.tree.AnnotationNode;
+import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
@@ -82,15 +88,15 @@ public class ForgePlugin extends CorePlugin {
                 .forEach(files::add);
         
         for (File file : files) {
-            Map<String, ModMetadata> metadatas = getMetadataCollection(file).accessor$getMetadatas();
-            if (metadatas.isEmpty()) {
+            Set<String> ids = getModIds(file);
+            if (ids == null || ids.isEmpty()) {
                 Sledgehammer.getInstance().getLogger().debug("{}: No metadata", file.getName());
                 continue;
             }
             
             loaderBridge.bridge$getMappings().computeIfAbsent(file, key -> Sets.newHashSet());
             Sledgehammer.getInstance().getLogger().debug("{}:", file.getName());
-            for (String id : metadatas.keySet()) {
+            for (String id : ids) {
                 if (loaderBridge.bridge$getMappings().get(file).add(id)) {
                     Sledgehammer.getInstance().getLogger().debug("- {}", id);
                 } else {
@@ -147,6 +153,30 @@ public class ForgePlugin extends CorePlugin {
         return null;
     }
     
+    private Set<String> getModIds(File file) {
+        Map<String, ModMetadata> metadatas = getMetadataCollection(file).accessor$getMetadatas();
+        if (metadatas.isEmpty()) {
+            return null;
+        }
+        
+        metadatas.keySet().removeIf(key -> key.equals("examplemod"));
+        if (!metadatas.isEmpty()) {
+            return metadatas.keySet();
+        }
+        
+        AnnotationNode annotationNode = getModAnnotation(file);
+        if (annotationNode == null) {
+            return null;
+        }
+        
+        String id = parseModAnnotation(annotationNode);
+        if (id != null) {
+            return Sets.newHashSet(id);
+        }
+        
+        return null;
+    }
+    
     private MetadataCollectionAccessor getMetadataCollection(File file) {
         try (JarFile jarFile = new JarFile(file)) {
             ZipEntry zipEntry = jarFile.getEntry("mcmod.info");
@@ -158,8 +188,58 @@ public class ForgePlugin extends CorePlugin {
                 return (MetadataCollectionAccessor) MetadataCollection.from(inputStream, jarFile.getName());
             }
         } catch (Exception ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error while getting Metadata from {}", file, ex);
+            Sledgehammer.getInstance().getLogger().error("Encountered an error while getting metadata from {}", file, ex);
             return (MetadataCollectionAccessor) MetadataCollection.from(null, "");
         }
+    }
+    
+    private AnnotationNode getModAnnotation(File file) {
+        try (JarFile jarFile = new JarFile(file)) {
+            for (Enumeration<JarEntry> enumeration = jarFile.entries(); enumeration.hasMoreElements(); ) {
+                JarEntry jarEntry = enumeration.nextElement();
+                if (jarEntry.isDirectory() || !jarEntry.getName().endsWith(".class")) {
+                    continue;
+                }
+                
+                try (InputStream inputStream = jarFile.getInputStream(jarEntry)) {
+                    ClassNode classNode = new ClassNode();
+                    ClassReader classReader = new ClassReader(inputStream);
+                    classReader.accept(classNode, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+                    
+                    if (classNode.visibleAnnotations == null || classNode.visibleAnnotations.isEmpty()) {
+                        continue;
+                    }
+                    
+                    for (AnnotationNode annotationNode : classNode.visibleAnnotations) {
+                        if (annotationNode.desc.equals("Lnet/minecraftforge/fml/common/Mod;")) {
+                            return annotationNode;
+                        }
+                    }
+                }
+            }
+            
+            return null;
+        } catch (Exception ex) {
+            Sledgehammer.getInstance().getLogger().error("Encountered an error while getting annotation from {}", file, ex);
+            return null;
+        }
+    }
+    
+    private String parseModAnnotation(AnnotationNode annotationNode) {
+        List<Object> values = annotationNode.values;
+        if (values == null || values.isEmpty()) {
+            return null;
+        }
+        
+        for (int index = 0; index < values.size(); index++) {
+            Object value = values.get(index);
+            if (!(value instanceof String) || !value.equals("modid")) {
+                continue;
+            }
+            
+            return (String) values.get(index + 1);
+        }
+        
+        return null;
     }
 }
