@@ -16,47 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category;
 
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ActuallyAdditionsMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ArmorUnderMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.AstralSorceryMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.BewitchmentMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.BiomesOPlentyMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.CareerBeesMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChampionsMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.DankNullMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderIOMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderStorageMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.FluxNetworksMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ImmersiveEngineeringMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.IntegratedDynamicsMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.JourneyMapMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.KubeJSMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.LogisticsPipesMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.MatterOverdriveMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.MorphMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.MowziesMobsMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.NaturesAuraMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveCraftingMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.PrimitiveMobsMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ProjectRedMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.PyrotechMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.QMDMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.QuarkMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.RandomThingsMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.RealFilingCabinetMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.RuinsMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.SpongeMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.StorageNetworkMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.ThaumicWondersMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.TombManyGravesMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.TopographyMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.TotemicMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.VaultopicMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.WolforceMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.*;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
@@ -110,6 +70,9 @@ public class MixinCategory {
     
     @Setting(value = "immersiveengineering", comment = "Immersive Engineering")
     private ImmersiveEngineeringMixinCategory immersiveEngineeringMixinCategory = new ImmersiveEngineeringMixinCategory();
+
+    @Setting(value = "industrialforegoing", comment = "IndustrialForegoing")
+    private IndustrialForegoingMixinCategory industrialForegoingMixinCategory = new IndustrialForegoingMixinCategory();
     
     @Setting(value = "integrateddynamics", comment = "Integrated Dynamics")
     private IntegratedDynamicsMixinCategory integratedDynamicsMixinCategory = new IntegratedDynamicsMixinCategory();
@@ -245,9 +208,13 @@ public class MixinCategory {
     public ForgeMixinCategory getForgeMixinCategory() {
         return forgeMixinCategory;
     }
-    
+
     public ImmersiveEngineeringMixinCategory getImmersiveEngineeringMixinCategory() {
         return immersiveEngineeringMixinCategory;
+    }
+
+    public IndustrialForegoingMixinCategory getIndustrialForegoingMixinCategory() {
+        return industrialForegoingMixinCategory;
     }
     
     public IntegratedDynamicsMixinCategory getIntegratedDynamicsMixinCategory() {

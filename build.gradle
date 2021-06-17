@@ -103,6 +103,12 @@ repositories {
         name = "spongepowered"
         url = "https://repo.spongepowered.org/repository/maven-public"
     }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
@@ -154,6 +160,10 @@ dependencies {
     api("forestry:forestry_1.12.2:5.8.2.387")
     api("hearth-well:hwell:0.5.2")
     api("immersive-engineering:ImmersiveEngineering:0.12:92")
+    /* Industrial Foregoing 1.12.13-237 */
+    api("curse.maven:industrialforegoing-266515:2745321")
+    /* TeslaCoreLib (required by Industrial Foregoing) */
+    api("curse.maven:teslacorelib-254602:2891841")
     api("integrated-dynamics:IntegratedDynamics:1.12.2:1.1.7")
     api("journeymap:journeymap:1.12.2:5.7.0")
     api("kubejs-forge:KubeJS-forge:1.12.2:1.1.0.63")
