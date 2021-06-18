@@ -96,10 +96,6 @@ repositories {
         }
     }
     maven {
-        name = "lxgaming"
-        url = "https://lxgaming.github.io/maven"
-    }
-    maven {
         name = "spongepowered"
         url = "https://repo.spongepowered.org/repository/maven-public"
     }
@@ -145,6 +141,7 @@ dependencies {
     api("biomes-o-plenty:BiomesOPlenty-1.12.2:7.0.1.2441:universal")
     api("career-bees:careerbees:0.4.0")
     api("carrots-lib:carrotslib:mc1.12.2:1.0.0b1")
+    api("carry-on:carryon:1.12.2:1.12.4.16")
     api("champions:champions:1.12.2:1.0.11.3")
     api("cyclops-core:CyclopsCore:1.12.2:1.6.6")
     api("dank-null:DankNull:1.12.2:1.7.89")
@@ -179,7 +176,6 @@ dependencies {
     api("thaumic-wonders:thaumicwonders:1.8.2")
     api("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
     api("topography:Topography:1.12.2:1.5.1")
-    api("tschipp:carryon:1.12.1")
     api("vaultopic-early-inventory-management:vaultopic:2.1")
 }
 
