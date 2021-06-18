@@ -32,6 +32,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderStorage
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.FluxNetworksMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ImmersiveEngineeringMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.IndustrialForegoingMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.IntegratedDynamicsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.JourneyMapMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.KubeJSMixinCategory;
@@ -110,6 +111,9 @@ public class MixinCategory {
     
     @Setting(value = "immersiveengineering", comment = "Immersive Engineering")
     private ImmersiveEngineeringMixinCategory immersiveEngineeringMixinCategory = new ImmersiveEngineeringMixinCategory();
+    
+    @Setting(value = "industrialforegoing", comment = "Industrial Foregoing")
+    private IndustrialForegoingMixinCategory industrialForegoingMixinCategory = new IndustrialForegoingMixinCategory();
     
     @Setting(value = "integrateddynamics", comment = "Integrated Dynamics")
     private IntegratedDynamicsMixinCategory integratedDynamicsMixinCategory = new IntegratedDynamicsMixinCategory();
@@ -248,6 +252,10 @@ public class MixinCategory {
     
     public ImmersiveEngineeringMixinCategory getImmersiveEngineeringMixinCategory() {
         return immersiveEngineeringMixinCategory;
+    }
+    
+    public IndustrialForegoingMixinCategory getIndustrialForegoingMixinCategory() {
+        return industrialForegoingMixinCategory;
     }
     
     public IntegratedDynamicsMixinCategory getIntegratedDynamicsMixinCategory() {

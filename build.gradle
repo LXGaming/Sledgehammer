@@ -151,6 +151,7 @@ dependencies {
     api("forestry:forestry_1.12.2:5.8.2.387")
     api("hearth-well:hwell:0.5.2")
     api("immersive-engineering:ImmersiveEngineering:0.12:92")
+    api("industrial-foregoing:industrialforegoing-1.12.2:1.12.13:237")
     api("integrated-dynamics:IntegratedDynamics:1.12.2:1.1.7")
     api("journeymap:journeymap:1.12.2:5.7.0")
     api("kubejs-forge:KubeJS-forge:1.12.2:1.1.0.63")
@@ -173,6 +174,7 @@ dependencies {
     api("ruins-structure-spawning-system:Ruins:1.12.2")
     api("simple-storage-network:SimpleStorageNetwork:1.12.2:1.7.8")
     api("sonar-core:sonarcore-1.12.2:5.0.19:20")
+    api("tesla-core-lib:tesla-core-lib:1.12.2:1.0.17")
     api("thaumic-wonders:thaumicwonders:1.8.2")
     api("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
     api("topography:Topography:1.12.2:1.5.1")
@@ -206,6 +208,7 @@ jar {
                         + "mixins.sledgehammer.fluxnetworks.json,"
                         + "mixins.sledgehammer.forge.json,"
                         + "mixins.sledgehammer.immersiveengineering.json,"
+                        + "mixins.sledgehammer.industrialforegoing.json,"
                         + "mixins.sledgehammer.integrateddynamicscompat.json,"
                         + "mixins.sledgehammer.journeymap.json,"
                         + "mixins.sledgehammer.kubejs.json,"
