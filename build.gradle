@@ -46,17 +46,23 @@ minecraft {
     mappings(channel: "official", version: "1.16.5")
     runs {
         client = {
-            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            args("--mixin.config", "mixins.sledgehammer.core.json")
+            args("--mixin.config", "mixins.sledgehammer.platform.json")
+            args("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
             properties("forge.logging.console.level": "debug")
-            workingDirectory(project.file("run").canonicalPath)
-            source(sourceSets.main)
+            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            singleInstance(true)
+            workingDirectory(project.file("run"))
         }
 
         server = {
-            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            args("--mixin.config", "mixins.sledgehammer.core.json")
+            args("--mixin.config", "mixins.sledgehammer.platform.json")
+            args("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker", "nogui")
             properties("forge.logging.console.level": "debug")
-            workingDirectory(project.file("run").canonicalPath)
-            source(sourceSets.main)
+            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            singleInstance(true)
+            workingDirectory(project.file("run"))
         }
     }
 }
