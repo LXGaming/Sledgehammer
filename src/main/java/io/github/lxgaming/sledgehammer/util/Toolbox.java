@@ -16,7 +16,19 @@
 
 package io.github.lxgaming.sledgehammer.util;
 
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+
 public class Toolbox {
+    
+    public static String getRegistryName(Item item) {
+        ResourceLocation resourceLocation = item.getRegistryName();
+        if (resourceLocation != null) {
+            return resourceLocation.toString();
+        }
+        
+        return "Unknown";
+    }
     
     public static String getClassSimpleName(Class<?> type) {
         if (type.getEnclosingClass() != null) {

@@ -35,6 +35,8 @@ public enum Locale {
     GENERAL_INFORMATION("general.information"),
     GENERAL_PREFIX("general.prefix"),
     
+    MESSAGE_INTEGRATED_DYNAMICS_COMPACT_EXPLOIT("message.integrated_dynamics_compact_exploit"),
+    
     TRANSLATION_INVALID("translation.invalid"),
     
     UNKNOWN("unknown");

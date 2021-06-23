@@ -108,6 +108,8 @@ dependencies {
     // implementation("sumsang:Sumsang:1.2.0")
 
     // Third Party Mods
+    implementation("cyclops-core:CyclopsCore:1.16.5:1.11.7")
+    implementation("integrated-dynamics:IntegratedDynamics:1.16.5:1.8.4")
 }
 
 artifacts {
@@ -128,6 +130,7 @@ jar {
                 "Implementation-Version": "${project.version}",
                 "MixinConfigs": ""
                         + "mixins.sledgehammer.core.json,"
+                        + "mixins.sledgehammer.integrateddynamicscompat.json,"
                         + "mixins.sledgehammer.platform.json",
                 "Specification-Title": "sledgehammer",
                 "Specification-Vendor": "LX_Gaming",

@@ -17,5 +17,6 @@
     "    &8Website: &9{}"
   ],
   "general.prefix": "&9&l[Sledgehammer]",
+  "message.integrated_dynamics_compact_exploit": "&cInvalid Item: &f{}",
   "translation.invalid": "&cInvalid translation: &f{}"
 }

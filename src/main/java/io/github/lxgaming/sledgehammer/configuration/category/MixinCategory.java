@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.configuration.category;
 
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.IntegratedDynamicsMixinCategory;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
@@ -28,7 +29,15 @@ public class MixinCategory {
     @Comment(value = "Minecraft")
     private CoreMixinCategory coreMixinCategory = new CoreMixinCategory();
     
+    @Setting(value = "integrateddynamics")
+    @Comment(value = "Integrated Dynamics")
+    private IntegratedDynamicsMixinCategory integratedDynamicsMixinCategory = new IntegratedDynamicsMixinCategory();
+    
     public CoreMixinCategory getCoreMixinCategory() {
         return coreMixinCategory;
+    }
+    
+    public IntegratedDynamicsMixinCategory getIntegratedDynamicsMixinCategory() {
+        return integratedDynamicsMixinCategory;
     }
 }
