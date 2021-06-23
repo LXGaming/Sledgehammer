@@ -17,31 +17,34 @@
 package io.github.lxgaming.sledgehammer.configuration;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
-import ninja.leaping.configurate.ConfigurationNode;
-import ninja.leaping.configurate.commented.CommentedConfigurationNode;
-import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
-import ninja.leaping.configurate.loader.ConfigurationLoader;
-import ninja.leaping.configurate.objectmapping.ObjectMapper;
+import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
+import org.spongepowered.configurate.loader.ConfigurationLoader;
+import org.spongepowered.configurate.objectmapping.ObjectMapper;
+import org.spongepowered.configurate.objectmapping.meta.NodeResolver;
 
 import java.nio.file.Path;
 
 public class Configuration {
     
-    private ConfigurationLoader<CommentedConfigurationNode> configurationLoader;
-    private ObjectMapper<Config>.BoundInstance objectMapper;
+    private final ConfigurationLoader<CommentedConfigurationNode> configurationLoader;
+    private Config config;
     
     public Configuration(Path path) {
-        try {
-            this.configurationLoader = HoconConfigurationLoader.builder().setPath(path).build();
-            this.objectMapper = ObjectMapper.forClass(Config.class).bindToNew();
-        } catch (Exception ex) {
-            Sledgehammer.getInstance().getLogger().error("Encountered an error while initializing configuration", ex);
-        }
+        this.configurationLoader = HoconConfigurationLoader.builder()
+                .path(path)
+                .defaultOptions(options -> options
+                        .implicitInitialization(true)
+                        .serializers(builder -> builder.registerAnnotatedObjects(ObjectMapper.factoryBuilder().addNodeResolver(NodeResolver.onlyWithSetting()).build()))
+                        .shouldCopyDefaults(true))
+                .build();
     }
     
     public void loadConfiguration() {
         try {
-            this.objectMapper.populate(this.configurationLoader.load());
+            CommentedConfigurationNode configurationNode = configurationLoader.load();
+            this.config = configurationNode.get(Config.class);
             Sledgehammer.getInstance().getLogger().info("Successfully loaded configuration file.");
         } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while loading config", ex);
@@ -50,9 +53,9 @@ public class Configuration {
     
     public void saveConfiguration() {
         try {
-            ConfigurationNode configurationNode = this.configurationLoader.createEmptyNode();
-            this.objectMapper.serialize(configurationNode);
-            this.configurationLoader.save(configurationNode);
+            ConfigurationNode configurationNode = configurationLoader.createNode();
+            configurationNode.set(config);
+            configurationLoader.save(configurationNode);
             Sledgehammer.getInstance().getLogger().info("Successfully saved configuration file.");
         } catch (Exception ex) {
             Sledgehammer.getInstance().getLogger().error("Encountered an error while saving config", ex);
@@ -60,6 +63,6 @@ public class Configuration {
     }
     
     public Config getConfig() {
-        return this.objectMapper.getInstance();
+        return config;
     }
 }

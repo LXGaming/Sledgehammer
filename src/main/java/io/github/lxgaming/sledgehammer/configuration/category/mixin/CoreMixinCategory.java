@@ -17,26 +17,31 @@
 package io.github.lxgaming.sledgehammer.configuration.category.mixin;
 
 import io.github.lxgaming.sledgehammer.configuration.annotation.Mapping;
-import ninja.leaping.configurate.objectmapping.Setting;
-import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Comment;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 @ConfigSerializable
 public class CoreMixinCategory {
     
     @Mapping(value = "core.client.MinecraftMixin_DropItem")
-    @Setting(value = "drop-item", comment = "If 'true', prevents items getting dropped from the hotbar when the drop key is pressed while the mouse cursor is over an empty slot.")
+    @Setting(value = "drop-item")
+    @Comment(value = "If 'true', prevents items getting dropped from the hotbar when the drop key is pressed while the mouse cursor is over an empty slot.")
     private boolean dropItem = false;
     
     @Mapping(value = "core.util.LazyValueMixin")
-    @Setting(value = "lazy-value-thread-safe", comment = "If 'true', makes LazyValue Thread-safe.")
+    @Setting(value = "lazy-value-thread-safe")
+    @Comment(value = "If 'true', makes LazyValue Thread-safe.")
     private boolean lazyValueThreadSafe = false;
     
     @Mapping(value = "core.network.play.ServerPlayNetHandlerMixin_Sleep")
-    @Setting(value = "leave-sleep", comment = "If 'true', allows players to exit the sleep screen.")
+    @Setting(value = "leave-sleep")
+    @Comment(value = "If 'true', allows players to exit the sleep screen.")
     private boolean leaveSleep = false;
     
     @Mapping(value = "core.client.GameSettingsMixin")
-    @Setting(value = "tutorial", comment = "If 'true', disables Tutorial on startup.")
+    @Setting(value = "tutorial")
+    @Comment(value = "If 'true', disables Tutorial on startup.")
     private boolean tutorial = false;
     
     public boolean isDropItem() {

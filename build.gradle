@@ -17,7 +17,7 @@ buildscript {
 
     dependencies {
         classpath("com.github.jengelman.gradle.plugins:shadow:6.1.0")
-        classpath("net.kyori:blossom:1.2.0")
+        classpath("net.kyori:blossom:1.3.0")
         classpath("net.minecraftforge.gradle:ForgeGradle:4.1.+")
         classpath("org.spongepowered:mixingradle:0.7-SNAPSHOT")
     }
@@ -25,6 +25,7 @@ buildscript {
 
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "java"
+apply plugin: "java-library"
 apply plugin: "net.kyori.blossom"
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "org.spongepowered.mixin"
@@ -73,16 +74,9 @@ mixin {
 }
 
 configurations {
-    provided {
-        compile.extendsFrom(provided)
-    }
-
     shadow {
         runtime.extendsFrom(shadow)
     }
-
-    build.dependsOn("signJar")
-    jar.classifier = "sponge"
 }
 
 repositories {
@@ -90,26 +84,28 @@ repositories {
     maven {
         name = "curseforge"
         url = "https://minecraft.curseforge.com/api/maven"
+        metadataSources {
+            artifact()
+        }
     }
     maven {
         name = "spongepowered"
-        url = "https://repo.spongepowered.org/maven"
+        url = "https://repo.spongepowered.org/repository/maven-public"
     }
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.16.5-36.1.0")
-    shadow("org.checkerframework:checker-qual:3.9.1")
-    testCompile("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-    shadow("org.spongepowered:configurate-hocon:3.6.1") {
+    minecraft("net.minecraftforge:forge:1.16.5-36.1.32")
+    shadow("org.checkerframework:checker-qual:3.15.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+    shadow("org.spongepowered:configurate-hocon:4.1.1") {
         exclude(module: "checker-qual")
-        exclude(module: "guava")
     }
     annotationProcessor("org.spongepowered:mixin:0.8.2:processor")
 
     // First Party Mods
-    // provided("northerncompass:NorthernCompass:1.14.4:1.0.0")
-    // provided("sumsang:Sumsang:1.2.0")
+    // implementation("northerncompass:NorthernCompass:1.14.4:1.0.0")
+    // implementation("sumsang:Sumsang:1.2.0")
 
     // Third Party Mods
 }
@@ -118,7 +114,12 @@ artifacts {
     archives shadowJar
 }
 
+build {
+    dependsOn("signJar")
+}
+
 jar {
+    archiveClassifier.set("sponge")
     manifest {
         attributes(
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),

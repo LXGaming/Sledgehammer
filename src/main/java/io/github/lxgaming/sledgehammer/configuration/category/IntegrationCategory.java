@@ -16,9 +16,8 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category;
 
-import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 @ConfigSerializable
 public class IntegrationCategory {
-
 }

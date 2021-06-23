@@ -17,13 +17,15 @@
 package io.github.lxgaming.sledgehammer.configuration.category;
 
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
-import ninja.leaping.configurate.objectmapping.Setting;
-import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Comment;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 @ConfigSerializable
 public class MixinCategory {
     
-    @Setting(value = "core", comment = "Minecraft")
+    @Setting(value = "core")
+    @Comment(value = "Minecraft")
     private CoreMixinCategory coreMixinCategory = new CoreMixinCategory();
     
     public CoreMixinCategory getCoreMixinCategory() {

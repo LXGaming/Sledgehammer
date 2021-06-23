@@ -17,8 +17,9 @@
 package io.github.lxgaming.sledgehammer.configuration.category;
 
 import com.google.common.collect.Maps;
-import ninja.leaping.configurate.objectmapping.Setting;
-import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Comment;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,8 @@ public class GeneralCategory {
     
     public static final String DEFAULT_LOCALE = "en_us";
     
-    @Setting(value = "debug", comment = "For debugging purposes")
+    @Setting(value = "debug")
+    @Comment(value = "For debugging purposes")
     private boolean debug = false;
     
     @Setting(value = "locale")
