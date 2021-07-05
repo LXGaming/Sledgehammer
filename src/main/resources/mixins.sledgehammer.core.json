@@ -37,7 +37,8 @@
   ],
   "client": [
     "client.MinecraftAccessor",
-    "client.MinecraftMixin"
+    "client.MinecraftMixin",
+    "client.RenderGlobalMixin"
   ],
   "server": [
     "server.management.PlayerChunkMapMixin",

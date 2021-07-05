@@ -111,6 +111,10 @@ public class CoreMixinCategory {
     @Mapping(value = "core.server.management.PlayerChunkMapMixin")
     @Setting(value = "player-chunk-map", comment = "If 'true', prevents ConcurrentModificationException in PlayerChunkMap.")
     private boolean playerChunkMap = false;
+
+    @Mapping(value = "core.client.RenderGlobalMixin")
+    @Setting(value = "premature-culling", comment = "If 'true', fixes MC-88176 (entities culled too aggresively at subchunk boundaries).")
+    private boolean prematureCulling = false;
     
     @Mapping(value = "core.world.WorldMixin_ChunkUnload")
     @Setting(value = "tile-entity-chunk-unload", comment = "If 'true', prevents unloading TileEntities from loading chunks")
