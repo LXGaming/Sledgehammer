@@ -104,12 +104,12 @@ dependencies {
     annotationProcessor("org.spongepowered:mixin:0.8.2:processor")
 
     // First Party Mods
-    // implementation("northerncompass:NorthernCompass:1.14.4:1.0.0")
-    // implementation("sumsang:Sumsang:1.2.0")
+    // compileOnly("northerncompass:NorthernCompass:1.14.4:1.0.0")
+    // compileOnly("sumsang:Sumsang:1.2.0")
 
     // Third Party Mods
-    implementation("cyclops-core:CyclopsCore:1.16.5:1.11.7")
-    implementation("integrated-dynamics:IntegratedDynamics:1.16.5:1.8.4")
+    compileOnly("cyclops-core:CyclopsCore:1.16.5:1.11.7")
+    compileOnly("integrated-dynamics:IntegratedDynamics:1.16.5:1.8.4")
 }
 
 artifacts {
