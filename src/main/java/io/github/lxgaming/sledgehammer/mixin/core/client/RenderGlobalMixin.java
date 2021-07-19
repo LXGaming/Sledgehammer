@@ -17,18 +17,23 @@ public class RenderGlobalMixin {
         // Fixes MC-88176 by checking the entity list for the subchunk and adjusting the bounding box as needed.
         int subChunkYPos = renderChunk.getPosition().getY();
         Chunk chunk = renderChunk.getWorld().getChunk(renderChunk.getPosition());
-        ClassInheritanceMultiMap<Entity> entityMap = chunk.getEntityLists()[subChunkYPos / 16];
-        double extraMaxY = 0;
+        int subChunkList = subChunkYPos / 16;
+        /* Make sure there is actually going to be an entity list, to be on the safe side */
+        if(subChunkList < 0 || subChunkList > 15)
+            return renderChunk.boundingBox;
+        ClassInheritanceMultiMap<Entity> entityMap = chunk.getEntityLists()[subChunkList];
+        AxisAlignedBB box = renderChunk.boundingBox;
         if (!entityMap.isEmpty()) {
             for (Entity entity : entityMap) {
+                /* Grow the entity bounding box by 0.5 to have a bit of a margin for error */
                 AxisAlignedBB entityBox = entity.getRenderBoundingBox().grow(0.5d);
-                double height = entityBox.maxY - entityBox.minY;
-                double subChunkOffset = entity.getPosition().getY() - subChunkYPos;
-                extraMaxY = Math.max(extraMaxY, (subChunkOffset+height)-16);
+                /*
+                 * Union the entity box with our current bounding box - this will return the smallest bounding box which
+                 * can fit both.
+                 */
+                box = box.union(entityBox);
             }
         }
-        AxisAlignedBB box = renderChunk.boundingBox;
-        box = new AxisAlignedBB(box.minX, box.minY, box.minZ, box.maxX, box.maxY + extraMaxY, box.maxZ);
         return box;
     }
 }
