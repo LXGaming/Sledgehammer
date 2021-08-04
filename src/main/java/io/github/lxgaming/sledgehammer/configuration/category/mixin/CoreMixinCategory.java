@@ -73,6 +73,15 @@ public class CoreMixinCategory {
     @Mapping(value = "core.entity.EntityTrackerMixin")
     @Setting(value = "entity-tracker", comment = "If 'true', prevents ConcurrentModificationException in EntityTracker.")
     private boolean entityTracker = false;
+
+    @Mapping(value = "core.world.WorldMixin_FixDespawning")
+    @Mapping(value = "core.entity.EntityLivingMixin_Despawning")
+    @Setting(value = "fix-mobs-not-despawning", comment = "If 'true', avoids MC-2536 by running mob despawning checks in lazy chunks. This will probably break farms which rely on vanilla 1.12 mechanics. You have been warned.")
+    private boolean fixMobsNotDespawning = false;
+
+    @Mapping(value = "core.entity.EntityLivingMixin_DespawnRanges")
+    @Setting(value = "fix-impossible-mob-despawn-range", comment = "If 'true', adjusts the despawn ranges of mobs (32/128 blocks) on low render distances. Requires fix-mobs-not-despawning so that mobs are eligible for despawning. This has no effect on Sponge as it makes these settings configurable.")
+    private boolean fixImpossibleMobDespawnRange = false;
     
     @Mapping(value = "core.network.play.server.SPacketChunkDataMixin")
     @Setting(value = "get-update-tag-crash", comment = "If 'true', adds TileEntity data to the crash report from calls to 'getUpdateTag' that fail.")
@@ -115,7 +124,11 @@ public class CoreMixinCategory {
     @Mapping(value = "core.client.RenderGlobalMixin")
     @Setting(value = "premature-culling", comment = "If 'true', fixes MC-88176 (entities culled too aggresively at subchunk boundaries).")
     private boolean prematureCulling = false;
-    
+
+    @Mapping(value = "core.client.EntityRendererMixin")
+    @Setting(value = "speed-up-chunk-rendering", comment = "If 'true', changes the renderer's target FPS to be 30 (matching 1.15-pre1) instead of the maximum FPS in game options. This helps with chunks not loading on the client.")
+    private boolean speedUpChunkRendering = false;
+
     @Mapping(value = "core.world.WorldMixin_ChunkUnload")
     @Setting(value = "tile-entity-chunk-unload", comment = "If 'true', prevents unloading TileEntities from loading chunks")
     private boolean tileEntityChunkUnload = false;
@@ -166,6 +179,14 @@ public class CoreMixinCategory {
     
     public boolean isEntityTracker() {
         return entityTracker;
+    }
+
+    public boolean isFixMobsNotDespawning() {
+        return fixMobsNotDespawning;
+    }
+
+    public boolean isFixImpossibleMobDespawnRange() {
+        return fixImpossibleMobDespawnRange;
     }
     
     public boolean isGetUpdateTagCrash() {
