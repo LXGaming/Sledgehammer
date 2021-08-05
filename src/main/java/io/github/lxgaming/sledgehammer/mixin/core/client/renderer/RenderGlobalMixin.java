@@ -1,3 +1,19 @@
+/*
+ * Copyright 2021 Alex Thomson
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.lxgaming.sledgehammer.mixin.core.client.renderer;
 
 import net.minecraft.client.renderer.RenderGlobal;
@@ -10,17 +26,25 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin( value = RenderGlobal.class, priority = 1337)
-public class RenderGlobalMixin {
-    @Redirect( method = "setupTerrain", at = @At( value = "FIELD", target = "Lnet/minecraft/client/renderer/chunk/RenderChunk;boundingBox:Lnet/minecraft/util/math/AxisAlignedBB;"))
+@Mixin(value = RenderGlobal.class)
+public abstract class RenderGlobalMixin {
+    
+    @Redirect(
+            method = "setupTerrain",
+            at = @At(
+                    value = "FIELD",
+                    target = "Lnet/minecraft/client/renderer/chunk/RenderChunk;boundingBox:Lnet/minecraft/util/math/AxisAlignedBB;"
+            )
+    )
     public AxisAlignedBB getBoundingBoxForChunk(RenderChunk renderChunk) {
         // Fixes MC-88176 by checking the entity list for the subchunk and adjusting the bounding box as needed.
         int subChunkYPos = renderChunk.getPosition().getY();
         Chunk chunk = renderChunk.getWorld().getChunk(renderChunk.getPosition());
         int subChunkList = subChunkYPos / 16;
         /* Make sure there is actually going to be an entity list, to be on the safe side */
-        if(subChunkList < 0 || subChunkList > 15)
+        if (subChunkList < 0 || subChunkList > 15) {
             return renderChunk.boundingBox;
+        }
         ClassInheritanceMultiMap<Entity> entityMap = chunk.getEntityLists()[subChunkList];
         AxisAlignedBB box = renderChunk.boundingBox;
         if (!entityMap.isEmpty()) {
