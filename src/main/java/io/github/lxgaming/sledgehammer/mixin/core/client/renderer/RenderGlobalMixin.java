@@ -1,4 +1,4 @@
-package io.github.lxgaming.sledgehammer.mixin.core.client;
+package io.github.lxgaming.sledgehammer.mixin.core.client.renderer;
 
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.chunk.RenderChunk;

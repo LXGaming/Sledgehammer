@@ -36,13 +36,13 @@
     "world.chunk.storage.AnvilChunkLoaderMixin",
     "world.chunk.storage.RegionFileChunkBufferMixin",
     "world.WorldMixin_ChunkUnload",
-    "world.WorldMixin_FixDespawning"
+    "world.WorldMixin_Despawning"
   ],
   "client": [
-    "client.EntityRendererMixin",
+    "client.renderer.EntityRendererMixin",
+    "client.renderer.RenderGlobalMixin",
     "client.MinecraftAccessor",
-    "client.MinecraftMixin",
-    "client.RenderGlobalMixin"
+    "client.MinecraftMixin"
   ],
   "server": [
     "server.management.PlayerChunkMapMixin",

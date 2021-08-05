@@ -1,4 +1,4 @@
-package io.github.lxgaming.sledgehammer.mixin.core.client;
+package io.github.lxgaming.sledgehammer.mixin.core.client.renderer;
 
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.settings.GameSettings;

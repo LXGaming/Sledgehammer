@@ -1,4 +1,4 @@
-package io.github.lxgaming.sledgehammer.bridge.core.entity;
+package io.github.lxgaming.sledgehammer.bridge.entity;
 
 /**
  * Helper to allow invoking methods from EntityLivingMixin_Despawning.

@@ -1,6 +1,6 @@
 package io.github.lxgaming.sledgehammer.mixin.core.world;
 
-import io.github.lxgaming.sledgehammer.bridge.core.entity.EntityLivingBridge;
+import io.github.lxgaming.sledgehammer.bridge.entity.EntityLivingBridge;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.world.World;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin( value = World.class )
-public class WorldMixin_FixDespawning {
+public class WorldMixin_Despawning {
     @Redirect( method = "updateEntityWithOptionalForce", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/event/ForgeEventFactory;canEntityUpdate(Lnet/minecraft/entity/Entity;)Z", remap = false))
     public boolean canEntityUpdate(Entity entity) {
         /*

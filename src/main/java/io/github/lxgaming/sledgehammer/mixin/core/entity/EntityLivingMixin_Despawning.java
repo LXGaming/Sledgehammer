@@ -1,6 +1,6 @@
 package io.github.lxgaming.sledgehammer.mixin.core.entity;
 
-import io.github.lxgaming.sledgehammer.bridge.core.entity.EntityLivingBridge;
+import io.github.lxgaming.sledgehammer.bridge.entity.EntityLivingBridge;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
