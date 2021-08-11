@@ -23,7 +23,7 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class ForgeMixinCategory {
     
-    @Mapping(value = "core.tileentity.TileEntityMixin_ForgeData")
+    @Mapping(value = "forge.world.WorldMixin_IgnoreForcedChunkTicking")
     @Setting(value = "entity-chunk-churn", comment = "If 'true', reverts Forge-chunkloaded chunk ticking to behave like vanilla (requiring a 5x5 area).")
     private boolean entityChunkChurn = false;
 
