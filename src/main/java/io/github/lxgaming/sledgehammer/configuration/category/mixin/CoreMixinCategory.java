@@ -69,6 +69,12 @@ public class CoreMixinCategory {
     @Mapping(value = "core.world.chunk.storage.RegionFileChunkBufferMixin")
     @Setting(value = "chunk-save-shutdown", comment = "If 'true', generates a crash report and safely stops the server if a chunk fails to save.")
     private boolean chunkSaveShutdown = false;
+
+    @Mapping(value = "core.client.renderer.entity.RenderMinecartMixin")
+    @Mapping(value = "core.client.renderer.entity.RenderTNTPrimedMixin")
+    @Mapping(value = "core.client.renderer.entity.RenderWolfMixin")
+    @Setting(value = "dark-blocks", comment = "If 'true', fixes BlockRendererDispatcher.renderBlockBrightness producing extremely dark blocks in certain cirumstances (MC-6932, MC-41825).")
+    private boolean darkBlocks = false;
     
     @Mapping(value = "core.entity.EntityTrackerMixin")
     @Setting(value = "entity-tracker", comment = "If 'true', prevents ConcurrentModificationException in EntityTracker.")
@@ -86,6 +92,12 @@ public class CoreMixinCategory {
     @Mapping(value = "core.network.play.server.SPacketChunkDataMixin")
     @Setting(value = "get-update-tag-crash", comment = "If 'true', adds TileEntity data to the crash report from calls to 'getUpdateTag' that fail.")
     private boolean getUpdateTagCrash = false;
+
+    @Mapping(value = "core.client.renderer.entity.layers.LayerArrowMixin")
+    @Mapping(value = "core.client.renderer.entity.RenderDragonMixin")
+    @Mapping(value = "core.client.renderer.entity.RenderGuardianMixin")
+    @Setting(value = "gl-state-bugs", comment = "If 'true', fixes some minor rendering glitches in vanilla.")
+    private boolean glStateBugs = false;
     
     @Mapping(value = "core.util.text.TextComponentTranslationMixin")
     @Setting(value = "invalid-translation", comment = "If 'true', prevents crash due to invalid translation keys.")
@@ -122,7 +134,8 @@ public class CoreMixinCategory {
     private boolean playerChunkMap = false;
     
     @Mapping(value = "core.client.renderer.RenderGlobalMixin")
-    @Setting(value = "premature-culling", comment = "If 'true', fixes MC-88176 (entities culled too aggresively at subchunk boundaries).")
+    @Mapping(value = "core.client.tileentity.TileEntityBannerMixin")
+    @Setting(value = "premature-culling", comment = "If 'true', fixes MC-88176 (entities culled too aggresively at subchunk boundaries) and MC-72166 (banners invisible at some angles).")
     private boolean prematureCulling = false;
     
     @Mapping(value = "core.client.renderer.EntityRendererMixin")

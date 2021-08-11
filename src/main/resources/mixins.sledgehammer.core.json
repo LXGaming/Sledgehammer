@@ -39,8 +39,15 @@
     "world.WorldMixin_Despawning"
   ],
   "client": [
+    "client.renderer.entity.RenderDragonMixin",
+    "client.renderer.entity.RenderGuardianMixin",
+    "client.renderer.entity.RenderMinecartMixin",
+    "client.renderer.entity.RenderTNTPrimedMixin",
+    "client.renderer.entity.RenderWolfMixin",
+    "client.renderer.entity.layers.LayerArrowMixin",
     "client.renderer.EntityRendererMixin",
     "client.renderer.RenderGlobalMixin",
+    "client.tileentity.TileEntityBannerMixin",
     "client.MinecraftAccessor",
     "client.MinecraftMixin"
   ],
