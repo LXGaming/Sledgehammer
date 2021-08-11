@@ -34,6 +34,10 @@ public class CoreMixinCategory {
     @Mapping(value = "forge.common.ForgeHooksMixin_Advancement")
     @Setting(value = "advancement-stacktrace", comment = "If 'true', prints a single message instead of a stacktrace for advancement errors.")
     private boolean advancementStacktrace = false;
+
+    @Mapping(value = "core.client.renderer.tileentity.TileEntityBannerRendererMixin")
+    @Setting(value = "banner-freezing", comment = "If 'true', fixes banners freezing when the world is old enough (MC-63720).")
+    private boolean bannerFreezing = false;
     
     @Mapping(value = "core.world.biome.BiomeProviderMixin")
     @Setting(value = "biome-provider", comment = "If 'true', fixes NullPointerException in BiomeProvider::findBiomePosition.")
