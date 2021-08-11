@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(RenderMinecart.class)
-public class RenderMinecartMixin {
+public abstract class RenderMinecartMixin {
 
     @Redirect(
             method = "renderCartContents",

@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(RenderGuardian.class)
-public class RenderGuardianMixin {
+public abstract class RenderGuardianMixin {
 
     @Inject(method = "doRender", at = @At("RETURN"))
     public void resetGlState(EntityGuardian entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {

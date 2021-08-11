@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(RenderTNTPrimed.class)
-public class RenderTNTPrimedMixin {
+public abstract class RenderTNTPrimedMixin {
 
     @Redirect(
             method = "doRender",

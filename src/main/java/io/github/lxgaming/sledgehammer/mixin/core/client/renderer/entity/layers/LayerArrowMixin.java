@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(LayerArrow.class)
-public class LayerArrowMixin {
+public abstract class LayerArrowMixin {
     /**
      * Use regular lighting enable/disable instead of the item one. It is unclear why Mojang used the item one.
      */
