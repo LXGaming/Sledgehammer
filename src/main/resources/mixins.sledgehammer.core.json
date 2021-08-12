@@ -17,6 +17,7 @@
     "crash.CrashReportMixin",
     "entity.EntityLivingMixin_Despawning",
     "entity.EntityLivingMixin_DespawnRanges",
+    "entity.EntityMixin_IDOffset",
     "entity.EntityMixin_Teleport",
     "entity.EntityTrackerMixin",
     "item.ItemStackMixin_Exploit",

@@ -79,6 +79,10 @@ public class CoreMixinCategory {
     @Mapping(value = "core.client.renderer.entity.RenderWolfMixin")
     @Setting(value = "dark-blocks", comment = "If 'true', fixes BlockRendererDispatcher.renderBlockBrightness producing extremely dark blocks in certain cirumstances (MC-6932, MC-41825).")
     private boolean darkBlocks = false;
+
+    @Mapping(value = "core.entity.EntityMixin_IDOffset")
+    @Setting(value = "entity-id-offset", comment = "If 'true', prevents ID 0 from being assigned to entities. Fixes bugs like MC-111480.")
+    private boolean entityIdOffset = false;
     
     @Mapping(value = "core.entity.EntityTrackerMixin")
     @Setting(value = "entity-tracker", comment = "If 'true', prevents ConcurrentModificationException in EntityTracker.")
