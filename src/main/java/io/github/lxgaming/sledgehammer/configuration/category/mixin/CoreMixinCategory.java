@@ -143,6 +143,10 @@ public class CoreMixinCategory {
     @Mapping(value = "core.client.tileentity.TileEntityBannerMixin")
     @Setting(value = "premature-culling", comment = "If 'true', fixes MC-88176 (entities culled too aggresively at subchunk boundaries) and MC-72166 (banners invisible at some angles).")
     private boolean prematureCulling = false;
+
+    @Mapping(value = "core.world.WorldMixin_RoofSpawning")
+    @Setting(value = "roof-lighting", comment = "If 'true', prevents the top of the world from being considered completely dark. Fixes MC-68565.")
+    private boolean roofLighting = false;
     
     @Mapping(value = "core.client.renderer.EntityRendererMixin")
     @Setting(value = "speed-up-chunk-rendering", comment = "If 'true', changes the renderer's target FPS to be 30 (matching 1.15-pre1) instead of the maximum FPS in game options. This helps with chunks not loading on the client.")
