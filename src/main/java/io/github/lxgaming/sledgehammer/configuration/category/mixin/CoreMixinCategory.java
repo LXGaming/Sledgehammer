@@ -98,6 +98,8 @@ public class CoreMixinCategory {
     private boolean getUpdateTagCrash = false;
 
     @Mapping(value = "core.client.renderer.entity.layers.LayerArrowMixin")
+    @Mapping(value = "core.client.renderer.entity.layers.LayerCreeperChargeMixin")
+    @Mapping(value = "core.client.renderer.entity.layers.LayerSpiderEyesMixin")
     @Mapping(value = "core.client.renderer.entity.RenderDragonMixin")
     @Mapping(value = "core.client.renderer.entity.RenderGuardianMixin")
     @Setting(value = "gl-state-bugs", comment = "If 'true', fixes some minor rendering glitches in vanilla.")

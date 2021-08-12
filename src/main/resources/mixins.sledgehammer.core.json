@@ -45,6 +45,8 @@
     "client.renderer.entity.RenderTNTPrimedMixin",
     "client.renderer.entity.RenderWolfMixin",
     "client.renderer.entity.layers.LayerArrowMixin",
+    "client.renderer.entity.layers.LayerCreeperChargeMixin",
+    "client.renderer.entity.layers.LayerSpiderEyesMixin",
     "client.renderer.tileentity.TileEntityBannerRendererMixin",
     "client.renderer.EntityRendererMixin",
     "client.renderer.RenderGlobalMixin",
