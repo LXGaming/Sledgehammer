@@ -1,0 +1,21 @@
+
+# Provide translations for some entities which don't have translated names in 1.12
+
+entity.ItemFrame.name=Item Frame
+entity.LeashKnot.name=Lead
+entity.ThrownExpBottle.name=Bottle o' Enchanting
+entity.ThrownEnderpearl.name=Ender Pearl
+entity.EyeOfEnderSignal.name=Eye of Ender
+entity.FireworksRocketEntity.name=Firework Rocket
+entity.WitherSkull.name=Wither Skull
+entity.EnderCrystal.name=End Crystal
+entity.MinecartRideable.name=Minecart
+entity.MinecartFurnace.name=Minecart with Furnace
+entity.MinecartTNT.name=Minecart with TNT
+entity.MinecartCommandBlock.name=Minecart with Command Block
+entity.MinecartSpawner.name=Minecart with Spawner
+entity.SpectralArrow.name=Spectral Arrow
+entity.AreaEffectCloud.name=Area Effect Cloud
+entity.ShulkerBullet.name=Shulker Bullet
+entity.EvocationFangs.name=Evocation Fangs
+entity.LlamaSpit.name=Llama Spit
