@@ -163,6 +163,10 @@ public class CoreMixinCategory {
     @Mapping(value = "core.network.play.server.SPacketJoinGameMixin")
     @Setting(value = "world-type-length", comment = "If 'true', increases the maximum length for a WorldType name in SPacketJoinGame packet.")
     private boolean worldTypeLength = false;
+
+    @Mapping(value = "core.client.renderer.RenderGlobalMixin_VoidBox")
+    @Setting(value = "void-box", comment = "If 'true', removes the box around the player at low Y levels.")
+    private boolean voidBox = false;
     
     public boolean isAdvancementReload() {
         return advancementReload;

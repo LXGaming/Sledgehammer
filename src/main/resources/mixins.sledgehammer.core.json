@@ -52,6 +52,7 @@
     "client.renderer.tileentity.TileEntityBannerRendererMixin",
     "client.renderer.EntityRendererMixin",
     "client.renderer.RenderGlobalMixin",
+    "client.renderer.RenderGlobalMixin_VoidBox",
     "client.tileentity.TileEntityBannerMixin",
     "client.MinecraftAccessor",
     "client.MinecraftMixin"
