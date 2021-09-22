@@ -178,7 +178,7 @@ dependencies {
     api("thaumic-wonders:thaumicwonders:1.8.2")
     api("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
     api("topography:Topography:1.12.2:1.5.1")
-    api("vaultopic-early-inventory-management:vaultopic:2.1")
+    api("vaultopic-early-inventory-management:vaultopic:2.2")
 }
 
 jar {

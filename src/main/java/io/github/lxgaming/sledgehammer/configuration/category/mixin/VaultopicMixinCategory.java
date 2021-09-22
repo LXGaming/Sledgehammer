@@ -27,7 +27,15 @@ public class VaultopicMixinCategory {
     @Setting(value = "load-matrixes", comment = "If 'true', fixes NullPointerException in Projector::loadMatrixes.")
     private boolean loadMatrixes = false;
     
+    @Mapping(value = "vaultopic.VaultopicMixin", dependencies = {"vaultopic"})
+    @Setting(value = "packet-handling", comment = "If 'true', processes VTOpenVice and VTRecipe packets on the Main Thread")
+    private boolean packetHandling = false;
+    
     public boolean isLoadMatrixes() {
         return loadMatrixes;
+    }
+    
+    public boolean isPacketHandling() {
+        return packetHandling;
     }
 }
