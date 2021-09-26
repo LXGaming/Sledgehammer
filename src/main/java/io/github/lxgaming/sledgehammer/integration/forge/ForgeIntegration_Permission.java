@@ -19,7 +19,12 @@ package io.github.lxgaming.sledgehammer.integration.forge;
 import com.google.common.collect.Lists;
 import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
+import io.github.lxgaming.sledgehammer.configuration.Config;
+import io.github.lxgaming.sledgehammer.configuration.category.IntegrationCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.integration.ForgeIntegrationCategory;
 import io.github.lxgaming.sledgehammer.integration.Integration;
+import io.github.lxgaming.sledgehammer.util.StringUtils;
+import net.minecraft.command.ICommand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -58,13 +63,27 @@ public class ForgeIntegration_Permission extends Integration {
             return;
         }
         
-        Sledgehammer.getInstance().debug("{} ran the command: /{}", entityPlayer.getName(), String.join(" ", arguments));
-        if (!entityPlayer.canUseCommand(4, String.join(".", arguments))) {
+        String command = String.join(" ", arguments);
+        String permission = getPermissionPrefix(event.getCommand().getClass()) + String.join(".", arguments);
+        Sledgehammer.getInstance().debug("{} ran the command: /{} ({})", entityPlayer.getName(), command, permission);
+        if (!entityPlayer.canUseCommand(4, permission)) {
             event.setCanceled(true);
             TextComponentTranslation textComponentTranslation = new TextComponentTranslation("commands.generic.permission");
             textComponentTranslation.getStyle().setColor(TextFormatting.RED);
             entityPlayer.sendMessage(textComponentTranslation);
-            Sledgehammer.getInstance().getLogger().info("{} was denied access to /{}", entityPlayer.getName(), String.join(" ", arguments));
+            Sledgehammer.getInstance().getLogger().info("{} was denied access to /{} ({})", entityPlayer.getName(), command, permission);
         }
+    }
+    
+    private String getPermissionPrefix(Class<? extends ICommand> commandClass) {
+        if (!Sledgehammer.getInstance().getConfig()
+                .map(Config::getIntegrationCategory)
+                .map(IntegrationCategory::getForgeIntegrationCategory)
+                .map(ForgeIntegrationCategory::isPackagePermissions)
+                .orElse(false)) {
+            return "";
+        }
+        
+        return commandClass != null ? StringUtils.substringBeforeLast(commandClass.getName(), ".") + "." : "";
     }
 }
