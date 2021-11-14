@@ -93,6 +93,16 @@ repositories {
         }
     }
     maven {
+        name = "cursemaven"
+        url = "https://cursemaven.com/"
+        content {
+            includeGroup("curse.maven")
+        }
+        metadataSources {
+            artifact()
+        }
+    }
+    maven {
         name = "spongepowered"
         url = "https://repo.spongepowered.org/repository/maven-public"
     }
@@ -140,6 +150,7 @@ dependencies {
     api("carrots-lib:carrotslib:mc1.12.2:1.0.0b1")
     api("carry-on:carryon:1.12.2:1.12.4.16")
     api("champions:champions:1.12.2:1.0.11.3")
+    api("curse.maven:bibliocraft-228027:2574880")
     api("cyclops-core:CyclopsCore:1.12.2:1.6.6")
     api("dank-null:DankNull:1.12.2:1.7.89")
     api("ender-io:EnderIO:1.12.2:5.1.55")
@@ -199,6 +210,7 @@ jar {
                         + "mixins.sledgehammer.astralsorcery.json,"
                         + "mixins.sledgehammer.bdsandm.json,"
                         + "mixins.sledgehammer.bewitchment.json,"
+                        + "mixins.sledgehammer.bibliocraft.json,"
                         + "mixins.sledgehammer.biomesoplenty.json,"
                         + "mixins.sledgehammer.careerbees.json,"
                         + "mixins.sledgehammer.carryon.json,"

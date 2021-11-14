@@ -21,6 +21,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.ArmorUnderMi
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.AstralSorceryMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BewitchmentMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.BiblioCraftMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BiomesOPlentyMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CareerBeesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
@@ -78,6 +79,9 @@ public class MixinCategory {
     
     @Setting(value = "bewitchment", comment = "Bewitchment")
     private BewitchmentMixinCategory bewitchmentMixinCategory = new BewitchmentMixinCategory();
+    
+    @Setting(value = "bibliocraft", comment = "BiblioCraft")
+    private BiblioCraftMixinCategory biblioCraftMixinCategory = new BiblioCraftMixinCategory();
     
     @Setting(value = "biomesoplenty", comment = "Biomes O' Plenty")
     private BiomesOPlentyMixinCategory biomesOPlentyMixinCategory = new BiomesOPlentyMixinCategory();
@@ -208,6 +212,10 @@ public class MixinCategory {
     
     public BewitchmentMixinCategory getBewitchmentMixinCategory() {
         return bewitchmentMixinCategory;
+    }
+    
+    public BiblioCraftMixinCategory getBiblioCraftMixinCategory() {
+        return biblioCraftMixinCategory;
     }
     
     public BiomesOPlentyMixinCategory getBiomesOPlentyMixinCategory() {
