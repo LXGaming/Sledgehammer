@@ -144,6 +144,7 @@ dependencies {
     api("astral-sorcery:astralsorcery:1.12.2:1.10.22")
     api("athenaeum:athenaeum:1.12.2:1.17.4")
     api("barrels-drums-storage-more:BarrelsDrumsStorageAndMore:0.0.24")
+    api("better-questing:BetterQuesting:3.5.323")
     api("bewitchment-legacy:bewitchment:1.12.2:0.0.22.49")
     api("biomes-o-plenty:BiomesOPlenty-1.12.2:7.0.1.2441:universal")
     api("career-bees:careerbees:0.4.0")
@@ -209,6 +210,7 @@ jar {
                         + "mixins.sledgehammer.armorunder.json,"
                         + "mixins.sledgehammer.astralsorcery.json,"
                         + "mixins.sledgehammer.bdsandm.json,"
+                        + "mixins.sledgehammer.betterquesting.json,"
                         + "mixins.sledgehammer.bewitchment.json,"
                         + "mixins.sledgehammer.bibliocraft.json,"
                         + "mixins.sledgehammer.biomesoplenty.json,"

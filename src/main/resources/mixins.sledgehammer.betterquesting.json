@@ -1,0 +1,17 @@
+{
+  "required": false,
+  "minVersion": "0.7.10",
+  "package": "io.github.lxgaming.sledgehammer.mixin.betterquesting",
+  "refmap": "mixins.sledgehammer.refmap.json",
+  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "api2.utils.BQThreadedIOMixin",
+    "core.BetterQuestingMixin",
+    "handlers.SaveLoadHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

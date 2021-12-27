@@ -20,6 +20,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.ActuallyAddi
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ArmorUnderMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.AstralSorceryMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BDSMMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.BetterQuestingMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BewitchmentMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BiblioCraftMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.BiomesOPlentyMixinCategory;
@@ -76,6 +77,9 @@ public class MixinCategory {
     
     @Setting(value = "bdsm", comment = "Barrels, Drums, Storage & More")
     private BDSMMixinCategory bdsmMixinCategory = new BDSMMixinCategory();
+    
+    @Setting(value = "betterquesting", comment = "Better Questing")
+    private BetterQuestingMixinCategory betterQuestingMixinCategory = new BetterQuestingMixinCategory();
     
     @Setting(value = "bewitchment", comment = "Bewitchment")
     private BewitchmentMixinCategory bewitchmentMixinCategory = new BewitchmentMixinCategory();
@@ -208,6 +212,10 @@ public class MixinCategory {
     
     public BDSMMixinCategory getBdsmMixinCategory() {
         return bdsmMixinCategory;
+    }
+    
+    public BetterQuestingMixinCategory getBetterQuestingMixinCategory() {
+        return betterQuestingMixinCategory;
     }
     
     public BewitchmentMixinCategory getBewitchmentMixinCategory() {
