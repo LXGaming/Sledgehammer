@@ -62,7 +62,7 @@ public class SledgehammerLaunch {
             SledgehammerLaunch.getLogger().debug("Detected Sponge");
         }
         
-        if (!isSledgehammerInitialized() && isMixinInitialized() && isTweakerQueued(SledgehammerTweaker.class)) {
+        if (!isSledgehammerInitialized() && isMixinInitialized() && isTweakerPresent(SledgehammerTweaker.class)) {
             GlobalPropertiesProxy.put(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
             
             // Triggers IMixinConfigPlugin::onLoad
@@ -73,11 +73,11 @@ public class SledgehammerLaunch {
     }
     
     public static boolean isEarly() {
-        return !isClassPresent(FORGE_CLASS) || isClassPresent(GRADLE_START_COMMON_CLASS) || isTweakerQueued(FORGE_DEOBF_TWEAKER_CLASS);
+        return !isClassPresent(FORGE_CLASS) || isClassPresent(GRADLE_START_COMMON_CLASS) || isTweakerPresent(FORGE_DEOBF_TWEAKER_CLASS);
     }
     
     public static boolean isStateTweakerPresent() {
-        return isTweakerQueued(MIXIN_STATE_TWEAKER_CLASS) && isClassPresentInStackTrace(MIXIN_STATE_TWEAKER_CLASS);
+        return isTweakerPresent(MIXIN_STATE_TWEAKER_CLASS) && isClassPresentInStackTrace(MIXIN_STATE_TWEAKER_CLASS);
     }
     
     public static boolean isClassPresent(String name) {
@@ -99,11 +99,11 @@ public class SledgehammerLaunch {
         return false;
     }
     
-    public static boolean isTweakerQueued(Class<? extends ITweaker> tweakerClass) {
-        return isTweakerQueued(tweakerClass.getName());
+    public static boolean isTweakerPresent(Class<? extends ITweaker> tweakerClass) {
+        return isTweakerPresent(tweakerClass.getName());
     }
     
-    public static boolean isTweakerQueued(String tweakerClass) {
+    public static boolean isTweakerPresent(String tweakerClass) {
         return getTweakerClasses().contains(tweakerClass)
                 || getTweakers().stream().map(ITweaker::getClass).map(Class::getName).anyMatch(tweakerClass::equals);
     }
