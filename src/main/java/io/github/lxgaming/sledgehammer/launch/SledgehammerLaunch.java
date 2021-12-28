@@ -40,6 +40,7 @@ public class SledgehammerLaunch {
     private static final String FORGE_DEOBF_TWEAKER_CLASS = "net.minecraftforge.fml.common.launcher.FMLDeobfTweaker";
     private static final String GRADLE_START_COMMON_CLASS = "net.minecraftforge.gradle.GradleStartCommon";
     private static final String MIXIN_STATE_TWEAKER_CLASS = "org.spongepowered.asm.mixin.EnvironmentStateTweaker";
+    private static final String MIXIN_TWEAKER_CLASS = "org.spongepowered.asm.launch.MixinTweaker";
     private static final String SPONGE_CLASS = "org.spongepowered.common.launch.SpongeLaunch";
     
     private SledgehammerLaunch() {
@@ -74,6 +75,10 @@ public class SledgehammerLaunch {
     
     public static boolean isEarly() {
         return !isClassPresent(FORGE_CLASS) || isClassPresent(GRADLE_START_COMMON_CLASS) || isTweakerPresent(FORGE_DEOBF_TWEAKER_CLASS);
+    }
+    
+    public static boolean isMixinTweakerPresent() {
+        return getTweakerClasses().contains(MIXIN_TWEAKER_CLASS);
     }
     
     public static boolean isSledgehammerTweakerPresent() {
