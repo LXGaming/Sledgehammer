@@ -76,6 +76,10 @@ public class SledgehammerLaunch {
         return !isClassPresent(FORGE_CLASS) || isClassPresent(GRADLE_START_COMMON_CLASS) || isTweakerPresent(FORGE_DEOBF_TWEAKER_CLASS);
     }
     
+    public static boolean isSledgehammerTweakerPresent() {
+        return isTweakerPresent(SledgehammerTweaker.class);
+    }
+    
     public static boolean isStateTweakerPresent() {
         return isTweakerPresent(MIXIN_STATE_TWEAKER_CLASS) && isClassPresentInStackTrace(MIXIN_STATE_TWEAKER_CLASS);
     }

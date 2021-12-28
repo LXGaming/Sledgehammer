@@ -37,7 +37,7 @@ public class SledgehammerLoadingPlugin implements IFMLLoadingPlugin {
             return;
         }
         
-        if (!SledgehammerLaunch.isTweakerPresent(SledgehammerTweaker.class)) {
+        if (!SledgehammerLaunch.isSledgehammerTweakerPresent()) {
             SledgehammerLaunch.getLogger().debug("Initializing {} from {}", SledgehammerTweaker.class.getSimpleName(), getClass().getSimpleName());
             new SledgehammerTweaker();
         }
