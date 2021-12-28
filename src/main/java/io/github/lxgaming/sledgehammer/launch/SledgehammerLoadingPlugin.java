@@ -34,7 +34,6 @@ public class SledgehammerLoadingPlugin implements IFMLLoadingPlugin {
             SledgehammerLaunch.getLogger().error("An attempt to initialize {} was made by the EnvironmentStateTweaker", Sledgehammer.NAME);
             SledgehammerLaunch.getLogger().error("This indicates that Mixin has been initialized incorrectly");
             SledgehammerLaunch.getLogger().error("------------------------- ERROR -------------------------");
-            return;
         }
         
         if (!SledgehammerLaunch.isSledgehammerTweakerPresent()) {
