@@ -26,8 +26,18 @@ public class ProjectRedMixinCategory {
     @Mapping(value = "projectred.transportation.TransportationSPHMixin", dependencies = {"projectred-transportation"})
     @Setting(value = "packet-exploit", comment = "If 'true', fixes item spawn packet exploit.")
     private boolean packetExploit = false;
+
+    @Mapping(value = "projectred.integration.ComparatorMixin", dependencies = {"projectred-integration"})
+    @Mapping(value = "projectred.integration.GatePartArrayMixin", dependencies = {"projectred-integration"})
+    @Mapping(value = "projectred.integration.RedstoneGatePartMixin", dependencies = {"projectred-integration"})
+    @Setting(value = "gates-pull-wrong-signals", comment = "If 'true', fixes https://github.com/MrTJP/ProjectRed/issues/1485.")
+    private boolean gatesPullWrongSignals = false;
     
     public boolean isPacketExploit() {
         return packetExploit;
+    }
+
+    public boolean isGatesPullWrongSignals() {
+        return gatesPullWrongSignals;
     }
 }
