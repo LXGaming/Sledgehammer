@@ -31,11 +31,18 @@ public class ForgeIntegrationCategory {
     @Setting(value = "check-permissions", comment = "If 'true', forces permission check for OP based commands")
     private boolean checkPermissions = false;
     
+    @Setting(value = "package-permissions", comment = "If 'true', the package containing the command class will be prepended to the permission check")
+    private boolean packagePermissions = false;
+    
     public List<String> getBlacklistedRecipeItems() {
         return blacklistedRecipeItems;
     }
     
     public boolean isCheckPermissions() {
         return checkPermissions;
+    }
+    
+    public boolean isPackagePermissions() {
+        return packagePermissions;
     }
 }

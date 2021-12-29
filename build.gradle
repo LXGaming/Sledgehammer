@@ -19,7 +19,7 @@ buildscript {
 
     dependencies {
         classpath("com.github.jengelman.gradle.plugins:shadow:6.1.0")
-        classpath("net.kyori:blossom:1.2.0")
+        classpath("net.kyori:blossom:1.3.0")
         classpath("net.minecraftforge.gradle:ForgeGradle:4.1.+")
         classpath("org.spongepowered:mixingradle:0.7-SNAPSHOT")
     }
@@ -38,7 +38,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-2.0.12"
+version = "1.12.2-2.0.15"
 
 blossom {
     replaceToken("@version@", version)
@@ -77,9 +77,6 @@ configurations {
     shadow {
         runtime.extendsFrom(shadow)
     }
-
-    build.dependsOn("signJar")
-    jar.classifier = "sponge"
 }
 
 repositories {
@@ -91,6 +88,16 @@ repositories {
     maven {
         name = "curseforge"
         url = "https://minecraft.curseforge.com/api/maven"
+        metadataSources {
+            artifact()
+        }
+    }
+    maven {
+        name = "cursemaven"
+        url = "https://cursemaven.com/"
+        content {
+            includeGroup("curse.maven")
+        }
         metadataSources {
             artifact()
         }
@@ -137,12 +144,14 @@ dependencies {
     api("astral-sorcery:astralsorcery:1.12.2:1.10.22")
     api("athenaeum:athenaeum:1.12.2:1.17.4")
     api("barrels-drums-storage-more:BarrelsDrumsStorageAndMore:0.0.24")
+    api("better-questing:BetterQuesting:3.5.323")
     api("bewitchment-legacy:bewitchment:1.12.2:0.0.22.49")
     api("biomes-o-plenty:BiomesOPlenty-1.12.2:7.0.1.2441:universal")
     api("career-bees:careerbees:0.4.0")
     api("carrots-lib:carrotslib:mc1.12.2:1.0.0b1")
     api("carry-on:carryon:1.12.2:1.12.4.16")
     api("champions:champions:1.12.2:1.0.11.3")
+    api("curse.maven:bibliocraft-228027:2574880")
     api("cyclops-core:CyclopsCore:1.12.2:1.6.6")
     api("dank-null:DankNull:1.12.2:1.7.89")
     api("ender-io:EnderIO:1.12.2:5.1.55")
@@ -178,10 +187,15 @@ dependencies {
     api("thaumic-wonders:thaumicwonders:1.8.2")
     api("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
     api("topography:Topography:1.12.2:1.5.1")
-    api("vaultopic-early-inventory-management:vaultopic:2.1")
+    api("vaultopic-early-inventory-management:vaultopic:2.2")
+}
+
+build {
+    dependsOn("signJar")
 }
 
 jar {
+    archiveClassifier.set("sponge")
     manifest {
         attributes(
                 "FMLCorePlugin": "io.github.lxgaming.sledgehammer.launch.SledgehammerLoadingPlugin",
@@ -196,7 +210,9 @@ jar {
                         + "mixins.sledgehammer.armorunder.json,"
                         + "mixins.sledgehammer.astralsorcery.json,"
                         + "mixins.sledgehammer.bdsandm.json,"
+                        + "mixins.sledgehammer.betterquesting.json,"
                         + "mixins.sledgehammer.bewitchment.json,"
+                        + "mixins.sledgehammer.bibliocraft.json,"
                         + "mixins.sledgehammer.biomesoplenty.json,"
                         + "mixins.sledgehammer.careerbees.json,"
                         + "mixins.sledgehammer.carryon.json,"

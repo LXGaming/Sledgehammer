@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Alex Thomson
+ * Copyright 2021 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,21 +21,13 @@ import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
-public class VaultopicMixinCategory {
+public class BiblioCraftMixinCategory {
     
-    @Mapping(value = "vaultopic.client.ProjectorMixin", dependencies = {"vaultopic"})
-    @Setting(value = "load-matrixes", comment = "If 'true', fixes NullPointerException in Projector::loadMatrixes.")
-    private boolean loadMatrixes = false;
+    @Mapping(value = "bibliocraft.tileentities.BiblioTileEntityMixin", dependencies = {"bibliocraft"})
+    @Setting(value = "abstract-stack-in-slot", comment = "If 'true', fixes AbstractMethodError caused by missing getStackInSlot method")
+    private boolean abstractStackInSlot = false;
     
-    @Mapping(value = "vaultopic.VaultopicMixin", dependencies = {"vaultopic"})
-    @Setting(value = "packet-handling", comment = "If 'true', processes VTOpenVice and VTRecipe packets on the Main Thread")
-    private boolean packetHandling = false;
-    
-    public boolean isLoadMatrixes() {
-        return loadMatrixes;
-    }
-    
-    public boolean isPacketHandling() {
-        return packetHandling;
+    public boolean isAbstractStackInSlot() {
+        return abstractStackInSlot;
     }
 }

@@ -29,15 +29,21 @@ import java.util.Map;
 public class SledgehammerLoadingPlugin implements IFMLLoadingPlugin {
     
     public SledgehammerLoadingPlugin() {
+        if (!SledgehammerLaunch.isMixinTweakerPresent()) {
+            SledgehammerLaunch.getLogger().error("------------------------- ERROR -------------------------");
+            SledgehammerLaunch.getLogger().error("An attempt to initialize {} was made but the MixinTweaker is not present", Sledgehammer.NAME);
+            SledgehammerLaunch.getLogger().error("This indicates that Mixin has been initialized incorrectly");
+            SledgehammerLaunch.getLogger().error("------------------------- ERROR -------------------------");
+        }
+        
         if (SledgehammerLaunch.isStateTweakerPresent()) {
             SledgehammerLaunch.getLogger().error("------------------------- ERROR -------------------------");
             SledgehammerLaunch.getLogger().error("An attempt to initialize {} was made by the EnvironmentStateTweaker", Sledgehammer.NAME);
             SledgehammerLaunch.getLogger().error("This indicates that Mixin has been initialized incorrectly");
             SledgehammerLaunch.getLogger().error("------------------------- ERROR -------------------------");
-            return;
         }
         
-        if (!SledgehammerLaunch.isTweakerQueued(SledgehammerTweaker.class)) {
+        if (!SledgehammerLaunch.isSledgehammerTweakerPresent()) {
             SledgehammerLaunch.getLogger().debug("Initializing {} from {}", SledgehammerTweaker.class.getSimpleName(), getClass().getSimpleName());
             new SledgehammerTweaker();
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Alex Thomson
+ * Copyright 2021 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,21 +21,22 @@ import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
-public class VaultopicMixinCategory {
+public class BetterQuestingMixinCategory {
     
-    @Mapping(value = "vaultopic.client.ProjectorMixin", dependencies = {"vaultopic"})
-    @Setting(value = "load-matrixes", comment = "If 'true', fixes NullPointerException in Projector::loadMatrixes.")
-    private boolean loadMatrixes = false;
+    @Mapping(value = "betterquesting.handlers.SaveLoadHandlerMixin", dependencies = {"betterquesting"})
+    @Setting(value = "debug", comment = "For debugging purposes")
+    private boolean debug = false;
     
-    @Mapping(value = "vaultopic.VaultopicMixin", dependencies = {"vaultopic"})
-    @Setting(value = "packet-handling", comment = "If 'true', processes VTOpenVice and VTRecipe packets on the Main Thread")
-    private boolean packetHandling = false;
+    @Mapping(value = "betterquesting.api2.utils.BQThreadedIOMixin", dependencies = {"betterquesting"})
+    @Mapping(value = "betterquesting.core.BetterQuestingMixin", dependencies = {"betterquesting"})
+    @Setting(value = "await-io", comment = "If 'true', waits for enqueued tasks to complete")
+    private boolean awaitIO = false;
     
-    public boolean isLoadMatrixes() {
-        return loadMatrixes;
+    public boolean isDebug() {
+        return debug;
     }
     
-    public boolean isPacketHandling() {
-        return packetHandling;
+    public boolean isAwaitIO() {
+        return awaitIO;
     }
 }
