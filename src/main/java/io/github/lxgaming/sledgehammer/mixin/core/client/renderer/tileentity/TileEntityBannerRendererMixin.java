@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class TileEntityBannerRendererMixin {
     
     @Redirect(
-            method = "render",
+            method = "render(Lnet/minecraft/tileentity/TileEntityBanner;DDDFIF)V",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;getTotalWorldTime()J"
