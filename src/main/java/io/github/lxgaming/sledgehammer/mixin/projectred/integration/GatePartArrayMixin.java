@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-@Mixin(TArrayGatePart$class.class)
+@Mixin(value = TArrayGatePart$class.class, remap = false)
 public abstract class GatePartArrayMixin {
     /**
      * The decompiler is not able to parse the target class correctly. IDE errors should be ignored, this code
@@ -33,8 +33,7 @@ public abstract class GatePartArrayMixin {
                     value = "INVOKE",
                     target = "Lmrtjp/projectred/integration/RedstoneGatePart;calcMaxSignal(IZZ)I"
             ),
-            index = 1,
-            remap = false
+            index = 1
     )
     private boolean alwaysUseStrongSignal(boolean strong) {
         return true;

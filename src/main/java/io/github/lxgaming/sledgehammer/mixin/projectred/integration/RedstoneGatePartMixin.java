@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-@Mixin(RedstoneGatePart.class)
+@Mixin(value = RedstoneGatePart.class, remap = false)
 public abstract class RedstoneGatePartMixin {
     @ModifyArg(
             method = "getRedstoneInput",
@@ -29,8 +29,7 @@ public abstract class RedstoneGatePartMixin {
                     value = "INVOKE",
                     target = "Lmrtjp/projectred/integration/RedstoneGatePart;calcMaxSignal(IZZ)I"
             ),
-            index = 1,
-            remap = false
+            index = 1
     )
     private boolean alwaysUseStrongSignal(boolean strong) {
         return true;

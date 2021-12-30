@@ -20,14 +20,14 @@ import mrtjp.projectred.integration.Comparator;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-@Mixin(Comparator.class)
+@Mixin(value = Comparator.class, remap = false)
 public abstract class ComparatorMixin {
     /**
      * @author embeddedt
      * @reason Follow changes in upstream
      * https://github.com/MrTJP/ProjectRed/commit/4134ea2461a0ae30f4da4629f72ed66ac11ebe6a
      */
-    @Overwrite(remap = false)
+    @Overwrite
     public boolean requireStrongInput(int r) {
         return false;
     }
