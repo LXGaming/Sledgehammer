@@ -34,7 +34,8 @@ public abstract class WorldMixin_IgnoreForcedChunkTicking {
             method = "updateEntityWithOptionalForce",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;getPersistentChunks()Lcom/google/common/collect/ImmutableSetMultimap;"
+                    target = "Lnet/minecraft/world/World;getPersistentChunks()Lcom/google/common/collect/ImmutableSetMultimap;",
+                    remap = false
             )
     )
     public ImmutableSetMultimap<ChunkPos, ForgeChunkManager.Ticket> getEmptyPersistentChunks(World world) {
