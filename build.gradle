@@ -171,6 +171,9 @@ dependencies {
     api("mrtjp:ProjectRed:1.12.2-4.9.3.116:mechanical") {
         exclude(module: "jei_1.12.2")
     }
+    api("mrtjp:ProjectRed:1.12.2-4.9.3.116:integration") {
+        exclude(module: "jei_1.12.2")
+    }
     api("natures-aura:NaturesAura:26.0")
     api("primalcore:PrimalCore:1.12.2:0.6.105")
     api("primitive-crafting:PrimitiveCrafting:1.12.2:1.4.0")

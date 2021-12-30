@@ -7,6 +7,9 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "integration.ComparatorMixin",
+    "integration.GatePartArrayMixin",
+    "integration.RedstoneGatePartMixin",
     "transportation.TransportationSPHMixin"
   ],
   "injectors": {
