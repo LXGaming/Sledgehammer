@@ -14,6 +14,7 @@
     "fml.common.network.simpleimpl.SimpleNetworkWrapperMixin",
     "fml.common.network.FMLEmbeddedChannelMixin",
     "fml.common.network.FMLEventChannelMixin",
+    "world.WorldMixin_IgnoreForcedChunkTicking",
     "world.storage.WorldInfoMixin"
   ],
   "client": [

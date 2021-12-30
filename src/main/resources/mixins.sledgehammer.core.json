@@ -17,6 +17,7 @@
     "crash.CrashReportMixin",
     "entity.EntityLivingMixin_Despawning",
     "entity.EntityLivingMixin_DespawnRanges",
+    "entity.EntityMixin_IDOffset",
     "entity.EntityMixin_Teleport",
     "entity.EntityTrackerMixin",
     "item.ItemStackMixin_Exploit",
@@ -36,11 +37,23 @@
     "world.chunk.storage.AnvilChunkLoaderMixin",
     "world.chunk.storage.RegionFileChunkBufferMixin",
     "world.WorldMixin_ChunkUnload",
-    "world.WorldMixin_Despawning"
+    "world.WorldMixin_Despawning",
+    "world.WorldMixin_RoofSpawning"
   ],
   "client": [
+    "client.renderer.entity.RenderDragonMixin",
+    "client.renderer.entity.RenderGuardianMixin",
+    "client.renderer.entity.RenderMinecartMixin",
+    "client.renderer.entity.RenderTNTPrimedMixin",
+    "client.renderer.entity.RenderWolfMixin",
+    "client.renderer.entity.layers.LayerArrowMixin",
+    "client.renderer.entity.layers.LayerCreeperChargeMixin",
+    "client.renderer.entity.layers.LayerSpiderEyesMixin",
+    "client.renderer.tileentity.TileEntityBannerRendererMixin",
     "client.renderer.EntityRendererMixin",
     "client.renderer.RenderGlobalMixin",
+    "client.renderer.RenderGlobalMixin_VoidBox",
+    "client.tileentity.TileEntityBannerMixin",
     "client.MinecraftAccessor",
     "client.MinecraftMixin"
   ],

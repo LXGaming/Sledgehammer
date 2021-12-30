@@ -34,6 +34,10 @@ public class CoreMixinCategory {
     @Mapping(value = "forge.common.ForgeHooksMixin_Advancement")
     @Setting(value = "advancement-stacktrace", comment = "If 'true', prints a single message instead of a stacktrace for advancement errors.")
     private boolean advancementStacktrace = false;
+
+    @Mapping(value = "core.client.renderer.tileentity.TileEntityBannerRendererMixin")
+    @Setting(value = "banner-freezing", comment = "If 'true', fixes banners freezing when the world is old enough (MC-63720).")
+    private boolean bannerFreezing = false;
     
     @Mapping(value = "core.world.biome.BiomeProviderMixin")
     @Setting(value = "biome-provider", comment = "If 'true', fixes NullPointerException in BiomeProvider::findBiomePosition.")
@@ -69,6 +73,16 @@ public class CoreMixinCategory {
     @Mapping(value = "core.world.chunk.storage.RegionFileChunkBufferMixin")
     @Setting(value = "chunk-save-shutdown", comment = "If 'true', generates a crash report and safely stops the server if a chunk fails to save.")
     private boolean chunkSaveShutdown = false;
+
+    @Mapping(value = "core.client.renderer.entity.RenderMinecartMixin")
+    @Mapping(value = "core.client.renderer.entity.RenderTNTPrimedMixin")
+    @Mapping(value = "core.client.renderer.entity.RenderWolfMixin")
+    @Setting(value = "dark-blocks", comment = "If 'true', fixes BlockRendererDispatcher.renderBlockBrightness producing extremely dark blocks in certain cirumstances (MC-6932, MC-41825).")
+    private boolean darkBlocks = false;
+
+    @Mapping(value = "core.entity.EntityMixin_IDOffset")
+    @Setting(value = "entity-id-offset", comment = "If 'true', prevents ID 0 from being assigned to entities. Fixes bugs like MC-111480.")
+    private boolean entityIdOffset = false;
     
     @Mapping(value = "core.entity.EntityTrackerMixin")
     @Setting(value = "entity-tracker", comment = "If 'true', prevents ConcurrentModificationException in EntityTracker.")
@@ -86,6 +100,14 @@ public class CoreMixinCategory {
     @Mapping(value = "core.network.play.server.SPacketChunkDataMixin")
     @Setting(value = "get-update-tag-crash", comment = "If 'true', adds TileEntity data to the crash report from calls to 'getUpdateTag' that fail.")
     private boolean getUpdateTagCrash = false;
+
+    @Mapping(value = "core.client.renderer.entity.layers.LayerArrowMixin")
+    @Mapping(value = "core.client.renderer.entity.layers.LayerCreeperChargeMixin")
+    @Mapping(value = "core.client.renderer.entity.layers.LayerSpiderEyesMixin")
+    @Mapping(value = "core.client.renderer.entity.RenderDragonMixin")
+    @Mapping(value = "core.client.renderer.entity.RenderGuardianMixin")
+    @Setting(value = "gl-state-bugs", comment = "If 'true', fixes some minor rendering glitches in vanilla.")
+    private boolean glStateBugs = false;
     
     @Mapping(value = "core.util.text.TextComponentTranslationMixin")
     @Setting(value = "invalid-translation", comment = "If 'true', prevents crash due to invalid translation keys.")
@@ -122,8 +144,13 @@ public class CoreMixinCategory {
     private boolean playerChunkMap = false;
     
     @Mapping(value = "core.client.renderer.RenderGlobalMixin")
-    @Setting(value = "premature-culling", comment = "If 'true', fixes MC-88176 (entities culled too aggresively at subchunk boundaries).")
+    @Mapping(value = "core.client.tileentity.TileEntityBannerMixin")
+    @Setting(value = "premature-culling", comment = "If 'true', fixes MC-88176 (entities culled too aggresively at subchunk boundaries) and MC-72166 (banners invisible at some angles).")
     private boolean prematureCulling = false;
+
+    @Mapping(value = "core.world.WorldMixin_RoofSpawning")
+    @Setting(value = "roof-lighting", comment = "If 'true', prevents the top of the world from being considered completely dark. Fixes MC-68565.")
+    private boolean roofLighting = false;
     
     @Mapping(value = "core.client.renderer.EntityRendererMixin")
     @Setting(value = "speed-up-chunk-rendering", comment = "If 'true', changes the renderer's target FPS to be 30 (matching 1.15-pre1) instead of the maximum FPS in game options. This helps with chunks not loading on the client.")
@@ -136,6 +163,10 @@ public class CoreMixinCategory {
     @Mapping(value = "core.network.play.server.SPacketJoinGameMixin")
     @Setting(value = "world-type-length", comment = "If 'true', increases the maximum length for a WorldType name in SPacketJoinGame packet.")
     private boolean worldTypeLength = false;
+
+    @Mapping(value = "core.client.renderer.RenderGlobalMixin_VoidBox")
+    @Setting(value = "void-box", comment = "If 'true', removes the box around the player at low Y levels.")
+    private boolean voidBox = false;
     
     public boolean isAdvancementReload() {
         return advancementReload;
