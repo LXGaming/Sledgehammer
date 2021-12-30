@@ -27,6 +27,7 @@ public abstract class GatePartArrayMixin {
      * The decompiler is not able to parse the target class correctly. IDE errors should be ignored, this code
      * works fine at runtime.
      */
+    @SuppressWarnings({"InvalidInjectorMethodSignature", "MixinAnnotationTarget", "UnresolvedMixinReference"})
     @ModifyArg(
             method = "calculateSignal",
             at = @At(
