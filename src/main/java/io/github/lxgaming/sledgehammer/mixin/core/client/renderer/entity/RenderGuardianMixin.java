@@ -24,12 +24,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(RenderGuardian.class)
+@Mixin(value = RenderGuardian.class)
 public abstract class RenderGuardianMixin {
-
-    @Inject(method = "doRender(Lnet/minecraft/entity/monster/EntityGuardian;DDDFF)V", at = @At("RETURN"))
+    
+    @Inject(
+            method = "doRender(Lnet/minecraft/entity/monster/EntityGuardian;DDDFF)V",
+            at = @At(
+                    "RETURN"
+            )
+    )
     public void resetGlState(EntityGuardian entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
-        if(entity.getTargetedEntity() != null) {
+        if (entity.getTargetedEntity() != null) {
             GlStateManager.enableLighting();
             GlStateManager.enableCull();
         }

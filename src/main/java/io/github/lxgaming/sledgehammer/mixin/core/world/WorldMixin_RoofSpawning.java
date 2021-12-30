@@ -23,19 +23,31 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(World.class)
+@Mixin(value = World.class)
 public abstract class WorldMixin_RoofSpawning {
     
-    @Inject(method = "getLight(Lnet/minecraft/util/math/BlockPos;)I", at = @At("HEAD"), cancellable = true)
+    @Inject(
+            method = "getLight(Lnet/minecraft/util/math/BlockPos;)I",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void handleRoofLight(BlockPos pos, CallbackInfoReturnable<Integer> cir) {
-        if(pos.getY() >= 256) {
+        if (pos.getY() >= 256) {
             cir.setReturnValue(15);
         }
     }
     
-    @Inject(method = "getLight(Lnet/minecraft/util/math/BlockPos;Z)I", at = @At("HEAD"), cancellable = true)
+    @Inject(
+            method = "getLight(Lnet/minecraft/util/math/BlockPos;Z)I",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
     private void handleRoofLight(BlockPos pos, boolean checkNeighbors, CallbackInfoReturnable<Integer> cir) {
-        if(pos.getY() >= 256) {
+        if (pos.getY() >= 256) {
             cir.setReturnValue(15);
         }
     }

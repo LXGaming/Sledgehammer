@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(TileEntityBannerRenderer.class)
+@Mixin(value = TileEntityBannerRenderer.class)
 public abstract class TileEntityBannerRendererMixin {
     
     @Redirect(

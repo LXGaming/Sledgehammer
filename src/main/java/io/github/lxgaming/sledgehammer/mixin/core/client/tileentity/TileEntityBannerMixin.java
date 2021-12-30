@@ -21,8 +21,9 @@ import net.minecraft.tileentity.TileEntityBanner;
 import net.minecraft.util.math.AxisAlignedBB;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(TileEntityBanner.class)
+@Mixin(value = TileEntityBanner.class)
 public abstract class TileEntityBannerMixin extends TileEntity {
+    
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
         return new AxisAlignedBB(pos, pos.add(1, -1, 1));

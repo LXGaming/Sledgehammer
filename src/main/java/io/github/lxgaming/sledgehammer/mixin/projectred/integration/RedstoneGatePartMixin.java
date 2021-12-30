@@ -23,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(value = RedstoneGatePart.class, remap = false)
 public abstract class RedstoneGatePartMixin {
+    
     @ModifyArg(
             method = "getRedstoneInput",
             at = @At(

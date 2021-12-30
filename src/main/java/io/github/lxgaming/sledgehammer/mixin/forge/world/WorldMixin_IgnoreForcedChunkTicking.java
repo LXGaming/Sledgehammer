@@ -24,9 +24,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(World.class)
+@Mixin(value = World.class)
 public abstract class WorldMixin_IgnoreForcedChunkTicking {
-
+    
     /**
      * Return an empty map to fool the entity ticking logic into thinking no chunks are forcefully loaded by Forge.
      */

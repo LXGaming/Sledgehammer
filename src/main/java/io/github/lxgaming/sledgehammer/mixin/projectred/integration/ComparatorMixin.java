@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(value = Comparator.class, remap = false)
 public abstract class ComparatorMixin {
+    
     /**
      * @author embeddedt
      * @reason Follow changes in upstream

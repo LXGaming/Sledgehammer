@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 /* Ideally this would be implemented with pure accessors, but they seemed to be causing issues. */
-@Mixin(EntityLiving.class)
+@Mixin(value = EntityLiving.class)
 public abstract class EntityLivingMixin_Despawning extends EntityLivingBase implements EntityLivingBridge {
     
     @Shadow

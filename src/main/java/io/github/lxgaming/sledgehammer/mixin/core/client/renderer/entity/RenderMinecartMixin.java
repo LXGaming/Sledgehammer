@@ -22,9 +22,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(RenderMinecart.class)
+@Mixin(value = RenderMinecart.class)
 public abstract class RenderMinecartMixin {
-
+    
     @Redirect(
             method = "renderCartContents",
             at = @At(

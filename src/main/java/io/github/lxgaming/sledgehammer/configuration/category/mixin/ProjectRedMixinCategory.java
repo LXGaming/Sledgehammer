@@ -26,7 +26,7 @@ public class ProjectRedMixinCategory {
     @Mapping(value = "projectred.transportation.TransportationSPHMixin", dependencies = {"projectred-transportation"})
     @Setting(value = "packet-exploit", comment = "If 'true', fixes item spawn packet exploit.")
     private boolean packetExploit = false;
-
+    
     @Mapping(value = "projectred.integration.ComparatorMixin", dependencies = {"projectred-integration"})
     @Mapping(value = "projectred.integration.GatePartArrayMixin", dependencies = {"projectred-integration"})
     @Mapping(value = "projectred.integration.RedstoneGatePartMixin", dependencies = {"projectred-integration"})
@@ -36,7 +36,7 @@ public class ProjectRedMixinCategory {
     public boolean isPacketExploit() {
         return packetExploit;
     }
-
+    
     public boolean isGatesPullWrongSignals() {
         return gatesPullWrongSignals;
     }

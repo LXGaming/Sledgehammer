@@ -24,10 +24,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(LayerSpiderEyes.class)
+@Mixin(value = LayerSpiderEyes.class)
 public abstract class LayerSpiderEyesMixin {
     
-    @Inject(method = "doRenderLayer(Lnet/minecraft/entity/monster/EntitySpider;FFFFFFF)V", at = @At("RETURN"))
+    @Inject(
+            method = "doRenderLayer(Lnet/minecraft/entity/monster/EntitySpider;FFFFFFF)V",
+            at = @At(
+                    "RETURN"
+            )
+    )
     private void reEnableDepthMask(EntitySpider spider, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale, CallbackInfo ci) {
         GlStateManager.depthMask(true);
     }

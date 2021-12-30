@@ -22,8 +22,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(RenderDragon.class)
+@Mixin(value = RenderDragon.class)
 public abstract class RenderDragonMixin {
+    
     /**
      * Use regular lighting enable/disable instead of the item one. It is unclear why Mojang used the item one.
      */
@@ -37,7 +38,7 @@ public abstract class RenderDragonMixin {
     private static void disableLighting() {
         GlStateManager.disableLighting();
     }
-
+    
     /**
      * Use regular lighting enable/disable instead of the item one. It is unclear why Mojang used the item one.
      */

@@ -24,12 +24,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(Entity.class)
+@Mixin(value = Entity.class)
 public abstract class EntityMixin_IDOffset {
     
     @Shadow
     private static int nextEntityID;
-
+    
     @Redirect(
             method = "<init>",
             at = @At(
@@ -39,7 +39,7 @@ public abstract class EntityMixin_IDOffset {
             )
     )
     private int adjustNextEntityId(World worldIn) {
-        if(nextEntityID == 0) {
+        if (nextEntityID == 0) {
             nextEntityID = 1;
         }
         return nextEntityID;

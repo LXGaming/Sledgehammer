@@ -23,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(value = TArrayGatePart$class.class, remap = false)
 public abstract class GatePartArrayMixin {
+    
     /**
      * The decompiler is not able to parse the target class correctly. IDE errors should be ignored, this code
      * works fine at runtime.

@@ -22,8 +22,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(LayerArrow.class)
+@Mixin(value = LayerArrow.class)
 public abstract class LayerArrowMixin {
+    
     /**
      * Use regular lighting enable/disable instead of the item one. It is unclear why Mojang used the item one.
      */
@@ -31,11 +32,13 @@ public abstract class LayerArrowMixin {
             method = "doRenderLayer",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/renderer/RenderHelper;disableStandardItemLighting()V"))
+                    target = "Lnet/minecraft/client/renderer/RenderHelper;disableStandardItemLighting()V"
+            )
+    )
     private void disableLighting() {
         GlStateManager.disableLighting();
     }
-
+    
     /**
      * Use regular lighting enable/disable instead of the item one. It is unclear why Mojang used the item one.
      */

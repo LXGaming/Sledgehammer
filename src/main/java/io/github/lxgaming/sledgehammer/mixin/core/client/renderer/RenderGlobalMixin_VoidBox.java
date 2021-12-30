@@ -16,7 +16,6 @@
 
 package io.github.lxgaming.sledgehammer.mixin.core.client.renderer;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GlStateManager;
@@ -30,35 +29,43 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = RenderGlobal.class)
 public abstract class RenderGlobalMixin_VoidBox {
-    @Shadow private WorldClient world;
-
-    @Shadow private boolean vboEnabled;
-
-    @Shadow private VertexBuffer sky2VBO;
-
-    @Shadow private int glSkyList2;
-
-    @Redirect(method = "renderSky(FI)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;getPositionEyes(F)Lnet/minecraft/util/math/Vec3d;"))
+    
+    @Shadow
+    private WorldClient world;
+    
+    @Shadow
+    private boolean vboEnabled;
+    
+    @Shadow
+    private VertexBuffer sky2VBO;
+    
+    @Shadow
+    private int glSkyList2;
+    
+    @Redirect(
+            method = "renderSky(FI)V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/entity/EntityPlayerSP;getPositionEyes(F)Lnet/minecraft/util/math/Vec3d;"
+            )
+    )
     private Vec3d getFakePosition(EntityPlayerSP entityPlayerSP, float partialTicks) {
         double offset = entityPlayerSP.getPositionEyes(partialTicks).y - world.getHorizon();
-        if(offset < 0.0d) {
+        if (offset < 0.0d) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 12.0F, 0.0F);
-
-            if (vboEnabled)
-            {
+            
+            if (vboEnabled) {
                 sky2VBO.bindBuffer();
                 GlStateManager.glEnableClientState(32884);
                 GlStateManager.glVertexPointer(3, 5126, 12, 0);
                 sky2VBO.drawArrays(7);
                 sky2VBO.unbindBuffer();
                 GlStateManager.glDisableClientState(32884);
-            }
-            else
-            {
+            } else {
                 GlStateManager.callList(glSkyList2);
             }
-
+            
             GlStateManager.popMatrix();
         }
         return new Vec3d(0, Double.POSITIVE_INFINITY, 0);

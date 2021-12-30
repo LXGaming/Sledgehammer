@@ -22,9 +22,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(RenderTNTPrimed.class)
+@Mixin(value = RenderTNTPrimed.class)
 public abstract class RenderTNTPrimedMixin {
-
+    
     @Redirect(
             method = "doRender(Lnet/minecraft/entity/item/EntityTNTPrimed;DDDFF)V",
             at = @At(
