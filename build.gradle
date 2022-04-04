@@ -18,9 +18,9 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.github.jengelman.gradle.plugins:shadow:6.1.0")
+        classpath("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
         classpath("net.kyori:blossom:1.3.0")
-        classpath("net.minecraftforge.gradle:ForgeGradle:4.1.+")
+        classpath("net.minecraftforge.gradle:ForgeGradle:5.1.+")
         classpath("org.spongepowered:mixingradle:0.7-SNAPSHOT")
     }
 }
@@ -74,8 +74,8 @@ mixin {
 }
 
 configurations {
-    shadow {
-        runtime.extendsFrom(shadow)
+    compileJar {
+        implementation.extendsFrom(compileJar)
     }
 }
 
@@ -109,16 +109,16 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor("org.spongepowered:mixin:0.8.2:processor")
-    minecraft("net.minecraftforge:forge:1.12.2-14.23.5.2855")
-    shadow("org.checkerframework:checker-qual:3.13.0")
-    shadow("org.spongepowered:configurate-hocon:3.7.2") {
+    minecraft("net.minecraftforge:forge:1.12.2-14.23.5.2860")
+    compileJar("org.checkerframework:checker-qual:3.13.0")
+    compileJar("org.spongepowered:configurate-hocon:3.7.2") {
         exclude(module: "checker-qual")
         exclude(module: "guava")
         exclude(module: "guice")
     }
-    shadow("org.spongepowered:mixin:0.8.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    annotationProcessor("org.spongepowered:mixin:0.8.3:processor")
+    compileJar("org.spongepowered:mixin:0.8.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 
     // Sponge
     annotationProcessor("org.spongepowered:spongecommon:1.12.2-7.3.0:dev")
@@ -281,16 +281,9 @@ processResources {
     exclude("sledgehammer_at.cfg")
 }
 
-reobf {
-    shadowJar {
-    }
-    thinShadowJar {
-    }
-}
-
 shadowJar {
     archiveClassifier.set(null)
-    configurations = [project.configurations.shadow]
+    configurations = [project.configurations.compileJar]
     relocate("com.typesafe.config", "io.github.lxgaming.sledgehammer.lib.config")
     relocate("ninja.leaping.configurate", "io.github.lxgaming.sledgehammer.lib.configurate")
     relocate("org.checkerframework", "io.github.lxgaming.sledgehammer.lib.checkerframework")
@@ -298,7 +291,7 @@ shadowJar {
 
 task thinShadowJar(type: ShadowJar) {
     archiveClassifier.set("thin")
-    configurations = [project.configurations.shadow]
+    configurations = shadowJar.configurations
     relocators = shadowJar.relocators
 
     dependencies {
@@ -315,6 +308,11 @@ task thinShadowJar(type: ShadowJar) {
 artifacts {
     archives shadowJar
     archives thinShadowJar
+}
+
+reobf {
+    shadowJar {}
+    thinShadowJar {}
 }
 
 test {
