@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-@Mixin(targets = "net/minecraft/world/chunk/storage/RegionFile$ChunkBuffer", priority = 1337)
+@Mixin(targets = "net.minecraft.world.chunk.storage.RegionFile$ChunkBuffer", priority = 1337)
 public abstract class RegionFileChunkBufferMixin extends ByteArrayOutputStream {
     
     @Shadow

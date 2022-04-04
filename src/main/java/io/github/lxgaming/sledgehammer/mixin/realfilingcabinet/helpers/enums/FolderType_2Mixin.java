@@ -24,7 +24,8 @@ import org.spongepowered.asm.mixin.Overwrite;
 /**
  * {@link com.bafomdad.realfilingcabinet.helpers.enums.FolderType#ENDER FolderType#ENDER}
  */
-@Mixin(targets = "com/bafomdad/realfilingcabinet/helpers/enums/FolderType$2", priority = 1337, remap = false)
+@SuppressWarnings("unresolvable-target")
+@Mixin(targets = "com.bafomdad.realfilingcabinet.helpers.enums.FolderType$2", priority = 1337, remap = false)
 public abstract class FolderType_2Mixin {
     
     /**
