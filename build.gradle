@@ -82,17 +82,6 @@ configurations {
 repositories {
     mavenCentral()
     maven {
-        name = "covers1624"
-        url = "https://maven.covers1624.net/"
-    }
-    maven {
-        name = "curseforge"
-        url = "https://minecraft.curseforge.com/api/maven"
-        metadataSources {
-            artifact()
-        }
-    }
-    maven {
         name = "cursemaven"
         url = "https://cursemaven.com/"
         content {
@@ -122,7 +111,7 @@ dependencies {
 
     // Sponge
     annotationProcessor("org.spongepowered:spongecommon:1.12.2-7.3.0:dev")
-    api("org.spongepowered:spongecommon:1.12.2-7.3.0:dev") {
+    compileOnly("org.spongepowered:spongecommon:1.12.2-7.3.0:dev") {
         exclude(module: "configurate-core")
         exclude(module: "configurate-hocon")
         exclude(module: "commons-io")
@@ -131,68 +120,66 @@ dependencies {
         exclude(module: "launchwrapper")
         exclude(module: "mixin")
     }
-    api("org.spongepowered:spongeforge:1.12.2-2838-7.3.0:dev") {
+    compileOnly("org.spongepowered:spongeforge:1.12.2-2838-7.3.0:dev") {
         transitive = false
     }
-    api("org.spongepowered:spongevanilla:1.12.2-7.3.0:dev") {
+    compileOnly("org.spongepowered:spongevanilla:1.12.2-7.3.0:dev") {
         transitive = false
     }
 
     // Third Party Mods
-    api("actually-additions:ActuallyAdditions:1.12.2:r145")
-    api("armor-underwear-mod:armorunder:mc1.12.2:1.0.0")
-    api("astral-sorcery:astralsorcery:1.12.2:1.10.22")
-    api("athenaeum:athenaeum:1.12.2:1.17.4")
-    api("barrels-drums-storage-more:BarrelsDrumsStorageAndMore:0.0.24")
-    api("better-questing:BetterQuesting:3.5.323")
-    api("bewitchment-legacy:bewitchment:1.12.2:0.0.22.49")
-    api("biomes-o-plenty:BiomesOPlenty-1.12.2:7.0.1.2441:universal")
-    api("career-bees:careerbees:0.4.0")
-    api("carrots-lib:carrotslib:mc1.12.2:1.0.0b1")
-    api("carry-on:carryon:1.12.2:1.12.4.16")
-    api("champions:champions:1.12.2:1.0.11.3")
-    api("curse.maven:bibliocraft-228027:2574880")
-    api("curse.maven:chest-transporter-78778:2524058")
-    api("curse.maven:ftb-library-legacy-forge-237167:2985811")
-    api("cyclops-core:CyclopsCore:1.12.2:1.6.6")
-    api("dank-null:DankNull:1.12.2:1.7.89")
-    api("ender-io:EnderIO:1.12.2:5.1.55")
-    api("ender-storage-1-8:EnderStorage-1.12.2:2.4.6.137:deobf")
-    api("flux-networks:fluxnetworks-1.12.2:3.0.19:21")
-    api("forestry:forestry_1.12.2:5.8.2.387")
-    api("hearth-well:hwell:0.5.2")
-    api("immersive-engineering:ImmersiveEngineering:0.12:92")
-    api("industrial-foregoing:industrialforegoing-1.12.2:1.12.13:237")
-    api("integrated-dynamics:IntegratedDynamics:1.12.2:1.1.7")
-    api("journeymap:journeymap:1.12.2:5.7.0")
-    api("kubejs-forge:KubeJS-forge:1.12.2:1.1.0.63")
-    api("logistics-pipes:logisticspipes:0.10.2.216")
-    api("matteroverdrive-legacy:MatterOverdrive-1.12.2:0.7.1.0:universal")
-    api("morph:Morph:1.12.2:7.1.3")
-    api("mowzies-mobs:mowziesmobs:1.5.8")
-    api("mrtjp:ProjectRed:1.12.2-4.9.3.116:mechanical") {
-        exclude(module: "jei_1.12.2")
-    }
-    api("mrtjp:ProjectRed:1.12.2-4.9.3.116:integration") {
-        exclude(module: "jei_1.12.2")
-    }
-    api("natures-aura:NaturesAura:26.0")
-    api("primalcore:PrimalCore:1.12.2:0.6.105")
-    api("primitive-crafting:PrimitiveCrafting:1.12.2:1.4.0")
-    api("primitive-mobs:primitivemobs:1.2.3a")
-    api("pyrotech:pyrotech:1.12.2:1.3.13")
-    api("qmd:QMD:0.10.1:1.12.2")
-    api("quark:Quark:r1.5:145")
-    api("random-things:RandomThings:MC1.12.2:4.2.7.4")
-    api("real-filing-cabinet:realfilingcabinet:1.12:0.2.0.20")
-    api("ruins-structure-spawning-system:Ruins:1.12.2")
-    api("simple-storage-network:SimpleStorageNetwork:1.12.2:1.7.8")
-    api("sonar-core:sonarcore-1.12.2:5.0.19:20")
-    api("tesla-core-lib:tesla-core-lib:1.12.2:1.0.17")
-    api("thaumic-wonders:thaumicwonders:1.8.2")
-    api("tomb-many-graves-2:TombManyGraves:1.12:4.2.0")
-    api("topography:Topography:1.12.2:1.5.1")
-    api("vaultopic-early-inventory-management:vaultopic:2.2")
+    compileOnly("curse.maven:actually-additions-228404:2669943") // Actually Additions v1.12.2-r145
+    compileOnly("curse.maven:armor-underwear-mod-310383:2660325") // Armor Underwear Mod v1.12.2-1.0.0
+    compileOnly("curse.maven:astral-sorcery-241721:2872629") // Astral Sorcery v1.12.2-1.10.22
+    compileOnly("curse.maven:athenaeum-284350:2780353") // Athenaeum v1.12.2-1.17.4
+    compileOnly("curse.maven:barrels-drums-storage-more-319404:2708193") // Barrels, Drums, Storage & More v0.0.24
+    compileOnly("curse.maven:better-questing-238856:2877468") // Better Questing v3.5.323
+    compileOnly("curse.maven:bewitchment-legacy-285439:3133005") // Bewitchment v1.12.2-0.0.22.49
+    compileOnly("curse.maven:bibliocraft-228027:2574880") // BiblioCraft v2.4.5
+    compileOnly("curse.maven:biomes-o-plenty-220318:2715506") // Biomes O' Plenty v1.12.2-7.0.1.2441-universal
+    compileOnly("curse.maven:career-bees-281791:2534481") // Career Bees v0.4.0
+    compileOnly("curse.maven:carrots-lib-311327:2660247") // Carrots Library v1.12.2-1.0.0b1
+    compileOnly("curse.maven:carry-on-274259:3271178") // Carry On v1.12.2-1.12.4.16
+    compileOnly("curse.maven:champions-307152:2849085") // Champions v1.12.2-1.0.11.3
+    compileOnly("curse.maven:chest-transporter-78778:2524058") // Chest Transporter v1.12.2-2.8.8
+    compileOnly("curse.maven:codechicken-lib-1-8-242818:2779848") // CodeChicken Lib v1.12.2-3.2.3.358-universal
+    compileOnly("curse.maven:cyclops-core-232758:3010617") // Cyclops Core v1.12.2-1.6.6
+    compileOnly("curse.maven:dank-null-272514:2831353") // /dank/null v1.12.2-1.7.89
+    compileOnly("curse.maven:ender-io-64578:2858816") // Ender IO v5.1.55
+    compileOnly("curse.maven:ender-storage-1-8-245174:2755787") // Ender Storage v1.12.2-2.4.6.137-universal
+    compileOnly("curse.maven:flux-networks-248020:2645165") // Flux Networks v1.12.2-3.0.19
+    compileOnly("curse.maven:forestry-59751:2684780") // Forestry v1.12.2-5.8.2.387
+    compileOnly("curse.maven:ftb-library-legacy-forge-237167:2985811") // FTB Library v5.4.7.2
+    compileOnly("curse.maven:hearth-well-313368:2800056") // Hearth Well v0.5.2
+    compileOnly("curse.maven:immersive-engineering-231951:2799143") // Immersive Engineering v0.12-92
+    compileOnly("curse.maven:industrial-foregoing-266515:2745321") // Industrial Foregoing v1.12.2-1.12.13-237
+    compileOnly("curse.maven:integrated-dynamics-236307:3005731") // Integrated Dynamics v1.12.2-1.1.7
+    compileOnly("curse.maven:journeymap-32274:2888880") // JourneyMap v1.12.2-5.7.0
+    compileOnly("curse.maven:kubejs-forge-238086:2823753") // KubeJS v1.12.2-1.1.0.63
+    compileOnly("curse.maven:logistics-pipes-232838:2850338") // Logistics Pipes v0.10.2.216
+    compileOnly("curse.maven:matteroverdrive-legacy-308192:2699215") // Matter Overdrive v1.12.2-0.7.1.0-universal
+    compileOnly("curse.maven:morph-229080:2682821") // Morph v1.12.2-7.1.3
+    compileOnly("curse.maven:mowzies-mobs-250498:3048685") // Mowzie's Mobs v1.5.8
+    compileOnly("curse.maven:mrtjpcore-229002:2735197") // MrTJPCore v1.12.2-2.1.4.43-universal
+    compileOnly("curse.maven:natures-aura-306626:2882138") // Nature's Aura v18.1
+    compileOnly("curse.maven:primalcore-247907:2734701") // PrimalCore v1.12.2-0.6.105
+    compileOnly("curse.maven:primitive-crafting-302819:2878845") // Primitive Crafting v1.12.2-1.4.0
+    compileOnly("curse.maven:primitive-mobs-282415:2658551") // Primitive Mobs v1.2.3a
+    compileOnly("curse.maven:project-red-expansion-229048:2734751") // Project Red v1.12.2-4.9.3.116-mechanical
+    compileOnly("curse.maven:project-red-integration-229045:2734749") // Project Red v1.12.2-4.9.3.116-integration
+    compileOnly("curse.maven:pyrotech-306676:2780601") // Pyrotech v1.12.2-1.3.13
+    compileOnly("curse.maven:qmd-362056:3066649") // QMD v0.10.1-1.12.2
+    compileOnly("curse.maven:quark-243121:2663450") // Quark vr1.5-145
+    compileOnly("curse.maven:random-things-59816:2905241") // Random Things v1.12.2-4.2.7.4
+    compileOnly("curse.maven:real-filing-cabinet-253619:2854777") // Real Filing Cabinet v1.12-0.2.0.20
+    compileOnly("curse.maven:ruins-structure-spawning-system-227873:2721268") // Ruins
+    compileOnly("curse.maven:simple-storage-network-268495:2735704") // Simple Storage Network v1.12.2-1.7.8
+    compileOnly("curse.maven:sonar-core-239418:2645156") // Sonar Core v1.12.2-5.0.19
+    compileOnly("curse.maven:tesla-core-lib-254602:2891841") // Tesla Core Lib v1.12.2-1.0.17
+    compileOnly("curse.maven:thaumic-wonders-316704:2787954") // Thaumic Wonders v1.8.2
+    compileOnly("curse.maven:tomb-many-graves-2-262823:2619249") // Tomb Many Graves 2 v1.12-4.2.0
+    compileOnly("curse.maven:topography-297878:2700878") // Topography v1.12.2-1.5.1
+    compileOnly("curse.maven:vaultopic-early-inventory-management-322730:2858289") // Vaultopic v2.2
 }
 
 build {
