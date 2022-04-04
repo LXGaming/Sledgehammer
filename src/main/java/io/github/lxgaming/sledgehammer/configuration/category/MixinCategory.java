@@ -27,6 +27,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.BiomesOPlent
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CareerBeesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChampionsMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChestTransporterMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.DankNullMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderIOMixinCategory;
@@ -98,6 +99,9 @@ public class MixinCategory {
     
     @Setting(value = "champions", comment = "Champions")
     private ChampionsMixinCategory championsMixinCategory = new ChampionsMixinCategory();
+    
+    @Setting(value = "chesttransporter", comment = "Chest Transporter")
+    private ChestTransporterMixinCategory chestTransporterMixinCategory = new ChestTransporterMixinCategory();
     
     @Setting(value = "core", comment = "Minecraft")
     private CoreMixinCategory coreMixinCategory = new CoreMixinCategory();
@@ -240,6 +244,10 @@ public class MixinCategory {
     
     public ChampionsMixinCategory getChampionsMixinCategory() {
         return championsMixinCategory;
+    }
+    
+    public ChestTransporterMixinCategory getChestTransporterMixinCategory() {
+        return chestTransporterMixinCategory;
     }
     
     public CoreMixinCategory getCoreMixinCategory() {

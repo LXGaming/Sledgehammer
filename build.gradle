@@ -152,6 +152,8 @@ dependencies {
     api("carry-on:carryon:1.12.2:1.12.4.16")
     api("champions:champions:1.12.2:1.0.11.3")
     api("curse.maven:bibliocraft-228027:2574880")
+    api("curse.maven:chest-transporter-78778:2524058")
+    api("curse.maven:ftb-library-legacy-forge-237167:2985811")
     api("cyclops-core:CyclopsCore:1.12.2:1.6.6")
     api("dank-null:DankNull:1.12.2:1.7.89")
     api("ender-io:EnderIO:1.12.2:5.1.55")
@@ -220,6 +222,7 @@ jar {
                         + "mixins.sledgehammer.careerbees.json,"
                         + "mixins.sledgehammer.carryon.json,"
                         + "mixins.sledgehammer.champions.json,"
+                        + "mixins.sledgehammer.chesttransporter.json,"
                         + "mixins.sledgehammer.core.json,"
                         + "mixins.sledgehammer.danknull.json,"
                         + "mixins.sledgehammer.enderio.json,"

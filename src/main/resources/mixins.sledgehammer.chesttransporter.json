@@ -1,0 +1,15 @@
+{
+  "required": false,
+  "minVersion": "0.7.10",
+  "package": "io.github.lxgaming.sledgehammer.mixin.chesttransporter",
+  "refmap": "mixins.sledgehammer.refmap.json",
+  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "chests.YabbaBarrelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
