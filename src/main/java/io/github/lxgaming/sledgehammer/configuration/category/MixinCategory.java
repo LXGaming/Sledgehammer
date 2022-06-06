@@ -37,6 +37,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCa
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ImmersiveEngineeringMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.IndustrialForegoingMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.IntegratedDynamicsMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.JETIFMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.JourneyMapMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.KubeJSMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.LogisticsPipesMixinCategory;
@@ -129,6 +130,9 @@ public class MixinCategory {
     
     @Setting(value = "integrateddynamics", comment = "Integrated Dynamics")
     private IntegratedDynamicsMixinCategory integratedDynamicsMixinCategory = new IntegratedDynamicsMixinCategory();
+    
+    @Setting(value = "jetif", comment = "Just Enough Throwing In Fluids")
+    private JETIFMixinCategory jetifMixinCategory = new JETIFMixinCategory();
     
     @Setting(value = "journeymap", comment = "JourneyMap")
     private JourneyMapMixinCategory journeyMapMixinCategory = new JourneyMapMixinCategory();
@@ -284,6 +288,10 @@ public class MixinCategory {
     
     public IntegratedDynamicsMixinCategory getIntegratedDynamicsMixinCategory() {
         return integratedDynamicsMixinCategory;
+    }
+    
+    public JETIFMixinCategory getJetifMixinCategory() {
+        return jetifMixinCategory;
     }
     
     public JourneyMapMixinCategory getJourneyMapMixinCategory() {

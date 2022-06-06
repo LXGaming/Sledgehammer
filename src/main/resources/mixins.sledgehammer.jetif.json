@@ -1,0 +1,15 @@
+{
+  "required": false,
+  "minVersion": "0.7.10",
+  "package": "io.github.lxgaming.sledgehammer.mixin.jetif",
+  "refmap": "mixins.sledgehammer.refmap.json",
+  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "compat.CompatFluxNetworksMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

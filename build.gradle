@@ -154,6 +154,7 @@ dependencies {
     compileOnly("curse.maven:immersive-engineering-231951:2799143") // Immersive Engineering v0.12-92
     compileOnly("curse.maven:industrial-foregoing-266515:2745321") // Industrial Foregoing v1.12.2-1.12.13-237
     compileOnly("curse.maven:integrated-dynamics-236307:3005731") // Integrated Dynamics v1.12.2-1.1.7
+    compileOnly("curse.maven:jetif-303122:2919936") // Just Enough Throwing In Fluids v1.12.2-1.5.2
     compileOnly("curse.maven:journeymap-32274:2888880") // JourneyMap v1.12.2-5.7.0
     compileOnly("curse.maven:kubejs-forge-238086:2823753") // KubeJS v1.12.2-1.1.0.63
     compileOnly("curse.maven:logistics-pipes-232838:2850338") // Logistics Pipes v0.10.2.216
@@ -219,6 +220,7 @@ jar {
                         + "mixins.sledgehammer.immersiveengineering.json,"
                         + "mixins.sledgehammer.industrialforegoing.json,"
                         + "mixins.sledgehammer.integrateddynamicscompat.json,"
+                        + "mixins.sledgehammer.jetif.json,"
                         + "mixins.sledgehammer.journeymap.json,"
                         + "mixins.sledgehammer.kubejs.json,"
                         + "mixins.sledgehammer.logisticspipes.json,"
