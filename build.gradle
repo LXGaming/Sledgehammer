@@ -82,8 +82,11 @@ configurations {
 repositories {
     mavenCentral()
     maven {
-        name = "curseforge"
-        url = "https://minecraft.curseforge.com/api/maven"
+        name = "cursemaven"
+        url = "https://cursemaven.com/"
+        content {
+            includeGroup("curse.maven")
+        }
         metadataSources {
             artifact()
         }
@@ -108,8 +111,8 @@ dependencies {
     // compileOnly("sumsang:Sumsang:1.2.0")
 
     // Third Party Mods
-    compileOnly("cyclops-core:CyclopsCore:1.16.5:1.11.7")
-    compileOnly("integrated-dynamics:IntegratedDynamics:1.16.5:1.8.4")
+    compileOnly("curse.maven:cyclops-core-232758:3336467") // Cyclops Core v1.16.5-1.11.7
+    compileOnly("curse.maven:integrated-dynamics-236307:3336471") // Integrated Dynamics v1.16.5-1.8.4
 }
 
 artifacts {
