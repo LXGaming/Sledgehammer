@@ -98,10 +98,10 @@ repositories {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.16.5-36.2.19")
-    compileJar("org.checkerframework:checker-qual:3.15.0")
+    minecraft("net.minecraftforge:forge:1.16.5-36.2.35")
+    compileJar("org.checkerframework:checker-qual:3.22.1")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
-    compileJar("org.spongepowered:configurate-hocon:4.1.1") {
+    compileJar("org.spongepowered:configurate-hocon:4.1.2") {
         exclude(module: "checker-qual")
     }
     annotationProcessor("org.spongepowered:mixin:0.8.4:processor")
