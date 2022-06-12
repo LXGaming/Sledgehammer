@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "io.github.lxgaming.sledgehammer.mixin.integrateddynamicscompat",
   "refmap": "mixins.sledgehammer.refmap.json",
-  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
+  "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.ForgePlugin",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
