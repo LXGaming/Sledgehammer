@@ -39,9 +39,10 @@ jobs:
     - name: Build
       env:
         BUILD_NUMBER: ${{ github.run_number }}
-      run: |
-        echo "release_name=${GITHUB_REPOSITORY#*/} ${GITHUB_REF_NAME}" >> $GITHUB_ENV
-        ./gradlew build --console=plain --refresh-dependencies
+      run: ./gradlew build --console=plain --refresh-dependencies
+    - name: Setup Release
+      if: github.event_name == 'create' && github.event.ref_type == 'tag'
+      run: echo "release_name=${GITHUB_REPOSITORY#*/} ${GITHUB_REF_NAME}" >> $GITHUB_ENV
     - name: Release
       if: github.event_name == 'create' && github.event.ref_type == 'tag'
       uses: softprops/action-gh-release@v1
