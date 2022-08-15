@@ -128,6 +128,7 @@ dependencies {
     }
 
     // Third Party Mods
+    compileOnly("curse.maven:abyssalcraft-53686:3425234") // AbyssalCraft v1.12.2-1.10.4
     compileOnly("curse.maven:actually-additions-228404:2669943") // Actually Additions v1.12.2-r145
     compileOnly("curse.maven:armor-underwear-mod-310383:2660325") // Armor Underwear Mod v1.12.2-1.0.0
     compileOnly("curse.maven:astral-sorcery-241721:2872629") // Astral Sorcery v1.12.2-1.10.22
@@ -199,6 +200,7 @@ jar {
                 "Implementation-Vendor": "LX_Gaming",
                 "Implementation-Version": "${project.version}",
                 "MixinConfigs": ""
+                        + "mixins.sledgehammer.abyssalcraft.json,"
                         + "mixins.sledgehammer.actuallyadditions.json,"
                         + "mixins.sledgehammer.armorunder.json,"
                         + "mixins.sledgehammer.astralsorcery.json,"

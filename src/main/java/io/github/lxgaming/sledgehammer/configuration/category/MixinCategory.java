@@ -16,6 +16,7 @@
 
 package io.github.lxgaming.sledgehammer.configuration.category;
 
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.AbyssalCraftMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ActuallyAdditionsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ArmorUnderMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.AstralSorceryMixinCategory;
@@ -67,6 +68,9 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
 public class MixinCategory {
+    
+    @Setting(value = "abyssalcraft", comment = "AbyssalCraft")
+    private AbyssalCraftMixinCategory abyssalCraftMixinCategory = new AbyssalCraftMixinCategory();
     
     @Setting(value = "actually-additions", comment = "Actually Additions")
     private ActuallyAdditionsMixinCategory actuallyAdditionsMixinCategory = new ActuallyAdditionsMixinCategory();
@@ -205,6 +209,10 @@ public class MixinCategory {
     
     @Setting(value = "wolforce", comment = "Hearth Well")
     private WolforceMixinCategory wolforceMixinCategory = new WolforceMixinCategory();
+    
+    public AbyssalCraftMixinCategory getAbyssalCraftMixinCategory() {
+        return abyssalCraftMixinCategory;
+    }
     
     public ActuallyAdditionsMixinCategory getActuallyAdditionsMixinCategory() {
         return actuallyAdditionsMixinCategory;
