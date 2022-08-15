@@ -38,7 +38,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
-version = "1.12.2-2.0.18"
+version = "1.12.2-2.0.19"
 
 blossom {
     replaceToken("@version@", version)
