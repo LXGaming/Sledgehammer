@@ -164,6 +164,7 @@ dependencies {
     compileOnly("curse.maven:mowzies-mobs-250498:3048685") // Mowzie's Mobs v1.5.8
     compileOnly("curse.maven:mrtjpcore-229002:2735197") // MrTJPCore v1.12.2-2.1.4.43-universal
     compileOnly("curse.maven:natures-aura-306626:2882138") // Nature's Aura v18.1
+    compileOnly("curse.maven:pneumaticcraft-repressurized-281849:2978408") // PneumaticCraft: Repressurized v0.11.15-398
     compileOnly("curse.maven:primalcore-247907:2734701") // PrimalCore v1.12.2-0.6.105
     compileOnly("curse.maven:primitive-crafting-302819:2878845") // Primitive Crafting v1.12.2-1.4.0
     compileOnly("curse.maven:primitive-mobs-282415:2658551") // Primitive Mobs v1.2.3a
@@ -231,6 +232,7 @@ jar {
                         + "mixins.sledgehammer.mowziesmobs.json,"
                         + "mixins.sledgehammer.naturesaura.json,"
                         + "mixins.sledgehammer.platform.json,"
+                        + "mixins.sledgehammer.pneumaticcraft.json,"
                         + "mixins.sledgehammer.primitivecrafting.json,"
                         + "mixins.sledgehammer.primitivemobs.json,"
                         + "mixins.sledgehammer.projectred.json,"
