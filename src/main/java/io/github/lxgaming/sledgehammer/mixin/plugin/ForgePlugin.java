@@ -159,7 +159,7 @@ public class ForgePlugin extends CorePlugin {
             return null;
         }
         
-        metadatas.keySet().removeIf(key -> key.equals("examplemod"));
+        metadatas.keySet().removeIf(key -> key == null || key.equals("examplemod"));
         if (!metadatas.isEmpty()) {
             return metadatas.keySet();
         }
