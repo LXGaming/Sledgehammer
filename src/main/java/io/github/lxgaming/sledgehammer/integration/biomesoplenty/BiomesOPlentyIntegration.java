@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.integration.biomesoplenty;
 
 import biomesoplenty.common.entities.item.EntityBOPBoat;
+import io.github.lxgaming.sledgehammer.Sledgehammer;
 import io.github.lxgaming.sledgehammer.SledgehammerPlatform;
 import io.github.lxgaming.sledgehammer.integration.Integration;
 import net.minecraftforge.common.MinecraftForge;
@@ -42,6 +43,7 @@ public class BiomesOPlentyIntegration extends Integration {
     public void onEntityJoinWorld(EntityJoinWorldEvent event) {
         if (event.getEntity() instanceof EntityBOPBoat) {
             event.setCanceled(true);
+            Sledgehammer.getInstance().debug("Biomes O' Plenty Boat was blocked");
         }
     }
 }
