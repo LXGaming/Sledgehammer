@@ -31,6 +31,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChampionsMix
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChestTransporterMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.DankNullMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.EmbersMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderIOMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderStorageMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.FluxNetworksMixinCategory;
@@ -114,6 +115,9 @@ public class MixinCategory {
     
     @Setting(value = "dank-null", comment = "DankNull")
     private DankNullMixinCategory dankNullMixinCategory = new DankNullMixinCategory();
+    
+    @Setting(value = "embers", comment = "Embers")
+    private EmbersMixinCategory embersMixinCategory = new EmbersMixinCategory();
     
     @Setting(value = "enderio", comment = "Ender IO")
     private EnderIOMixinCategory enderIOMixinCategory = new EnderIOMixinCategory();
@@ -272,6 +276,10 @@ public class MixinCategory {
     
     public DankNullMixinCategory getDankNullMixinCategory() {
         return dankNullMixinCategory;
+    }
+    
+    public EmbersMixinCategory getEmbersMixinCategory() {
+        return embersMixinCategory;
     }
     
     public EnderIOMixinCategory getEnderIOMixinCategory() {
