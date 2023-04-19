@@ -29,6 +29,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.CareerBeesMi
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CarryOnMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChampionsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ChestTransporterMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.ConstructsArmoryMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.DankNullMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EmbersMixinCategory;
@@ -60,6 +61,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.RuinsMixinCa
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.SpongeMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.StorageNetworkMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ThaumicWondersMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.TinkersConstructMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TinkersEvolutionMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TombManyGravesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TopographyMixinCategory;
@@ -110,6 +112,9 @@ public class MixinCategory {
     
     @Setting(value = "chesttransporter", comment = "Chest Transporter")
     private ChestTransporterMixinCategory chestTransporterMixinCategory = new ChestTransporterMixinCategory();
+    
+    @Setting(value = "conarm", comment = "Construct's Armory")
+    private ConstructsArmoryMixinCategory constructsArmoryMixinCategory = new ConstructsArmoryMixinCategory();
     
     @Setting(value = "core", comment = "Minecraft")
     private CoreMixinCategory coreMixinCategory = new CoreMixinCategory();
@@ -204,6 +209,9 @@ public class MixinCategory {
     @Setting(value = "thaumicwonders", comment = "Thaumic Wonders")
     private ThaumicWondersMixinCategory thaumicWondersMixinCategory = new ThaumicWondersMixinCategory();
     
+    @Setting(value = "tconstruct", comment = "Tinkers Construct")
+    private TinkersConstructMixinCategory tinkersConstructMixinCategory = new TinkersConstructMixinCategory();
+    
     @Setting(value = "tconevo", comment = "Tinkers' Evolution")
     private TinkersEvolutionMixinCategory tinkersEvolutionMixinCategory = new TinkersEvolutionMixinCategory();
     
@@ -272,6 +280,10 @@ public class MixinCategory {
     
     public ChestTransporterMixinCategory getChestTransporterMixinCategory() {
         return chestTransporterMixinCategory;
+    }
+    
+    public ConstructsArmoryMixinCategory getConstructsArmoryMixinCategory() {
+        return constructsArmoryMixinCategory;
     }
     
     public CoreMixinCategory getCoreMixinCategory() {
@@ -396,6 +408,10 @@ public class MixinCategory {
     
     public ThaumicWondersMixinCategory getThaumicWondersMixinCategory() {
         return thaumicWondersMixinCategory;
+    }
+    
+    public TinkersConstructMixinCategory getTinkersConstructMixinCategory() {
+        return tinkersConstructMixinCategory;
     }
     
     public TinkersEvolutionMixinCategory getTinkersEvolutionMixinCategory() {
