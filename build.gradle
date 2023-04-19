@@ -181,6 +181,7 @@ dependencies {
     compileOnly("curse.maven:sonar-core-239418:2645156") // Sonar Core v1.12.2-5.0.19
     compileOnly("curse.maven:tesla-core-lib-254602:2891841") // Tesla Core Lib v1.12.2-1.0.17
     compileOnly("curse.maven:thaumic-wonders-316704:2787954") // Thaumic Wonders v1.8.2
+    compileOnly("curse.maven:tinkers-evolution-384589:3362723") // Tinkers' Evolution v1.12.2-1.0.44
     compileOnly("curse.maven:tomb-many-graves-2-262823:2619249") // Tomb Many Graves 2 v1.12-4.2.0
     compileOnly("curse.maven:topography-297878:2700878") // Topography v1.12.2-1.5.1
     compileOnly("curse.maven:vaultopic-early-inventory-management-322730:2858289") // Vaultopic v2.2
@@ -246,6 +247,7 @@ jar {
                         + "mixins.sledgehammer.ruins.json,"
                         + "mixins.sledgehammer.sponge.json,"
                         + "mixins.sledgehammer.storagenetwork.json,"
+                        + "mixins.sledgehammer.tconevo.json,"
                         + "mixins.sledgehammer.thaumicwonders.json,"
                         + "mixins.sledgehammer.tombmanygraves.json,"
                         + "mixins.sledgehammer.topography.json,"
