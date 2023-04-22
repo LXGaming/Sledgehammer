@@ -27,7 +27,15 @@ public class TinkersConstructMixinCategory {
     @Setting(value = "magnetic-void", comment = "If 'true', fixes magnetic trait voiding items")
     private boolean magneticVoid = false;
     
+    @Mapping(value = "tconstruct.tools.common.network.ToolStationTextPacketMixin", dependencies = "tconstruct")
+    @Setting(value = "text-sync", comment = "If 'true', fixes item duplication when renaming items in the Tool Forge")
+    private boolean textSync = false;
+    
     public boolean isMagneticVoid() {
         return magneticVoid;
+    }
+    
+    public boolean isTextSync() {
+        return textSync;
     }
 }
