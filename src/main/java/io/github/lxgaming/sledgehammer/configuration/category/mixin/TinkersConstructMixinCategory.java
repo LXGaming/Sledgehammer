@@ -23,6 +23,10 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class TinkersConstructMixinCategory {
     
+    @Mapping(value = "tconstruct.library.modifiers.LevelAspectMixin", dependencies = "tconstruct")
+    @Setting(value = "clamp-level-aspect", comment = "If 'true', prevents LevelAspects from exceeding the maximum level")
+    private boolean clampLevelAspect = false;
+    
     @Mapping(value = "tconstruct.tools.traits.TraitMagneticMixin", dependencies = "tconstruct")
     @Setting(value = "magnetic-void", comment = "If 'true', fixes magnetic trait voiding items")
     private boolean magneticVoid = false;
@@ -30,6 +34,10 @@ public class TinkersConstructMixinCategory {
     @Mapping(value = "tconstruct.tools.common.network.ToolStationTextPacketMixin", dependencies = "tconstruct")
     @Setting(value = "text-sync", comment = "If 'true', fixes item duplication when renaming items in the Tool Forge")
     private boolean textSync = false;
+    
+    public boolean isClampLevelAspect() {
+        return clampLevelAspect;
+    }
     
     public boolean isMagneticVoid() {
         return magneticVoid;
