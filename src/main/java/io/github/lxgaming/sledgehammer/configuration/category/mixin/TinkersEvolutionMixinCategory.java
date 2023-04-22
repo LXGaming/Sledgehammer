@@ -23,9 +23,17 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class TinkersEvolutionMixinCategory {
     
+    @Mapping(value = "tconevo.trait.draconicevolution.TraitEvolvedMixin", dependencies = "tconevo")
+    @Setting(value = "draconic-upgrade", comment = "If 'true', fixes unintended upgrading of Draconic Modifiers")
+    private boolean draconicUpgrade = false;
+    
     @Mapping(value = "tconevo.integration.redstonerepository.RedstoneRepositoryHooksImplMixin", dependencies = "tconevo")
     @Setting(value = "redstone-repository", comment = "If 'true', fixes NoClassDefFoundError with Redstone Repository")
     private boolean redstoneRepository = false;
+    
+    public boolean isDraconicUpgrade() {
+        return draconicUpgrade;
+    }
     
     public boolean isRedstoneRepository() {
         return redstoneRepository;
