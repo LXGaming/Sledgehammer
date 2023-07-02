@@ -45,6 +45,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.JourneyMapMi
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.KubeJSMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.LogisticsPipesMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MatterOverdriveMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.MobGrindingUtilsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MorphMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.MowziesMobsMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.NaturesAuraMixinCategory;
@@ -160,6 +161,9 @@ public class MixinCategory {
     
     @Setting(value = "matter-overdrive", comment = "Matter Overdrive")
     private MatterOverdriveMixinCategory matterOverdriveMixinCategory = new MatterOverdriveMixinCategory();
+    
+    @Setting(value = "mob-grinding-utils", comment = "Mob Grinding Utils")
+    private MobGrindingUtilsMixinCategory mobGrindingUtilsMixinCategory = new MobGrindingUtilsMixinCategory();
     
     @Setting(value = "morph", comment = "Morph")
     private MorphMixinCategory morphMixinCategory = new MorphMixinCategory();
@@ -344,6 +348,10 @@ public class MixinCategory {
     
     public MatterOverdriveMixinCategory getMatterOverdriveMixinCategory() {
         return matterOverdriveMixinCategory;
+    }
+    
+    public MobGrindingUtilsMixinCategory getMobGrindingUtilsMixinCategory() {
+        return mobGrindingUtilsMixinCategory;
     }
     
     public MorphMixinCategory getMorphMixinCategory() {

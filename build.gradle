@@ -163,6 +163,7 @@ dependencies {
     compileOnly("curse.maven:logistics-pipes-232838:2850338") // Logistics Pipes v0.10.2.216
     compileOnly("curse.maven:mantle-74924:2713386") // Mantle v1.12-1.3.3.55
     compileOnly("curse.maven:matteroverdrive-legacy-308192:2699215") // Matter Overdrive v1.12.2-0.7.1.0-universal
+    compileOnly("curse.maven:mob-grinding-utils-254241:2656683") // Mob Grinding Utils v0.3.13
     compileOnly("curse.maven:morph-229080:2682821") // Morph v1.12.2-7.1.3
     compileOnly("curse.maven:mowzies-mobs-250498:3048685") // Mowzie's Mobs v1.5.8
     compileOnly("curse.maven:mrtjpcore-229002:2735197") // MrTJPCore v1.12.2-2.1.4.43-universal
@@ -235,6 +236,7 @@ jar {
                         + "mixins.sledgehammer.kubejs.json,"
                         + "mixins.sledgehammer.logisticspipes.json,"
                         + "mixins.sledgehammer.matteroverdrive.json,"
+                        + "mixins.sledgehammer.mobgrindingutils.json,"
                         + "mixins.sledgehammer.morph.json,"
                         + "mixins.sledgehammer.mowziesmobs.json,"
                         + "mixins.sledgehammer.naturesaura.json,"
