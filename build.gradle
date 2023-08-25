@@ -170,6 +170,12 @@ build {
 }
 
 jar {
+    var mixinConfigs = sourceSets.main.resources.findAll {
+        it.name.matches("mixins\\.sledgehammer\\.\\w+\\.json")
+    }.collect {
+        it.name
+    }.join(",")
+
     archiveClassifier.set("sponge")
     manifest {
         attributes(
@@ -180,60 +186,7 @@ jar {
                 "Implementation-Title": "Sledgehammer",
                 "Implementation-Vendor": "LX_Gaming",
                 "Implementation-Version": "${project.version}",
-                "MixinConfigs": ""
-                        + "mixins.sledgehammer.abyssalcraft.json,"
-                        + "mixins.sledgehammer.actuallyadditions.json,"
-                        + "mixins.sledgehammer.armorunder.json,"
-                        + "mixins.sledgehammer.astralsorcery.json,"
-                        + "mixins.sledgehammer.bdsandm.json,"
-                        + "mixins.sledgehammer.betterquesting.json,"
-                        + "mixins.sledgehammer.bewitchment.json,"
-                        + "mixins.sledgehammer.bibliocraft.json,"
-                        + "mixins.sledgehammer.biomesoplenty.json,"
-                        + "mixins.sledgehammer.careerbees.json,"
-                        + "mixins.sledgehammer.carryon.json,"
-                        + "mixins.sledgehammer.champions.json,"
-                        + "mixins.sledgehammer.chesttransporter.json,"
-                        + "mixins.sledgehammer.conarm.json,"
-                        + "mixins.sledgehammer.core.json,"
-                        + "mixins.sledgehammer.danknull.json,"
-                        + "mixins.sledgehammer.embers.json,"
-                        + "mixins.sledgehammer.enderio.json,"
-                        + "mixins.sledgehammer.enderstorage.json,"
-                        + "mixins.sledgehammer.fluxnetworks.json,"
-                        + "mixins.sledgehammer.forge.json,"
-                        + "mixins.sledgehammer.immersiveengineering.json,"
-                        + "mixins.sledgehammer.industrialforegoing.json,"
-                        + "mixins.sledgehammer.integrateddynamicscompat.json,"
-                        + "mixins.sledgehammer.jetif.json,"
-                        + "mixins.sledgehammer.journeymap.json,"
-                        + "mixins.sledgehammer.kubejs.json,"
-                        + "mixins.sledgehammer.logisticspipes.json,"
-                        + "mixins.sledgehammer.matteroverdrive.json,"
-                        + "mixins.sledgehammer.mobgrindingutils.json,"
-                        + "mixins.sledgehammer.morph.json,"
-                        + "mixins.sledgehammer.mowziesmobs.json,"
-                        + "mixins.sledgehammer.naturesaura.json,"
-                        + "mixins.sledgehammer.platform.json,"
-                        + "mixins.sledgehammer.pneumaticcraft.json,"
-                        + "mixins.sledgehammer.primitivecrafting.json,"
-                        + "mixins.sledgehammer.primitivemobs.json,"
-                        + "mixins.sledgehammer.projectred.json,"
-                        + "mixins.sledgehammer.pyrotech.json,"
-                        + "mixins.sledgehammer.qmd.json,"
-                        + "mixins.sledgehammer.quark.json,"
-                        + "mixins.sledgehammer.randomthings.json,"
-                        + "mixins.sledgehammer.realfilingcabinet.json,"
-                        + "mixins.sledgehammer.ruins.json,"
-                        + "mixins.sledgehammer.sponge.json,"
-                        + "mixins.sledgehammer.storagenetwork.json,"
-                        + "mixins.sledgehammer.tconevo.json,"
-                        + "mixins.sledgehammer.tconstruct.json,"
-                        + "mixins.sledgehammer.thaumicwonders.json,"
-                        + "mixins.sledgehammer.tombmanygraves.json,"
-                        + "mixins.sledgehammer.topography.json,"
-                        + "mixins.sledgehammer.vaultopic.json,"
-                        + "mixins.sledgehammer.wolforce.json",
+                "MixinConfigs": "${mixinConfigs}",
                 "Specification-Title": "sledgehammer",
                 "Specification-Vendor": "LX_Gaming",
                 "Specification-Version": "1",
