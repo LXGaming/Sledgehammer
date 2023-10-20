@@ -126,7 +126,6 @@ dependencies {
     compileOnly("curse.maven:cyclops-core-232758:3010617") // Cyclops Core v1.12.2-1.6.6
     compileOnly("curse.maven:dank-null-272514:2831353") // /dank/null v1.12.2-1.7.89
     compileOnly("curse.maven:embers-rekindled-300777:3695248") // EmbersRekindled v1.19
-    compileOnly("curse.maven:ender-io-64578:2858816") // Ender IO v5.1.55
     compileOnly("curse.maven:ender-storage-1-8-245174:2755787") // Ender Storage v1.12.2-2.4.6.137-universal
     compileOnly("curse.maven:flux-networks-248020:2645165") // Flux Networks v1.12.2-3.0.19
     compileOnly("curse.maven:forestry-59751:2684780") // Forestry v1.12.2-5.8.2.387

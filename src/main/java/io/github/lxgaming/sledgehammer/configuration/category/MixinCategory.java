@@ -33,7 +33,6 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.ConstructsAr
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.CoreMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.DankNullMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EmbersMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderIOMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderStorageMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.FluxNetworksMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
@@ -125,9 +124,6 @@ public class MixinCategory {
     
     @Setting(value = "embers", comment = "Embers")
     private EmbersMixinCategory embersMixinCategory = new EmbersMixinCategory();
-    
-    @Setting(value = "enderio", comment = "Ender IO")
-    private EnderIOMixinCategory enderIOMixinCategory = new EnderIOMixinCategory();
     
     @Setting(value = "enderstorage", comment = "Ender Storage")
     private EnderStorageMixinCategory enderStorageMixinCategory = new EnderStorageMixinCategory();
@@ -300,10 +296,6 @@ public class MixinCategory {
     
     public EmbersMixinCategory getEmbersMixinCategory() {
         return embersMixinCategory;
-    }
-    
-    public EnderIOMixinCategory getEnderIOMixinCategory() {
-        return enderIOMixinCategory;
     }
     
     public EnderStorageMixinCategory getEnderStorageMixinCategory() {
