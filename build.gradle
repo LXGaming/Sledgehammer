@@ -77,7 +77,7 @@ repositories {
 
 dependencies {
     minecraft("net.minecraftforge:forge:1.12.2-14.23.5.2860")
-    compileJar("org.checkerframework:checker-qual:3.13.0")
+    compileJar("org.checkerframework:checker-qual:3.38.0")
     compileJar("org.spongepowered:configurate-hocon:3.7.2") {
         exclude(module: "checker-qual")
         exclude(module: "guava")
@@ -85,11 +85,11 @@ dependencies {
     }
     annotationProcessor("org.spongepowered:mixin:0.8.3:processor")
     compileJar("org.spongepowered:mixin:0.8.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 
     // Sponge
-    annotationProcessor("org.spongepowered:spongecommon:1.12.2-7.3.0:dev")
-    compileOnly("org.spongepowered:spongecommon:1.12.2-7.3.0:dev") {
+    annotationProcessor("org.spongepowered:spongecommon:1.12.2-7.4.7:dev")
+    compileOnly("org.spongepowered:spongecommon:1.12.2-7.4.7:dev") {
         exclude(module: "configurate-core")
         exclude(module: "configurate-hocon")
         exclude(module: "commons-io")
@@ -98,10 +98,10 @@ dependencies {
         exclude(module: "launchwrapper")
         exclude(module: "mixin")
     }
-    compileOnly("org.spongepowered:spongeforge:1.12.2-2838-7.3.0:dev") {
+    compileOnly("org.spongepowered:spongeforge:1.12.2-2838-7.4.7:dev") {
         transitive = false
     }
-    compileOnly("org.spongepowered:spongevanilla:1.12.2-7.3.0:dev") {
+    compileOnly("org.spongepowered:spongevanilla:1.12.2-7.4.7:dev") {
         transitive = false
     }
 
