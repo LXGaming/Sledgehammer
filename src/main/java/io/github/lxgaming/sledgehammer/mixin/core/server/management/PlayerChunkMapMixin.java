@@ -17,10 +17,10 @@
 package io.github.lxgaming.sledgehammer.mixin.core.server.management;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.util.PrettyPrinterProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.management.PlayerChunkMap;
 import net.minecraft.server.management.PlayerChunkMapEntry;
-import org.apache.logging.log4j.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -68,13 +68,12 @@ public abstract class PlayerChunkMapMixin {
     )
     private void onEntryChanged(PlayerChunkMapEntry entry, CallbackInfo callbackInfo) {
         if (sledgehammer$lock.get()) {
-            new PrettyPrinter(50)
+            PrettyPrinterProxy.error(new PrettyPrinter()
                     .add("Tried to mark PlayerChunkMapEntry as dirty while locked").centre().hr()
                     .add("Chunk: %d, %d", entry.getPos().x, entry.getPos().z)
                     .add("Players: %s", entry.getWatchingPlayers().stream().map(EntityPlayer::getName).collect(Collectors.joining(", ")))
                     .add("StackTrace:")
-                    .add(new Exception(String.format("%s v%s", Sledgehammer.NAME, Sledgehammer.VERSION)))
-                    .log(Sledgehammer.getInstance().getLogger(), Level.ERROR);
+                    .add(new Exception(String.format("%s v%s", Sledgehammer.NAME, Sledgehammer.VERSION))));
             
             callbackInfo.cancel();
         }
@@ -89,13 +88,12 @@ public abstract class PlayerChunkMapMixin {
     )
     private void onRemoveEntry(PlayerChunkMapEntry entry, CallbackInfo callbackInfo) {
         if (sledgehammer$lock.get()) {
-            new PrettyPrinter(50)
+            PrettyPrinterProxy.error(new PrettyPrinter()
                     .add("Tried to remove PlayerChunkMapEntry while locked").centre().hr()
                     .add("Chunk: %d, %d", entry.getPos().x, entry.getPos().z)
                     .add("Players: %s", entry.getWatchingPlayers().stream().map(EntityPlayer::getName).collect(Collectors.joining(", ")))
                     .add("StackTrace:")
-                    .add(new Exception(String.format("%s v%s", Sledgehammer.NAME, Sledgehammer.VERSION)))
-                    .log(Sledgehammer.getInstance().getLogger(), Level.ERROR);
+                    .add(new Exception(String.format("%s v%s", Sledgehammer.NAME, Sledgehammer.VERSION))));
             
             callbackInfo.cancel();
         }

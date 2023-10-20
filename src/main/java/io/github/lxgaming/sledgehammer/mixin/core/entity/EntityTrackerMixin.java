@@ -17,9 +17,9 @@
 package io.github.lxgaming.sledgehammer.mixin.core.entity;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.util.PrettyPrinterProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityTracker;
-import org.apache.logging.log4j.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -66,11 +66,10 @@ public abstract class EntityTrackerMixin {
     )
     private void onTrack(Entity entity, int trackingRange, final int updateFrequency, boolean sendVelocityUpdates, CallbackInfo callbackInfo) {
         if (sledgehammer$lock.get()) {
-            new PrettyPrinter(50)
+            PrettyPrinterProxy.error(new PrettyPrinter()
                     .add("Tried to track entity while locked").centre().hr()
                     .add("StackTrace:")
-                    .add(new Exception(String.format("%s v%s", Sledgehammer.NAME, Sledgehammer.VERSION)))
-                    .log(Sledgehammer.getInstance().getLogger(), Level.ERROR);
+                    .add(new Exception(String.format("%s v%s", Sledgehammer.NAME, Sledgehammer.VERSION))));
             
             callbackInfo.cancel();
         }
@@ -85,11 +84,10 @@ public abstract class EntityTrackerMixin {
     )
     private void onUntrack(Entity entity, CallbackInfo callbackInfo) {
         if (sledgehammer$lock.get()) {
-            new PrettyPrinter(50)
+            PrettyPrinterProxy.error(new PrettyPrinter()
                     .add("Tried to untrack entity while locked").centre().hr()
                     .add("StackTrace:")
-                    .add(new Exception(String.format("%s v%s", Sledgehammer.NAME, Sledgehammer.VERSION)))
-                    .log(Sledgehammer.getInstance().getLogger(), Level.ERROR);
+                    .add(new Exception(String.format("%s v%s", Sledgehammer.NAME, Sledgehammer.VERSION))));
             
             callbackInfo.cancel();
         }
