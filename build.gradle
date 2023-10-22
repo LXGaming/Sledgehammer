@@ -250,8 +250,15 @@ artifacts {
 }
 
 reobf {
-    shadowJar {}
-    thinShadowJar {}
+    jar {
+        getArgs().addAll("--threads", "1")
+    }
+    shadowJar {
+        getArgs().addAll("--threads", "1")
+    }
+    thinShadowJar {
+        getArgs().addAll("--threads", "1")
+    }
 }
 
 test {
