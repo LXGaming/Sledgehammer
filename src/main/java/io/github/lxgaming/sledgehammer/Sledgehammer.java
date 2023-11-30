@@ -21,6 +21,7 @@ import io.github.lxgaming.sledgehammer.configuration.Configuration;
 import io.github.lxgaming.sledgehammer.configuration.category.GeneralCategory;
 import io.github.lxgaming.sledgehammer.launch.SledgehammerLaunch;
 import io.github.lxgaming.sledgehammer.manager.MappingManager;
+import io.github.lxgaming.sledgehammer.util.BuildParameters;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,7 +32,7 @@ public class Sledgehammer {
     
     public static final String ID = "sledgehammer";
     public static final String NAME = "Sledgehammer";
-    public static final String VERSION = "@version@";
+    public static final String VERSION = BuildParameters.VERSION;
     public static final String DESCRIPTION = "Smashes the stupid out of the client & server.";
     public static final String AUTHORS = "LX_Gaming";
     public static final String SOURCE = "https://github.com/LXGaming/Sledgehammer";

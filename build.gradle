@@ -4,8 +4,9 @@ plugins {
     id "com.github.johnrengelman.shadow" version "8.1.1"
     id "java"
     id "java-library"
-    id "net.kyori.blossom" version "1.3.1"
+    id "net.kyori.blossom" version "2.1.0"
     id "net.neoforged.gradle" version "6.0.+"
+    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
     id "org.spongepowered.mixin" version "0.7.+"
     id "signing"
 }
@@ -13,10 +14,6 @@ plugins {
 group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
 version = "1.12.2-2.0.25"
-
-blossom {
-    replaceToken("@version@", version)
-}
 
 minecraft {
     accessTransformer(file("src/main/resources/sledgehammer_at.cfg"))
@@ -226,6 +223,16 @@ shadowJar {
     relocate("com.typesafe.config", "io.github.lxgaming.sledgehammer.lib.config")
     relocate("ninja.leaping.configurate", "io.github.lxgaming.sledgehammer.lib.configurate")
     relocate("org.checkerframework", "io.github.lxgaming.sledgehammer.lib.checkerframework")
+}
+
+sourceSets {
+    main {
+        blossom {
+            javaSources {
+                property("version", version)
+            }
+        }
+    }
 }
 
 task thinShadowJar(type: ShadowJar) {
