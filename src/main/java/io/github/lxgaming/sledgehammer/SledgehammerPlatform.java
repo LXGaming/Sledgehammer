@@ -29,8 +29,7 @@ import javax.annotation.Nullable;
         name = Sledgehammer.NAME,
         version = Sledgehammer.VERSION,
         acceptedMinecraftVersions = Sledgehammer.ACCEPTED_VERSIONS,
-        acceptableRemoteVersions = Sledgehammer.ACCEPTABLE_REMOTE_VERSIONS,
-        certificateFingerprint = Sledgehammer.CERTIFICATE_FINGERPRINT
+        acceptableRemoteVersions = Sledgehammer.ACCEPTABLE_REMOTE_VERSIONS
 )
 @Plugin(
         id = Sledgehammer.ID,

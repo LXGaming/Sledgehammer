@@ -31,7 +31,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -59,11 +58,6 @@ public abstract class SledgehammerPlatformMixin_Mod {
     private static SledgehammerPlatform instance;
     
     private SledgehammerPlatform.State platform$state;
-    
-    @Mod.EventHandler
-    public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
-        Sledgehammer.getInstance().getLogger().warn("Certificate Fingerprint Violation Detected!");
-    }
     
     @SuppressWarnings("UnstableApiUsage")
     @Subscribe
