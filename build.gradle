@@ -6,7 +6,7 @@ plugins {
     id "java-library"
     id "net.kyori.blossom" version "2.1.0"
     id "net.neoforged.gradle" version "6.0.+"
-    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
+    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.8"
     id "org.spongepowered.mixin" version "0.7.+"
     id "signing"
 }
@@ -235,7 +235,7 @@ sourceSets {
     }
 }
 
-task thinShadowJar(type: ShadowJar) {
+tasks.register("thinShadowJar", ShadowJar) {
     archiveClassifier.set("thin")
     configurations = shadowJar.configurations
     relocators = shadowJar.relocators
@@ -276,7 +276,7 @@ test {
     useJUnitPlatform()
 }
 
-task signJar {
+tasks.register("signJar") {
     doFirst {
         if (!project.hasProperty("signing.keyStorePath") || !project.hasProperty("signing.secretKeyRingFile")) {
             project.logger.warn("========== [WARNING] ==========")
