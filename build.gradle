@@ -15,6 +15,23 @@ group = "io.github.lxgaming"
 archivesBaseName = "Sledgehammer"
 version = "1.12.2-2.0.25"
 
+var excludedMixinConfigs = [
+        "mixins.sledgehammer.forge.preinit.json"
+]
+var firstPartyMixinConfigs = [
+        "mixins.sledgehammer.core.json",
+        "mixins.sledgehammer.forge.json",
+        "mixins.sledgehammer.platform.json",
+        "mixins.sledgehammer.sponge.json",
+]
+var thirdPartyMixinConfigs = sourceSets.main.resources.findAll {
+    it.name.matches("^mixins\\.sledgehammer\\.[^.]+(?:\\.(?:preinit|init))?\\.json\$")
+}.findAll {
+    !excludedMixinConfigs.contains(it.name) && !firstPartyMixinConfigs.contains(it.name)
+}.collect {
+    it.name
+}
+
 minecraft {
     accessTransformer(file("src/main/resources/sledgehammer_at.cfg"))
     mappings(channel: "stable", version: "39-1.12")
@@ -52,6 +69,10 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        name = "cleanroommc"
+        url = "https://repo.cleanroommc.com/releases"
+    }
     maven {
         name = "cursemaven"
         url = "https://cursemaven.com/"
@@ -101,6 +122,9 @@ dependencies {
     compileOnly("org.spongepowered:spongevanilla:1.12.2-7.4.7:dev") {
         transitive = false
     }
+
+    // Third Party Mod Loaders
+    compileOnly("zone.rong:mixinbooter:8.8")
 
     // Third Party Mods
     compileOnly("curse.maven:abyssalcraft-53686:3425234") // AbyssalCraft v1.12.2-1.10.4
@@ -170,17 +194,6 @@ build {
 }
 
 jar {
-    var excludedMixinConfigs = [
-            "mixins.sledgehammer.forge.preinit.json"
-    ]
-    var mixinConfigs = sourceSets.main.resources.findAll {
-        it.name.matches("^mixins\\.sledgehammer\\.[^.]+(?:\\.(?:preinit|init))?\\.json\$")
-    }.findAll {
-        !excludedMixinConfigs.contains(it.name)
-    }.collect {
-        it.name
-    }.join(",")
-
     archiveClassifier.set("sponge")
     manifest {
         attributes(
@@ -191,7 +204,7 @@ jar {
                 "Implementation-Title": "Sledgehammer",
                 "Implementation-Vendor": "LX_Gaming",
                 "Implementation-Version": "${project.version}",
-                "MixinConfigs": "${mixinConfigs}",
+                "MixinConfigs": "${firstPartyMixinConfigs.join(",")}",
                 "Specification-Title": "sledgehammer",
                 "Specification-Vendor": "LX_Gaming",
                 "Specification-Version": "1",
@@ -234,6 +247,7 @@ sourceSets {
     main {
         blossom {
             javaSources {
+                property("mixinConfigs", thirdPartyMixinConfigs.join(","))
                 property("version", version)
             }
         }

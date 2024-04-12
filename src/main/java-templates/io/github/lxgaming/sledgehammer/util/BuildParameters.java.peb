@@ -16,12 +16,26 @@
 
 package io.github.lxgaming.sledgehammer.util;
 
+import com.google.common.collect.ImmutableList;
+
+import java.util.List;
+
 public final class BuildParameters {
 
     private BuildParameters() {
     }
 
+    public static final List<String> MIXIN_CONFIGS = ImmutableList.of(
+{% for mixinConfig in mixinConfigs | split(',') %}
+            "{{ mixinConfig }}"{% if loop.last == false %},{% else %}{% endif %}
+
+{% endfor %}
+    );
     public static final String VERSION = "{{ version }}";
+
+    public static List<String> getMixinConfigs() {
+        return MIXIN_CONFIGS;
+    }
 
     public static String getVersion() {
         return VERSION;

@@ -17,6 +17,7 @@
 package io.github.lxgaming.sledgehammer.launch;
 
 import io.github.lxgaming.sledgehammer.Sledgehammer;
+import io.github.lxgaming.sledgehammer.util.BuildParameters;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.launchwrapper.LaunchClassLoader;
@@ -29,6 +30,8 @@ import java.util.List;
 public class SledgehammerLaunch {
     
     private static final Logger LOGGER = LogManager.getLogger("Sledgehammer Launch");
+    
+    // First Party Keys
     private static final String DEOBFUSCATED_ENVIRONMENT = "fml.deobfuscatedEnvironment";
     private static final String FORGE_INITIALIZED = "forge.initialized";
     private static final String MIXIN_INITIALIZED = "mixin.initialised";
@@ -36,12 +39,20 @@ public class SledgehammerLaunch {
     private static final String SPONGE_INITIALIZED = "sponge.initialized";
     private static final String TWEAK_CLASSES = "TweakClasses";
     private static final String TWEAKS = "Tweaks";
+    
+    // First Party Classes
     private static final String FORGE_CLASS = "net.minecraftforge.fml.relauncher.CoreModManager";
     private static final String FORGE_DEOBF_TWEAKER_CLASS = "net.minecraftforge.fml.common.launcher.FMLDeobfTweaker";
     private static final String GRADLE_START_COMMON_CLASS = "net.minecraftforge.gradle.GradleStartCommon";
     private static final String MIXIN_STATE_TWEAKER_CLASS = "org.spongepowered.asm.mixin.EnvironmentStateTweaker";
     private static final String MIXIN_TWEAKER_CLASS = "org.spongepowered.asm.launch.MixinTweaker";
     private static final String SPONGE_CLASS = "org.spongepowered.common.launch.SpongeLaunch";
+    
+    // Third Party Keys
+    private static final String MIXIN_BOOTER_INITIALIZED = "mixinbooter.initialised";
+    
+    // Third Party Classes
+    private static final String MIXIN_BOOTER_CLASS = "zone.rong.mixinbooter.MixinBooterPlugin";
     
     private SledgehammerLaunch() {
     }
@@ -58,6 +69,11 @@ public class SledgehammerLaunch {
             SledgehammerLaunch.getLogger().debug("Detected Forge");
         }
         
+        if (!isMixinBooterInitialized() && isClassPresent(MIXIN_BOOTER_CLASS)) {
+            GlobalPropertiesProxy.put(MIXIN_BOOTER_INITIALIZED, Boolean.TRUE);
+            SledgehammerLaunch.getLogger().debug("Detected MixinBooter");
+        }
+        
         if (!isSpongeInitialized() && isClassPresent(SPONGE_CLASS)) {
             GlobalPropertiesProxy.put(SPONGE_INITIALIZED, Boolean.TRUE);
             SledgehammerLaunch.getLogger().debug("Detected Sponge");
@@ -65,11 +81,17 @@ public class SledgehammerLaunch {
         
         if (!isSledgehammerInitialized() && isMixinInitialized() && isTweakerPresent(SledgehammerTweaker.class)) {
             GlobalPropertiesProxy.put(SLEDGEHAMMER_INITIALIZED, Sledgehammer.VERSION);
+            SledgehammerLaunch.getLogger().debug("Detected Mixin & SledgehammerTweaker");
             
             // Triggers IMixinConfigPlugin::onLoad
             // ConcurrentModificationException - SpongeVanilla
-            Mixins.addConfiguration("mixins.sledgehammer.forge.preinit.json");
-            SledgehammerLaunch.getLogger().debug("Detected Mixin & SledgehammerTweaker");
+            if (!isMixinBooterInitialized()) {
+                Mixins.addConfiguration("mixins.sledgehammer.forge.preinit.json");
+                
+                for (String mixinConfig : BuildParameters.getMixinConfigs()) {
+                    Mixins.addConfiguration(mixinConfig);
+                }
+            }
         }
     }
     
@@ -143,6 +165,10 @@ public class SledgehammerLaunch {
     
     public static boolean isMixinInitialized() {
         return getMixinVersion() != null;
+    }
+    
+    public static boolean isMixinBooterInitialized() {
+        return GlobalPropertiesProxy.get(MIXIN_BOOTER_INITIALIZED) == Boolean.TRUE;
     }
     
     public static boolean isSledgehammerInitialized() {

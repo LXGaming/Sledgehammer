@@ -61,6 +61,7 @@ public class ForgePlugin extends CorePlugin {
         if (INITIALIZED
                 || SledgehammerLaunch.isDeobfuscatedEnvironment()
                 || !SledgehammerLaunch.isForgeInitialized()
+                || SledgehammerLaunch.isMixinBooterInitialized()
                 || !SledgehammerLaunch.isSledgehammerInitialized()
                 || MappingManager.MOD_MAPPINGS.isEmpty()) {
             return;
