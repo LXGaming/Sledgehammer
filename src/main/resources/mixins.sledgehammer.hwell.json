@@ -1,7 +1,7 @@
 {
   "required": false,
   "minVersion": "0.7.10",
-  "package": "io.github.lxgaming.sledgehammer.mixin.wolforce",
+  "package": "io.github.lxgaming.sledgehammer.mixin.hwell",
   "refmap": "mixins.sledgehammer.refmap.json",
   "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
   "target": "@env(DEFAULT)",

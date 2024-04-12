@@ -23,7 +23,7 @@ import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 @ConfigSerializable
 public class MobGrindingUtilsMixinCategory {
     
-    @Mapping(value = "mobgrindingutils.tile.TileEntityFanMixin", dependencies = {"mob_grinding_utils"})
+    @Mapping(value = "mob_grinding_utils.tile.TileEntityFanMixin", dependencies = {"mob_grinding_utils"})
     @Setting(value = "packet-spam", comment = "If 'true', reduces Mob Fan block updates to one per second")
     private boolean packetSpam = false;
     

@@ -170,8 +170,13 @@ build {
 }
 
 jar {
+    var excludedMixinConfigs = [
+            "mixins.sledgehammer.forge.preinit.json"
+    ]
     var mixinConfigs = sourceSets.main.resources.findAll {
-        it.name.matches("mixins\\.sledgehammer\\.\\w+\\.json")
+        it.name.matches("^mixins\\.sledgehammer\\.[^.]+(?:\\.(?:preinit|init))?\\.json\$")
+    }.findAll {
+        !excludedMixinConfigs.contains(it.name)
     }.collect {
         it.name
     }.join(",")

@@ -21,9 +21,9 @@ import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
 @ConfigSerializable
-public class WolforceMixinCategory {
+public class HearthWellMixinCategory {
     
-    @Mapping(value = "wolforce.blocks.BlockGraftingTrayMixin", dependencies = {"hwell"})
+    @Mapping(value = "hwell.blocks.BlockGraftingTrayMixin", dependencies = {"hwell"})
     @Setting(value = "block-grafting-tray-sponge", comment = "If 'true', fixes inventory handling in BlockGraftingTray which is incompatible with Sponge")
     private boolean blockGraftingTray = false;
     

@@ -67,7 +67,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.TombManyGrav
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TopographyMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TotemicMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.VaultopicMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.WolforceMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.HearthWellMixinCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
@@ -133,6 +133,9 @@ public class MixinCategory {
     
     @Setting(value = "forge", comment = "Forge")
     private ForgeMixinCategory forgeMixinCategory = new ForgeMixinCategory();
+    
+    @Setting(value = "hearth-well", comment = "Hearth Well")
+    private HearthWellMixinCategory hearthWellMixinCategory = new HearthWellMixinCategory();
     
     @Setting(value = "immersiveengineering", comment = "Immersive Engineering")
     private ImmersiveEngineeringMixinCategory immersiveEngineeringMixinCategory = new ImmersiveEngineeringMixinCategory();
@@ -227,9 +230,6 @@ public class MixinCategory {
     @Setting(value = "vaultopic", comment = "Vaultopic - Early Inventory Management")
     private VaultopicMixinCategory vaultopicMixinCategory = new VaultopicMixinCategory();
     
-    @Setting(value = "wolforce", comment = "Hearth Well")
-    private WolforceMixinCategory wolforceMixinCategory = new WolforceMixinCategory();
-    
     public AbyssalCraftMixinCategory getAbyssalCraftMixinCategory() {
         return abyssalCraftMixinCategory;
     }
@@ -308,6 +308,10 @@ public class MixinCategory {
     
     public ForgeMixinCategory getForgeMixinCategory() {
         return forgeMixinCategory;
+    }
+    
+    public HearthWellMixinCategory getHearthWellMixinCategory() {
+        return hearthWellMixinCategory;
     }
     
     public ImmersiveEngineeringMixinCategory getImmersiveEngineeringMixinCategory() {
@@ -432,9 +436,5 @@ public class MixinCategory {
     
     public VaultopicMixinCategory getVaultopicMixinCategory() {
         return vaultopicMixinCategory;
-    }
-    
-    public WolforceMixinCategory getWolforceMixinCategory() {
-        return wolforceMixinCategory;
     }
 }

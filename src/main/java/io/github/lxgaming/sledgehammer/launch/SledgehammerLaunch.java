@@ -68,7 +68,7 @@ public class SledgehammerLaunch {
             
             // Triggers IMixinConfigPlugin::onLoad
             // ConcurrentModificationException - SpongeVanilla
-            Mixins.addConfiguration("mixins.sledgehammer.preinit.json");
+            Mixins.addConfiguration("mixins.sledgehammer.forge.preinit.json");
             SledgehammerLaunch.getLogger().debug("Detected Mixin & SledgehammerTweaker");
         }
     }

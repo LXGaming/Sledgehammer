@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Alex Thomson
+ * Copyright 2024 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.sledgehammer.mixin.mobgrindingutils.tile;
+package io.github.lxgaming.sledgehammer.mixin.mob_grinding_utils.tile;
 
 import mob_grinding_utils.tile.TileEntityFan;
 import mob_grinding_utils.tile.TileEntityInventoryHelper;

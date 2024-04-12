@@ -1,13 +1,15 @@
 {
   "required": false,
   "minVersion": "0.7.10",
-  "package": "io.github.lxgaming.sledgehammer.mixin.mobgrindingutils",
+  "package": "io.github.lxgaming.sledgehammer.mixin.projectred",
   "refmap": "mixins.sledgehammer.refmap.json",
   "plugin": "io.github.lxgaming.sledgehammer.mixin.plugin.CorePlugin",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "tile.TileEntityFanMixin"
+    "integration.ComparatorMixin",
+    "integration.GatePartArrayMixin",
+    "integration.RedstoneGatePartMixin"
   ],
   "injectors": {
     "defaultRequire": 1
