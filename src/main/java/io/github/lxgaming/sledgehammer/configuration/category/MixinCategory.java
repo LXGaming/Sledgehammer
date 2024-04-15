@@ -36,6 +36,7 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.EmbersMixinC
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.EnderStorageMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.FluxNetworksMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ForgeMixinCategory;
+import io.github.lxgaming.sledgehammer.configuration.category.mixin.HearthWellMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.ImmersiveEngineeringMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.IndustrialForegoingMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.IntegratedDynamicsMixinCategory;
@@ -67,7 +68,6 @@ import io.github.lxgaming.sledgehammer.configuration.category.mixin.TombManyGrav
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TopographyMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.TotemicMixinCategory;
 import io.github.lxgaming.sledgehammer.configuration.category.mixin.VaultopicMixinCategory;
-import io.github.lxgaming.sledgehammer.configuration.category.mixin.HearthWellMixinCategory;
 import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 
