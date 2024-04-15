@@ -49,9 +49,11 @@ public class SledgehammerLaunch {
     private static final String SPONGE_CLASS = "org.spongepowered.common.launch.SpongeLaunch";
     
     // Third Party Keys
+    private static final String CLEANROOM_MIXIN_INITIALIZED = "mixin:initialised";
     private static final String MIXIN_BOOTER_INITIALIZED = "mixinbooter.initialised";
     
     // Third Party Classes
+    private static final String CLEANROOM_MIXIN_BOOTER_CLASS = "net.minecraftforge.fml.relauncher.MixinBooterPlugin";
     private static final String MIXIN_BOOTER_CLASS = "zone.rong.mixinbooter.MixinBooterPlugin";
     
     private SledgehammerLaunch() {
@@ -69,7 +71,7 @@ public class SledgehammerLaunch {
             SledgehammerLaunch.getLogger().debug("Detected Forge");
         }
         
-        if (!isMixinBooterInitialized() && isClassPresent(MIXIN_BOOTER_CLASS)) {
+        if (!isMixinBooterInitialized() && (isClassPresent(MIXIN_BOOTER_CLASS) || isClassPresent(CLEANROOM_MIXIN_BOOTER_CLASS))) {
             GlobalPropertiesProxy.put(MIXIN_BOOTER_INITIALIZED, Boolean.TRUE);
             SledgehammerLaunch.getLogger().debug("Detected MixinBooter");
         }
@@ -152,7 +154,17 @@ public class SledgehammerLaunch {
     }
     
     public static String getMixinVersion() {
-        return GlobalPropertiesProxy.get(MIXIN_INITIALIZED);
+        String mixinVersion = GlobalPropertiesProxy.get(MIXIN_INITIALIZED);
+        if (mixinVersion != null) {
+            return mixinVersion;
+        }
+        
+        String cleanroomMixinVersion = GlobalPropertiesProxy.get(CLEANROOM_MIXIN_INITIALIZED);
+        if (cleanroomMixinVersion != null) {
+            return cleanroomMixinVersion;
+        }
+        
+        return null;
     }
     
     public static boolean isDeobfuscatedEnvironment() {
