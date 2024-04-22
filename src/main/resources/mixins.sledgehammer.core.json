@@ -28,6 +28,7 @@
     "network.NetHandlerPlayServerMixin_Sleep",
     "network.NetworkManagerMixin",
     "network.NetworkSystemMixin",
+    "server.MinecraftServerMixin",
     "tileentity.TileEntityMixin_ForgeData",
     "tileentity.TileEntityMixin_StackOverflow",
     "util.text.TextComponentTranslationMixin",

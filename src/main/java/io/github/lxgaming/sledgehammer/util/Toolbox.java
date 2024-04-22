@@ -35,6 +35,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
 public class Toolbox {
@@ -58,6 +59,30 @@ public class Toolbox {
             Sledgehammer.getInstance().getLogger().error("We were unable to save this crash report to disk.");
             return false;
         }
+    }
+    
+    public static void threadDump() {
+        Sledgehammer.getInstance().getLogger().error("------------------------- THREAD DUMP -------------------------");
+        
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry<Thread, StackTraceElement[]> stackTraces : Thread.getAllStackTraces().entrySet()) {
+            Thread thread = stackTraces.getKey();
+            
+            stringBuilder.setLength(0);
+            stringBuilder.append("\"").append(thread.getName()).append("\"");
+            stringBuilder.append(" id=").append(thread.getId());
+            stringBuilder.append(" priority=").append(thread.getPriority());
+            stringBuilder.append(" daemon=").append(thread.isDaemon());
+            stringBuilder.append("\n  java.lang.Thread.State: ").append(thread.getState());
+            
+            for (StackTraceElement stackTraceElement : stackTraces.getValue()) {
+                stringBuilder.append("\n    at ").append(stackTraceElement);
+            }
+            
+            Sledgehammer.getInstance().getLogger().error(stringBuilder.toString());
+        }
+        
+        Sledgehammer.getInstance().getLogger().error("------------------------- THREAD DUMP -------------------------");
     }
     
     public static Chunk getLoadedChunkWithoutMarkingActive(World world, int chunkX, int chunkZ) {

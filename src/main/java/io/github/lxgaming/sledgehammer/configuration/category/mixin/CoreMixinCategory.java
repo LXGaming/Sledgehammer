@@ -156,6 +156,10 @@ public class CoreMixinCategory {
     @Setting(value = "speed-up-chunk-rendering", comment = "If 'true', changes the renderer's target FPS to be 30 (matching 1.15-pre1) instead of the maximum FPS in game options. This helps with chunks not loading on the client.")
     private boolean speedUpChunkRendering = false;
     
+    @Mapping(value = "core.server.MinecraftServerMixin")
+    @Setting(value = "thread-dump-crash", comment = "If 'true', performs a thread dump when the server crashes.")
+    public boolean threadDumpCrash = false;
+    
     @Mapping(value = "core.world.WorldMixin_ChunkUnload")
     @Setting(value = "tile-entity-chunk-unload", comment = "If 'true', prevents unloading TileEntities from loading chunks")
     private boolean tileEntityChunkUnload = false;
@@ -254,6 +258,10 @@ public class CoreMixinCategory {
     
     public boolean isPlayerChunkMap() {
         return playerChunkMap;
+    }
+    
+    public boolean isThreadDumpCrash() {
+        return threadDumpCrash;
     }
     
     public boolean isTileEntityChunkUnload() {
